@@ -1,0 +1,58 @@
+@import './variables';
+
+body {
+  background: $smoke-white;
+  font-family: $main-font-family;
+  font-size: 14px;
+  line-height: 1.35em;
+  color: $black;
+
+  @media (max-width: 640px) {
+    font-size: 12px;
+  }
+}
+
+h1 {
+  font-family: $header-font-family;
+  color: $dark-grey;
+  font-size: 1.9em;
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+}
+
+h3 {
+  margin-top: 0;
+  margin-bottom: 3pt;
+}
+
+img {
+  max-width: 100%;
+}
+
+a {
+  color: $orange;
+  text-decoration: underline;
+  transition: all 150ms linear;
+
+  &:hover {
+    color: lighten($orange, 20%);
+    text-decoration: underline;
+  }
+}
+
+hr {
+  border-top: 1px solid $lighter-grey;
+  border-right: none;
+  border-bottom: none;
+  border-left: none;
+  height: 1px;
+  margin: 0;
+  padding: 0;
+}
+
+blockquote {
+  color: #666666;
+  margin: 0 20px;
+  padding: 2px 5px 5px 10px;
+  border-left: 3px solid $grey;
+}

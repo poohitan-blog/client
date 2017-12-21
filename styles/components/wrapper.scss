@@ -1,0 +1,17 @@
+@import '../variables';
+
+.wrapper {
+  width: 43em;
+  margin: 1em auto 1.8em auto;
+  background: $white;
+  border: 1px solid $light-grey;
+  padding: 1.8em;
+  box-sizing: border-box;
+  transition: width 200ms linear;
+}
+
+@media (max-width: 640px) {
+  .wrapper {
+    width: calc(100% - 2em);
+  }
+}
