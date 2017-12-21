@@ -1,4 +1,4 @@
-#Front-end for poohitan.com
+# Front-end for poohitan.com
 
 Implemented with Next.js (server-side rendered React).
 
