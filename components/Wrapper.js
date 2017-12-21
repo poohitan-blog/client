@@ -1,12 +1,20 @@
+import React from 'react';
+import PropTypes from 'prop-types';
 import Header from './Header';
 import Content from './Content';
 
-export default (props) => (
+const Wrapper = props => (
   <div className="wrapper">
-    <Header/>
+    <Header />
 
     <Content>
       {props.children}
     </Content>
   </div>
-)
+);
+
+Wrapper.propTypes = {
+  children: PropTypes.node.isRequired,
+};
+
+export default Wrapper;

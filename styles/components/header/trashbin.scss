@@ -1,0 +1,17 @@
+@import '../../variables';
+
+.header-trashbin {
+  margin-top: 1.7em;
+  height: 1.9em;
+
+  svg {
+    height: 100%;
+    width: auto;
+    margin: 0;
+    padding: 0;
+  }
+
+  .trashbin-body {
+    fill: $dark-grey;
+  }
+}

@@ -1,0 +1,27 @@
+@import '../variables';
+
+.post {
+  .post-title {
+    padding: 0;
+
+    a {
+      color: $light-orange;
+      text-decoration: none;
+
+      &:hover {
+        color: lighten($light-orange, 10%);
+      }
+    }
+  }
+
+  .post-body {
+    margin: 1em 0;
+  }
+
+  .post-footer {
+    background-color: $yellowy-grey;
+    font-size: 0.75em;
+    line-height: 1.55em;
+    padding: 0.28em 0.42em;
+  }
+}

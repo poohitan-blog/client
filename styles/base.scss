@@ -15,9 +15,9 @@ body {
 h1 {
   font-family: $header-font-family;
   color: $dark-grey;
-  font-size: 1.9em;
-  margin-top: 1em;
-  margin-bottom: 0.5em;
+  font-size: 1.7em;
+  margin: 1.12em 0 0.4em 0;
+  line-height: 1em;
 }
 
 h3 {
@@ -32,12 +32,16 @@ img {
 a {
   color: $orange;
   text-decoration: underline;
-  transition: all 150ms linear;
+  transition: $link-transition;
 
   &:hover {
     color: lighten($orange, 20%);
     text-decoration: underline;
   }
+}
+
+p {
+  margin: 0.5em 0;
 }
 
 hr {
