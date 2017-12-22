@@ -6,21 +6,21 @@ import CutBody from './post/CutBody';
 import Footer from './post/Footer';
 
 const Post = (props) => {
-  const postBody = props.cut ? <CutBody {...props} /> : <FullBody {...props} />;
+  const body = props.cut ? <CutBody {...props} /> : <FullBody {...props} />;
 
   return (
-    <article className="post">
+    <article className="post post-complete">
       <h1 className="post-title"><Link as={props.path} href={`/post?path=${props.path}`}><a>{props.title}</a></Link></h1>
-      <div className="post-body">{postBody}</div>
+      <div className="post-body">{body}</div>
       <Footer {...props} />
     </article>
   );
 };
 
 Post.propTypes = {
-  cut: PropTypes.string,
-  path: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
+  path: PropTypes.string.isRequired,
+  cut: PropTypes.bool,
 };
 
 Post.defaultProps = {
