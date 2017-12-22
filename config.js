@@ -35,4 +35,6 @@ const config = {
 
 const environment = process.env.NODE_ENV;
 
-module.exports = Object.assign({}, config, { current: Object.assign({ environment }, config[environment]) });
+module.exports = Object.assign({}, config, {
+  current: Object.assign({ environment }, config[environment]),
+});
