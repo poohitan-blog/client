@@ -1,0 +1,20 @@
+@import '../../variables';
+
+.post-footer {
+  background-color: $yellowy-grey;
+  font-size: 0.75em;
+  line-height: 1.55em;
+  padding: 0.28em 1em;
+
+  .post-footer-icon {
+    fill: $dark-grey;
+  }
+
+  .post-footer-comments-icon {
+    height: 1.4em;
+  }
+
+  .post-footer-date-icon {
+    height: 1.1em;
+  }
+}
