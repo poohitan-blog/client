@@ -15,9 +15,24 @@ const config = {
     disqus: {
       shortname: 'poohitan',
     },
+
+    server: {
+      host: '46.101.99.203',
+      user: 'poohitan',
+      folder: '~/poohitan.com/client',
+    },
+
+    git: {
+      repo: 'git@github.com:poohitan-blog/client.git',
+      branch: 'production',
+    },
+
+    pm2: {
+      appName: 'poohitan-com-client',
+    },
   },
 };
 
 const environment = process.env.NODE_ENV;
 
-export default config[environment];
+module.exports = Object.assign({}, config, { current: config[environment] });

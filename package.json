@@ -32,7 +32,8 @@
     "react-dom": "^16.2.0",
     "sass-loader": "^6.0.6",
     "ssh-exec": "^2.0.0",
-    "unfetch": "^3.0.0"
+    "unfetch": "^3.0.0",
+    "yargs": "^10.0.3"
   },
   "devDependencies": {
     "babel-plugin-inline-react-svg": "^0.5.2",

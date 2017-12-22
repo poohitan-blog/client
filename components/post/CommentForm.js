@@ -6,7 +6,7 @@ import config from '../../config';
 const CommentForm = props => (
   <div className="post-comment-form">
     <ReactDisqusComments
-      shortname={config.disqus.shortname}
+      shortname={config.current.disqus.shortname}
       identifier={props.path}
       title={props.title}
       url={`${config.host}/${props.path}`}
