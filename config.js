@@ -9,7 +9,7 @@ const config = {
   },
 
   production: {
-    port: 7000,
+    port: 4000,
     host: 'https://new.poohitan.com',
 
     disqus: {
@@ -18,7 +18,7 @@ const config = {
 
     server: {
       host: '46.101.99.203',
-      user: 'poohitan',
+      username: 'poohitan',
       folder: '~/poohitan.com/client',
     },
 

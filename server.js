@@ -1,5 +1,6 @@
 const express = require('express');
 const next = require('next');
+const config = require('./config').current;
 
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
@@ -30,9 +31,9 @@ app.prepare()
 
     server.get('*', (req, res) => handle(req, res));
 
-    server.listen(7000, (err) => {
+    server.listen(config.port, (err) => {
       if (err) throw err;
-      console.log('> Ready on http://localhost:7000');
+      console.log(`> Listening on ${config.port}`);
     });
   })
   .catch((ex) => {
