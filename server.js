@@ -2,7 +2,7 @@ const express = require('express');
 const next = require('next');
 const config = require('./config').current;
 
-const dev = process.env.NODE_ENV !== 'production';
+const dev = config.environment !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
 
@@ -31,8 +31,11 @@ app.prepare()
 
     server.get('*', (req, res) => handle(req, res));
 
-    server.listen(config.port, (err) => {
-      if (err) throw err;
+    server.listen(config.port, (error) => {
+      if (error) {
+        throw error;
+      }
+
       console.log(`> Listening on ${config.port}`);
     });
   })
