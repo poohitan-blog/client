@@ -9,7 +9,7 @@ const CommentForm = props => (
       shortname={config.current.disqus.shortname}
       identifier={props.path}
       title={props.title}
-      url={`${config.host}/${props.path}`}
+      url={`${config.current.host}/${props.path}`}
     />
   </div>
 );
