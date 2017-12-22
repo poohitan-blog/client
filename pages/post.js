@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Head from 'next/head';
 import Wrapper from '../components/Wrapper';
 import Post from '../components/Post';
+import CommentForm from '../components/post/CommentForm';
 import * as Data from '../services/data';
 
 const postPage = (props) => {
@@ -14,6 +15,7 @@ const postPage = (props) => {
         <title>{post.title}</title>
       </Head>
       <Post {...post} />
+      <CommentForm {...post} />
     </Wrapper>
   );
 };
