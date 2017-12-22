@@ -1,4 +1,6 @@
-const posts = [
+import moment from 'moment';
+
+export const posts = [
   {
     id: 1,
     path: 'cake-in-face',
@@ -12,6 +14,7 @@ const posts = [
   <li>густина — торт не має стікати з лиця</li>
   <li>специфічна комбінація шарів — після кидка, бажано, аби частина торту залишилась в руці і її можна було з'їсти іншим друзям</li>
 </ol>`,
+    date: new Date(),
   },
   {
     id: 2,
@@ -110,7 +113,24 @@ const posts = [
 <p>Ну і в принципі це кінець, результат на відео :)</p>
 
 <p><iframe src="https://www.youtube.com/embed/pK83FsUccEQ" allowfullscreen="" width="550" height="309" frameborder="0"></iframe></p>`,
+    date: moment().startOf('day').subtract(15516, 'hours').subtract(23, 'minutes')
+      .toDate(),
   },
 ];
 
-export default posts;
+export const pages = [
+  {
+    id: 1,
+    title: 'Архів',
+    path: 'archive',
+    body: '<h1>Архів</h1><p>бла-бла</p>',
+  },
+  {
+    id: 2,
+    title: 'Про',
+    path: 'about',
+    body: '<h1>Про</h1>',
+  },
+];
+
+export default { posts, pages };

@@ -1,13 +1,33 @@
 @import '../variables';
 
+$shadow-height: 6px;
+
 .wrapper {
+  background-color: $white;
+  border: 1px solid $light-grey;
+  box-sizing: border-box;
+
   width: 43em;
   margin: 1em auto 1.8em auto;
-  background: $white;
-  border: 1px solid $light-grey;
   padding: 1.8em;
-  box-sizing: border-box;
+  position: relative;
+
   transition: width 200ms linear;
+
+  .wrapper-shadow {
+    $width: 97%;
+
+    background-color: $black;
+    opacity: 0.6;
+
+    width: 80%;
+    height: $shadow-height;
+
+    position: absolute;
+    bottom: -$shadow-height;
+    left: calc((100% - #{$width}) / 2);
+    width: $width
+  }
 }
 
 @media (max-width: 640px) {

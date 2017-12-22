@@ -1,3 +1,11 @@
+@import url(https://fonts.googleapis.com/css?family=PT+Sans&subset=cyrillic-ext,latin-ext);
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:800&subset=cyrillic-ext,latin-ext);
+
+@font-face {
+  font-family: MovaviGrotesque;
+  src: url('/static/fonts/MovaviGrotesque.ttf');
+}
+
 @import './variables';
 
 body {
@@ -59,4 +67,16 @@ blockquote {
   margin: 0 20px;
   padding: 2px 5px 5px 10px;
   border-left: 3px solid $grey;
+}
+
+svg {
+  width: auto;
+}
+
+.caption {
+  font-size: 0.75em;
+}
+
+.nowrap {
+  white-space: nowrap;
 }

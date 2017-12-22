@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export function describeCommentsCount(count) {
   if (!count) {
     return 'Немає коментарів';
@@ -25,4 +27,22 @@ export function describeCommentsCount(count) {
   return `${count} коментарів`;
 }
 
-export default { describeCommentsCount };
+export function formatPostDate(date) {
+  moment.locale('uk');
+
+  const todayStart = moment().startOf('day');
+  const yesterdayStart = moment().startOf('day').subtract(1, 'days');
+  const target = moment(date);
+  const hoursPassed = todayStart.diff(target, 'hours');
+  const oOrOb = target.hours() === 11 ? 'об' : 'о';
+
+  if (hoursPassed < 24 && todayStart.date() === target.date()) {
+    return `Сьогодні ${oOrOb} ${target.format('HH:mm')}`;
+  }
+
+  if (hoursPassed < 48 && yesterdayStart.date() === target.date()) {
+    return `Вчора ${oOrOb} ${target.format('HH:mm')}`;
+  }
+
+  return `${target.format('D MMMM YYYY')} ${oOrOb} ${target.format('HH:mm')}`;
+}

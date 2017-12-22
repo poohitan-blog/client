@@ -15,7 +15,9 @@ export default class Trashbin extends React.Component {
   }
 
   getTrashbinIcon() {
-    return this.state.open ? <TrashbinOpenIcon /> : <TrashbinClosedIcon />;
+    return this.state.open
+      ? <TrashbinOpenIcon className="trashbin-icon" />
+      : <TrashbinClosedIcon className="trashbin-icon" />;
   }
 
   open() {

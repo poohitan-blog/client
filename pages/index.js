@@ -1,14 +1,18 @@
 import React from 'react';
-import Layout from '../components/Layout';
+import Head from 'next/head';
+import Wrapper from '../components/Wrapper';
 import Post from '../components/Post';
-import posts from '../services/data';
+import * as Data from '../services/data';
 
-const postsList = posts.map(post => <Post {...post} cut key={post.id} />);
+const postListMarkup = Data.posts.map(post => <Post {...post} cut key={post.id} />);
 
 const Index = () => (
-  <Layout>
-    {postsList}
-  </Layout>
+  <Wrapper>
+    <Head>
+      <title>poohitan</title>
+    </Head>
+    {postListMarkup}
+  </Wrapper>
 );
 
 export default Index;

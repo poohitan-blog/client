@@ -1,20 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Layout from '../components/Layout';
+import Head from 'next/head';
+import Wrapper from '../components/Wrapper';
 import Post from '../components/Post';
-import posts from '../services/data';
+import * as Data from '../services/data';
 
-const page = (props) => {
-  const postForThisPage = posts.find(post => post.path === props.url.query.path);
+const postPage = (props) => {
+  const post = Data.posts.find(post => post.path === props.url.query.path); // eslint-disable-line
 
   return (
-    <Layout>
-      <Post {...postForThisPage} />
-    </Layout>
+    <Wrapper>
+      <Head>
+        <title>{post.title}</title>
+      </Head>
+      <Post {...post} />
+    </Wrapper>
   );
 };
 
-page.propTypes = {
+postPage.propTypes = {
   url: PropTypes.shape({
     query: PropTypes.shape({
       path: PropTypes.string.isRequired,
@@ -22,4 +26,4 @@ page.propTypes = {
   }).isRequired,
 };
 
-export default page;
+export default postPage;

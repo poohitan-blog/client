@@ -6,7 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "node server.js",
-    "lint": "./node_modules/.bin/eslint \"**/*.js\" --fix && ./node_modules/.bin/eslint \"*.js\" --fix"
+    "build": "next build",
+    "start": "next start",
+    "lint": "./node_modules/.bin/eslint \"**/*.js\" --fix"
   },
   "author": "",
   "license": "ISC",
@@ -16,6 +18,7 @@
     "babel-plugin-wrap-in-js": "^1.1.0",
     "express": "^4.16.2",
     "glob": "^7.1.2",
+    "moment": "^2.20.1",
     "next": "^4.2.1",
     "node-sass": "^4.4.0",
     "normalize.css": "^7.0.0",

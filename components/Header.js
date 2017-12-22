@@ -12,7 +12,7 @@ export default () => (
         <h1><Link href="/archive"><a>Архів</a></Link></h1>
       </li>
       <li>
-        <h1><Link href="/about"><a>Про</a></Link></h1>
+        <h1><Link as="/about" href="/page?path=about"><a>Про</a></Link></h1>
       </li>
       <li>
         <Link href="/trash"><a><Trashbin /></a></Link>
