@@ -28,12 +28,11 @@ const envVariablesString = Object.keys(envVariables).map(envVariableName => `exp
 
 exec(`git clone -b ${branch} ${repo} ${folder}/new`)
   .then(() => exec(`npm install --prefix ${folder}/new`))
-  .then(() => exec(`pm2 stop ${appName}`))
   .then(() => exec(`rm -rf ${folder}/current`))
   .then(() => exec(`mv ${folder}/new ${folder}/current`))
-  .then(() => exec(`cd ${folder}/current`))
-  .then(() => exec(`cd ${folder}/current && npm run build`))
-  .then(() => exec(`cd ${folder}/current && ${envVariablesString} && pm2 start ${folder}/current/server.js --name "${appName}"`))
+  .then(() => exec(`npm run build --prefix ${folder}/current`))
+  .then(() => exec(`pm2 stop ${appName}`))
+  .then(() => exec(`${envVariablesString} && pm2 start ${folder}/current/server.js --name ${appName} --update-env`))
   .then(() => console.log('Deployed successfully.'))
   .catch(error => console.error(error))
   .then(() => process.exit());
