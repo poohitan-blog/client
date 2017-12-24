@@ -15,7 +15,7 @@ export default () => (
         <h1 className="menu-item"><Link as="/about" href="/page?path=about"><a>Про</a></Link></h1>
       </li>
       <li>
-        <div className="menu-item"><Link href="/trash"><a><Trashbin/></a></Link></div>
+        <div className="menu-item"><Link href="/trash"><a><Trashbin /></a></Link></div>
       </li>
     </ul>
   </nav>

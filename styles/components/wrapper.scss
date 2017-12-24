@@ -28,6 +28,16 @@ $shadow-height: 6px;
     left: calc((100% - #{$width}) / 2);
     width: $width
   }
+
+  .raspberries {
+    background-image: url(/static/images/raspberry.gif);
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    z-index: -100;
+  }
 }
 
 @media (max-width: 640px) {

@@ -1,12 +1,13 @@
 {
-    "extends": "airbnb",
-    "rules": {
-      "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
-      "jsx-a11y/anchor-is-valid": [1, {
-        "components": [ "Link" ],
-        "specialLink": [ "href" ],
-        "aspects": [ "noHref", "invalidHref", "preferButton" ]
-      }],
-      "import/no-extraneous-dependencies": 0
-    }
+  "extends": "airbnb",
+  "rules": {
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "jsx-a11y/anchor-is-valid": [1, {
+      "components": [ "Link" ],
+      "specialLink": [ "href" ],
+      "aspects": [ "noHref", "invalidHref", "preferButton" ]
+    }],
+    "import/no-extraneous-dependencies": 0,
+    "max-len": [2, { "code": 120, "ignoreStrings": true, "ignoreUrls": true, "ignoreTemplateLiterals": true }]
+  }
 }
