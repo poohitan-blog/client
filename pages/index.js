@@ -1,18 +1,33 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Head from 'next/head';
+import API from '../services/api';
 import Wrapper from '../components/Wrapper';
 import Post from '../components/Post';
-import * as Data from '../services/data';
 
-const postListMarkup = Data.posts.map(post => <Post {...post} cut key={post.id} />);
+class IndexPage extends React.Component {
+  static async getInitialProps() {
+    const posts = await API.posts.findAll();
 
-const Index = () => (
-  <Wrapper>
-    <Head>
-      <title>poohitan</title>
-    </Head>
-    {postListMarkup}
-  </Wrapper>
-);
+    return { posts };
+  }
 
-export default Index;
+  render() {
+    const postsMarkup = this.props.posts.map(post => <Post {...post} cut key={post.id} />);
+
+    return (
+      <Wrapper>
+        <Head>
+          <title>poohitan</title>
+        </Head>
+        { postsMarkup }
+      </Wrapper>
+    );
+  }
+}
+
+IndexPage.propTypes = {
+  posts: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
+
+export default IndexPage;

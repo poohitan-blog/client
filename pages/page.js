@@ -2,28 +2,34 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
 import Wrapper from '../components/Wrapper';
-import * as Data from '../services/data';
+import API from '../services/api';
 
-const pagePage = (props) => {
-  const page = Data.pages.find(page => page.path === props.url.query.path); // eslint-disable-line
-  const markup = { __html: page.body };
+class PagePage extends React.Component {
+  static async getInitialProps({ query }) {
+    const page = await API.pages.findByPath(query.path);
 
-  return (
-    <Wrapper>
-      <Head>
-        <title>{page.title}</title>
-      </Head>
-      <div className="page-body" dangerouslySetInnerHTML={markup} />
-    </Wrapper>
-  );
-};
+    return { page };
+  }
 
-pagePage.propTypes = {
-  url: PropTypes.shape({
-    query: PropTypes.shape({
-      path: PropTypes.string.isRequired,
-    }).isRequired,
+  render() {
+    const markup = { __html: this.props.page.body };
+
+    return (
+      <Wrapper>
+        <Head>
+          <title>{this.props.page.title} - poohitan</title>
+        </Head>
+        <div className="page-body" dangerouslySetInnerHTML={markup} />
+      </Wrapper>
+    );
+  }
+}
+
+PagePage.propTypes = {
+  page: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    body: PropTypes.string.isRequired,
   }).isRequired,
 };
 
-export default pagePage;
+export default PagePage;

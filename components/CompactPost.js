@@ -14,7 +14,7 @@ const CompactPost = (props) => {
         <h3 className="post-title">
           <Link as={props.path} href={`/post?path=${props.path}`}><a>{props.title}</a></Link>
         </h3>
-        <div className="post-date caption nowrap">{ formatPostDate(props.date) }</div>
+        <div className="post-date caption nowrap">{ formatPostDate(props.publishedAt) }</div>
       </div>
       <div className="post-body">{ shortenedBody }&hellip;</div>
     </article>
@@ -25,7 +25,10 @@ CompactPost.propTypes = {
   title: PropTypes.string.isRequired,
   body: PropTypes.string.isRequired,
   path: PropTypes.string.isRequired,
-  date: PropTypes.instanceOf(Date).isRequired,
+  publishedAt: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.instanceOf(Date),
+  ]).isRequired,
 };
 
 export default CompactPost;

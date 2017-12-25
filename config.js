@@ -1,7 +1,8 @@
 const config = {
   development: {
     port: 7000,
-    host: 'http://localhost:7000',
+    clientURL: 'http://localhost:7000',
+    apiURL: 'http://localhost:3100',
 
     disqus: {
       shortname: 'localhost-z4zziksnph',
@@ -10,7 +11,8 @@ const config = {
 
   production: {
     port: 4000,
-    host: 'https://new.poohitan.com',
+    clientURL: 'https://new.poohitan.com',
+    apiURL: 'https://api.poohitan.com',
 
     disqus: {
       shortname: 'poohitan',

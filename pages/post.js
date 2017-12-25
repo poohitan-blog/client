@@ -1,31 +1,35 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
+import API from '../services/api';
 import Wrapper from '../components/Wrapper';
 import Post from '../components/Post';
 import CommentForm from '../components/post/CommentForm';
-import * as Data from '../services/data';
 
-const postPage = (props) => {
-  const post = Data.posts.find(post => post.path === props.url.query.path); // eslint-disable-line
+class PostPage extends React.Component {
+  static async getInitialProps({ query }) {
+    const post = await API.posts.findByPath(query.path);
 
-  return (
-    <Wrapper>
-      <Head>
-        <title>{post.title}</title>
-      </Head>
-      <Post {...post} />
-      <CommentForm {...post} />
-    </Wrapper>
-  );
-};
+    return { post };
+  }
 
-postPage.propTypes = {
-  url: PropTypes.shape({
-    query: PropTypes.shape({
-      path: PropTypes.string.isRequired,
-    }).isRequired,
+  render() {
+    return (
+      <Wrapper>
+        <Head>
+          <title>{this.props.post.title} - poohitan</title>
+        </Head>
+        <Post {...this.props.post} />
+        <CommentForm {...this.props.post} />
+      </Wrapper>
+    );
+  }
+}
+
+PostPage.propTypes = {
+  post: PropTypes.shape({
+    title: PropTypes.string.isRequired,
   }).isRequired,
 };
 
-export default postPage;
+export default PostPage;

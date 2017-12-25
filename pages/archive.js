@@ -1,26 +1,41 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Head from 'next/head';
 import Wrapper from '../components/Wrapper';
 import CompactPost from '../components/CompactPost';
-import * as Data from '../services/data';
+import API from '../services/api';
 
-const postListMarkup = Data.posts.map((post, index) => {
-  if (index) {
-    return (<div key={post.id}><hr /><CompactPost {...post} /></div>);
+class ArchivePage extends React.Component {
+  static async getInitialProps() {
+    const posts = await API.posts.findAll();
+
+    return { posts };
   }
 
-  return <CompactPost {...post} key={post.id} />;
-});
+  render() {
+    const postsMarkup = this.props.posts.map((post, index) => {
+      if (index) {
+        return (<div key={post.id}><hr /><CompactPost {...post} /></div>);
+      }
 
-const archivePage = () => (
-  <Wrapper>
-    <Head>
-      <title>Архів</title>
-    </Head>
-    <div className="page-body">
-      {postListMarkup}
-    </div>
-  </Wrapper>
-);
+      return <CompactPost {...post} key={post.id} />;
+    });
 
-export default archivePage;
+    return (
+      <Wrapper>
+        <Head>
+          <title>Архів</title>
+        </Head>
+        <div className="page-body">
+          { postsMarkup }
+        </div>
+      </Wrapper>
+    );
+  }
+}
+
+ArchivePage.propTypes = {
+  posts: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
+
+export default ArchivePage;

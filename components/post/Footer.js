@@ -14,7 +14,7 @@ const Footer = props => (
     </div>
     <div className="post-footer-date layout-row layout-align-start-center flex-offset-5">
       <CalendarIcon className="post-footer-icon post-footer-date-icon" />
-      <span className="flex-offset-5 nowrap">{ Grammar.formatPostDate(props.date) }</span>
+      <span className="flex-offset-5 nowrap">{ Grammar.formatPostDate(props.publishedAt) }</span>
     </div>
     <div className="post-footer-tags" />
     <div className="post-footer-social" />
@@ -23,7 +23,10 @@ const Footer = props => (
 
 Footer.propTypes = {
   commentsCount: PropTypes.number,
-  date: PropTypes.instanceOf(Date).isRequired,
+  publishedAt: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.instanceOf(Date),
+  ]).isRequired,
 };
 
 Footer.defaultProps = {
