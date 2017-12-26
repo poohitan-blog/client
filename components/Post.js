@@ -10,7 +10,7 @@ const Post = (props) => {
 
   return (
     <article className="post post-complete">
-      <h1 className="post-title"><Link as={props.path} href={`/post?path=${props.path}`}><a>{props.title}</a></Link></h1>
+      <h1 className="post-title"><Link as={`/p/${props.path}`} href={`/post?path=${props.path}`}><a>{props.title}</a></Link></h1>
       <div className="post-body">{body}</div>
       <Footer {...props} />
     </article>

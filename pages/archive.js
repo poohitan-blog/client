@@ -24,7 +24,7 @@ class ArchivePage extends React.Component {
     return (
       <Wrapper>
         <Head>
-          <title>Архів</title>
+          <title>Архів - poohitan</title>
         </Head>
         <div className="page-body">
           { postsMarkup }

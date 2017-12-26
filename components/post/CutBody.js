@@ -17,7 +17,7 @@ const CutBody = (props) => {
   return (
     <div>
       <div dangerouslySetInnerHTML={markup} />
-      <Link as={props.path} href={`/post?path=${props.path}`}><a>{READ_MORE}</a></Link>
+      <Link as={`/p/${props.path}`} href={`/post?path=${props.path}`}><a>{READ_MORE}</a></Link>
     </div>
   );
 };
