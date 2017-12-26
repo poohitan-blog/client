@@ -6,8 +6,6 @@ const dev = config.environment !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
 
-const pageNames = ['about', 'archive', 'trash'];
-
 app.prepare()
   .then(() => {
     const server = express();
@@ -16,17 +14,23 @@ app.prepare()
       app.render(req, res, '/archive');
     });
 
-    server.get('/:path', (req, res) => {
-      let actualPage;
+    server.get('/trash', (req, res) => {
+      app.render(req, res, '/trash');
+    });
 
-      if (pageNames.includes(req.params.path)) {
-        actualPage = '/page';
-      } else {
-        actualPage = '/post';
-      }
+    server.get('/trash/:trash_post_id', (req, res) => {
+      const queryParams = { id: req.params.trash_post_id };
+      app.render(req, res, '/trash', queryParams);
+    });
 
+    server.get('/p/:path', (req, res) => {
       const queryParams = { path: req.params.path };
-      app.render(req, res, actualPage, queryParams);
+      app.render(req, res, '/post', queryParams);
+    });
+
+    server.get('/:path', (req, res) => {
+      const queryParams = { path: req.params.path };
+      app.render(req, res, '/page', queryParams);
     });
 
     server.get('*', (req, res) => handle(req, res));
