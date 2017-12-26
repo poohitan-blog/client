@@ -1,5 +1,6 @@
 import fetch from 'isomorphic-unfetch';
 import pluralize from 'pluralize';
+import queryString from 'query-string';
 
 import config from '../config';
 import deserialize from '../utils/deserialize';
@@ -20,9 +21,19 @@ async function findAll({ model }) {
   return deserialized;
 }
 
-async function findBy({ model, param }) {
+async function findBy({ model, param, queryParams }) {
   const modelName = pluralize(model.name);
-  const response = await fetch(`${API_URL}/${modelName}/${param}`);
+  let url = `${API_URL}/${modelName}`;
+
+  if (param) {
+    url += `/${param}`;
+  }
+
+  if (queryParams) {
+    url += `?${queryString.stringify(queryParams)}`;
+  }
+
+  const response = await fetch(url);
   const json = await response.json();
   const deserialized = deserialize(json, model.schema);
 
@@ -42,6 +53,7 @@ const pages = {
 const trashPosts = {
   findAll: () => findAll({ model: TrashPost }),
   findById: id => findBy({ model: TrashPost, param: id }),
+  findByDate: date => findBy({ model: TrashPost, queryParams: { createdAt: date.toISOString() } }),
 };
 
 const users = {

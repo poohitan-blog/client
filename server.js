@@ -15,7 +15,7 @@ app.prepare()
     });
 
     server.get('/trash', (req, res) => {
-      app.render(req, res, '/trash');
+      app.render(req, res, '/trash', req.query);
     });
 
     server.get('/trash/:trash_post_id', (req, res) => {
