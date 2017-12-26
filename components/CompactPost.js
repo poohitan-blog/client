@@ -12,7 +12,7 @@ const CompactPost = (props) => {
     <article className="post post-compact">
       <div className="layout-row layout-align-space-between-start">
         <h3 className="post-title">
-          <Link as={`/p/${props.path}`} href={`/post?path=${props.path}`}><a>{props.title}</a></Link>
+          <Link as={`/p/${props.path}`} href={`/post?path=${props.path}`} prefetch><a>{props.title}</a></Link>
         </h3>
         <div className="post-date caption nowrap">{ formatPostDate(props.publishedAt) }</div>
       </div>

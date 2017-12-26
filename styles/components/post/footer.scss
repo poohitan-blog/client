@@ -5,6 +5,14 @@
   line-height: 1.55em;
   padding: 0.28em 1em;
 
+  .post-footer-item {
+    margin-left: 1em;
+
+    &:first-child {
+      margin-left: 0;
+    }
+  }
+
   .post-footer-icon {
     fill: $dark-grey;
   }

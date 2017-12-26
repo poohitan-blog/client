@@ -1,10 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Router from 'next/router';
+import NProgress from 'nprogress';
 import Head from 'next/head';
 import Header from './Header';
 import Content from './Content';
 import styles from '../styles/base.scss';
 import random from '../helpers/random';
+
+NProgress.configure({ showSpinner: false });
+Router.onRouteChangeStart = () => NProgress.start();
+Router.onRouteChangeComplete = () => NProgress.done();
+Router.onRouteChangeError = () => NProgress.done();
 
 const LUCKY_NUMBER = { min: 1, max: 10 };
 

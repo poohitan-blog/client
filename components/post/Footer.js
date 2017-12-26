@@ -16,18 +16,18 @@ const Footer = (props) => {
 
   return (
     <div className="post-footer layout-row caption">
-      <div className="post-footer-comments layout-row layout-align-start-center">
+      <div className="post-footer-item post-footer-comments layout-row layout-align-start-center">
         <CommentIcon className="post-footer-icon post-footer-comments-icon" />
         <span className="flex-offset-5 nowrap">
           { Grammar.describeCommentsCount(props.commentsCount) }
         </span>
       </div>
-      <div className="post-footer-date layout-row layout-align-start-center flex-offset-5">
+      <div className="post-footer-item post-footer-date layout-row layout-align-start-center">
         <CalendarIcon className="post-footer-icon post-footer-date-icon" />
         <span className="flex-offset-5 nowrap">{ Grammar.formatPostDate(props.publishedAt) }</span>
       </div>
-      <div className="post-footer-tags nowrap flex-offset-5">Теґи: { tags }</div>
-      <div className="post-footer-social" />
+      <div className="post-footer-item post-footer-tags nowrap">Теґи: { tags }</div>
+      <div className="post-footer-item post-footer-social" />
     </div>
   );
 };
