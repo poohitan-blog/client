@@ -35,6 +35,11 @@ async function findBy({ model, param, queryParams }) {
 
   const response = await fetch(url);
   const json = await response.json();
+
+  if (!response.ok) {
+    throw json;
+  }
+
   const deserialized = deserialize(json, model.schema);
 
   return deserialized;
@@ -43,6 +48,7 @@ async function findBy({ model, param, queryParams }) {
 const posts = {
   findAll: () => findAll({ model: Post }),
   findByPath: path => findBy({ model: Post, param: path }),
+  findByTag: tag => findBy({ model: Post, queryParams: { tag } }),
 };
 
 const pages = {

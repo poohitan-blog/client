@@ -14,6 +14,10 @@ app.prepare()
       app.render(req, res, '/archive');
     });
 
+    server.get('/tag/:tag_name', (req, res) => {
+      app.render(req, res, '/tag', { tag: req.params.tag_name });
+    });
+
     server.get('/trash', (req, res) => {
       app.render(req, res, '/trash', req.query);
     });

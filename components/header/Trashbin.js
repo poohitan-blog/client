@@ -1,42 +1,74 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import TrashbinClosedIcon from '../../static/icons/trashbin.svg';
-import TrashbinOpenIcon from '../../static/icons/trashbin-open.svg';
+import TrashbinSemiOpenIcon from '../../static/icons/trashbin-semi-open.svg';
+import TrashbinFullyOpenIcon from '../../static/icons/trashbin-fully-open.svg';
 
-export default class Trashbin extends React.Component {
+class Trashbin extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      open: false,
+      state: props.state || Trashbin.STATES.CLOSED,
     };
 
-    this.open = this.open.bind(this);
+    this.semiOpen = this.semiOpen.bind(this);
     this.close = this.close.bind(this);
   }
 
   getTrashbinIcon() {
-    return this.state.open
-      ? <TrashbinOpenIcon className="trashbin-icon" />
-      : <TrashbinClosedIcon className="trashbin-icon" />;
+    if (this.state.state === 'fully-open') {
+      return <TrashbinFullyOpenIcon className="trashbin-icon" />;
+    }
+
+    if (this.state.state === 'semi-open') {
+      return <TrashbinSemiOpenIcon className="trashbin-icon" />;
+    }
+
+    return <TrashbinClosedIcon className="trashbin-icon" />;
   }
 
-  open() {
+  semiOpen() {
+    if (this.state.state === Trashbin.STATES.FULLY_OPEN) {
+      return;
+    }
+
     this.setState({
-      open: true,
+      state: Trashbin.STATES.SEMI_OPEN,
     });
   }
 
   close() {
+    if (this.state.state === Trashbin.STATES.FULLY_OPEN) {
+      return;
+    }
+
     this.setState({
-      open: false,
+      state: Trashbin.STATES.CLOSED,
     });
   }
 
   render() {
     return (
-      <div className="header-trashbin" onMouseEnter={this.open} onMouseLeave={this.close}>
+      <div className="header-trashbin" onMouseEnter={this.semiOpen} onMouseLeave={this.close}>
         { this.getTrashbinIcon() }
       </div>
     );
   }
 }
+
+Trashbin.STATES = {
+  CLOSED: 'closed',
+  SEMI_OPEN: 'semi-open',
+  FULLY_OPEN: 'fully-open',
+};
+
+Trashbin.propTypes = {
+  state: PropTypes.string,
+};
+
+Trashbin.defaultProps = {
+  state: Trashbin.STATES.CLOSED,
+};
+
+export default Trashbin;

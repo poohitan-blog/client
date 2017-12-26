@@ -28,7 +28,7 @@ class Wrapper extends React.Component {
           <style>{styles}</style>
         </Head>
 
-        <Header />
+        <Header trashBinState={this.props.trashBinState} />
 
         <Content>
           {this.props.children}
@@ -41,8 +41,10 @@ class Wrapper extends React.Component {
     );
   }
 }
+
 Wrapper.propTypes = {
   children: PropTypes.node.isRequired,
+  trashBinState: PropTypes.string.isRequired,
 };
 
 export default Wrapper;
