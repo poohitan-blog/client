@@ -5,11 +5,14 @@ import Wrapper from '../components/Wrapper';
 import CompactPost from '../components/CompactPost';
 import API from '../services/api';
 
-class ArchivePage extends React.Component {
-  static async getInitialProps() {
-    const posts = await API.posts.findAll();
+const POSTS_PER_PAGE = 50;
 
-    return { posts };
+class ArchivePage extends React.Component {
+  static async getInitialProps({ query }) {
+    const { page = 1 } = query;
+    const { docs, meta } = await API.posts.find({ page, limit: POSTS_PER_PAGE });
+
+    return { posts: docs, meta };
   }
 
   render() {

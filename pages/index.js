@@ -3,17 +3,21 @@ import PropTypes from 'prop-types';
 import Head from 'next/head';
 import API from '../services/api';
 import Wrapper from '../components/Wrapper';
+
 import Post from '../components/Post';
 
+const POSTS_PER_PAGE = 10;
+
 class IndexPage extends React.Component {
-  static async getInitialProps() {
-    const posts = await API.posts.findAll();
+  static async getInitialProps({ query }) {
+    const { page = 1 } = query;
+    const { docs, meta } = await API.posts.find({ page, limit: POSTS_PER_PAGE });
     const commentsCountByPostPath = await API.posts.fetchCommentsCount();
-    const postsWithCommentsCount = posts.map(post => Object.assign({
+    const posts = docs.map(post => Object.assign({
       commentsCount: commentsCountByPostPath[post.path],
     }, post));
 
-    return { posts: postsWithCommentsCount };
+    return { posts, meta };
   }
 
   render() {

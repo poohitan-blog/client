@@ -11,7 +11,7 @@ app.prepare()
     const server = express();
 
     server.get('/archive', (req, res) => {
-      app.render(req, res, '/archive');
+      app.render(req, res, '/archive', req.query);
     });
 
     server.get('/tag/:tag_name', (req, res) => {

@@ -11,18 +11,22 @@ import API from '../services/api';
 class TrashPage extends React.Component {
   static async getInitialProps({ query }) {
     try {
-      let posts = [];
-
       if (query.id) {
-        posts = [await API.trashPosts.findById(query.id)];
-      } else if (query.permalink) { // keeps compatibility with old version of links
-        const date = moment.utc(query.permalink, 'YYYYMMDD_HHmmss').toDate();
-        posts = await API.trashPosts.findByDate(date);
-      } else {
-        posts = await API.trashPosts.findAll();
+        const posts = [await API.trashPosts.findOne(query.id)];
+
+        return { posts };
       }
 
-      return { posts };
+      if (query.permalink) { // keeps compatibility with old version of links
+        const date = moment.utc(query.permalink, 'YYYYMMDD_HHmmss').toISOString();
+        const { docs } = await API.trashPosts.find({ createdAt: date });
+
+        return { posts: docs };
+      }
+
+      const { docs, meta } = await API.trashPosts.find();
+
+      return { posts: docs, meta };
     } catch (error) {
       return { error };
     }

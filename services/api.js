@@ -13,26 +13,24 @@ import User from '../models/user';
 
 const API_URL = config.current.apiURL;
 
-async function findAll({ model }) {
-  const modelName = pluralize(model.name);
-  const response = await fetch(`${API_URL}/${modelName}`);
-  const json = await response.json();
-  const deserialized = deserialize(json, model.schema);
-
-  return deserialized;
-}
-
-async function findBy({ model, param, queryParams }) {
+async function find({ model, queryParams }) {
   const modelName = pluralize(model.name);
   let url = `${API_URL}/${modelName}`;
-
-  if (param) {
-    url += `/${param}`;
-  }
 
   if (queryParams) {
     url += `?${queryString.stringify(queryParams)}`;
   }
+
+  const response = await fetch(url);
+  const { docs, meta } = await response.json();
+  const deserialized = deserialize(docs, model.schema);
+
+  return { docs: deserialized, meta };
+}
+
+async function findOne({ model, param }) {
+  const modelName = pluralize(model.name);
+  const url = `${API_URL}/${modelName}/${param}`;
 
   const response = await fetch(url);
   const json = await response.json();
@@ -47,26 +45,24 @@ async function findBy({ model, param, queryParams }) {
 }
 
 const posts = {
-  findAll: () => findAll({ model: Post }),
-  findByPath: path => findBy({ model: Post, param: path }),
-  findByTag: tag => findBy({ model: Post, queryParams: { tag } }),
+  find: queryParams => find({ model: Post, queryParams }),
+  findOne: path => findOne({ model: Post, param: path }),
   fetchCommentsCount,
 };
 
 const pages = {
-  findAll: () => findAll({ model: Page }),
-  findByPath: path => findBy({ model: Page, param: path }),
+  find: () => find({ model: Page }),
+  findOne: path => findOne({ model: Page, param: path }),
 };
 
 const trashPosts = {
-  findAll: () => findAll({ model: TrashPost }),
-  findById: id => findBy({ model: TrashPost, param: id }),
-  findByDate: date => findBy({ model: TrashPost, queryParams: { createdAt: date.toISOString() } }),
+  find: queryParams => find({ model: TrashPost, queryParams }),
+  findOne: id => findOne({ model: TrashPost, param: id }),
 };
 
 const users = {
-  findAll: () => findAll({ model: User }),
-  findById: id => findBy({ model: User, param: id }),
+  find: queryParams => find({ model: User, queryParams }),
+  findOne: id => findOne({ model: User, param: id }),
 };
 
 const API = {

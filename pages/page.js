@@ -8,7 +8,7 @@ import API from '../services/api';
 class PagePage extends React.Component {
   static async getInitialProps({ query }) {
     try {
-      const page = await API.pages.findByPath(query.path);
+      const page = await API.pages.findOne(query.path);
 
       return { page };
     } catch (error) {

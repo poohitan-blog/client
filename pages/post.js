@@ -11,7 +11,7 @@ import * as Text from '../services/text';
 class PostPage extends React.Component {
   static async getInitialProps({ query }) {
     try {
-      const post = await API.posts.findByPath(query.path);
+      const post = await API.posts.findOne(query.path);
       const images = Text.getImagesFromHTML(post.body);
       const commentsCountByPostPath = await API.posts.fetchCommentsCount();
       const postWithCommentsCount = Object.assign({ commentsCount: commentsCountByPostPath[post.path] }, post);

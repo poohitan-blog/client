@@ -8,7 +8,7 @@ import API from '../services/api';
 class TagPage extends React.Component {
   static async getInitialProps({ query }) {
     const { tag } = query;
-    const posts = await API.posts.findByTag(tag);
+    const posts = await API.posts.find({ tag });
 
     return { posts, tag };
   }
