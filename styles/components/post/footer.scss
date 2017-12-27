@@ -7,10 +7,15 @@
   overflow: hidden;
 
   .post-footer-item {
-    margin-left: 1em;
+    margin-left: 0.5em;
+    margin-right: 0.5em;
 
     &:first-child {
       margin-left: 0;
+    }
+
+    &:last-child {
+      margin-right: 0;
     }
   }
 
@@ -20,9 +25,11 @@
 
   .post-footer-comments-icon {
     width: 1.2em;
+    min-width: 1.2em;
   }
 
   .post-footer-date-icon {
     width: 1.1em;
+    min-width: 1.1em;
   }
 }

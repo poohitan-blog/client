@@ -1,5 +1,31 @@
 @import './variables';
 
+@font-face {
+  font-family: 'Movavi Grotesque';
+  src: url('/static/fonts/movavi-grotesque.ttf');
+}
+
+@font-face {
+  font-family: 'PT Sans';
+  src: url('/static/fonts/pt-sans-reqular.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'PT Sans';
+  src: url('/static/fonts/pt-sans-bold.ttf');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'PT Sans';
+  src: url('/static/fonts/pt-sans-italic.ttf');
+  font-weight: normal;
+  font-style: italic;
+}
+
 body {
   background: $smoke-white;
   font-family: $main-font-family;
@@ -55,7 +81,7 @@ hr {
 }
 
 blockquote {
-  color: #666666;
+  color: $dark-grey;
   margin: 0 20px;
   padding: 2px 5px 5px 10px;
   border-left: 3px solid $grey;

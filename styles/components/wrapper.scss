@@ -31,7 +31,7 @@ $shadow-height: 6px;
   }
 
   .raspberries {
-    background-image: url(/static/images/raspberry.gif);
+    background-image: url('/static/images/raspberry.gif');
     position: fixed;
     width: 100vw;
     height: 100vh;

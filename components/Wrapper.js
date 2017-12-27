@@ -3,9 +3,7 @@ import PropTypes from 'prop-types';
 import Router from 'next/router';
 import NProgress from 'nprogress';
 import Head from 'next/head';
-
 import random from '../helpers/random';
-import styles from '../styles/base.scss';
 
 NProgress.configure({ showSpinner: false });
 Router.onRouteChangeStart = () => NProgress.start();
@@ -30,10 +28,6 @@ class Wrapper extends React.Component {
 
     return (
       <div className="wrapper">
-        <Head>
-          <style>{styles}</style>
-        </Head>
-
         {this.props.children}
 
         <div className="wrapper-shadow" />

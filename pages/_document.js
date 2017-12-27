@@ -27,7 +27,7 @@ export default class MyDocument extends Document {
           <meta name="viewport" content="initial-scale=1.0, width=device-width" key="viewport" />
           <meta httpEquiv="content-type" content="text/html; charset=utf-8" />
           <link rel="icon" href="/static/icons/favicon.ico" type="image/x-icon" />
-          <style>{styles}</style>
+          <style dangerouslySetInnerHTML={{ __html: styles }} />
         </Head>
         <body>
           <Main />
