@@ -3,10 +3,12 @@ import PropTypes from 'prop-types';
 import Router from 'next/router';
 import NProgress from 'nprogress';
 import Head from 'next/head';
+
 import Header from './Header';
 import Content from './Content';
-import styles from '../styles/base.scss';
+import Trashbin from '../components/header/Trashbin';
 import random from '../helpers/random';
+import styles from '../styles/base.scss';
 
 NProgress.configure({ showSpinner: false });
 Router.onRouteChangeStart = () => NProgress.start();
@@ -51,7 +53,11 @@ class Wrapper extends React.Component {
 
 Wrapper.propTypes = {
   children: PropTypes.node.isRequired,
-  trashBinState: PropTypes.string.isRequired,
+  trashBinState: PropTypes.string,
+};
+
+Wrapper.defaultProps = {
+  trashBinState: Trashbin.STATES.CLOSED,
 };
 
 export default Wrapper;
