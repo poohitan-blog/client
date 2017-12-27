@@ -17,6 +17,8 @@
 @import './components/wrapper';
 @import './components/content';
 @import './components/header';
+@import './components/footer';
+
 @import './components/header/trashbin';
 
 @import './components/post';
@@ -24,3 +26,5 @@
 @import './components/post/comment-form';
 
 @import './components/trash-post';
+
+@import './components/search-box';

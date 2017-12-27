@@ -1,0 +1,36 @@
+@import '../variables';
+
+$icon-size: 1em;
+$icon-margin: 0.5em;
+
+.search-box {
+  border: 1px solid $light-grey;
+  box-sizing: border-box;
+  padding: 1px 4px;
+  width: 100%;
+
+  .search-box-icon {
+    fill: $light-grey;
+    width: $icon-size;
+    margin-right: $icon-margin;
+  }
+
+  .search-box-input {
+    color: $light-grey;
+    border: none;
+    font-family: $main-font-family;
+    width: calc(100% - #{$icon-size} - #{$icon-margin});
+  }
+
+  &.search-box-focused {
+    border-color: $orange;
+
+    .search-box-input{
+      color: $orange;
+    }
+
+    .search-box-icon {
+      fill: $orange;
+    }
+  }
+}
