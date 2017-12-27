@@ -1,11 +1,3 @@
-@import url(https://fonts.googleapis.com/css?family=PT+Sans&subset=cyrillic-ext,latin-ext);
-@import url(https://fonts.googleapis.com/css?family=Open+Sans:800&subset=cyrillic-ext,latin-ext);
-
-@font-face {
-  font-family: MovaviGrotesque;
-  src: url('/static/fonts/MovaviGrotesque.ttf');
-}
-
 @import './variables';
 
 body {
@@ -71,6 +63,7 @@ blockquote {
 
 svg {
   width: auto;
+  height: auto;
 }
 
 .caption {
