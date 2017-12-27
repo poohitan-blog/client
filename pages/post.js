@@ -3,10 +3,14 @@ import PropTypes from 'prop-types';
 import Head from 'next/head';
 import Error from './_error';
 import API from '../services/api';
+import * as Text from '../services/text';
+
 import Wrapper from '../components/Wrapper';
+import Header from '../components/Header';
+import Content from '../components/Content';
+import Footer from '../components/Footer';
 import Post from '../components/Post';
 import CommentForm from '../components/post/CommentForm';
-import * as Text from '../services/text';
 
 class PostPage extends React.Component {
   static async getInitialProps({ query }) {
@@ -32,8 +36,12 @@ class PostPage extends React.Component {
         <Head>
           <title>{this.props.post.title} - poohitan</title>
         </Head>
-        <Post {...this.props.post} />
-        <CommentForm {...this.props.post} />
+        <Header />
+        <Content>
+          <Post {...this.props.post} />
+          <CommentForm {...this.props.post} />
+        </Content>
+        <Footer />
       </Wrapper>
     );
   }

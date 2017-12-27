@@ -2,8 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
 import Error from './_error';
-import Wrapper from '../components/Wrapper';
 import API from '../services/api';
+
+import Wrapper from '../components/Wrapper';
+import Header from '../components/Header';
+import Content from '../components/Content';
+import Footer from '../components/Footer';
 
 class PagePage extends React.Component {
   static async getInitialProps({ query }) {
@@ -28,7 +32,11 @@ class PagePage extends React.Component {
         <Head>
           <title>{this.props.page.title} - poohitan</title>
         </Head>
-        <div className="page-body" dangerouslySetInnerHTML={markup} />
+        <Header />
+        <Content>
+          <div dangerouslySetInnerHTML={markup} />
+        </Content>
+        <Footer />
       </Wrapper>
     );
   }

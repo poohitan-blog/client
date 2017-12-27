@@ -4,9 +4,6 @@ import Router from 'next/router';
 import NProgress from 'nprogress';
 import Head from 'next/head';
 
-import Header from './Header';
-import Content from './Content';
-import Trashbin from '../components/header/Trashbin';
 import random from '../helpers/random';
 import styles from '../styles/base.scss';
 
@@ -37,11 +34,7 @@ class Wrapper extends React.Component {
           <style>{styles}</style>
         </Head>
 
-        <Header trashBinState={this.props.trashBinState} />
-
-        <Content>
-          {this.props.children}
-        </Content>
+        {this.props.children}
 
         <div className="wrapper-shadow" />
 
@@ -53,11 +46,6 @@ class Wrapper extends React.Component {
 
 Wrapper.propTypes = {
   children: PropTypes.node.isRequired,
-  trashBinState: PropTypes.string,
-};
-
-Wrapper.defaultProps = {
-  trashBinState: Trashbin.STATES.CLOSED,
 };
 
 export default Wrapper;

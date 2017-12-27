@@ -2,8 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
 import API from '../services/api';
-import Wrapper from '../components/Wrapper';
 
+import Wrapper from '../components/Wrapper';
+import Header from '../components/Header';
+import Content from '../components/Content';
+import Footer from '../components/Footer';
 import Post from '../components/Post';
 
 const POSTS_PER_PAGE = 10;
@@ -28,7 +31,11 @@ class IndexPage extends React.Component {
         <Head>
           <title>poohitan</title>
         </Head>
-        { postsMarkup }
+        <Header />
+        <Content>
+          { postsMarkup }
+        </Content>
+        <Footer />
       </Wrapper>
     );
   }

@@ -3,10 +3,14 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import Head from 'next/head';
 import Error from './_error';
+import API from '../services/api';
+
 import Wrapper from '../components/Wrapper';
+import Header from '../components/Header';
+import Content from '../components/Content';
+import Footer from '../components/Footer';
 import TrashPost from '../components/TrashPost';
 import Trashbin from '../components/header/Trashbin';
-import API from '../services/api';
 
 class TrashPage extends React.Component {
   static async getInitialProps({ query }) {
@@ -40,14 +44,16 @@ class TrashPage extends React.Component {
     const postsMarkup = this.props.posts.map(post => <TrashPost {...post} key={post.id} />);
 
     return (
-      <Wrapper trashBinState={Trashbin.STATES.FULLY_OPEN}>
+      <Wrapper>
         <Head>
           <title>Смітник - poohitan</title>
         </Head>
-        <div className="page-body">
+        <Header trashBinState={Trashbin.STATES.FULLY_OPEN} />
+        <Content>
           <h1>Смітник</h1>
           { postsMarkup }
-        </div>
+        </Content>
+        <Footer />
       </Wrapper>
     );
   }

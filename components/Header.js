@@ -25,7 +25,11 @@ const Header = props => (
 );
 
 Header.propTypes = {
-  trashBinState: PropTypes.string.isRequired,
+  trashBinState: PropTypes.string,
+};
+
+Header.defaultProps = {
+  trashBinState: Trashbin.STATES.CLOSED,
 };
 
 export default Header;

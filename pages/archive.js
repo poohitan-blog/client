@@ -1,9 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
-import Wrapper from '../components/Wrapper';
-import CompactPost from '../components/CompactPost';
 import API from '../services/api';
+
+import Wrapper from '../components/Wrapper';
+import Header from '../components/Header';
+import Content from '../components/Content';
+import Footer from '../components/Footer';
+import CompactPost from '../components/CompactPost';
 
 const POSTS_PER_PAGE = 50;
 
@@ -16,22 +20,20 @@ class ArchivePage extends React.Component {
   }
 
   render() {
-    const postsMarkup = this.props.posts.map((post, index) => {
-      if (index) {
-        return (<div key={post.id}><hr /><CompactPost {...post} /></div>);
-      }
-
-      return <CompactPost {...post} key={post.id} />;
-    });
+    const postsMarkup = this.props.posts
+      .map(post => <CompactPost {...post} key={post.id} />)
+      .reduce((previousPosts, currentPost) => [previousPosts, <hr />, currentPost]);
 
     return (
       <Wrapper>
         <Head>
           <title>Архів - poohitan</title>
         </Head>
-        <div className="page-body">
+        <Header />
+        <Content>
           { postsMarkup }
-        </div>
+        </Content>
+        <Footer />
       </Wrapper>
     );
   }
