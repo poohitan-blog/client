@@ -13,8 +13,10 @@ class PostPage extends React.Component {
     try {
       const post = await API.posts.findByPath(query.path);
       const images = Text.getImagesFromHTML(post.body);
+      const commentsCountByPostPath = await API.posts.fetchCommentsCount();
+      const postWithCommentsCount = Object.assign({ commentsCount: commentsCountByPostPath[post.path] }, post);
 
-      return { post, images };
+      return { post: postWithCommentsCount, images };
     } catch (error) {
       return { error };
     }

@@ -4,12 +4,12 @@ import ReactDisqusComments from 'react-disqus-comments';
 import config from '../../config';
 
 const CommentForm = props => (
-  <div className="post-comment-form">
+  <div className="post-comment-form" id="comments">
     <ReactDisqusComments
       shortname={config.current.disqus.shortname}
       identifier={props.path}
       title={props.title}
-      url={`${config.current.host}/${props.path}`}
+      url={`${config.current.clientURL}/p/${props.path}`}
     />
   </div>
 );

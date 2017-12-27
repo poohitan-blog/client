@@ -4,6 +4,7 @@ import queryString from 'query-string';
 
 import config from '../config';
 import deserialize from '../utils/deserialize';
+import fetchCommentsCount from '../utils/fetch-comments-count';
 
 import Post from '../models/post';
 import Page from '../models/page';
@@ -49,6 +50,7 @@ const posts = {
   findAll: () => findAll({ model: Post }),
   findByPath: path => findBy({ model: Post, param: path }),
   findByTag: tag => findBy({ model: Post, queryParams: { tag } }),
+  fetchCommentsCount,
 };
 
 const pages = {

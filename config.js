@@ -5,7 +5,8 @@ const config = {
     apiURL: 'http://localhost:3100',
 
     disqus: {
-      shortname: 'localhost-z4zziksnph',
+      shortname: 'new-poohitan',
+      APIKey: 'yMQUyJ8OWzQhQdUQvU9UT1H2xtvaVbevBScMnaXkhkIauYUKjOoQGLL6usjy7Q3b',
     },
   },
 
@@ -15,7 +16,8 @@ const config = {
     apiURL: 'https://api.poohitan.com',
 
     disqus: {
-      shortname: 'poohitan',
+      shortname: 'new-poohitan',
+      APIKey: 'yMQUyJ8OWzQhQdUQvU9UT1H2xtvaVbevBScMnaXkhkIauYUKjOoQGLL6usjy7Q3b',
     },
 
     server: {

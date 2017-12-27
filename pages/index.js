@@ -8,8 +8,12 @@ import Post from '../components/Post';
 class IndexPage extends React.Component {
   static async getInitialProps() {
     const posts = await API.posts.findAll();
+    const commentsCountByPostPath = await API.posts.fetchCommentsCount();
+    const postsWithCommentsCount = posts.map(post => Object.assign({
+      commentsCount: commentsCountByPostPath[post.path],
+    }, post));
 
-    return { posts };
+    return { posts: postsWithCommentsCount };
   }
 
   render() {

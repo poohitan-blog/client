@@ -19,7 +19,9 @@ const Footer = (props) => {
       <div className="post-footer-item post-footer-comments layout-row layout-align-start-center">
         <CommentIcon className="post-footer-icon post-footer-comments-icon" />
         <span className="flex-offset-5 nowrap">
-          { Grammar.describeCommentsCount(props.commentsCount) }
+          <Link as={`/p/${props.path}#comments`} href={{ pathname: '/post', query: { path: props.path }, href: '#comments' }}>
+            <a>{ Grammar.describeCommentsCount(props.commentsCount) }</a>
+          </Link>
         </span>
       </div>
       <div className="post-footer-item post-footer-date layout-row layout-align-start-center">
@@ -33,6 +35,7 @@ const Footer = (props) => {
 };
 
 Footer.propTypes = {
+  path: PropTypes.string.isRequired,
   commentsCount: PropTypes.number,
   publishedAt: PropTypes.oneOfType([
     PropTypes.string,
