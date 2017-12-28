@@ -2,40 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Router from 'next/router';
 import NProgress from 'nprogress';
-import random from '../helpers/random';
 
 NProgress.configure({ showSpinner: false });
 Router.onRouteChangeStart = () => NProgress.start();
 Router.onRouteChangeComplete = () => NProgress.done();
 Router.onRouteChangeError = () => NProgress.done();
 
-const LUCKY_NUMBER = { min: 1, max: 10 };
+const Wrapper = props => (
+  <div className="wrapper">
+    {props.children}
 
-class Wrapper extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      luckyNumber: random(LUCKY_NUMBER),
-      usersNumber: random(LUCKY_NUMBER),
-    };
-  }
-
-  render() {
-    const userWonTheGame = this.state.luckyNumber === this.state.usersNumber;
-    const raspberries = userWonTheGame ? <div className="raspberries" /> : null;
-
-    return (
-      <div className="wrapper">
-        {this.props.children}
-
-        <div className="wrapper-shadow" />
-
-        {raspberries}
-      </div>
-    );
-  }
-}
+    <div className="wrapper-shadow" />
+  </div>
+);
 
 Wrapper.propTypes = {
   children: PropTypes.node.isRequired,

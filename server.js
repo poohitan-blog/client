@@ -1,5 +1,6 @@
 const express = require('express');
 const next = require('next');
+const cookieParser = require('cookie-parser');
 const config = require('./config').current;
 
 const dev = config.environment !== 'production';
@@ -9,6 +10,8 @@ const handle = app.getRequestHandler();
 app.prepare()
   .then(() => {
     const server = express();
+
+    server.use(cookieParser());
 
     server.get('/archive', (req, res) => {
       app.render(req, res, '/archive', req.query);

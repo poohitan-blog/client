@@ -1,9 +1,12 @@
 import React from 'react';
 import Document, { Head, Main, NextScript } from 'next/document';
+import Raspberries from '../services/raspberries';
 import styles from '../styles/main.scss';
 
 export default class MyDocument extends Document {
-  static getInitialProps({ renderPage }) {
+  static getInitialProps({ renderPage, req, res }) {
+    const raspberriesDay = Raspberries.runLottery(req, res);
+
     const {
       html,
       head,
@@ -16,6 +19,7 @@ export default class MyDocument extends Document {
       head,
       errorHtml,
       chunks,
+      raspberriesDay,
     };
   }
 
@@ -29,7 +33,7 @@ export default class MyDocument extends Document {
           <link rel="icon" href="/static/icons/favicon.ico" type="image/x-icon" />
           <style dangerouslySetInnerHTML={{ __html: styles }} />
         </Head>
-        <body>
+        <body className={this.props.raspberriesDay ? 'raspberries' : ''}>
           <Main />
           <NextScript />
         </body>
