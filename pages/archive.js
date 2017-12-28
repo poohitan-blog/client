@@ -21,13 +21,13 @@ class ArchivePage extends React.Component {
 
   render() {
     const postsMarkup = this.props.posts
-      .map(post => <CompactPost {...post} key={post.id} />)
-      .reduce((previousPosts, currentPost) => {
+      .map(post => ({ id: post.id, component: <CompactPost {...post} key={post.id} /> }))
+      .reduce((previousPosts, { id, component }) => {
         if (!previousPosts.length) {
-          return [currentPost];
+          return [component];
         }
 
-        return [...previousPosts, <hr key={`hr${currentPost.id}`} />, currentPost];
+        return [...previousPosts, <hr key={`hr${id}`} />, component];
       }, []);
 
     return (
