@@ -6,9 +6,13 @@
   padding: 0.28em 1em;
   overflow: hidden;
 
+  @media (max-width: 600px) {
+    flex-wrap: wrap;
+  }
+
   .post-footer-item {
-    margin-left: 0.5em;
-    margin-right: 0.5em;
+    margin-left: 0.7em;
+    margin-right: 0.7em;
 
     &:first-child {
       margin-left: 0;

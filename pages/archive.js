@@ -22,7 +22,13 @@ class ArchivePage extends React.Component {
   render() {
     const postsMarkup = this.props.posts
       .map(post => <CompactPost {...post} key={post.id} />)
-      .reduce((previousPosts, currentPost) => [previousPosts, <hr key={`hr${currentPost.id}`} />, currentPost]);
+      .reduce((previousPosts, currentPost) => {
+        if (!previousPosts.length) {
+          return [currentPost];
+        }
+
+        return [...previousPosts, <hr key={`hr${currentPost.id}`} />, currentPost];
+      }, []);
 
     return (
       <Wrapper>
@@ -33,7 +39,7 @@ class ArchivePage extends React.Component {
         <Content>
           { postsMarkup }
         </Content>
-        <Footer />
+        <Footer pagination={this.props.meta} />
       </Wrapper>
     );
   }
@@ -41,6 +47,10 @@ class ArchivePage extends React.Component {
 
 ArchivePage.propTypes = {
   posts: PropTypes.arrayOf(PropTypes.object).isRequired,
+  meta: PropTypes.shape({
+    currentPage: PropTypes.number,
+    totalPages: PropTypes.number,
+  }).isRequired,
 };
 
 export default ArchivePage;

@@ -10,7 +10,7 @@ const TrashPost = (props) => {
   return (
     <div className="trash-post">
       <div dangerouslySetInnerHTML={markup} />
-      <div className="trash-post-footer caption layout-row layout-align-space-between-center">
+      <div className="trash-post-footer smaller layout-row layout-align-space-between-center">
         <span className="nowrap">
           <Link as={`/trash/${props.id}`} href={`/trash?id=${props.id}`}><a>постійне посилання</a></Link>
         </span>

@@ -5,7 +5,7 @@ import Trashbin from './header/Trashbin';
 
 const Header = props => (
   <nav className="header">
-    <ul className="menu layout-gt-xs-row layout-align-gt-xs-center-start layout-column layout-align-start-center">
+    <ul className="menu layout-row layout-wrap layout-align-center-center">
       <li>
         <h1 className="menu-item"><Link href="/" prefetch><a>Головна</a></Link></h1>
       </li>

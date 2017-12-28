@@ -15,7 +15,7 @@ const Footer = (props) => {
     .reduce((previousTags, currentTag) => [previousTags, ', ', currentTag]);
 
   return (
-    <div className="post-footer layout-row layout-wrap layout-align-xs-center-center caption">
+    <div className="post-footer layout-row layout-align-xs-center-center smaller">
       <div className="post-footer-item post-footer-comments layout-row layout-align-start-center">
         <CommentIcon className="post-footer-icon post-footer-comments-icon" />
         <span className="flex-offset-5 nowrap">

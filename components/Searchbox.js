@@ -9,7 +9,6 @@ class Searchbox extends React.Component {
 
     this.state = {
       isFocused: false,
-      placeholder: PLACEHOLDER
     };
 
     this.focus = this.focus.bind(this);
@@ -19,22 +18,26 @@ class Searchbox extends React.Component {
   focus() {
     this.setState({
       isFocused: true,
-      placeholder: '',
     });
   }
 
   blur() {
     this.setState({
       isFocused: false,
-      placeholder: PLACEHOLDER,
     });
   }
 
   render() {
     return (
-      <div className={`search-box ${this.state.isFocused ? "search-box-focused" : ""} caption layout-row layout-align-start-center`}>
+      <div className={`search-box ${this.state.isFocused ? 'search-box-focused' : ''} smaller layout-row layout-align-start-center`}>
         <SearchIcon className="search-box-icon" />
-        <input onFocus={this.focus} onBlur={this.blur} className="search-box-input" type="text" placeholder={this.state.placeholder} />
+        <input
+          onFocus={this.focus}
+          onBlur={this.blur}
+          className="search-box-input"
+          type="text"
+          placeholder={PLACEHOLDER}
+        />
       </div>
     );
   }

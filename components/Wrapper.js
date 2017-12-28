@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Router from 'next/router';
 import NProgress from 'nprogress';
-import Head from 'next/head';
 import random from '../helpers/random';
 
 NProgress.configure({ showSpinner: false });

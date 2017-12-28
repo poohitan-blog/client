@@ -12,6 +12,8 @@ import Footer from '../components/Footer';
 import TrashPost from '../components/TrashPost';
 import Trashbin from '../components/header/Trashbin';
 
+const POSTS_PER_PAGE = 15;
+
 class TrashPage extends React.Component {
   static async getInitialProps({ query }) {
     try {
@@ -28,7 +30,8 @@ class TrashPage extends React.Component {
         return { posts: docs };
       }
 
-      const { docs, meta } = await API.trashPosts.find();
+      const { page = 1 } = query;
+      const { docs, meta } = await API.trashPosts.find({ page, limit: POSTS_PER_PAGE });
 
       return { posts: docs, meta };
     } catch (error) {
@@ -42,6 +45,7 @@ class TrashPage extends React.Component {
     }
 
     const postsMarkup = this.props.posts.map(post => <TrashPost {...post} key={post.id} />);
+    const paginationInfo = { ...this.props.meta, linkTexts: { next: 'Далі', previous: 'Назад' } };
 
     return (
       <Wrapper>
@@ -53,7 +57,7 @@ class TrashPage extends React.Component {
           <h1>Смітник</h1>
           { postsMarkup }
         </Content>
-        <Footer />
+        <Footer pagination={paginationInfo} />
       </Wrapper>
     );
   }
@@ -65,6 +69,11 @@ TrashPage.propTypes = {
   error: PropTypes.shape({
     status: PropTypes.number,
   }),
+
+  meta: PropTypes.shape({
+    currentPage: PropTypes.number,
+    totalPages: PropTypes.number,
+  }).isRequired,
 };
 
 TrashPage.defaultProps = {

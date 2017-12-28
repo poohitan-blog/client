@@ -35,7 +35,7 @@ class IndexPage extends React.Component {
         <Content>
           { postsMarkup }
         </Content>
-        <Footer />
+        <Footer pagination={this.props.meta} />
       </Wrapper>
     );
   }
@@ -43,6 +43,10 @@ class IndexPage extends React.Component {
 
 IndexPage.propTypes = {
   posts: PropTypes.arrayOf(PropTypes.object).isRequired,
+  meta: PropTypes.shape({
+    currentPage: PropTypes.number,
+    totalPages: PropTypes.number,
+  }).isRequired,
 };
 
 export default IndexPage;

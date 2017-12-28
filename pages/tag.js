@@ -9,18 +9,33 @@ import Content from '../components/Content';
 import Footer from '../components/Footer';
 import CompactPost from '../components/CompactPost';
 
+const POSTS_PER_PAGE = 50;
+
 class TagPage extends React.Component {
   static async getInitialProps({ query }) {
-    const { tag } = query;
-    const { docs, meta } = await API.posts.find({ tag });
+    const { tag, page = 1 } = query;
+    const { docs, meta } = await API.posts.find({ tag, page, limit: POSTS_PER_PAGE });
 
     return { posts: docs, meta, tag };
   }
 
   render() {
-    const postsMarkup = this.props.posts
-      .map(post => <CompactPost {...post} key={post.id} />)
-      .reduce((previousPosts, currentPost) => [previousPosts, <hr />, currentPost]);
+    const postsFound = this.props.posts.length;
+    let content;
+
+    if (postsFound) {
+      content = this.props.posts
+        .map(post => <CompactPost {...post} key={post.id} />)
+        .reduce((previousPosts, currentPost) => {
+          if (!previousPosts.length) {
+            return currentPost;
+          }
+
+          return [...previousPosts, <hr key={`hr${currentPost.id}`} />, currentPost];
+        }, []);
+    } else {
+      content = <div>Нічого не знайдено.</div>;
+    }
 
     return (
       <Wrapper>
@@ -30,9 +45,9 @@ class TagPage extends React.Component {
         <Header />
         <Content>
           <h1>Записи з теґом «{this.props.tag}»</h1>
-          { postsMarkup }
+          { content }
         </Content>
-        <Footer />
+        <Footer pagination={this.props.meta} />
       </Wrapper>
     );
   }
@@ -41,6 +56,10 @@ class TagPage extends React.Component {
 TagPage.propTypes = {
   posts: PropTypes.arrayOf(PropTypes.object).isRequired,
   tag: PropTypes.string.isRequired,
+  meta: PropTypes.shape({
+    currentPage: PropTypes.number,
+    totalPages: PropTypes.number,
+  }).isRequired,
 };
 
 export default TagPage;

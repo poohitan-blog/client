@@ -1,4 +1,19 @@
 @import '../variables';
 
 .footer {
+  margin-top: 1em;
+
+  .footer-pagination > a {
+    margin-left: 1em;
+
+    &:first-child {
+      margin-left: 0;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .footer-pagination {
+      margin-bottom: 1em;
+    }
+  }
 }
