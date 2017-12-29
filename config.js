@@ -28,7 +28,7 @@ const config = {
 
     git: {
       repo: 'git@github.com:poohitan-blog/client.git',
-      branch: 'production',
+      branch: 'stable',
     },
 
     pm2: {

@@ -25,7 +25,7 @@ class PagePage extends React.Component {
       return <Error statusCode={this.props.error.status} />;
     }
 
-    const markup = { __html: this.props.page.body };
+    const title = this.props.page.title ? <h1>{this.props.page.title}</h1> : null;
 
     return (
       <Wrapper>
@@ -34,7 +34,8 @@ class PagePage extends React.Component {
         </Head>
         <Header />
         <Content>
-          <div dangerouslySetInnerHTML={markup} />
+          {title}
+          <div dangerouslySetInnerHTML={{ __html: this.props.page.body }} />
         </Content>
         <Footer />
       </Wrapper>

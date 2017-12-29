@@ -22,6 +22,10 @@
 .post.post-compact {
   margin: 1em 0;
 
+  .post-title {
+    margin-top: 0;
+  }
+
   .post-date {
     color: $grey;
     margin-left: 1em;

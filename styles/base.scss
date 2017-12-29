@@ -43,12 +43,12 @@ h1 {
   color: $dark-grey;
   font-size: 1.7em;
   margin: 1.12em 0 0.4em 0;
-  line-height: 1em;
+  line-height: 1.1em;
 }
 
 h3 {
-  margin-top: 0;
-  margin-bottom: 3pt;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
 }
 
 img {
@@ -102,6 +102,14 @@ svg {
 
 .nowrap {
   white-space: nowrap;
+}
+
+.fatty {
+  padding: 2em;
+}
+
+.text-center {
+  text-align: center;
 }
 
 .raspberries {

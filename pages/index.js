@@ -20,11 +20,11 @@ class IndexPage extends React.Component {
       commentsCount: commentsCountByPostPath[post.path],
     }, post));
 
-    return { posts, meta };
+    return { posts, meta, query };
   }
 
   render() {
-    const postsMarkup = this.props.posts.map(post => <Post {...post} cut key={post.id} />);
+    const content = this.props.posts.map(post => <Post {...post} cut key={post.id} />);
 
     return (
       <Wrapper>
@@ -33,9 +33,9 @@ class IndexPage extends React.Component {
         </Head>
         <Header />
         <Content>
-          { postsMarkup }
+          { content }
         </Content>
-        <Footer pagination={this.props.meta} />
+        <Footer pagination={this.props.meta} query={this.props.query} />
       </Wrapper>
     );
   }
@@ -43,10 +43,17 @@ class IndexPage extends React.Component {
 
 IndexPage.propTypes = {
   posts: PropTypes.arrayOf(PropTypes.object).isRequired,
+
   meta: PropTypes.shape({
     currentPage: PropTypes.number,
     totalPages: PropTypes.number,
   }).isRequired,
+
+  query: PropTypes.shape({}),
+};
+
+IndexPage.defaultProps = {
+  query: {},
 };
 
 export default IndexPage;

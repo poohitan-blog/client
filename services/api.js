@@ -44,6 +44,26 @@ async function findOne({ model, param }) {
   return deserialized;
 }
 
+async function search(queryParams) {
+  const url = `${API_URL}/search?${queryString.stringify(queryParams)}`;
+  const response = await fetch(url);
+  const { docs, meta } = await response.json();
+
+  const modelsBySearchResultType = {
+    post: Post,
+    page: Page,
+    trashPost: TrashPost,
+  };
+
+  const deserialized = docs.map((doc) => {
+    const searchResultModel = modelsBySearchResultType[doc.searchResultType];
+
+    return deserialize(doc, searchResultModel.schema);
+  });
+
+  return { docs: deserialized, meta };
+}
+
 const posts = {
   find: queryParams => find({ model: Post, queryParams }),
   findOne: path => findOne({ model: Post, param: path }),
@@ -70,6 +90,7 @@ const API = {
   pages,
   trashPosts,
   users,
+  search,
 };
 
 export default API;

@@ -9,18 +9,18 @@ import Content from '../components/Content';
 import Footer from '../components/Footer';
 import CompactPost from '../components/CompactPost';
 
-const POSTS_PER_PAGE = 50;
+const POSTS_PER_PAGE = 30;
 
 class ArchivePage extends React.Component {
   static async getInitialProps({ query }) {
     const { page = 1 } = query;
     const { docs, meta } = await API.posts.find({ page, limit: POSTS_PER_PAGE });
 
-    return { posts: docs, meta };
+    return { posts: docs, meta, query };
   }
 
   render() {
-    const postsMarkup = this.props.posts
+    const content = this.props.posts
       .map(post => ({ id: post.id, component: <CompactPost {...post} key={post.id} /> }))
       .reduce((previousPosts, { id, component }) => {
         if (!previousPosts.length) {
@@ -37,9 +37,9 @@ class ArchivePage extends React.Component {
         </Head>
         <Header />
         <Content>
-          { postsMarkup }
+          { content }
         </Content>
-        <Footer pagination={this.props.meta} />
+        <Footer pagination={this.props.meta} query={this.props.query} />
       </Wrapper>
     );
   }
@@ -47,10 +47,17 @@ class ArchivePage extends React.Component {
 
 ArchivePage.propTypes = {
   posts: PropTypes.arrayOf(PropTypes.object).isRequired,
+
   meta: PropTypes.shape({
     currentPage: PropTypes.number,
     totalPages: PropTypes.number,
   }).isRequired,
+
+  query: PropTypes.shape({}),
+};
+
+ArchivePage.defaultProps = {
+  query: {},
 };
 
 export default ArchivePage;

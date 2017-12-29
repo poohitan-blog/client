@@ -16,7 +16,7 @@ const CompactPost = (props) => {
         </h3>
         <div className="post-date smaller nowrap">{ formatPostDate(props.publishedAt) }</div>
       </div>
-      <div className="post-body">{ shortenedBody }&hellip;</div>
+      <div className="post-body">{shortenedBody}</div>
     </article>
   );
 };

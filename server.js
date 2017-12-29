@@ -17,8 +17,8 @@ app.prepare()
       app.render(req, res, '/archive', req.query);
     });
 
-    server.get('/tag/:tag_name', (req, res) => {
-      app.render(req, res, '/tag', { tag: req.params.tag_name });
+    server.get('/search', (req, res) => {
+      app.render(req, res, '/search', req.query);
     });
 
     server.get('/trash', (req, res) => {
@@ -28,6 +28,10 @@ app.prepare()
     server.get('/trash/:trash_post_id', (req, res) => {
       const queryParams = { id: req.params.trash_post_id };
       app.render(req, res, '/trash', queryParams);
+    });
+
+    server.get('/tag/:tag_name', (req, res) => {
+      app.render(req, res, '/tag', { tag: req.params.tag_name });
     });
 
     server.get('/p/:path', (req, res) => {

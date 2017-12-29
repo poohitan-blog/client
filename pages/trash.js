@@ -33,7 +33,7 @@ class TrashPage extends React.Component {
       const { page = 1 } = query;
       const { docs, meta } = await API.trashPosts.find({ page, limit: POSTS_PER_PAGE });
 
-      return { posts: docs, meta };
+      return { posts: docs, meta, query };
     } catch (error) {
       return { error };
     }
@@ -57,7 +57,7 @@ class TrashPage extends React.Component {
           <h1>Смітник</h1>
           { postsMarkup }
         </Content>
-        <Footer pagination={paginationInfo} />
+        <Footer pagination={paginationInfo} query={this.props.query} />
       </Wrapper>
     );
   }
@@ -74,11 +74,14 @@ TrashPage.propTypes = {
     currentPage: PropTypes.number,
     totalPages: PropTypes.number,
   }).isRequired,
+
+  query: PropTypes.shape({}),
 };
 
 TrashPage.defaultProps = {
   posts: [],
   error: null,
+  query: {},
 };
 
 export default TrashPage;
