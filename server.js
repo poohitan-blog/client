@@ -13,6 +13,10 @@ app.prepare()
 
     server.use(cookieParser());
 
+    server.get('/wardrobe', (req, res) => {
+      app.render(req, res, '/login', req.query);
+    });
+
     server.get('/archive', (req, res) => {
       app.render(req, res, '/archive', req.query);
     });

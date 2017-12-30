@@ -3,7 +3,7 @@
 .search-box {
   border: 1px solid $light-grey;
   box-sizing: border-box;
-  padding: 1px 4px;
+  padding: 4px 6px;
   width: 100%;
 
   .search-box-icon {
@@ -16,8 +16,8 @@
   .search-box-input {
     color: $light-grey;
     border: none;
-    font-family: $main-font-family;
     width: 100%;
+    padding: 0;
   }
 
   &.search-box-focused {

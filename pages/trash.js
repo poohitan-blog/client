@@ -4,6 +4,7 @@ import moment from 'moment';
 import Head from 'next/head';
 import Error from './_error';
 import API from '../services/api';
+import { getAllCookies } from '../services/cookies';
 
 import Wrapper from '../components/Wrapper';
 import Header from '../components/Header';
@@ -15,23 +16,23 @@ import Trashbin from '../components/header/Trashbin';
 const POSTS_PER_PAGE = 15;
 
 class TrashPage extends React.Component {
-  static async getInitialProps({ query }) {
+  static async getInitialProps({ query, req }) {
     try {
       if (query.id) {
-        const posts = [await API.trashPosts.findOne(query.id)];
+        const posts = [await API.trashPosts.findOne(query.id, getAllCookies(req))];
 
         return { posts };
       }
 
       if (query.permalink) { // keeps compatibility with old version of links
         const date = moment.utc(query.permalink, 'YYYYMMDD_HHmmss').toISOString();
-        const { docs } = await API.trashPosts.find({ createdAt: date });
+        const { docs } = await API.trashPosts.find({ createdAt: date }, getAllCookies(req));
 
         return { posts: docs };
       }
 
       const { page = 1 } = query;
-      const { docs, meta } = await API.trashPosts.find({ page, limit: POSTS_PER_PAGE });
+      const { docs, meta } = await API.trashPosts.find({ page, limit: POSTS_PER_PAGE }, getAllCookies(req));
 
       return { posts: docs, meta, query };
     } catch (error) {

@@ -12,9 +12,9 @@ function getCookie(req) {
 }
 
 function setCookie(wonLottery, res) {
-  const cookieExpirationDate = moment().endOf('day').toDate();
+  const expires = moment().endOf('day').toDate().toUTCString();
 
-  Cookies.set(COOKIE_NAME, wonLottery, { expires: cookieExpirationDate }, res);
+  Cookies.set(COOKIE_NAME, wonLottery, { expires }, res);
 }
 
 function runLottery(req, res) {

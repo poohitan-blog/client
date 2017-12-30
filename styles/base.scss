@@ -92,6 +92,18 @@ svg {
   height: auto;
 }
 
+input {
+  color: $grey;
+  border: 1px solid $light-grey;
+  font-family: $main-font-family;
+  outline: none;
+  padding: 4px;
+
+  &:focus {
+    border-color: $orange;
+  }
+}
+
 .smaller {
   font-size: 0.75em;
 }

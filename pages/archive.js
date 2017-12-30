@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
 import API from '../services/api';
+import Error from './_error';
+import { getAllCookies } from '../services/cookies';
 
 import Wrapper from '../components/Wrapper';
 import Header from '../components/Header';
@@ -12,14 +14,22 @@ import CompactPost from '../components/CompactPost';
 const POSTS_PER_PAGE = 30;
 
 class ArchivePage extends React.Component {
-  static async getInitialProps({ query }) {
-    const { page = 1 } = query;
-    const { docs, meta } = await API.posts.find({ page, limit: POSTS_PER_PAGE });
+  static async getInitialProps({ query, req }) {
+    try {
+      const { page = 1 } = query;
+      const { docs, meta } = await API.posts.find({ page, limit: POSTS_PER_PAGE }, getAllCookies(req));
 
-    return { posts: docs, meta, query };
+      return { posts: docs, meta, query };
+    } catch (error) {
+      return { error };
+    }
   }
 
   render() {
+    if (this.props.error) {
+      return <Error statusCode={this.props.error.status} />;
+    }
+
     const content = this.props.posts
       .map(post => ({ id: post.id, component: <CompactPost {...post} key={post.id} /> }))
       .reduce((previousPosts, { id, component }) => {
@@ -37,6 +47,7 @@ class ArchivePage extends React.Component {
         </Head>
         <Header />
         <Content>
+          <h1>Архів</h1>
           { content }
         </Content>
         <Footer pagination={this.props.meta} query={this.props.query} />
@@ -54,10 +65,15 @@ ArchivePage.propTypes = {
   }).isRequired,
 
   query: PropTypes.shape({}),
+
+  error: PropTypes.shape({
+    status: PropTypes.number,
+  }),
 };
 
 ArchivePage.defaultProps = {
   query: {},
+  error: null,
 };
 
 export default ArchivePage;

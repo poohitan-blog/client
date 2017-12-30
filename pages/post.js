@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Head from 'next/head';
 import Error from './_error';
 import API from '../services/api';
+import { getAllCookies } from '../services/cookies';
 import * as Text from '../services/text';
 
 import Wrapper from '../components/Wrapper';
@@ -13,9 +14,9 @@ import Post from '../components/Post';
 import CommentForm from '../components/post/CommentForm';
 
 class PostPage extends React.Component {
-  static async getInitialProps({ query }) {
+  static async getInitialProps({ query, req }) {
     try {
-      const post = await API.posts.findOne(query.path);
+      const post = await API.posts.findOne(query.path, getAllCookies(req));
       const images = Text.getImagesFromHTML(post.body);
       const commentsCountByPostPath = await API.posts.fetchCommentsCount();
       const postWithCommentsCount = Object.assign({ commentsCount: commentsCountByPostPath[post.path] }, post);

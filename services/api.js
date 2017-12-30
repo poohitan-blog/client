@@ -1,9 +1,8 @@
-import fetch from 'isomorphic-unfetch';
 import pluralize from 'pluralize';
-import queryString from 'query-string';
 
 import config from '../config';
 import deserialize from '../utils/deserialize';
+import request from '../utils/request';
 import fetchCommentsCount from '../utils/fetch-comments-count';
 
 import Post from '../models/post';
@@ -13,41 +12,47 @@ import User from '../models/user';
 
 const API_URL = config.current.apiURL;
 
-async function find({ model, queryParams }) {
-  const modelName = pluralize(model.name);
-  let url = `${API_URL}/${modelName}`;
+async function find({ model, query }, cookies) {
+  const url = `${API_URL}/${pluralize(model.name)}`;
+  const headers = cookies ? { Cookie: cookies } : {};
+  const { docs, meta } = await request({ url, query, headers });
 
-  if (queryParams) {
-    url += `?${queryString.stringify(queryParams)}`;
-  }
-
-  const response = await fetch(url);
-  const { docs, meta } = await response.json();
-  const deserialized = deserialize(docs, model.schema);
-
-  return { docs: deserialized, meta };
+  return { docs: deserialize(docs, model.schema), meta };
 }
 
-async function findOne({ model, param }) {
-  const modelName = pluralize(model.name);
-  const url = `${API_URL}/${modelName}/${param}`;
+async function findOne({ model, param }, cookies) {
+  const url = `${API_URL}/${pluralize(model.name)}/${param}`;
+  const headers = cookies ? { Cookie: cookies } : {};
+  const doc = await request({ url, headers });
 
-  const response = await fetch(url);
-  const json = await response.json();
-
-  if (!response.ok) {
-    throw json;
-  }
-
-  const deserialized = deserialize(json, model.schema);
-
-  return deserialized;
+  return deserialize(doc, model.schema);
 }
 
-async function search(queryParams) {
-  const url = `${API_URL}/search?${queryString.stringify(queryParams)}`;
-  const response = await fetch(url);
-  const { docs, meta } = await response.json();
+const posts = {
+  find: (query, cookies) => find({ model: Post, query }, cookies),
+  findOne: (path, cookies) => findOne({ model: Post, param: path }, cookies),
+  fetchCommentsCount,
+};
+
+const pages = {
+  find: cookies => find({ model: Page }, cookies),
+  findOne: (path, cookies) => findOne({ model: Page, param: path }, cookies),
+};
+
+const trashPosts = {
+  find: (query, cookies) => find({ model: TrashPost, query }, cookies),
+  findOne: (id, cookies) => findOne({ model: TrashPost, param: id }, cookies),
+};
+
+const users = {
+  find: (query, cookies) => find({ model: User, query }, cookies),
+  findOne: (id, cookies) => findOne({ model: User, param: id }, cookies),
+};
+
+async function search(query, cookies) {
+  const url = `${API_URL}/search`;
+  const headers = cookies ? { Cookie: cookies } : {};
+  const { docs, meta } = await request({ url, query, headers });
 
   const modelsBySearchResultType = {
     post: Post,
@@ -63,27 +68,6 @@ async function search(queryParams) {
 
   return { docs: deserialized, meta };
 }
-
-const posts = {
-  find: queryParams => find({ model: Post, queryParams }),
-  findOne: path => findOne({ model: Post, param: path }),
-  fetchCommentsCount,
-};
-
-const pages = {
-  find: () => find({ model: Page }),
-  findOne: path => findOne({ model: Page, param: path }),
-};
-
-const trashPosts = {
-  find: queryParams => find({ model: TrashPost, queryParams }),
-  findOne: id => findOne({ model: TrashPost, param: id }),
-};
-
-const users = {
-  find: queryParams => find({ model: User, queryParams }),
-  findOne: id => findOne({ model: User, param: id }),
-};
 
 const API = {
   posts,

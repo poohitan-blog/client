@@ -1,22 +1,22 @@
-import fetch from 'isomorphic-unfetch';
+import request from './request';
 import config from '../config';
 
 let cache = null;
 
-async function fetchCommentsCount(previousData = {}, cursor = '') {
+async function fetchCommentsCount(previousData = {}, cursor) {
   if (cache) {
     return cache;
   }
 
   const { APIKey, shortname } = config.current.disqus;
-  let url = `https://disqus.com/api/3.0/forums/listThreads.json?api_key=${APIKey}&forum=${shortname}`;
+  const url = 'https://disqus.com/api/3.0/forums/listThreads.json';
+  const query = {
+    api_key: APIKey,
+    forum: shortname,
+    cursor,
+  };
 
-  if (cursor) {
-    url += `&cursor=${cursor}`;
-  }
-
-  const response = await fetch(url);
-  const json = await response.json();
+  const json = await request({ url, query });
 
   const commentsCountByPost = json.response.reduce((result, thread) => {
     const postPath = thread.identifiers[0];

@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
 import API from '../services/api';
+import Error from './_error';
+import { getAllCookies } from '../services/cookies';
 
 import Wrapper from '../components/Wrapper';
 import Header from '../components/Header';
@@ -12,19 +14,27 @@ import CompactPost from '../components/CompactPost';
 const POSTS_PER_PAGE = 30;
 
 class TagPage extends React.Component {
-  static async getInitialProps({ query }) {
-    const { tag, page = 1 } = query;
-    const { docs, meta } = await API.posts.find({ tag, page, limit: POSTS_PER_PAGE });
+  static async getInitialProps({ query, req }) {
+    try {
+      const { tag, page = 1 } = query;
+      const { docs, meta } = await API.posts.find({ tag, page, limit: POSTS_PER_PAGE }, getAllCookies(req));
 
-    return {
-      posts: docs,
-      meta,
-      tag,
-      query,
-    };
+      return {
+        posts: docs,
+        meta,
+        tag,
+        query,
+      };
+    } catch (error) {
+      return { error };
+    }
   }
 
   render() {
+    if (this.props.error) {
+      return <Error statusCode={this.props.error.status} />;
+    }
+
     const nothingFound = !this.props.posts.length;
     let content;
 
@@ -61,17 +71,21 @@ class TagPage extends React.Component {
 TagPage.propTypes = {
   posts: PropTypes.arrayOf(PropTypes.object).isRequired,
   tag: PropTypes.string.isRequired,
+  query: PropTypes.shape({}),
 
   meta: PropTypes.shape({
     currentPage: PropTypes.number,
     totalPages: PropTypes.number,
   }).isRequired,
 
-  query: PropTypes.shape({}),
+  error: PropTypes.shape({
+    status: PropTypes.number,
+  }),
 };
 
 TagPage.defaultProps = {
   query: {},
+  error: null,
 };
 
 export default TagPage;

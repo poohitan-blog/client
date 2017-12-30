@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Head from 'next/head';
 import Error from './_error';
 import API from '../services/api';
+import { getAllCookies } from '../services/cookies';
 
 import Wrapper from '../components/Wrapper';
 import Header from '../components/Header';
@@ -10,9 +11,9 @@ import Content from '../components/Content';
 import Footer from '../components/Footer';
 
 class PagePage extends React.Component {
-  static async getInitialProps({ query }) {
+  static async getInitialProps({ query, req }) {
     try {
-      const page = await API.pages.findOne(query.path);
+      const page = await API.pages.findOne(query.path, getAllCookies(req));
 
       return { page };
     } catch (error) {

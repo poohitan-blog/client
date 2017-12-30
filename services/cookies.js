@@ -8,22 +8,43 @@ export function getCookie(name, req) {
   return matches ? decodeURIComponent(matches[1]) : undefined;
 }
 
-export function setCookie(name, value, { expires } = {}, res) {
+export function setCookie(name, value, options = {}, res) {
+  const { expires, httpOnly } = options;
+
   if (res) {
-    res.cookie(name, value, { expires });
+    res.cookie(name, value, { expires: new Date(expires), httpOnly });
 
     return;
   }
 
-  const expirationDate = expires ? expires.toUTCString() : null;
+  let cookie = `${name}=${encodeURIComponent(value)}`;
 
-  let updatedCookie = `${name}=${encodeURIComponent(value)}`;
-
-  if (expirationDate) {
-    updatedCookie += `; expires=${expirationDate}`;
+  if (expires) {
+    cookie += `; expires=${expires}`;
   }
 
-  global.document.cookie = updatedCookie;
+  if (httpOnly) {
+    cookie += '; HttpOnly';
+  }
+
+  global.document.cookie = cookie;
 }
 
-export default { get: getCookie, set: setCookie };
+export function stringifyCookies(cookies) { // TODO: don't miss cookies options (httpOnly, expires, etc.)
+  return Object.keys(cookies).map(cookieName => `${cookieName}=${cookies[cookieName]}`).join('; ');
+}
+
+export function getAllCookies(req) {
+  if (req) {
+    return stringifyCookies(req.cookies);
+  }
+
+  return global.document.cookie;
+}
+
+export default {
+  get: getCookie,
+  set: setCookie,
+  getAll: getAllCookies,
+  stringify: stringifyCookies,
+};
