@@ -4,6 +4,7 @@ import Head from 'next/head';
 import API from '../services/api';
 import Error from './_error';
 import { getAllCookies } from '../services/cookies';
+import Session from '../services/session';
 
 import Wrapper from '../components/Wrapper';
 import Header from '../components/Header';
@@ -16,13 +17,18 @@ const POSTS_PER_PAGE = 30;
 class ArchivePage extends React.Component {
   static async getInitialProps({ query, req }) {
     try {
+      const isAuthenticated = Session.isAuthenticated(req);
       const { page = 1 } = query;
       const { docs, meta } = await API.posts.find({ page, limit: POSTS_PER_PAGE }, getAllCookies(req));
 
-      return { posts: docs, meta };
+      return { posts: docs, meta, isAuthenticated };
     } catch (error) {
       return { error };
     }
+  }
+
+  getChildContext() {
+    return { isAuthenticated: this.props.isAuthenticated };
   }
 
   render() {
@@ -57,6 +63,7 @@ class ArchivePage extends React.Component {
 }
 
 ArchivePage.propTypes = {
+  isAuthenticated: PropTypes.bool.isRequired,
   posts: PropTypes.arrayOf(PropTypes.object).isRequired,
 
   meta: PropTypes.shape({
@@ -71,6 +78,10 @@ ArchivePage.propTypes = {
 
 ArchivePage.defaultProps = {
   error: null,
+};
+
+ArchivePage.childContextTypes = {
+  isAuthenticated: PropTypes.bool,
 };
 
 export default ArchivePage;

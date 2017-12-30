@@ -4,6 +4,7 @@ import Head from 'next/head';
 import Error from './_error';
 import API from '../services/api';
 import { getAllCookies } from '../services/cookies';
+import Session from '../services/session';
 import * as Text from '../services/text';
 
 import Wrapper from '../components/Wrapper';
@@ -16,15 +17,20 @@ import CommentForm from '../components/post/CommentForm';
 class PostPage extends React.Component {
   static async getInitialProps({ query, req }) {
     try {
+      const isAuthenticated = Session.isAuthenticated(req);
       const post = await API.posts.findOne(query.path, getAllCookies(req));
       const images = Text.getImagesFromHTML(post.body);
       const commentsCountByPostPath = await API.posts.fetchCommentsCount();
       const postWithCommentsCount = Object.assign({ commentsCount: commentsCountByPostPath[post.path] }, post);
 
-      return { post: postWithCommentsCount, images };
+      return { post: postWithCommentsCount, images, isAuthenticated };
     } catch (error) {
       return { error };
     }
+  }
+
+  getChildContext() {
+    return { isAuthenticated: this.props.isAuthenticated };
   }
 
   render() {
@@ -49,6 +55,8 @@ class PostPage extends React.Component {
 }
 
 PostPage.propTypes = {
+  isAuthenticated: PropTypes.bool.isRequired,
+
   post: PropTypes.shape({
     title: PropTypes.string.isRequired,
   }),
@@ -61,6 +69,10 @@ PostPage.propTypes = {
 PostPage.defaultProps = {
   post: {},
   error: null,
+};
+
+PostPage.childContextTypes = {
+  isAuthenticated: PropTypes.bool,
 };
 
 export default PostPage;

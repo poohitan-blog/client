@@ -30,13 +30,19 @@ export function setCookie(name, value, options = {}, res) {
   global.document.cookie = cookie;
 }
 
-export function stringifyCookies(cookies) { // TODO: don't miss cookies options (httpOnly, expires, etc.)
+export function deleteCookie(name, res) {
+  setCookie(name, '', { expires: new Date(0).toUTCString() }, res);
+}
+
+export function stringifyCookies(req) { // TODO: don't miss cookie options (httpOnly, expires, etc.)
+  const cookies = req ? req.cookies : global.document.cookies;
+
   return Object.keys(cookies).map(cookieName => `${cookieName}=${cookies[cookieName]}`).join('; ');
 }
 
 export function getAllCookies(req) {
   if (req) {
-    return stringifyCookies(req.cookies);
+    return stringifyCookies(req);
   }
 
   return global.document.cookie;
@@ -45,6 +51,7 @@ export function getAllCookies(req) {
 export default {
   get: getCookie,
   set: setCookie,
+  delete: deleteCookie,
   getAll: getAllCookies,
   stringify: stringifyCookies,
 };

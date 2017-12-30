@@ -4,6 +4,7 @@ import Head from 'next/head';
 import API from '../services/api';
 import Error from './_error';
 import { getAllCookies } from '../services/cookies';
+import Session from '../services/session';
 
 import Wrapper from '../components/Wrapper';
 import Header from '../components/Header';
@@ -16,6 +17,7 @@ const POSTS_PER_PAGE = 10;
 class SearchPage extends React.Component {
   static async getInitialProps({ query, req }) {
     try {
+      const isAuthenticated = Session.isAuthenticated(req);
       const { page = 1 } = query;
       const searchQuery = query.query;
       const { docs, meta } = await API.search({
@@ -28,10 +30,15 @@ class SearchPage extends React.Component {
         searchResults: docs,
         meta,
         searchQuery,
+        isAuthenticated,
       };
     } catch (error) {
       return { error };
     }
+  }
+
+  getChildContext() {
+    return { isAuthenticated: this.props.isAuthenticated };
   }
 
   render() {
@@ -70,6 +77,7 @@ class SearchPage extends React.Component {
 }
 
 SearchPage.propTypes = {
+  isAuthenticated: PropTypes.bool.isRequired,
   searchResults: PropTypes.arrayOf(PropTypes.object).isRequired,
   searchQuery: PropTypes.string.isRequired,
 
@@ -85,6 +93,10 @@ SearchPage.propTypes = {
 
 SearchPage.defaultProps = {
   error: null,
+};
+
+SearchPage.childContextTypes = {
+  isAuthenticated: PropTypes.bool,
 };
 
 export default SearchPage;

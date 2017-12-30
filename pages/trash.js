@@ -5,6 +5,7 @@ import Head from 'next/head';
 import Error from './_error';
 import API from '../services/api';
 import { getAllCookies } from '../services/cookies';
+import Session from '../services/session';
 
 import Wrapper from '../components/Wrapper';
 import Header from '../components/Header';
@@ -18,26 +19,32 @@ const POSTS_PER_PAGE = 15;
 class TrashPage extends React.Component {
   static async getInitialProps({ query, req }) {
     try {
+      const isAuthenticated = Session.isAuthenticated(req);
+
       if (query.id) {
         const posts = [await API.trashPosts.findOne(query.id, getAllCookies(req))];
 
-        return { posts };
+        return { posts, isAuthenticated };
       }
 
       if (query.permalink) { // keeps compatibility with old version of links
         const date = moment.utc(query.permalink, 'YYYYMMDD_HHmmss').toISOString();
         const { docs } = await API.trashPosts.find({ createdAt: date }, getAllCookies(req));
 
-        return { posts: docs };
+        return { posts: docs, isAuthenticated };
       }
 
       const { page = 1 } = query;
       const { docs, meta } = await API.trashPosts.find({ page, limit: POSTS_PER_PAGE }, getAllCookies(req));
 
-      return { posts: docs, meta };
+      return { posts: docs, meta, isAuthenticated };
     } catch (error) {
       return { error };
     }
+  }
+
+  getChildContext() {
+    return { isAuthenticated: this.props.isAuthenticated };
   }
 
   render() {
@@ -65,6 +72,7 @@ class TrashPage extends React.Component {
 }
 
 TrashPage.propTypes = {
+  isAuthenticated: PropTypes.bool.isRequired,
   posts: PropTypes.arrayOf(PropTypes.object),
 
   error: PropTypes.shape({
@@ -80,6 +88,10 @@ TrashPage.propTypes = {
 TrashPage.defaultProps = {
   posts: [],
   error: null,
+};
+
+TrashPage.childContextTypes = {
+  isAuthenticated: PropTypes.bool,
 };
 
 export default TrashPage;
