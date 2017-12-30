@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
+import { withRouter } from 'next/router';
 import SearchBox from './SearchBox';
 
 const DEFAULT_LINK_TEXTS = {
@@ -8,13 +9,13 @@ const DEFAULT_LINK_TEXTS = {
   previous: 'Новіші записи',
 };
 
-const Footer = (props) => {
-  const { currentPage, totalPages } = props.pagination;
-  const { query } = props;
+const Footer = ({ pagination, router }) => {
+  const { currentPage, totalPages } = pagination;
+  const { query } = router;
   const hasNextPage = currentPage < totalPages;
   const hasPreviousPage = currentPage > 1;
 
-  const { next, previous } = (props.pagination && props.pagination.linkTexts) || DEFAULT_LINK_TEXTS;
+  const { next, previous } = (pagination && pagination.linkTexts) || DEFAULT_LINK_TEXTS;
 
   let previousPagelink;
   let nextPageLink;
@@ -57,12 +58,11 @@ Footer.propTypes = {
     }),
   }),
 
-  query: PropTypes.shape({}),
+  router: PropTypes.shape({}).isRequired,
 };
 
 Footer.defaultProps = {
   pagination: {},
-  query: {},
 };
 
-export default Footer;
+export default withRouter(Footer);

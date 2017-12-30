@@ -23,7 +23,6 @@ class TagPage extends React.Component {
         posts: docs,
         meta,
         tag,
-        query,
       };
     } catch (error) {
       return { error };
@@ -62,7 +61,7 @@ class TagPage extends React.Component {
           <h1>Записи з теґом «{this.props.tag}»</h1>
           { content }
         </Content>
-        <Footer pagination={this.props.meta} query={this.props.query} />
+        <Footer pagination={this.props.meta} />
       </Wrapper>
     );
   }
@@ -71,7 +70,6 @@ class TagPage extends React.Component {
 TagPage.propTypes = {
   posts: PropTypes.arrayOf(PropTypes.object).isRequired,
   tag: PropTypes.string.isRequired,
-  query: PropTypes.shape({}),
 
   meta: PropTypes.shape({
     currentPage: PropTypes.number,
@@ -84,7 +82,6 @@ TagPage.propTypes = {
 };
 
 TagPage.defaultProps = {
-  query: {},
   error: null,
 };
 

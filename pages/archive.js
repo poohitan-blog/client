@@ -19,7 +19,7 @@ class ArchivePage extends React.Component {
       const { page = 1 } = query;
       const { docs, meta } = await API.posts.find({ page, limit: POSTS_PER_PAGE }, getAllCookies(req));
 
-      return { posts: docs, meta, query };
+      return { posts: docs, meta };
     } catch (error) {
       return { error };
     }
@@ -50,7 +50,7 @@ class ArchivePage extends React.Component {
           <h1>Архів</h1>
           { content }
         </Content>
-        <Footer pagination={this.props.meta} query={this.props.query} />
+        <Footer pagination={this.props.meta} />
       </Wrapper>
     );
   }
@@ -64,15 +64,12 @@ ArchivePage.propTypes = {
     totalPages: PropTypes.number,
   }).isRequired,
 
-  query: PropTypes.shape({}),
-
   error: PropTypes.shape({
     status: PropTypes.number,
   }),
 };
 
 ArchivePage.defaultProps = {
-  query: {},
   error: null,
 };
 

@@ -28,7 +28,6 @@ class SearchPage extends React.Component {
         searchResults: docs,
         meta,
         searchQuery,
-        query,
       };
     } catch (error) {
       return { error };
@@ -64,7 +63,7 @@ class SearchPage extends React.Component {
             { content }
           </div>
         </Content>
-        <Footer pagination={paginationInfo} query={this.props.query} />
+        <Footer pagination={paginationInfo} />
       </Wrapper>
     );
   }
@@ -73,7 +72,6 @@ class SearchPage extends React.Component {
 SearchPage.propTypes = {
   searchResults: PropTypes.arrayOf(PropTypes.object).isRequired,
   searchQuery: PropTypes.string.isRequired,
-  query: PropTypes.shape({}),
 
   meta: PropTypes.shape({
     currentPage: PropTypes.number,
@@ -86,7 +84,6 @@ SearchPage.propTypes = {
 };
 
 SearchPage.defaultProps = {
-  query: {},
   error: null,
 };
 

@@ -23,7 +23,7 @@ class IndexPage extends React.Component {
         commentsCount: commentsCountByPostPath[post.path],
       }, post));
 
-      return { posts, meta, query };
+      return { posts, meta };
     } catch (error) {
       return { error };
     }
@@ -45,7 +45,7 @@ class IndexPage extends React.Component {
         <Content>
           { content }
         </Content>
-        <Footer pagination={this.props.meta} query={this.props.query} />
+        <Footer pagination={this.props.meta} />
       </Wrapper>
     );
   }
@@ -59,15 +59,12 @@ IndexPage.propTypes = {
     totalPages: PropTypes.number,
   }).isRequired,
 
-  query: PropTypes.shape({}),
-
   error: PropTypes.shape({
     status: PropTypes.number,
   }),
 };
 
 IndexPage.defaultProps = {
-  query: {},
   error: null,
 };
 
