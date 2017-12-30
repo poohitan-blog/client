@@ -1,6 +1,7 @@
 const express = require('express');
 const next = require('next');
 const cookieParser = require('cookie-parser');
+const fetch = require('isomorphic-unfetch');
 const config = require('./config').current;
 
 const dev = config.environment !== 'production';
@@ -12,6 +13,13 @@ app.prepare()
     const server = express();
 
     server.use(cookieParser());
+
+    server.get('/rss', async (req, res) => {
+      const response = await fetch(`${config.apiURL}/rss`);
+      const xml = await response.text();
+
+      res.header({ 'Content-Type': 'application/rss+xml' }).send(xml);
+    });
 
     server.get('/wardrobe', (req, res) => {
       app.render(req, res, '/login', req.query);
@@ -55,10 +63,10 @@ app.prepare()
         throw error;
       }
 
-      console.log(`> Listening on ${config.port}`);
+      console.log(`Listening on ${config.port}`);
     });
   })
-  .catch((ex) => {
-    console.error(ex.stack);
+  .catch((error) => {
+    console.error(error.stack);
     process.exit(1);
   });
