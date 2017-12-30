@@ -1,3 +1,5 @@
+import config from '../config';
+
 export function getCookie(name, req) {
   if (req) {
     return req.cookies[name];
@@ -9,15 +11,15 @@ export function getCookie(name, req) {
 }
 
 export function setCookie(name, value, options = {}, res) {
-  const { expires, httpOnly } = options;
+  const { expires, httpOnly = false } = options;
 
   if (res) {
-    res.cookie(name, value, { expires: new Date(expires), httpOnly });
+    res.cookie(name, value, { expires: new Date(expires), httpOnly, domain: config.current.cookiesDomain });
 
     return;
   }
 
-  let cookie = `${name}=${encodeURIComponent(value)}`;
+  let cookie = `${name}=${encodeURIComponent(value)}; domain=${config.current.cookiesDomain}`;
 
   if (expires) {
     cookie += `; expires=${expires}`;
@@ -35,7 +37,11 @@ export function deleteCookie(name, res) {
 }
 
 export function stringifyCookies(req) { // TODO: don't miss cookie options (httpOnly, expires, etc.)
-  const cookies = req ? req.cookies : global.document.cookies;
+  if (!req) {
+    return global.document.cookies;
+  }
+
+  const { cookies } = req;
 
   return Object.keys(cookies).map(cookieName => `${cookieName}=${cookies[cookieName]}`).join('; ');
 }

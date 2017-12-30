@@ -3,6 +3,7 @@ const config = {
     port: 7000,
     clientURL: 'http://localhost:7000',
     apiURL: 'http://localhost:3100',
+    cookiesDomain: 'localhost',
 
     disqus: {
       shortname: 'new-poohitan',
@@ -14,6 +15,7 @@ const config = {
     port: 4000,
     clientURL: 'https://new.poohitan.com',
     apiURL: 'https://api.poohitan.com',
+    cookiesDomain: '.poohitan.com',
 
     disqus: {
       shortname: 'new-poohitan',
