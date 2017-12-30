@@ -3,8 +3,8 @@ import Document, { Head, Main, NextScript } from 'next/document';
 import Raspberries from '../services/raspberries';
 import styles from '../styles/main.scss';
 
-export default class MyDocument extends Document {
-  static getInitialProps({ renderPage, req, res }) {
+class MyDocument extends Document {
+  static async getInitialProps({ renderPage, req, res }) {
     const raspberriesDay = Raspberries.runLottery(req, res);
 
     const {
@@ -41,3 +41,5 @@ export default class MyDocument extends Document {
     );
   }
 }
+
+export default MyDocument;

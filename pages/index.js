@@ -4,6 +4,7 @@ import Head from 'next/head';
 import Error from './_error';
 import API from '../services/api';
 import { getAllCookies } from '../services/cookies';
+import Session from '../services/session';
 
 import Wrapper from '../components/Wrapper';
 import Header from '../components/Header';
@@ -16,6 +17,7 @@ const POSTS_PER_PAGE = 10;
 class IndexPage extends React.Component {
   static async getInitialProps({ query, req }) {
     try {
+      const isAuthenticated = Session.isAuthenticated(req);
       const { page = 1 } = query;
       const { docs, meta } = await API.posts.find({ page, limit: POSTS_PER_PAGE }, getAllCookies(req));
       const commentsCountByPostPath = await API.posts.fetchCommentsCount();
@@ -23,10 +25,14 @@ class IndexPage extends React.Component {
         commentsCount: commentsCountByPostPath[post.path],
       }, post));
 
-      return { posts, meta };
+      return { posts, meta, isAuthenticated };
     } catch (error) {
       return { error };
     }
+  }
+
+  getChildContext() {
+    return { isAuthenticated: this.props.isAuthenticated };
   }
 
   render() {
@@ -52,6 +58,7 @@ class IndexPage extends React.Component {
 }
 
 IndexPage.propTypes = {
+  isAuthenticated: PropTypes.bool.isRequired,
   posts: PropTypes.arrayOf(PropTypes.object).isRequired,
 
   meta: PropTypes.shape({
@@ -66,6 +73,10 @@ IndexPage.propTypes = {
 
 IndexPage.defaultProps = {
   error: null,
+};
+
+IndexPage.childContextTypes = {
+  isAuthenticated: PropTypes.bool,
 };
 
 export default IndexPage;

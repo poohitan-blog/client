@@ -4,6 +4,7 @@ import Head from 'next/head';
 import Error from './_error';
 import API from '../services/api';
 import { getAllCookies } from '../services/cookies';
+import Session from '../services/session';
 
 import Wrapper from '../components/Wrapper';
 import Header from '../components/Header';
@@ -13,12 +14,17 @@ import Footer from '../components/Footer';
 class PagePage extends React.Component {
   static async getInitialProps({ query, req }) {
     try {
+      const isAuthenticated = Session.isAuthenticated(req);
       const page = await API.pages.findOne(query.path, getAllCookies(req));
 
-      return { page };
+      return { page, isAuthenticated };
     } catch (error) {
       return { error };
     }
+  }
+
+  getChildContext() {
+    return { isAuthenticated: this.props.isAuthenticated };
   }
 
   render() {
@@ -45,6 +51,8 @@ class PagePage extends React.Component {
 }
 
 PagePage.propTypes = {
+  isAuthenticated: PropTypes.bool.isRequired,
+
   page: PropTypes.shape({
     title: PropTypes.string.isRequired,
     body: PropTypes.string.isRequired,
@@ -58,6 +66,10 @@ PagePage.propTypes = {
 PagePage.defaultProps = {
   page: {},
   error: null,
+};
+
+PagePage.childContextTypes = {
+  isAuthenticated: PropTypes.bool,
 };
 
 export default PagePage;

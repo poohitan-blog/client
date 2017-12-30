@@ -1,3 +1,4 @@
+import Router from 'next/router';
 import config from '../config';
 import Cookies from './cookies';
 import request from '../utils/request';
@@ -21,4 +22,14 @@ function getToken(req) {
   return Cookies.get('token', req);
 }
 
-export default { authenticate, isAuthenticated, getToken };
+function logOut() {
+  Cookies.delete('token');
+  Router.push('/');
+}
+
+export default {
+  authenticate,
+  isAuthenticated,
+  getToken,
+  logOut,
+};
