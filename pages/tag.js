@@ -4,8 +4,8 @@ import Head from 'next/head';
 import API from '../services/api';
 import Error from './_error';
 import { getAllCookies } from '../services/cookies';
-import Session from '../services/session';
 
+import AuthenticatablePage from './_authenticatable';
 import Wrapper from '../components/Wrapper';
 import Header from '../components/Header';
 import Content from '../components/Content';
@@ -14,26 +14,21 @@ import CompactPost from '../components/CompactPost';
 
 const POSTS_PER_PAGE = 30;
 
-class TagPage extends React.Component {
+class TagPage extends AuthenticatablePage {
   static async getInitialProps({ query, req }) {
     try {
-      const isAuthenticated = Session.isAuthenticated(req);
+      const parentProps = await super.getInitialProps({ req });
       const { tag, page = 1 } = query;
       const { docs, meta } = await API.posts.find({ tag, page, limit: POSTS_PER_PAGE }, getAllCookies(req));
 
-      return {
+      return Object.assign(parentProps, {
         posts: docs,
         meta,
         tag,
-        isAuthenticated,
-      };
+      });
     } catch (error) {
       return { error };
     }
-  }
-
-  getChildContext() {
-    return { isAuthenticated: this.props.isAuthenticated };
   }
 
   render() {
@@ -75,7 +70,6 @@ class TagPage extends React.Component {
 }
 
 TagPage.propTypes = {
-  isAuthenticated: PropTypes.bool.isRequired,
   posts: PropTypes.arrayOf(PropTypes.object).isRequired,
   tag: PropTypes.string.isRequired,
 
@@ -91,10 +85,6 @@ TagPage.propTypes = {
 
 TagPage.defaultProps = {
   error: null,
-};
-
-TagPage.childContextTypes = {
-  isAuthenticated: PropTypes.bool,
 };
 
 export default TagPage;

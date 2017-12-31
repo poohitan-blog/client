@@ -10,7 +10,7 @@ class AdminPanel extends React.Component {
   }
 
   render() {
-    const pages = this.props.pages.map(page => (
+    const pages = !this.context ? [] : this.context.pages.map(page => (
       <li key={page.id}>
         <Link href={`/page?path=${page.path}`} as={`/${page.path}`}>
           <a>{page.title}</a>
@@ -43,12 +43,8 @@ class AdminPanel extends React.Component {
   }
 }
 
-AdminPanel.propTypes = {
+AdminPanel.contextTypes = {
   pages: PropTypes.arrayOf(PropTypes.object),
-};
-
-AdminPanel.defaultProps = {
-  pages: [],
 };
 
 export default AdminPanel;
