@@ -2,6 +2,7 @@
 
 .trash-post {
   padding: 0.5em 0;
+  position: relative;
 
   .trash-post-footer {
     color: $light-grey;
@@ -14,6 +15,21 @@
 
     .trash-post-footer-line {
       margin: 0 1em;
+    }
+  }
+
+  .trash-post-admin-control-buttons {
+    background-color: transparentize(white, 0.2);
+    font-size: 1.3em;
+    padding: 0.2em 0.5em;
+
+    position: absolute;
+    right: 0;
+
+    transition: background-color 150ms linear;
+
+    &:hover {
+      background-color: white;
     }
   }
 }

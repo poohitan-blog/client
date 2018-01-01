@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
-import Session from '../services/session';
+import Session from '../../services/session';
 
-class AdminPanel extends React.Component {
+class Panel extends React.Component {
   static logOut(event) {
     event.preventDefault();
     Session.logOut();
@@ -18,7 +18,7 @@ class AdminPanel extends React.Component {
       </li>
     ));
     const pagesBlock = pages.length ? (
-      <div className="admin-panel-block">
+      <div className="admin-panel-block admin-panel-block-pages">
         <h3>Сторінки</h3>
         <ul>
           {pages}
@@ -31,10 +31,10 @@ class AdminPanel extends React.Component {
         <div className="admin-panel-block">
           <h3>Панель приладів</h3>
           <ul>
-            <li><a>Додати запис</a></li>
-            <li><a>Додати запис у смітник</a></li>
-            <li><a>Додати сторінку</a></li>
-            <li><a href="#" role="button" onClick={AdminPanel.logOut}>Вийти</a></li>
+            <li><Link href="/admin/post-editor" as="/posts/new"><a>Додати запис</a></Link></li>
+            <li><Link href="/admin/trash-post-editor" as="/trash/new"><a>Додати запис у смітник</a></Link></li>
+            <li><Link href="/admin/page-editor" as="/pages/new"><a>Додати сторінку</a></Link></li>
+            <li><a href="#" role="button" onClick={Panel.logOut}>Вийти</a></li>
           </ul>
         </div>
         {pagesBlock}
@@ -43,8 +43,8 @@ class AdminPanel extends React.Component {
   }
 }
 
-AdminPanel.contextTypes = {
+Panel.contextTypes = {
   pages: PropTypes.arrayOf(PropTypes.object),
 };
 
-export default AdminPanel;
+export default Panel;

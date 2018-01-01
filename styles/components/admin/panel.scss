@@ -1,4 +1,4 @@
-@import '../variables';
+@import '../../variables';
 
 $width: 15em;
 $margin: 3em;
@@ -30,6 +30,14 @@ $margin: 3em;
       list-style: none;
       margin: 0;
       padding: 0;
+    }
+  }
+
+  .admin-panel-block-pages {
+    li {
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
     }
   }
 }

@@ -10,6 +10,7 @@ import Wrapper from '../components/Wrapper';
 import Header from '../components/Header';
 import Content from '../components/Content';
 import Footer from '../components/Footer';
+import Page from '../components/Page';
 
 class PagePage extends AuthenticatablePage {
   static async getInitialProps({ query, req }) {
@@ -28,8 +29,6 @@ class PagePage extends AuthenticatablePage {
       return <Error statusCode={this.props.error.status} />;
     }
 
-    const title = this.props.page.title ? <h1>{this.props.page.title}</h1> : null;
-
     return (
       <Wrapper>
         <Head>
@@ -37,8 +36,7 @@ class PagePage extends AuthenticatablePage {
         </Head>
         <Header />
         <Content>
-          {title}
-          <div dangerouslySetInnerHTML={{ __html: this.props.page.body }} />
+          <Page {...this.props.page} />
         </Content>
         <Footer />
       </Wrapper>

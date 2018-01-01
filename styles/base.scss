@@ -127,3 +127,26 @@ input {
 .raspberries {
   background-image: url('/static/images/raspberry.gif');
 }
+
+.children-equal-margin-vertical {
+  > * {
+    margin: 0.5em 0;
+
+    &:first-child {
+      margin-top: 1em;
+    }
+
+    &:last-child {
+      margin-bottom: 1em;
+    }
+  }
+}
+
+.margin-left {
+  margin-left: 1em;
+}
+
+.text-overflow-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Router from 'next/router';
 import NProgress from 'nprogress';
 
-import AdminPanel from './AdminPanel';
+import AdminPanel from './admin/Panel';
 import LoginButton from './LoginButton';
 
 NProgress.configure({ showSpinner: false });
