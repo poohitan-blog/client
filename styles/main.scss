@@ -11,6 +11,8 @@
 
 @import './components/header/trashbin';
 
+@import './components/page';
+
 @import './components/post';
 @import './components/post/footer';
 @import './components/post/comment-form';
@@ -20,5 +22,6 @@
 @import './components/search-box';
 @import './components/search-result';
 
-@import './components/admin-panel';
 @import './components/login-button';
+@import './components/admin/panel';
+@import './components/admin/control-buttons';

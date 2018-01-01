@@ -8,6 +8,10 @@ const dev = config.environment !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
 
+const pagesRouter = require('./routes/pages.js');
+const postsRouter = require('./routes/posts.js');
+const trashRouter = require('./routes/trash.js');
+
 app.prepare()
   .then(() => {
     const server = express();
@@ -33,28 +37,15 @@ app.prepare()
       app.render(req, res, '/search', req.query);
     });
 
-    server.get('/trash', (req, res) => {
-      app.render(req, res, '/trash', req.query);
-    });
-
-    server.get('/trash/:trash_post_id', (req, res) => {
-      const queryParams = { id: req.params.trash_post_id };
-      app.render(req, res, '/trash', queryParams);
-    });
-
     server.get('/tag/:tag_name', (req, res) => {
-      app.render(req, res, '/tag', { tag: req.params.tag_name });
+      app.render(req, res, '/tag', Object.assign({}, req.query, { tag: req.params.tag_name }));
     });
 
-    server.get('/p/:path', (req, res) => {
-      const queryParams = { path: req.params.path };
-      app.render(req, res, '/post', queryParams);
-    });
+    server.use(trashRouter(app));
 
-    server.get('/:path', (req, res) => {
-      const queryParams = { path: req.params.path };
-      app.render(req, res, '/page', queryParams);
-    });
+    server.use(postsRouter(app));
+
+    server.use(pagesRouter(app));
 
     server.get('*', (req, res) => handle(req, res));
 

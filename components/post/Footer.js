@@ -12,7 +12,14 @@ const Footer = (props) => {
 
       return <Link key={tag} as={`/tag/${encodedTag}`} href={`/tag?tag=${encodedTag}`}><a>{tag}</a></Link>;
     })
-    .reduce((previousTags, currentTag) => [previousTags, ', ', currentTag]);
+    .reduce((previousTags, currentTag) => {
+      if (!previousTags.length) {
+        return [currentTag];
+      }
+
+      return [...previousTags, ', ', currentTag];
+    }, []);
+  const tagsMarkup = tags.length ? <span>Теґи: {tags}</span> : null;
 
   return (
     <div className="post-footer layout-row layout-align-xs-center-center smaller">
@@ -28,7 +35,7 @@ const Footer = (props) => {
         <CalendarIcon className="post-footer-icon post-footer-date-icon" />
         <span className="flex-offset-5 nowrap">{ Grammar.formatPostDate(props.publishedAt) }</span>
       </div>
-      <div className="post-footer-item post-footer-tags nowrap">Теґи: { tags }</div>
+      <div className="post-footer-item post-footer-tags nowrap">{tagsMarkup}</div>
       <div className="post-footer-item post-footer-social" />
     </div>
   );
