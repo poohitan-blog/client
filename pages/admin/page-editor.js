@@ -13,6 +13,7 @@ import Wrapper from '../../components/Wrapper';
 import Header from '../../components/Header';
 import Content from '../../components/Content';
 import Editor from '../../utils/editor';
+import Checkbox from '../../components/ui/Checkbox';
 
 class PageEditor extends ProtectedPage {
   static async getInitialProps({ req, query }) {
@@ -78,6 +79,7 @@ class PageEditor extends ProtectedPage {
       return <Error statusCode={this.props.error.status} />;
     }
 
+    const title = this.props.page.path ? 'Редагувати сторінку' : 'Додати сторінку';
     const link = this.getPageLinkMarkup();
 
     return (
@@ -85,6 +87,7 @@ class PageEditor extends ProtectedPage {
         <Header />
         <Content>
           <div className="children-equal-margin-vertical layout-row layout-wrap">
+            <h1>{title}</h1>
             <input
               type="text"
               placeholder="Назва"
@@ -107,7 +110,12 @@ class PageEditor extends ProtectedPage {
             <div className="flex-100">
               <Editor html={this.state.body} onChange={body => this.setState({ body })} />
             </div>
-            <div className="layout-row layout-align-center-center flex-100">
+            <div className="layout-row layout-align-space-between-center flex-100">
+              <Checkbox
+                label="Заховати"
+                checked={this.state.private}
+                onChange={hidden => this.setState({ private: hidden })}
+              />
               <button onClick={this.submit} className="flex-30">Вйо</button>
             </div>
           </div>

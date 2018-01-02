@@ -36,6 +36,10 @@ body {
   @media (max-width: 640px) {
     font-size: 12px;
   }
+
+  &.raspberries {
+    background-image: url('/static/images/raspberry.gif');
+  }
 }
 
 h1 {
@@ -146,8 +150,8 @@ button, *[role="button"] {
   text-align: center;
 }
 
-.raspberries {
-  background-image: url('/static/images/raspberry.gif');
+.hidden {
+  display: none;
 }
 
 .children-equal-margin-vertical {
