@@ -1,0 +1,65 @@
+@import '../variables.scss';
+
+$padding: 2em;
+
+.popup-wrapper {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 100ms linear;
+  font-size: $main-font-size;
+  font-family: $main-font-family;
+  font-weight: normal;
+
+  &.popup-wrapper-visible {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .popup {
+    background-color: $white;
+    border: 1px solid $light-grey;
+
+    box-sizing: border-box;
+    padding: $padding;
+
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
+    min-width: 20%;
+
+    z-index: 100;
+
+    .popup-close-button {
+      position: absolute;
+      top: $padding;
+      right: $padding;
+
+      padding: 0;
+      border: none;
+      cursor: pointer;
+
+      &:hover {
+        background-color: transparent;
+        fill: lighten($grey, 20%);
+      }
+
+      svg {
+        height: 1em;
+      }
+    }
+  }
+
+  .popup-shadow {
+    background-color: transparentize($white, 0.3);
+
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+
+    z-index: 10;
+  }
+}
