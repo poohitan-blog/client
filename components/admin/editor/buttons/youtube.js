@@ -1,6 +1,6 @@
 export default {
   name: 'youtube',
-  tooltip: 'Youtube video',
+  tooltip: 'Відео з Youtube',
   iconURL: '/static/icons/youtube.svg',
   popup(editor, current, control, close) {
     const input = global.document.createElement('input');
@@ -11,7 +11,7 @@ export default {
     button.textContent = 'Вставити';
 
     const form = global.document.createElement('form');
-    form.classList.add('children-equal-margin-vertical');
+    form.classList.add('jodit_form');
 
     form.appendChild(input);
     form.appendChild(button);
@@ -27,10 +27,15 @@ export default {
         .map(regex => link.match(regex))
         .reduce((resultArray, matchArray) => (matchArray ? [...resultArray, ...matchArray] : resultArray), []);
       const videoId = matches.length ? matches[1] : null;
+
+      if (!videoId) {
+        return;
+      }
+
       const embedUrl = `//youtube.com/embed/${videoId}`;
 
       editor.selection.restore(selection);
-      editor.selection.insertHTML(`<div class="video-16-9"><iframe src="${embedUrl}" allowfullscreen="" frameborder="0"></iframe></div>`);
+      editor.selection.insertHTML(`<p class="video-16-9"><iframe src="${embedUrl}" allowfullscreen="" frameborder="0"></iframe></p>`);
 
       close();
     });

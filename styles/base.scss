@@ -88,10 +88,11 @@ hr {
 }
 
 blockquote {
-  color: $dark-grey;
+  color: $grey;
   margin: 0 20px;
   padding: 2px 5px 5px 10px;
-  border-left: 3px solid $grey;
+  border-left: 3px solid $lighter-grey;
+  white-space: pre-wrap;
 }
 
 svg {

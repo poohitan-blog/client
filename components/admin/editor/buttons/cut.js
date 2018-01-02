@@ -1,6 +1,6 @@
 export default {
   name: 'cut',
-  tooltip: 'Cut',
+  tooltip: 'Кат',
   iconURL: '/static/icons/scissors.svg',
   exec(editor) {
     const hasCutAlready = editor.getEditorValue().includes('<cut>');
