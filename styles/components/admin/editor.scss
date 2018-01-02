@@ -1,0 +1,11 @@
+@import '../../variables';
+
+.editor-wrapper {
+  cut {
+    display: block;
+    width: 100%;
+    height: 1px;
+    border-bottom: 1px dashed $grey;
+    margin: 0.5em 0;
+  }
+}

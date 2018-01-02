@@ -57,6 +57,7 @@ h3 {
 
 img {
   max-width: 100%;
+  display: block;
 }
 
 a {
@@ -96,6 +97,10 @@ svg {
   height: auto;
 }
 
+cut {
+  display: none;
+}
+
 input,
 button {
   color: $grey;
@@ -106,6 +111,11 @@ button {
 
   &:focus {
     border-color: $orange;
+  }
+
+  &:invalid {
+    border-color: red;
+    box-shadow: none;
   }
 }
 

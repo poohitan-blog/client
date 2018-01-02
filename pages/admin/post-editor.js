@@ -40,25 +40,32 @@ class PostEditor extends ProtectedPage {
     super(props);
 
     this.state = props.post || {};
+    this.state.tagsString = props.post.tags && props.post.tags.length ? props.post.tags.join(', ') : '';
+    this.state.dateString = props.post.publishedAt ? moment(props.post.publishedAt).format(DATE_FORMAT) : '';
 
-    this.setTags = this.setTags.bind(this);
-    this.setDate = this.setDate.bind(this);
+    this.handleTagsChange = this.handleTagsChange.bind(this);
+    this.handleDateChange = this.handleDateChange.bind(this);
     this.getPostLinkMarkup = this.getPostLinkMarkup.bind(this);
     this.submit = this.submit.bind(this);
   }
 
-  setTags(event) {
+  handleTagsChange(event) {
     const tagsString = event.target.value;
-    const tags = tagsString.split(',').map(tag => tag.trim());
 
-    this.setState({ tags });
+    this.setState({
+      tagsString,
+      tags: tagsString.split(',').map(tag => tag.trim()),
+    });
   }
 
-  setDate(event) {
+  handleDateChange(event) {
     const dateString = event.target.value;
     const date = moment(dateString, DATE_FORMAT).toDate();
 
-    this.setState({ publishedAt: date });
+    this.setState({
+      dateString,
+      publishedAt: date,
+    });
   }
 
   async submit() {
@@ -101,7 +108,6 @@ class PostEditor extends ProtectedPage {
 
     const title = this.props.post.path ? 'Редагувати запис' : 'Додати запис';
     const link = this.getPostLinkMarkup();
-    const tags = this.state.tags ? this.state.tags.join(', ') : '';
 
     return (
       <Wrapper>
@@ -135,8 +141,8 @@ class PostEditor extends ProtectedPage {
               <span>Теґи (через кому):</span>
               <input
                 type="text"
-                value={tags}
-                onChange={this.setTags}
+                value={this.state.tagsString}
+                onChange={this.handleTagsChange}
                 className="flex-100"
               />
             </div>
@@ -144,10 +150,11 @@ class PostEditor extends ProtectedPage {
               <div className="layout-row layout-align-start-center flex-50">
                 <input
                   type="text"
-                  placeholder="Дата"
-                  value={moment(this.state.publishedAt).format(DATE_FORMAT)}
-                  onChange={this.setDate}
-                  className="flex-45"
+                  placeholder="DD.MM.YYYY HH:mm"
+                  value={this.state.dateString}
+                  onChange={this.handleDateChange}
+                  pattern="[0-3][0-9]\.[0-1][0-9]\.[1-2][0-9][0-9][0-9] [0-2][0-9]:[0-5][0-9]"
+                  className="text-center flex-50"
                 />
                 <div className="flex-offset-5">
                   <Checkbox
