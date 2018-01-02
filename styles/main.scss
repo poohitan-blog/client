@@ -1,35 +1,37 @@
 @import 'normalize.css';
 
-@import './angular-material/angular-material.layouts';
-@import './components/nprogress';
+@import 'angular-material/angular-material.layouts';
+@import 'components/nprogress';
 
-@import './base';
+@import 'mixins/aspect-ratio';
 
-@import './components/ui/checkbox';
+@import 'base';
 
-@import './components/wrapper';
-@import './components/content';
-@import './components/header';
-@import './components/footer';
+@import 'components/ui/checkbox';
 
-@import './components/popup';
+@import 'components/wrapper';
+@import 'components/content';
+@import 'components/header';
+@import 'components/footer';
 
-@import './components/header/trashbin';
+@import 'components/popup';
 
-@import './components/page';
+@import 'components/header/trashbin';
 
-@import './components/post';
-@import './components/post/footer';
-@import './components/post/comment-form';
+@import 'components/page';
 
-@import './components/trash-post';
+@import 'components/post';
+@import 'components/post/footer';
+@import 'components/post/comment-form';
 
-@import './components/search-box';
-@import './components/search-result';
+@import 'components/trash-post';
 
-@import './components/login-button';
-@import './components/admin/panel';
-@import './components/admin/control-buttons';
+@import 'components/search-box';
+@import 'components/search-result';
 
-@import './components/admin/editor.scss';
+@import 'components/login-button';
+@import 'components/admin/panel';
+@import 'components/admin/control-buttons';
+
+@import 'components/admin/editor.scss';
 

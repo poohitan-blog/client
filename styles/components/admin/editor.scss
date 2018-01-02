@@ -8,4 +8,14 @@
     border-bottom: 1px dashed $grey;
     margin: 0.5em 0;
   }
+
+  .jodit_toolbar_btn {
+    a {
+      background-size: 16px 16px !important;
+    }
+  }
+}
+
+.jodit_resizer > i {
+  background-color: $orange !important;
 }

@@ -1,44 +1,59 @@
+// Warning: this component can be used client-side only
+// Import it using dynamic import with "ssr: false"
+
 import React from 'react';
 import PropTypes from 'prop-types';
 
 import config from '../../config';
 import styles from '../../static/libs/jodit/jodit.min.css';
-import '../../static/libs/jodit/jodit.min';
 
-// Warning: this component can be used client-side only
-// Import it using dynamic import with "ssr: false"
+import YoutubeButton from './editor/youtube-button';
+import CutButton from './editor/cut-button';
+
+const Jodit = require('../../static/libs/jodit/jodit.min.js');
 
 const buttons = [
   'bold', 'italic', '|',
   'paragraph', 'align',
   'ul', 'ol', '|',
   'brush', '|',
-  'image', 'video', 'table', 'link', '|',
+  'image',
+  YoutubeButton,
+  'table', 'link', '|',
   'hr', 'fullsize', 'source',
-  {
-    name: 'cut',
-    tooltip: 'Cut',
-    exec(editor) {
-      const hasCutAlready = editor.getEditorValue().includes('<cut>');
-
-      if (hasCutAlready) {
-        return;
-      }
-
-      editor.selection.insertHTML('<cut></cut>');
-    },
-  },
+  CutButton,
 ];
 
 class Editor extends React.Component {
   componentDidMount() {
-    const editor = new global.Jodit('.editor', {
+    const editor = new Jodit('.editor', {
       buttons,
       sizeLG: 100,
       minHeight: 200,
       height: 350,
       width: '100%',
       placeholder: 'Жили-були дід і бабця…',
+      cleanHTML: {
+        allowTags: {
+          p: true,
+          strong: true,
+          b: true,
+          em: true,
+          i: true,
+          blockquote: true,
+          div: true,
+          cut: true,
+          a: true,
+          table: true,
+          tr: true,
+          td: true,
+          img: true,
+          iframe: {
+            src: true, allowfullscreen: true, frameborder: true,
+          },
+        },
+        cleanOnPaste: true,
+      },
       uploader: {
         url: `${config.current.apiURL}/images`,
         prepareData(formData) {
