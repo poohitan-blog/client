@@ -37,7 +37,7 @@ Editor.propTypes = {
 };
 
 Editor.defaultProps = {
-  html: '',
+  html: '<p></p>',
 };
 
 export default Editor;

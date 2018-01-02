@@ -13,7 +13,7 @@ const TrashPost = (props, context) => {
       {
         context.isAuthenticated &&
         <div className="trash-post-admin-control-buttons">
-          <AdminControlButtons attachedTo="trashPost" path={props.id} />
+          <AdminControlButtons attachedTo="trashPost" id={props.id} />
         </div>
       }
       <div dangerouslySetInnerHTML={markup} />

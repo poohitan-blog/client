@@ -54,32 +54,18 @@ async function create({ model, body }, cookies) {
   return deserialize(doc, model.schema);
 }
 
-const posts = {
-  find: (query, cookies) => find({ model: Post, query }, cookies),
-  findOne: (path, cookies) => findOne({ model: Post, param: path }, cookies),
-  update: (path, body, cookies) => update({ model: Post, param: path, body }, cookies),
-  create: (body, cookies) => create({ model: Post, body }, cookies),
-  fetchCommentsCount,
-};
+async function remove({ model, param }, cookies) {
+  const url = `${API_URL}/${pluralize(model.name)}/${param}`;
+  const headers = cookies ? { Cookie: cookies } : {};
 
-const pages = {
-  find: cookies => find({ model: Page }, cookies),
-  findOne: (path, cookies) => findOne({ model: Page, param: path }, cookies),
-  update: (path, body, cookies) => update({ model: Page, param: path, body }, cookies),
-  create: (body, cookies) => create({ model: Page, body }, cookies),
-};
+  await request({
+    url,
+    headers,
+    method: 'DELETE',
+  });
 
-const trashPosts = {
-  find: (query, cookies) => find({ model: TrashPost, query }, cookies),
-  findOne: (id, cookies) => findOne({ model: TrashPost, param: id }, cookies),
-  update: (id, body, cookies) => update({ model: TrashPost, param: id, body }, cookies),
-  create: (body, cookies) => create({ model: TrashPost, body }, cookies),
-};
-
-const users = {
-  find: (query, cookies) => find({ model: User, query }, cookies),
-  findOne: (id, cookies) => findOne({ model: User, param: id }, cookies),
-};
+  return true;
+}
 
 async function search(query, cookies) {
   const url = `${API_URL}/search`;
@@ -100,6 +86,36 @@ async function search(query, cookies) {
 
   return { docs: deserialized, meta };
 }
+
+const posts = {
+  find: (query, cookies) => find({ model: Post, query }, cookies),
+  findOne: (path, cookies) => findOne({ model: Post, param: path }, cookies),
+  update: (path, body, cookies) => update({ model: Post, param: path, body }, cookies),
+  create: (body, cookies) => create({ model: Post, body }, cookies),
+  remove: (path, cookies) => remove({ model: Post, param: path }, cookies),
+  fetchCommentsCount,
+};
+
+const pages = {
+  find: cookies => find({ model: Page }, cookies),
+  findOne: (path, cookies) => findOne({ model: Page, param: path }, cookies),
+  update: (path, body, cookies) => update({ model: Page, param: path, body }, cookies),
+  create: (body, cookies) => create({ model: Page, body }, cookies),
+  remove: (path, cookies) => remove({ model: Page, param: path }, cookies),
+};
+
+const trashPosts = {
+  find: (query, cookies) => find({ model: TrashPost, query }, cookies),
+  findOne: (id, cookies) => findOne({ model: TrashPost, param: id }, cookies),
+  update: (id, body, cookies) => update({ model: TrashPost, param: id, body }, cookies),
+  create: (body, cookies) => create({ model: TrashPost, body }, cookies),
+  remove: (id, cookies) => remove({ model: TrashPost, param: id }, cookies),
+};
+
+const users = {
+  find: (query, cookies) => find({ model: User, query }, cookies),
+  findOne: (id, cookies) => findOne({ model: User, param: id }, cookies),
+};
 
 const API = {
   posts,

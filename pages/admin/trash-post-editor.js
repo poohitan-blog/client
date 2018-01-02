@@ -39,16 +39,22 @@ class TrashPostEditor extends ProtectedPage {
 
   async submit() {
     if (this.props.trashPost.id) {
-      const updatedTrashPost = await API.trashPosts.update(this.props.trashPost.id, this.state, getAllCookies());
+      await API.trashPosts.update(this.props.trashPost.id, this.state, getAllCookies());
 
-      Router.push(`/trash?id=${updatedTrashPost.id}`, `/trash/${updatedTrashPost.id}`);
+      Router.push('/trash');
 
       return;
     }
 
-    const newTrashPost = await API.trashPosts.create(this.state, getAllCookies());
+    if (!this.state.body) {
+      // TODO: show error popup
 
-    Router.push(`/trash?id=${newTrashPost.id}`, `/trash/${newTrashPost.id}`);
+      return;
+    }
+
+    await API.trashPosts.create(this.state, getAllCookies());
+
+    Router.push('/trash');
   }
 
   render() {
@@ -64,7 +70,9 @@ class TrashPostEditor extends ProtectedPage {
             <div className="flex-100">
               <Editor html={this.state.body} onChange={body => this.setState({ body })} />
             </div>
-            <button onClick={this.submit}>Вйо</button>
+            <div className="layout-row layout-align-center-center flex-100">
+              <button onClick={this.submit} className="flex-30">Вйо</button>
+            </div>
           </div>
         </Content>
       </Wrapper>

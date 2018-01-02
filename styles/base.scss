@@ -29,7 +29,7 @@
 body {
   background: $smoke-white;
   font-family: $main-font-family;
-  font-size: 14px;
+  font-size: $main-font-size;
   line-height: 1.35em;
   color: $black;
 
@@ -92,7 +92,8 @@ svg {
   height: auto;
 }
 
-input {
+input,
+button {
   color: $grey;
   border: 1px solid $light-grey;
   font-family: $main-font-family;
@@ -101,6 +102,27 @@ input {
 
   &:focus {
     border-color: $orange;
+  }
+}
+
+button {
+  background-color: $white;
+  padding: 10px 15px;
+  border-radius: 5px;
+  transition: all 100ms linear;
+
+  &:hover {
+    background-color: $orange;
+    border-color: $orange;
+    color: $white;
+  }
+}
+
+button, *[role="button"] {
+  transition: all 100ms linear;
+
+  &:active {
+    transform: translateY(2px);
   }
 }
 

@@ -9,6 +9,8 @@
       "aspects": [ "noHref", "invalidHref", "preferButton" ]
     }],
     "import/no-extraneous-dependencies": 0,
-    "max-len": [2, { "code": 120, "ignoreStrings": true, "ignoreUrls": true, "ignoreTemplateLiterals": true }]
+    "max-len": [2, { "code": 120, "ignoreStrings": true, "ignoreUrls": true, "ignoreTemplateLiterals": true }],
+    "jsx-a11y/no-static-element-interactions": [1],
+    "jsx-a11y/click-events-have-key-events": [1]
   }
 }

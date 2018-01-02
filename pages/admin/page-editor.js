@@ -49,6 +49,12 @@ class PageEditor extends ProtectedPage {
       return;
     }
 
+    if (!this.state.body || (!this.state.title && !this.state.path)) {
+      // TODO: show error popup
+
+      return;
+    }
+
     const newPage = await API.pages.create(this.state, getAllCookies());
 
     Router.push(`/page?path=${newPage.path}`, `/${newPage.path}`);
@@ -101,7 +107,9 @@ class PageEditor extends ProtectedPage {
             <div className="flex-100">
               <Editor html={this.state.body} onChange={body => this.setState({ body })} />
             </div>
-            <button onClick={this.submit}>Вйо</button>
+            <div className="layout-row layout-align-center-center flex-100">
+              <button onClick={this.submit} className="flex-30">Вйо</button>
+            </div>
           </div>
         </Content>
       </Wrapper>

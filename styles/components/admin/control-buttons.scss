@@ -4,6 +4,8 @@
   .admin-control-button {
     cursor: pointer;
     margin-left: 0.3em;
+    padding: 0;
+    border: none;
 
     &:first-child {
       margin-left: 0;

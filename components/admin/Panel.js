@@ -13,7 +13,7 @@ class Panel extends React.Component {
     const pages = !this.context ? [] : this.context.pages.map(page => (
       <li key={page.id}>
         <Link href={`/page?path=${page.path}`} as={`/${page.path}`}>
-          <a>{page.title}</a>
+          <a>{page.title || page.path}</a>
         </Link>
       </li>
     ));
@@ -28,7 +28,7 @@ class Panel extends React.Component {
 
     return (
       <nav className="admin-panel">
-        <div className="admin-panel-block">
+        <div className="admin-panel-block admin-panel-block-main">
           <h3>Панель приладів</h3>
           <ul>
             <li><Link href="/admin/post-editor" as="/posts/new"><a>Додати запис</a></Link></li>

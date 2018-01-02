@@ -58,6 +58,12 @@ class PostEditor extends ProtectedPage {
       return;
     }
 
+    if (!(this.state.title && this.state.body)) {
+      // TODO: show error popup
+
+      return;
+    }
+
     const newPost = await API.posts.create(this.state, getAllCookies());
 
     Router.push(`/post?path=${newPost.path}`, `/p/${newPost.path}`);
@@ -120,7 +126,9 @@ class PostEditor extends ProtectedPage {
                 className="flex-100"
               />
             </div>
-            <button onClick={this.submit}>Вйо</button>
+            <div className="layout-row layout-align-center-center flex-100">
+              <button onClick={this.submit} className="flex-30">Вйо</button>
+            </div>
           </div>
         </Content>
       </Wrapper>
