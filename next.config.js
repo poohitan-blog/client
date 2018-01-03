@@ -1,3 +1,4 @@
+const webpack = require('webpack');
 const path = require('path');
 const glob = require('glob');
 
@@ -34,6 +35,13 @@ module.exports = {
         loader: 'raw-loader',
       } // eslint-disable-line
     );
+
+    const jQueryPlugin = new webpack.ProvidePlugin({
+      $: 'jquery',
+      jQuery: 'jquery',
+    });
+
+    config.plugins.push(jQueryPlugin);
 
     return config;
   },
