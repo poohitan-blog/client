@@ -17,12 +17,14 @@ $horizontal-padding: 1em;
     margin-left: 0.7em;
     margin-right: 0.7em;
 
-    &:first-child {
-      margin-left: 0;
-    }
+    @media (max-width: 600px) {
+      &:first-child {
+        margin-left: 0;
+      }
 
-    &:last-child {
-      margin-right: 0;
+      &:last-child {
+        margin-right: 0;
+      }
     }
   }
 
@@ -42,11 +44,15 @@ $horizontal-padding: 1em;
 
   .post-footer-social {
     font-size: 1.2em;
-    position: absolute;
-    top: 2px;
-    right: calc(#{$horizontal-padding} - 3px);
-    background: linear-gradient(to left, $yellowy-grey, $yellowy-grey 70%, transparent);
-    padding-left: 2.5em;
+
+
+    @media (min-width: 600px) {
+      position: absolute;
+      top: 2px;
+      right: calc(#{$horizontal-padding} - 3px);
+      background: linear-gradient(to left, $yellowy-grey, $yellowy-grey 70%, transparent);
+      padding-left: 2.5em;
+    }
 
     .jssocials-shares {
       margin: 0;
