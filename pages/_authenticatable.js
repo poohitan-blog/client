@@ -10,7 +10,7 @@ class AuthenticatablePage extends React.Component {
     const props = { isAuthenticated };
 
     if (isAuthenticated) {
-      const { docs } = await API.pages.find({}, getAllCookies(req));
+      const { docs } = await API.pages.find(getAllCookies(req));
 
       props.pages = docs;
     }
