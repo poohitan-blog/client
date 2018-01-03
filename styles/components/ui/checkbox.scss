@@ -1,0 +1,32 @@
+@import '../../variables';
+
+.checkbox {
+  .checkbox-native {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+  }
+
+  .checkbox-square {
+    border: 1px solid $light-grey;
+    fill: $grey;
+    box-sizing: border-box;
+    width: 1em;
+    height: 1em;
+
+    svg {
+      margin-bottom: 1px;
+    }
+  }
+
+  .checkbox-label {
+    margin-left: 0.5em;
+  }
+
+  &:hover {
+    .checkbox-square {
+      border-color: $orange;
+    }
+  }
+}

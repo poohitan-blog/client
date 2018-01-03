@@ -1,4 +1,4 @@
-@import './variables';
+@import 'variables';
 
 @font-face {
   font-family: 'Movavi Grotesque';
@@ -32,9 +32,15 @@ body {
   font-size: $main-font-size;
   line-height: 1.35em;
   color: $black;
+  margin: 0;
+  padding: 0;
 
   @media (max-width: 640px) {
     font-size: 12px;
+  }
+
+  &.raspberries {
+    background-image: url('/static/images/raspberry.gif');
   }
 }
 
@@ -53,6 +59,7 @@ h3 {
 
 img {
   max-width: 100%;
+  display: block;
 }
 
 a {
@@ -81,15 +88,20 @@ hr {
 }
 
 blockquote {
-  color: $dark-grey;
+  color: $grey;
   margin: 0 20px;
   padding: 2px 5px 5px 10px;
-  border-left: 3px solid $grey;
+  border-left: 3px solid $lighter-grey;
+  white-space: pre-wrap;
 }
 
 svg {
   width: auto;
   height: auto;
+}
+
+cut {
+  display: none;
 }
 
 input,
@@ -102,6 +114,11 @@ button {
 
   &:focus {
     border-color: $orange;
+  }
+
+  &:invalid {
+    border-color: red;
+    box-shadow: none;
   }
 }
 
@@ -146,8 +163,8 @@ button, *[role="button"] {
   text-align: center;
 }
 
-.raspberries {
-  background-image: url('/static/images/raspberry.gif');
+.hidden {
+  display: none;
 }
 
 .children-equal-margin-vertical {
@@ -171,4 +188,13 @@ button, *[role="button"] {
 .text-overflow-ellipsis {
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.video-16-9 {
+  @include aspect-ratio(16, 9);
+
+  iframe {
+    width: 100%;
+    height: 100%;
+  }
 }

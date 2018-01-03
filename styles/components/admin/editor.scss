@@ -1,0 +1,32 @@
+@import '../../variables';
+
+.editor-wrapper {
+  cut {
+    display: block;
+    width: 100%;
+    height: 1px;
+    border-bottom: 1px dashed $grey;
+    margin: 0.5em 0;
+  }
+
+  .jodit_toolbar_btn {
+    a {
+      background-size: 16px 16px !important;
+    }
+  }
+
+  .editor-quote-plugin textarea {
+    line-height: 1.2em;
+    font-family: $main-font-family;
+  }
+
+  .jodit_toolbar > li.jodit_toolbar_btn.jodit_toolbar_btn-separator {
+    border-left: 1px solid $light-grey;
+    border-right: none;
+    margin: 1px 3px 0 3px !important;
+  }
+}
+
+.jodit_resizer > i {
+  background-color: $orange !important;
+}

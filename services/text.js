@@ -93,4 +93,23 @@ export function getImagesFromHTML(html) {
   return images;
 }
 
-export default { stripHTML, getImagesFromHTML, shorten };
+export function wrapImagesInLinks(html, { imagesClass = '' } = {}) {
+  const regex = /<img .*?src="(.+?)".*?\/?>/g;
+  const matches = [];
+  let match = regex.exec(html);
+
+  while (match) {
+    matches.push(match);
+    match = regex.exec(html);
+  }
+
+  return matches.reduce((resultHtml, [imageTag, imageLink]) =>
+    resultHtml.replace(imageTag, `<a href="${imageLink}" class="${imagesClass}">${imageTag}</a>`), html);
+}
+
+export default {
+  stripHTML,
+  getImagesFromHTML,
+  wrapImagesInLinks,
+  shorten,
+};

@@ -1,0 +1,62 @@
+@import '../../variables';
+
+.featherlight {
+  background: transparentize($white, 0.3) !important;
+}
+
+$lightbox-height: calc(100% - 2em);
+$lightbox-padding: 1em;
+
+.featherlight-content {
+  border: none !important;
+  padding: $lightbox-padding !important;
+  max-height: $lightbox-height !important;
+
+  img {
+    max-height: calc(#{$lightbox-height} - #{$lightbox-padding});
+  }
+}
+
+.featherlight-previous,
+.featherlight-next {
+  background-color: $white;
+  border-radius: 50%;
+  border: 1px solid $light-grey;
+  opacity: 0.7;
+  transition: opacity 150ms linear;
+
+  display: block;
+  box-sizing: border-box;
+  width: 2em;
+  height: 2em;
+  position: fixed;
+  top: 50%;
+  margin-top: -1em;
+  overflow: hidden;
+  padding: 2em;
+
+  &:hover {
+    border: 1px solid $orange;
+    opacity: 1;
+  }
+
+  span {
+    color: $dark-grey;
+    font-size: 1.5em;
+    display: block;
+  }
+}
+
+.featherlight-close-icon {
+  display: none;
+}
+
+.featherlight-previous {
+  left: 2em;
+  right: auto;
+}
+
+.featherlight-next {
+  right: 2em;
+  left: auto;
+}

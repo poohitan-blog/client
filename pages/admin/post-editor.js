@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 import Router from 'next/router';
+import moment from 'moment';
 
 import API from '../../services/api';
 import Error from '../_error';
@@ -12,8 +13,11 @@ import ProtectedPage from '../_protected';
 import Wrapper from '../../components/Wrapper';
 import Header from '../../components/Header';
 import Content from '../../components/Content';
+import Checkbox from '../../components/ui/Checkbox';
 
 import Editor from '../../utils/editor';
+
+const DATE_FORMAT = 'DD.MM.YYYY HH:mm';
 
 class PostEditor extends ProtectedPage {
   static async getInitialProps({ req, query }) {
@@ -36,17 +40,32 @@ class PostEditor extends ProtectedPage {
     super(props);
 
     this.state = props.post || {};
+    this.state.tagsString = props.post.tags && props.post.tags.length ? props.post.tags.join(', ') : '';
+    this.state.dateString = props.post.publishedAt ? moment(props.post.publishedAt).format(DATE_FORMAT) : '';
 
     this.handleTagsChange = this.handleTagsChange.bind(this);
+    this.handleDateChange = this.handleDateChange.bind(this);
     this.getPostLinkMarkup = this.getPostLinkMarkup.bind(this);
     this.submit = this.submit.bind(this);
   }
 
   handleTagsChange(event) {
     const tagsString = event.target.value;
-    const tags = tagsString.split(',').map(tag => tag.trim());
 
-    this.setState({ tags });
+    this.setState({
+      tagsString,
+      tags: tagsString.split(',').map(tag => tag.trim()),
+    });
+  }
+
+  handleDateChange(event) {
+    const dateString = event.target.value;
+    const date = moment(dateString, DATE_FORMAT).toDate();
+
+    this.setState({
+      dateString,
+      publishedAt: date,
+    });
   }
 
   async submit() {
@@ -87,14 +106,15 @@ class PostEditor extends ProtectedPage {
       return <Error statusCode={this.props.error.status} />;
     }
 
+    const title = this.props.post.path ? 'Редагувати запис' : 'Додати запис';
     const link = this.getPostLinkMarkup();
-    const tags = this.state.tags ? this.state.tags.join(', ') : '';
 
     return (
       <Wrapper>
         <Header />
         <Content>
           <div className="children-equal-margin-vertical layout-row layout-wrap">
+            <h1>{title}</h1>
             <input
               type="text"
               placeholder="Назва"
@@ -121,12 +141,29 @@ class PostEditor extends ProtectedPage {
               <span>Теґи (через кому):</span>
               <input
                 type="text"
-                value={tags}
+                value={this.state.tagsString}
                 onChange={this.handleTagsChange}
                 className="flex-100"
               />
             </div>
-            <div className="layout-row layout-align-center-center flex-100">
+            <div className="layout-row layout-align-space-between-center flex-100">
+              <div className="layout-row layout-align-start-center flex-50">
+                <input
+                  type="text"
+                  placeholder="DD.MM.YYYY HH:mm"
+                  value={this.state.dateString}
+                  onChange={this.handleDateChange}
+                  pattern="[0-3][0-9]\.[0-1][0-9]\.[1-2][0-9][0-9][0-9] [0-2][0-9]:[0-5][0-9]"
+                  className="text-center flex-50"
+                />
+                <div className="flex-offset-5">
+                  <Checkbox
+                    label="Заховати"
+                    checked={this.state.private}
+                    onChange={hidden => this.setState({ private: hidden })}
+                  />
+                </div>
+              </div>
               <button onClick={this.submit} className="flex-30">Вйо</button>
             </div>
           </div>

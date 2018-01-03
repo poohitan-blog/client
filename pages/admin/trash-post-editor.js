@@ -62,11 +62,14 @@ class TrashPostEditor extends ProtectedPage {
       return <Error statusCode={this.props.error.status} />;
     }
 
+    const title = this.props.trashPost.id ? 'Редагувати запис' : 'Додати запис у смітник';
+
     return (
       <Wrapper>
         <Header />
         <Content>
           <div className="children-equal-margin-vertical layout-row layout-wrap">
+            <h1>{title}</h1>
             <div className="flex-100">
               <Editor html={this.state.body} onChange={body => this.setState({ body })} />
             </div>
