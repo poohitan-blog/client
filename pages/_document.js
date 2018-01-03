@@ -29,10 +29,19 @@ class MyDocument extends Document {
       <html lang="uk-UA">
         <Head>
           <title>poohitan</title>
+
           <meta name="viewport" content="initial-scale=1.0, width=device-width" key="viewport" />
           <meta httpEquiv="content-type" content="text/html; charset=utf-8" />
           <link rel="icon" href="/static/icons/favicon.ico" type="image/x-icon" />
           <link rel="alternate" type="application/rss+xml" title="RSS блоґу" href={`${config.current.clientURL}/rss`} />
+
+          <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossOrigin="anonymous" />
+          <script src="/static/libs/lightbox/featherlight.min.js" type="text/javascript" charSet="utf-8" />
+          <script src="/static/libs/lightbox/featherlight.gallery.uk.min.js" type="text/javascript" charSet="utf-8" />
+
+          <link href="/static/libs/lightbox/featherlight.min.css" type="text/css" rel="stylesheet" />
+          <link href="/static/libs/lightbox/featherlight.gallery.min.css" type="text/css" rel="stylesheet" />
+
           <style dangerouslySetInnerHTML={{ __html: styles }} />
         </Head>
         <body className={this.props.raspberriesDay ? 'raspberries' : ''}>

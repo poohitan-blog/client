@@ -4,7 +4,6 @@ import Head from 'next/head';
 import Error from './_error';
 import API from '../services/api';
 import { getAllCookies } from '../services/cookies';
-import * as Text from '../services/text';
 
 import AuthenticatablePage from './_authenticatable';
 import Wrapper from '../components/Wrapper';
@@ -19,11 +18,10 @@ class PostPage extends AuthenticatablePage {
     try {
       const parentProps = await super.getInitialProps({ req });
       const post = await API.posts.findOne(query.path, getAllCookies(req));
-      const images = Text.getImagesFromHTML(post.body);
       const commentsCountByPostPath = await API.posts.fetchCommentsCount();
       const postWithCommentsCount = Object.assign({ commentsCount: commentsCountByPostPath[post.path] }, post);
 
-      return Object.assign(parentProps, { post: postWithCommentsCount, images });
+      return Object.assign(parentProps, { post: postWithCommentsCount });
     } catch (error) {
       return { error };
     }
