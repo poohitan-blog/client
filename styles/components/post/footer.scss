@@ -1,10 +1,13 @@
 @import '../../variables';
 
+$horizontal-padding: 1em;
+
 .post-footer {
   background-color: $yellowy-grey;
   line-height: 1.55em;
-  padding: 0.28em 1em;
+  padding: 0.28em $horizontal-padding;
   overflow: hidden;
+  position: relative;
 
   @media (max-width: 600px) {
     flex-wrap: wrap;
@@ -35,5 +38,30 @@
   .post-footer-date-icon {
     width: 1.1em;
     min-width: 1.1em;
+  }
+
+  .post-footer-social {
+    font-size: 1.2em;
+    position: absolute;
+    top: 2px;
+    right: calc(#{$horizontal-padding} - 3px);
+    background: linear-gradient(to left, $yellowy-grey, $yellowy-grey 70%, transparent);
+    padding-left: 2.5em;
+
+    .jssocials-shares {
+      margin: 0;
+
+      * {
+        margin: 0 2px;
+
+        &:first-child {
+          margin-left: 0;
+        }
+
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+    }
   }
 }
