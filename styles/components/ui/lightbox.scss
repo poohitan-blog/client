@@ -19,7 +19,7 @@ $lightbox-padding: 1em;
 
 .featherlight-previous,
 .featherlight-next {
-  background-color: $white;
+  background-color: $white !important;
   border-radius: 50%;
   border: 1px solid $light-grey;
   opacity: 0.7;
@@ -29,8 +29,8 @@ $lightbox-padding: 1em;
   box-sizing: border-box;
   width: 2em;
   height: 2em;
-  position: fixed;
-  top: 50%;
+  position: fixed !important;
+  top: 50% !important;
   margin-top: -1em;
   overflow: hidden;
   padding: 2em;
@@ -41,9 +41,9 @@ $lightbox-padding: 1em;
   }
 
   span {
-    color: $dark-grey;
-    font-size: 1.5em;
-    display: block;
+    color: $dark-grey !important;
+    font-size: 1.5em !important;
+    display: block !important;
   }
 }
 
@@ -52,11 +52,11 @@ $lightbox-padding: 1em;
 }
 
 .featherlight-previous {
-  left: 2em;
-  right: auto;
+  left: 2em !important;
+  right: auto !important;
 }
 
 .featherlight-next {
-  right: 2em;
-  left: auto;
+  right: 2em !important;
+  left: auto !important;
 }
