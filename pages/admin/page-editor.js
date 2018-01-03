@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Head from 'next/head';
 import Link from 'next/link';
 import Router from 'next/router';
 
@@ -84,6 +85,9 @@ class PageEditor extends ProtectedPage {
 
     return (
       <Wrapper>
+        <Head>
+          <title>{title}</title>
+        </Head>
         <Header />
         <Content>
           <div className="children-equal-margin-vertical layout-row layout-wrap">
