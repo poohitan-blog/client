@@ -13,7 +13,7 @@ const config = {
 
   production: {
     port: 4000,
-    clientURL: 'https://new.poohitan.com',
+    clientURL: 'https://poohitan.com',
     apiURL: 'https://api.poohitan.com',
     cookiesDomain: '.poohitan.com',
 
