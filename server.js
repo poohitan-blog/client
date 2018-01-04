@@ -8,6 +8,8 @@ const dev = config.environment !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
 
+const migrationMap = require('./routes/migration-map.js');
+
 const pagesRouter = require('./routes/pages.js');
 const postsRouter = require('./routes/posts.js');
 const trashRouter = require('./routes/trash.js');
@@ -15,6 +17,8 @@ const trashRouter = require('./routes/trash.js');
 app.prepare()
   .then(() => {
     const server = express();
+
+    server.use(migrationMap);
 
     server.use(cookieParser());
 

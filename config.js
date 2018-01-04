@@ -18,7 +18,7 @@ const config = {
     cookiesDomain: '.poohitan.com',
 
     disqus: {
-      shortname: 'new-poohitan',
+      shortname: 'poohitan',
       APIKey: 'yMQUyJ8OWzQhQdUQvU9UT1H2xtvaVbevBScMnaXkhkIauYUKjOoQGLL6usjy7Q3b',
     },
 
