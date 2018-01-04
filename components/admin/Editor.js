@@ -28,6 +28,11 @@ class Editor extends React.Component {
       height: 350,
       heightMax: 350,
 
+      fileMaxSize: 15 * 1024 * 1024,
+      fileUploadMethod: 'POST',
+      fileUploadParam: 'files',
+      fileUploadURL: `${config.current.apiURL}/files/froala`,
+
       htmlAllowedEmptyTags: ['iframe', 'object', 'video', 'cut', 'pre', 'code'],
       htmlAllowedTags: ['a', 'abbr', 'address', 'audio', 'b', 'blockquote', 'br', 'cite', 'code', 'cut', 'div', 'em', 'embed', 'figcaption', 'figure', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'hr', 'i', 'iframe', 'img', 'li', 'link', 'object', 'ol', 'p', 'pre', 's', 'span', 'small', 'source', 'strike', 'strong', 'sub', 'sup', 'table', 'tbody', 'td', 'textarea', 'tfoot', 'th', 'thead', 'time', 'title', 'tr', 'u', 'ul', 'video'],
       htmlDoNotWrapTags: ['br', 'blockquote', 'code', 'pre', 'hr'],
