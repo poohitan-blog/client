@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 import FullBody from './post/FullBody';
 import CutBody from './post/CutBody';
 import Footer from './post/Footer';
@@ -8,6 +9,9 @@ import AdminControlButtons from './admin/ControlButtons';
 import * as Text from '../services/text';
 
 const LIGHTBOX_CLASS = 'lightbox-image';
+const Lightbox = dynamic(import('./ui/Lightbox'), { ssr: false, loading: () => null });
+const SyntaxHighlighter = dynamic(import('./ui/SyntaxHighlighter'), { ssr: false, loading: () => null });
+const MathHighlighter = dynamic(import('./ui/MathHighlighter'), { ssr: false, loading: () => null });
 
 class Post extends React.Component {
   constructor(props) {
@@ -18,18 +22,12 @@ class Post extends React.Component {
     };
   }
 
-  componentDidMount() {
-    global.$(`.post[data-path="${this.props.path}"] .post-body a.${LIGHTBOX_CLASS}`).featherlightGallery({
-      galleryFadeIn: 100,
-      galleryFadeOut: 200,
-      type: 'image',
-    });
-  }
-
   render() {
     const body = this.props.cut
       ? <CutBody {...this.props} body={this.state.body} />
       : <FullBody {...this.props} body={this.state.body} />;
+
+    const lightboxImageSelector = `.post[data-path="${this.props.path}"] .post-body a.${LIGHTBOX_CLASS}`;
 
     return (
       <article className="post post-complete" data-path={this.props.path}>
@@ -43,6 +41,9 @@ class Post extends React.Component {
           }
         </h1>
         <div className="post-body">{body}</div>
+        <Lightbox selector={lightboxImageSelector} />
+        <SyntaxHighlighter />
+        <MathHighlighter />
         <Footer {...this.props} />
       </article>
     );

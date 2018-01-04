@@ -88,16 +88,26 @@ hr {
 }
 
 blockquote {
-  color: $grey;
-  margin: 0 20px;
-  padding: 2px 5px 5px 10px;
-  border-left: 3px solid $lighter-grey;
+  color: $grey !important;
+  margin: 1em 1.2em !important;
+  padding: 2px 5px 5px 10px !important;
+  border-left: 3px solid $lighter-grey !important;
   white-space: pre-wrap;
+}
+
+pre {
+  font-size: 0.8em;
+  padding: 0.5em 1em !important;
 }
 
 svg {
   width: auto;
   height: auto;
+}
+
+ol, ul {
+  margin: 1em 0;
+  padding: 0 0 0 2.5em;
 }
 
 cut {

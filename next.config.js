@@ -1,9 +1,10 @@
+const webpack = require('webpack');
 const path = require('path');
 const glob = require('glob');
 
 module.exports = {
   webpack: (config, { dev }) => { // eslint-disable-line
-    config.module.rules.push(
+    const rules = [
       {
         test: /\.(css|scss)/,
         loader: 'emit-file-loader',
@@ -32,8 +33,18 @@ module.exports = {
       {
         test: /\.svg$/,
         loader: 'raw-loader',
-      } // eslint-disable-line
-    );
+      },
+    ];
+
+    config.module.rules.push(...rules);
+
+    const jQueryPlugin = new webpack.ProvidePlugin({
+      $: 'jquery',
+      jQuery: 'jquery',
+      'window.jQuery': 'jquery',
+    });
+
+    config.plugins.push(jQueryPlugin);
 
     return config;
   },

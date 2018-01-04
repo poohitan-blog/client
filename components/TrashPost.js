@@ -1,11 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 import moment from 'moment';
 import AdminControlButtons from './admin/ControlButtons';
 import * as Text from '../services/text';
 
 const LIGHTBOX_CLASS = 'lightbox-image';
+const Lightbox = dynamic(import('./ui/Lightbox'), { ssr: false, loading: () => null });
 
 class TrashPost extends React.Component {
   constructor(props) {
@@ -16,17 +18,10 @@ class TrashPost extends React.Component {
     };
   }
 
-  componentDidMount() {
-    global.$(`.trash-post-body a.${LIGHTBOX_CLASS}`).featherlightGallery({
-      galleryFadeIn: 100,
-      galleryFadeOut: 200,
-      type: 'image',
-    });
-  }
-
   render() {
     const markup = { __html: this.state.body };
     const formattedDate = moment(this.props.createdAt).format('DD:MM:YYYY, HH:mm');
+    const lightboxImageSelector = `.trash-post-body a.${LIGHTBOX_CLASS}`;
 
     return (
       <div className="trash-post">
@@ -37,6 +32,7 @@ class TrashPost extends React.Component {
           </div>
         }
         <div className="trash-post-body" dangerouslySetInnerHTML={markup} />
+        <Lightbox selector={lightboxImageSelector} />
         <div className="trash-post-footer smaller layout-row layout-align-space-between-center">
           <span className="nowrap">
             <Link as={`/trash/${this.props.id}`} href={`/trash?id=${this.props.id}`}><a>постійне посилання</a></Link>

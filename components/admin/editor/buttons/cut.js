@@ -1,14 +1,10 @@
-export default {
-  name: 'cut',
-  tooltip: 'Кат',
-  iconURL: '/static/icons/scissors.svg',
-  exec(editor) {
-    const hasCutAlready = editor.getEditorValue().includes('<cut>');
-
-    if (hasCutAlready) {
-      return;
-    }
-
-    editor.selection.insertHTML('<cut></cut>');
+$.FroalaEditor.DefineIcon('cut', { NAME: 'scissors' });
+$.FroalaEditor.RegisterCommand('cut', {
+  title: 'Вставити кат',
+  focus: true,
+  undo: true,
+  refreshAfterCallback: true,
+  callback() {
+    this.html.insert('<cut></cut>', false);
   },
-};
+});

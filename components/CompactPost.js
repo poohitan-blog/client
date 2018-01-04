@@ -14,9 +14,9 @@ const CompactPost = (props) => {
         <h3 className="post-title">
           <Link as={`/p/${props.path}`} href={`/post?path=${props.path}`} prefetch><a>{props.title}</a></Link>
         </h3>
-        <div className="post-date smaller nowrap">{ formatPostDate(props.publishedAt) }</div>
+        <div className="post-date smaller nowrap">{formatPostDate(props.publishedAt)}</div>
       </div>
-      <div className="post-body">{shortenedBody}</div>
+      <div className="post-body" dangerouslySetInnerHTML={{ __html: shortenedBody }} />
     </article>
   );
 };

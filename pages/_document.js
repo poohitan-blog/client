@@ -35,16 +35,8 @@ class MyDocument extends Document {
           <link rel="icon" href="/static/icons/favicon.ico" type="image/x-icon" />
           <link rel="alternate" type="application/rss+xml" title="RSS блоґу" href={`${config.current.clientURL}/rss`} />
 
-          <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossOrigin="anonymous" />
+          <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML" />
 
-          <script src="/static/libs/lightbox/featherlight.min.js" type="text/javascript" charSet="utf-8" />
-          <script src="/static/libs/lightbox/featherlight.gallery.uk.min.js" type="text/javascript" charSet="utf-8" />
-          <link href="/static/libs/lightbox/featherlight.min.css" type="text/css" rel="stylesheet" />
-          <link href="/static/libs/lightbox/featherlight.gallery.min.css" type="text/css" rel="stylesheet" />
-
-          <script src="/static/libs/social/jssocials.min.js" type="text/javascript" charSet="utf-8" />
-          <link href="/static/libs/social/jssocials.css" type="text/css" rel="stylesheet" />
-          <link href="/static/libs/social/jssocials-theme-minima.css" type="text/css" rel="stylesheet" />
           <link type="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 
           <style dangerouslySetInnerHTML={{ __html: styles }} />

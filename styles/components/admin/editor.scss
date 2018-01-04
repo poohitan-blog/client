@@ -9,24 +9,14 @@
     margin: 0.5em 0;
   }
 
-  .jodit_toolbar_btn {
-    a {
-      background-size: 16px 16px !important;
+  .fr-wrapper {
+    a[href*="froala.com"] {
+      display: none !important;
     }
   }
 
-  .editor-quote-plugin textarea {
-    line-height: 1.2em;
-    font-family: $main-font-family;
+  pre {
+    background: $dark-grey;
+    color: $white;
   }
-
-  .jodit_toolbar > li.jodit_toolbar_btn.jodit_toolbar_btn-separator {
-    border-left: 1px solid $light-grey;
-    border-right: none;
-    margin: 1px 3px 0 3px !important;
-  }
-}
-
-.jodit_resizer > i {
-  background-color: $orange !important;
 }
