@@ -3,54 +3,105 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import config from '../../config';
 
-import styles from '../../static/libs/jodit/jodit.min.css';
-
-import YoutubeButton from './editor/buttons/youtube';
-import CutButton from './editor/buttons/cut';
-import QuoteButton from './editor/buttons/quote';
-import UploaderPlugin from './editor/plugins/uploader';
-
-import Localization from './editor/localization';
-
-const Jodit = require('../../static/libs/jodit/jodit.min.js');
+import '../../static/libs/froala/froala_editor.pkgd.min';
+import '../../static/libs/froala/plugins/image.min';
+import '../../static/libs/froala/languages/uk';
+import './editor/buttons/cut';
+import editorStyles from '../../static/libs/froala/froala_editor.pkgd.min.css';
+import styles from '../../static/libs/froala/froala_style.min.css';
+import theme from '../../static/libs/froala/themes/custom.css';
 
 const buttons = [
-  'bold', 'italic', '|',
-  'paragraph', 'align',
-  'ul', 'ol', 'brush', '|',
-  'image',
-  YoutubeButton,
-  QuoteButton,
-  'link', 'hr', '|',
-  'fullsize', 'source',
-  CutButton,
-
+  'bold', 'italic', 'underline', 'strikeThrough', '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', '|', 'subscript', 'superscript', '|', 'color', 'clearFormatting',
+  '|', '-', 'insertLink', 'insertImage', 'insertVideo', 'insertFile', 'quote', 'code', 'insertTable', '|', 'insertHR', 'fullscreen', 'html', 'cut',
 ];
 
 class Editor extends React.Component {
   componentDidMount() {
-    Jodit.lang.uk = Localization;
-    const editor = new Jodit('.editor', {
-      buttons,
-      sizeLG: 100,
-      minHeight: 200,
+    const $editor = $('.editor');
+
+    $editor.froalaEditor({
+      charCounterCount: false,
+      editorClass: 'editor-inner',
       height: 350,
-      width: '100%',
-      placeholder: 'Жили-були дід і бабця…',
+      heightMax: 350,
+
+      htmlAllowedEmptyTags: ['iframe', 'object', 'video', 'cut', 'pre', 'code'],
+      htmlAllowedTags: ['a', 'abbr', 'address', 'audio', 'b', 'blockquote', 'br', 'cite', 'code', 'cut', 'div', 'em', 'embed', 'figcaption', 'figure', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'hr', 'i', 'iframe', 'img', 'li', 'link', 'object', 'ol', 'p', 'pre', 's', 'span', 'small', 'source', 'strike', 'strong', 'sub', 'sup', 'table', 'tbody', 'td', 'textarea', 'tfoot', 'th', 'thead', 'time', 'title', 'tr', 'u', 'ul', 'video'],
+      htmlDoNotWrapTags: ['br', 'blockquote', 'code', 'pre', 'hr'],
+      htmlExecuteScripts: false,
+      htmlUntouched: true,
+
+      imageAllowedTypes: ['jpeg', 'jpg', 'png', 'gif'],
+      imageDefaultWidth: 0,
+      imageEditButtons: ['imageReplace', 'imageRemove', 'imageSize', '-', '|', 'imageLink', 'linkOpen', 'linkEdit', 'linkRemove', 'imageAlt', 'imageAlign'],
+      imageMaxSize: 15 * 1024 * 1024,
+      imagePasteProcess: true,
+      imageUploadMethod: 'POST',
+      imageUploadParam: 'images',
+      imageUploadURL: `${config.current.apiURL}/images/froala`,
+
       language: 'uk',
-      uploader: UploaderPlugin,
+
+      paragraphFormat: {
+        N: 'Звичайний',
+        H1: 'Заголовок 1',
+        H2: 'Заголовок 2',
+        H3: 'Заголовок 3',
+        H4: 'Заголовок 4',
+        PRE: 'Код',
+        SMALL: 'Маленький',
+      },
+
+      pastePlain: true,
+      quickInsertButtons: ['image', 'video', 'hr'],
+
+      requestWithCredentials: true,
+
+      theme: 'custom',
+
+      toolbarButtons: buttons,
+      toolbarButtonsMD: buttons,
+      toolbarButtonsSM: buttons,
+      toolbarButtonsXS: buttons,
+
+      videoDefaultWidth: 0,
+      videoEditButtons: ['videoReplace', 'videoRemove', '|', 'videoAlign', 'videoSize'],
+      videoInsertButtons: ['videoBack', '|', 'videoByURL', 'videoEmbed'],
+      videoMove: false,
+
+      width: '100%',
     });
 
-    editor.setEditorValue(this.props.html);
+    $editor.froalaEditor('html.set', this.props.html);
 
-    editor.events.on('change', (oldContent, newContent) => this.props.onChange(newContent));
+    $editor.on('keyup', () => this.sendContent($editor));
+    $editor.on('froalaEditor.contentChanged', () => this.sendContent($editor));
+
+    $editor.on('froalaEditor.video.inserted', (e, editor, $video) => {
+      const videoSource = $video.contents().get(0).src;
+      $video.html(`<p class="video-16-9"><iframe src="${videoSource}" frameborder="0" allowfullscreen></iframe></p>`);
+    });
+  }
+
+  sendContent($editor) {
+    let content;
+
+    if ($editor.froalaEditor('codeView.isActive')) {
+      content = $editor.froalaEditor('codeView.get').replace(/[\r\n]/g, '');
+    } else {
+      content = $editor.froalaEditor('html.get');
+    }
+
+    this.props.onChange(content);
   }
 
   render() {
     return (
       <div className="editor-wrapper">
-        <style>{styles}</style>
+        <style>{ editorStyles + styles + theme }</style>
         <div className="editor" />
       </div>
     );

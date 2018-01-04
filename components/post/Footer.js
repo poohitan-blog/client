@@ -1,23 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
-import config from '../../config';
+import dynamic from 'next/dynamic';
 import * as Grammar from '../../services/grammar';
 import CommentIcon from '../../static/icons/comment.svg';
 import CalendarIcon from '../../static/icons/calendar.svg';
 
-class Footer extends React.Component {
-  componentDidMount() {
-    global.$('.post-footer-social').jsSocials({
-      shares: ['twitter', 'facebook', 'googleplus', 'vkontakte'],
-      showLabel: false,
-      showCount: false,
-      url: `${config.current.clientURL}/p/${this.props.path}`,
-      text: this.props.title,
-      shareIn: 'popup',
-    });
-  }
+const SocialButtons = dynamic(import('./SocialButtons'), { ssr: false, loading: () => null });
 
+class Footer extends React.Component {
   render() {
     const tags = this.props.tags
       .map((tag) => {
@@ -49,7 +40,7 @@ class Footer extends React.Component {
           <span className="flex-offset-5 nowrap">{ Grammar.formatPostDate(this.props.publishedAt) }</span>
         </div>
         <div className="post-footer-item post-footer-tags nowrap">{tagsMarkup}</div>
-        <div className="post-footer-item post-footer-social nowrap" />
+        <SocialButtons title={this.props.title} path={this.props.path} />
       </div>
     );
   }

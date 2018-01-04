@@ -1,11 +1,13 @@
 @import '../../variables';
 
-$horizontal-padding: 1em;
+$vertical-padding: 0.28em;
+$horizontal-padding: 0.6em;
+$item-horizontal-margin: 0.8em;
 
 .post-footer {
   background-color: $yellowy-grey;
   line-height: 1.55em;
-  padding: 0.28em $horizontal-padding;
+  padding: 0 $horizontal-padding;
   overflow: hidden;
   position: relative;
 
@@ -14,8 +16,9 @@ $horizontal-padding: 1em;
   }
 
   .post-footer-item {
-    margin-left: 0.7em;
-    margin-right: 0.7em;
+    padding: $vertical-padding 0;
+    margin-left: $item-horizontal-margin;
+    margin-right: $item-horizontal-margin;
 
     @media (max-width: 600px) {
       &:first-child {
@@ -42,16 +45,33 @@ $horizontal-padding: 1em;
     min-width: 1.1em;
   }
 
-  .post-footer-social {
-    font-size: 1.2em;
+  .post-footer-tags {
+    background-color: $yellowy-grey;
+    overflow: hidden;
+    text-overflow: ellipsis;
 
+    &:hover {
+      +.post-footer-social-wrapper,
+      +.post-footer-social-wrapper * {
+        opacity: 0;
+        pointer-events: none;
+      }
+    }
+  }
+
+  .post-footer-social {
+    font-size: 0.85em;
+    opacity: 1;
+    pointer-events: all;
+    transition: opacity 100ms linear;
 
     @media (min-width: 600px) {
       position: absolute;
-      top: 2px;
-      right: calc(#{$horizontal-padding} - 3px);
+      top: 0;
+      right: 0;
       background: linear-gradient(to left, $yellowy-grey, $yellowy-grey 70%, transparent);
-      padding-left: 2.5em;
+      padding-left: 3.5em;
+      padding-right: $horizontal-padding;
     }
 
     .jssocials-shares {
