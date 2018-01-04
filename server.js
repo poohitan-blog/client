@@ -2,6 +2,7 @@ const express = require('express');
 const next = require('next');
 const cookieParser = require('cookie-parser');
 const fetch = require('isomorphic-unfetch');
+const path = require('path');
 const config = require('./config').current;
 
 const dev = config.environment !== 'production';
@@ -14,11 +15,15 @@ const pagesRouter = require('./routes/pages.js');
 const postsRouter = require('./routes/posts.js');
 const trashRouter = require('./routes/trash.js');
 
+const staticDirPath = config.environment === 'development' ? '../stuff' : '../../stuff';
+
 app.prepare()
   .then(() => {
     const server = express();
 
     server.use(migrationMap);
+
+    server.use('/stuff', express.static(path.join(__dirname, staticDirPath)));
 
     server.use(cookieParser());
 

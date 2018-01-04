@@ -1,6 +1,6 @@
 const express = require('express');
 
-const map = {
+const postsMap = {
   41: '/p/ukulele-piezo-pickup',
   40: '/p/orbita-holodnyi-yar',
   39: '/p/new-year-with-homeless',
@@ -42,13 +42,19 @@ const map = {
 const router = express.Router();
 
 router.get('/p/:post_old_id', (req, res, next) => {
-  const newPostPath = map[req.params.post_old_id];
+  const newPostPath = postsMap[req.params.post_old_id];
 
   if (newPostPath) {
     return res.redirect(301, newPostPath);
   }
 
   return next();
+});
+
+const stuffList = ['shutup', 'uah', 'tortynka', 'thats-a-paddlin', 'webcolors', 'comic-saaaaaaanns!!', 'google', 'homer', 'prehistoric-2', 'rainbow-sheep'];
+
+stuffList.forEach((stuffName) => {
+  router.get(`/${stuffName}`, (req, res) => res.redirect(301, `/stuff/${stuffName}`));
 });
 
 module.exports = router;
