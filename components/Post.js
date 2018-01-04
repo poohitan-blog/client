@@ -11,6 +11,7 @@ import * as Text from '../services/text';
 const LIGHTBOX_CLASS = 'lightbox-image';
 const Lightbox = dynamic(import('./ui/Lightbox'), { ssr: false, loading: () => null });
 const SyntaxHighlighter = dynamic(import('./ui/SyntaxHighlighter'), { ssr: false, loading: () => null });
+const MathHighlighter = dynamic(import('./ui/MathHighlighter'), { ssr: false, loading: () => null });
 
 class Post extends React.Component {
   constructor(props) {
@@ -42,6 +43,7 @@ class Post extends React.Component {
         <div className="post-body">{body}</div>
         <Lightbox selector={lightboxImageSelector} />
         <SyntaxHighlighter />
+        <MathHighlighter />
         <Footer {...this.props} />
       </article>
     );
