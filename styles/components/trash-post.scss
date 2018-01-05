@@ -4,6 +4,10 @@
   padding: 0.5em 0;
   position: relative;
 
+  .trash-post-body {
+    margin: 0.5em 0;
+  }
+
   .trash-post-footer {
     color: $light-grey;
     line-height: 1em;
