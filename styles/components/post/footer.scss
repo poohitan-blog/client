@@ -50,11 +50,13 @@ $item-horizontal-margin: 0.8em;
     overflow: hidden;
     text-overflow: ellipsis;
 
-    &:hover {
-      +.post-footer-social-wrapper,
-      +.post-footer-social-wrapper * {
-        opacity: 0;
-        pointer-events: none;
+    @media (min-width: 600px) {
+      &:hover {
+        +.post-footer-social-wrapper,
+        +.post-footer-social-wrapper * {
+          opacity: 0;
+          pointer-events: none;
+        }
       }
     }
   }
