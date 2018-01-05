@@ -2,7 +2,7 @@ import ReactGA from 'react-ga';
 import { current } from '../config';
 
 export const initGA = () => {
-  ReactGA.initialize(current.googleAnalyticsId);
+  ReactGA.initialize(current.google.analyticsTrackingId);
 };
 
 export const logPageView = () => {

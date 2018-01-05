@@ -37,7 +37,9 @@ const config = {
       appName: 'poohitan-com-client',
     },
 
-    googleAnalyticsId: 'UA-10797087',
+    google: {
+      analyticsTrackingId: 'UA-10797087-16',
+    },
   },
 };
 
