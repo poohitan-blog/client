@@ -36,6 +36,8 @@ const config = {
     pm2: {
       appName: 'poohitan-com-client',
     },
+
+    googleAnalyticsId: 'UA-10797087',
   },
 };
 
