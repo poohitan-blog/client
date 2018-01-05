@@ -33,7 +33,7 @@ exec(`git clone -b ${branch} ${repo} ${folder}/new`)
   .then(() => exec(`mv ${folder}/new ${folder}/current`))
   .then(() => exec(`npm run build --prefix ${folder}/current`))
   .then(() => exec(`pm2 stop ${appName}`))
-  .then(() => exec(`${envVariablesString} && pm2 start ${folder}/current/server.js --name ${appName} --update-env`))
+  .then(() => exec(`${envVariablesString} && cd ${folder}/current && pm2 start server.js --name ${appName} --update-env`))
   .then(() => console.log('Deployed successfully.'))
   .catch(error => console.error(error))
   .then(() => process.exit());
