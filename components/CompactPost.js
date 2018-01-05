@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Link from 'next/link';
 import * as Text from '../services/text';
 import { formatPostDate } from '../services/grammar';
+import HiddenIcon from '../static/icons/hidden.svg';
 
 const CompactPost = (props) => {
   const bodyWithoutHTML = Text.stripHTML(props.body);
@@ -11,8 +12,11 @@ const CompactPost = (props) => {
   return (
     <article className="post post-compact">
       <div className="layout-row layout-align-space-between-start">
-        <h3 className="post-title">
+        <h3 className="post-title layout-row layout-align-start-end">
           <Link as={`/p/${props.path}`} href={`/post?path=${props.path}`} prefetch><a>{props.title}</a></Link>
+          {
+            props.private && <div className="post-title-icon"><HiddenIcon /></div>
+          }
         </h3>
         <div className="post-date smaller nowrap">{formatPostDate(props.publishedAt)}</div>
       </div>
@@ -29,6 +33,11 @@ CompactPost.propTypes = {
     PropTypes.string,
     PropTypes.instanceOf(Date),
   ]).isRequired,
+  private: PropTypes.bool,
+};
+
+CompactPost.defaultProps = {
+  private: false,
 };
 
 export default CompactPost;

@@ -7,6 +7,7 @@ import CutBody from './post/CutBody';
 import Footer from './post/Footer';
 import AdminControlButtons from './admin/ControlButtons';
 import * as Text from '../services/text';
+import HiddenIcon from '../static/icons/hidden.svg';
 
 const LIGHTBOX_CLASS = 'lightbox-image';
 const Lightbox = dynamic(import('./ui/Lightbox'), { ssr: false, loading: () => null });
@@ -39,6 +40,9 @@ class Post extends React.Component {
             this.context.isAuthenticated &&
             <div className="post-admin-control-buttons"><AdminControlButtons attachedTo="post" path={this.props.path} /></div>
           }
+          {
+            this.props.private && <div className="post-title-icon"><HiddenIcon /></div>
+          }
         </h1>
         <div className="post-body">{body}</div>
         <Lightbox selector={lightboxImageSelector} />
@@ -55,10 +59,12 @@ Post.propTypes = {
   body: PropTypes.string.isRequired,
   path: PropTypes.string.isRequired,
   cut: PropTypes.bool,
+  private: PropTypes.bool,
 };
 
 Post.defaultProps = {
   cut: false,
+  private: false,
 };
 
 Post.contextTypes = {

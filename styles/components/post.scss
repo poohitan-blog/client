@@ -25,6 +25,16 @@
   .post-admin-control-buttons {
     margin-left: 0.6em;
   }
+
+  .post-title-icon {
+    margin-left: 0.2em;
+    height: 1em;
+
+    svg {
+      fill: $grey;
+      height: 100%;
+    }
+  }
 }
 
 .post.post-compact {
@@ -32,6 +42,16 @@
 
   .post-title {
     margin-top: 0;
+  }
+
+  .post-title-icon {
+    margin-left: 0.2em;
+    height: 1em;
+
+    svg {
+      fill: $grey;
+      height: 100%;
+    }
   }
 
   .post-date {

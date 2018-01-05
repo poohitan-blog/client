@@ -4,4 +4,14 @@
   .page-admin-control-buttons {
     margin-left: 0.6em;
   }
+
+  .page-title-icon {
+    height: 1em;
+    margin-left: 0.2em;
+
+    svg {
+      fill: $grey;
+      height: 100%;
+    }
+  }
 }
