@@ -35,18 +35,40 @@ class PostPage extends AuthenticatablePage {
       return <Error statusCode={this.props.error.status} />;
     }
 
+    const { post } = this.props;
+    const title = `${post.title} - ${current.meta.title}`;
+    const description = Text.stripHTML(Text.shorten(post.body, 60));
+    const image = Text.getImagesFromHTML(post.body)[0];
+    const url = `${current.clientURL}/p/${post.path}`;
+
     return (
       <Wrapper>
         <Head>
-          <title>{this.props.post.title} - {current.meta.title}</title>
-          <meta name="description" content={Text.stripHTML(Text.shorten(this.props.post.body, 60))} key="description" />
-          <meta name="keywords" content={this.props.post.tags.join(', ')} key="keywords" />
-          <BlogPosting {...this.props.post} />
+          <title>{title}</title>
+          <meta name="description" content={description} key="description" />
+          <meta name="keywords" content={post.tags.join(', ')} key="keywords" />
+
+          <BlogPosting {...post} />
+
+          <meta name="twitter:card" content="summary" />
+          <meta name="twitter:title" content={title} />
+          <meta name="twitter:description" content={description} />
+          <meta name="twitter:site" content={current.meta.social.twitter.username} />
+          <meta name="twitter:creator" content={current.meta.social.twitter.username} />
+          <meta name="twitter:image:src" content={image} />
+
+          <meta name="og:title" content={title} />
+          <meta name="og:description" content={description} />
+          <meta name="og:image" content={image} />
+          <meta name="og:url" content={url} />
+          <meta name="og:site_name" content={current.meta.title} />
+          <meta name="og:locale" content={current.meta.language} />
+          <meta name="og:type" content="website" />
         </Head>
         <Header />
         <Content>
-          <Post {...this.props.post} />
-          <CommentForm {...this.props.post} />
+          <Post {...post} />
+          <CommentForm {...post} />
         </Content>
         <Footer />
       </Wrapper>

@@ -26,7 +26,7 @@ class MyDocument extends Document {
 
   render() {
     return (
-      <html lang="uk-UA">
+      <html lang={current.meta.language}>
         <Head>
           <meta name="viewport" content="initial-scale=1.0, width=device-width" key="viewport" />
           <meta name="google-site-verification" content={current.google.siteVerificationCode} key="google-site-verification" />

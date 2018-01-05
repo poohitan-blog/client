@@ -1,14 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { current } from '../../config';
-import { stripHTML } from '../../services/text';
-
-function getURLOfMainPostImage(body) {
-  const regex = /<img(?:\s*|\w*)src="(\S+)"(?:\s*|\w*)\/?>/;
-  const matches = body.match(regex);
-
-  return matches ? matches[1] : '';
-}
+import { stripHTML, getImagesFromHTML } from '../../services/text';
 
 const BlogPosting = (props) => {
   const postURL = `${current.clientURL}/p/${props.path}`;
@@ -16,7 +9,7 @@ const BlogPosting = (props) => {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
     headline: props.title,
-    image: getURLOfMainPostImage(props.body),
+    image: getImagesFromHTML(props.body)[0],
     keywords: props.tags.join(' '),
     articleBody: stripHTML(props.body),
     url: postURL,

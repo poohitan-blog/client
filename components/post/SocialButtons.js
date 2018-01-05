@@ -15,7 +15,7 @@ class SocialButtons extends React.Component {
       showLabel: false,
       showCount: false,
       url: `${current.clientURL}/p/${this.props.path}`,
-      text: this.props.title,
+      text: `${this.props.title} - ${current.meta.title}`,
       shareIn: 'popup',
     });
   }

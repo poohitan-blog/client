@@ -3,10 +3,17 @@ const shared = {
     title: 'poohitan',
     description: 'У лісі-лісі темному, де ходить хитрий лис, росла собі ялиночка, і зайчик з нею ріс.',
     keywords: ['poohitan', 'туфта', 'мандрівки', 'подорожі', 'гори', 'ровер', 'велосипед', 'веб-дизайн', 'програмування', 'JavaScript', 'C++', 'C#', 'бомж', 'трамвай', 'тролейбус', 'місто', 'Львів', 'автостоп', 'фестивалі', 'музика', 'печенько', 'печиво', 'випічка', 'барабани', 'перкусія', 'книжки', 'читання', 'електроніка', 'комп’ютер', 'IT', 'стули пельку', 'рок-н-рол', 'хеві-метал'],
-    socialLinks: [
-      'https://facebook.com/poohitan',
-      'https://twitter.com/poohitan',
-    ],
+    language: 'uk_UA',
+    social: {
+      twitter: {
+        username: '@poohitan',
+        link: 'https://twitter.com/poohitan',
+      },
+      facebook: {
+        username: 'poohitan',
+        link: 'https://twitter.com/poohitan',
+      },
+    },
   },
 };
 

@@ -41,18 +41,39 @@ class IndexPage extends AuthenticatablePage {
     }
 
     const content = this.props.posts.map(post => <Post {...post} cut key={post.id} />);
+    const {
+      title,
+      description,
+      keywords,
+      language,
+      social,
+    } = current.meta;
 
     return (
       <Wrapper>
         <Head>
-          <title>{current.meta.title}</title>
-          <meta name="description" content={current.meta.description} key="description" />
-          <meta name="keywords" content={current.meta.keywords.join(', ')} key="keywords" />
+          <title>{title}</title>
+          <meta name="description" content={description} key="description" />
+          <meta name="keywords" content={keywords.join(', ')} key="keywords" />
+
           <Blog />
+
+          <meta name="twitter:card" content="summary" />
+          <meta name="twitter:title" content={title} />
+          <meta name="twitter:description" content={description} />
+          <meta name="twitter:site" content={social.twitter.username} />
+          <meta name="twitter:creator" content={social.twitter.username} />
+
+          <meta name="og:title" content={title} />
+          <meta name="og:description" content={description} />
+          <meta name="og:url" content={current.clientURL} />
+          <meta name="og:site_name" content={title} />
+          <meta name="og:locale" content={language} />
+          <meta name="og:type" content="website" />
         </Head>
         <Header />
         <Content>
-          { content }
+          {content}
         </Content>
         <Footer pagination={this.props.meta} />
       </Wrapper>
