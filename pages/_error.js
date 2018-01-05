@@ -19,6 +19,12 @@ class Error extends React.Component {
   }
 
   render() {
+    let message = 'Шось пішло не так…';
+
+    if (this.props.statusCode) {
+      message += `Код помилки: ${this.props.statusCode}`;
+    }
+
     return (
       <Wrapper>
         <Head>
@@ -27,7 +33,7 @@ class Error extends React.Component {
         <Header />
         <Content>
           <h1>Сталась помилка</h1>
-          <p>Шось пішло не так… Код помилки: {this.props.statusCode}</p>
+          <p>{message}</p>
         </Content>
         <Footer />
       </Wrapper>
