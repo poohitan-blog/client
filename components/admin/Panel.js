@@ -11,16 +11,21 @@ class Panel extends React.Component {
   }
 
   render() {
-    const pages = !this.context ? [] : this.context.pages.map(page => (
-      <li key={page.id}>
-        <Link href={`/page?path=${page.path}`} as={`/${page.path}`}>
-          <a className="layout-row layout-align-start-center">
-            <div className="admin-panel-list-sentence">{page.title || page.path}</div>
-            {page.private && <div className="admin-panel-list-icon"><HiddenIcon /></div>}
-          </a>
-        </Link>
-      </li>
-    ));
+    const pages = !this.context
+      ? []
+      : this.context.pages
+        .sort((leftPage, rightPage) => Number(leftPage.title > rightPage.title))
+        .sort(page => Number(page.private))
+        .map(page => (
+          <li key={page.id}>
+            <Link href={`/page?path=${page.path}`} as={`/${page.path}`}>
+              <a className="layout-row layout-align-start-center">
+                <div className="admin-panel-list-sentence">{page.title || page.path}</div>
+                {page.private && <div className="admin-panel-list-icon"><HiddenIcon /></div>}
+              </a>
+            </Link>
+          </li>
+        ));
     const pagesBlock = pages.length ? (
       <div className="admin-panel-block admin-panel-block-pages">
         <h3>Сторінки</h3>
