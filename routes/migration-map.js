@@ -25,7 +25,7 @@ const postsMap = {
   17: '/p/first-long-ride',
   16: '/p/math-parser-c-sharp',
   15: '/p/sweets-for-pedestrians',
-  14: '/p/custom-mosquite-build',
+  14: '/p/custom-mosquito-build',
   13: '/p/drum-stuff',
   12: '/p/disqus-comments-count',
   11: '/p/thoughts-on-bydlokod',
