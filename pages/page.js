@@ -2,8 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
 import Error from './_error';
+import { current } from '../config';
 import API from '../services/api';
 import { getAllCookies } from '../services/cookies';
+import * as Text from '../services/text';
 
 import AuthenticatablePage from './_authenticatable';
 import Wrapper from '../components/Wrapper';
@@ -32,7 +34,8 @@ class PagePage extends AuthenticatablePage {
     return (
       <Wrapper>
         <Head>
-          <title>{this.props.page.title} - poohitan</title>
+          <title>{this.props.page.title} - {current.meta.title}</title>
+          <meta name="description" content={Text.stripHTML(Text.shorten(this.props.page.body, 60))} key="description" />
         </Head>
         <Header />
         <Content>

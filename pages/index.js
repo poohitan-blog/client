@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
 import Error from './_error';
+import { current } from '../config';
+
 import API from '../services/api';
 import { getAllCookies } from '../services/cookies';
 
@@ -11,6 +13,8 @@ import Header from '../components/Header';
 import Content from '../components/Content';
 import Footer from '../components/Footer';
 import Post from '../components/Post';
+
+import Blog from '../components/jsonld/Blog';
 
 const POSTS_PER_PAGE = 10;
 
@@ -41,7 +45,10 @@ class IndexPage extends AuthenticatablePage {
     return (
       <Wrapper>
         <Head>
-          <title>poohitan</title>
+          <title>{current.meta.title}</title>
+          <meta name="description" content={current.meta.description} key="description" />
+          <meta name="keywords" content={current.meta.keywords.join(', ')} key="keywords" />
+          <Blog />
         </Head>
         <Header />
         <Content>

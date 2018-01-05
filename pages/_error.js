@@ -28,7 +28,7 @@ class Error extends React.Component {
     return (
       <Wrapper>
         <Head>
-          <title>Сталась помилка - poohitan</title>
+          <title>Сталась помилка - {current.meta.title}</title>
         </Head>
         <Header />
         <Content>

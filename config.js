@@ -1,5 +1,17 @@
+const shared = {
+  meta: {
+    title: 'poohitan',
+    description: 'У лісі-лісі темному, де ходить хитрий лис, росла собі ялиночка, і зайчик з нею ріс.',
+    keywords: ['poohitan', 'туфта', 'мандрівки', 'подорожі', 'гори', 'ровер', 'велосипед', 'веб-дизайн', 'програмування', 'JavaScript', 'C++', 'C#', 'бомж', 'трамвай', 'тролейбус', 'місто', 'Львів', 'автостоп', 'фестивалі', 'музика', 'печенько', 'печиво', 'випічка', 'барабани', 'перкусія', 'книжки', 'читання', 'електроніка', 'комп’ютер', 'IT', 'стули пельку', 'рок-н-рол', 'хеві-метал'],
+    socialLinks: [
+      'https://facebook.com/poohitan',
+      'https://twitter.com/poohitan',
+    ],
+  },
+};
+
 const config = {
-  development: {
+  development: Object.assign({}, shared, {
     port: 7000,
     clientURL: 'http://localhost:7000',
     apiURL: 'http://localhost:3100',
@@ -11,9 +23,9 @@ const config = {
     },
 
     google: {},
-  },
+  }),
 
-  production: {
+  production: Object.assign({}, shared, {
     port: 4000,
     clientURL: 'https://poohitan.com',
     apiURL: 'https://api.poohitan.com',
@@ -41,8 +53,9 @@ const config = {
 
     google: {
       analyticsTrackingId: 'UA-10797087-16',
+      siteVerificationCode: 'bfS0NjYLa1mTldGwMWMUuG5RuIS1oIksGoVxJoFDZwY',
     },
-  },
+  }),
 };
 
 const environment = process.env.NODE_ENV;

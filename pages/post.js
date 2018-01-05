@@ -2,8 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
 import Error from './_error';
+import { current } from '../config';
 import API from '../services/api';
 import { getAllCookies } from '../services/cookies';
+import * as Text from '../services/text';
 
 import AuthenticatablePage from './_authenticatable';
 import Wrapper from '../components/Wrapper';
@@ -12,7 +14,6 @@ import Content from '../components/Content';
 import Footer from '../components/Footer';
 import Post from '../components/Post';
 import CommentForm from '../components/post/CommentForm';
-
 import BlogPosting from '../components/jsonld/BlogPosting';
 
 class PostPage extends AuthenticatablePage {
@@ -37,7 +38,9 @@ class PostPage extends AuthenticatablePage {
     return (
       <Wrapper>
         <Head>
-          <title>{this.props.post.title} - poohitan</title>
+          <title>{this.props.post.title} - {current.meta.title}</title>
+          <meta name="description" content={Text.stripHTML(Text.shorten(this.props.post.body, 60))} key="description" />
+          <meta name="keywords" content={this.props.post.tags.join(', ')} key="keywords" />
           <BlogPosting {...this.props.post} />
         </Head>
         <Header />

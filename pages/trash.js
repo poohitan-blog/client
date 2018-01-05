@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import Head from 'next/head';
 import Error from './_error';
+import { current } from '../config';
 import API from '../services/api';
 import { getAllCookies } from '../services/cookies';
 
@@ -54,7 +55,7 @@ class TrashPage extends AuthenticatablePage {
     return (
       <Wrapper>
         <Head>
-          <title>Смітник - poohitan</title>
+          <title>Смітник - {current.meta.title}</title>
         </Head>
         <Header trashBinState={Trashbin.STATES.FULLY_OPEN} />
         <Content>

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Head from 'next/head';
 import API from '../services/api';
 import Error from './_error';
+import { current } from '../config';
 import { getAllCookies } from '../services/cookies';
 
 import AuthenticatablePage from './_authenticatable';
@@ -56,7 +57,7 @@ class SearchPage extends AuthenticatablePage {
     return (
       <Wrapper>
         <Head>
-          <title>Пошук за запитом «{this.props.searchQuery}» - poohitan</title>
+          <title>Пошук за запитом «{this.props.searchQuery}» - {current.meta.title}</title>
         </Head>
         <Header />
         <Content>

@@ -28,10 +28,10 @@ class MyDocument extends Document {
     return (
       <html lang="uk-UA">
         <Head>
-          <title>poohitan</title>
-
           <meta name="viewport" content="initial-scale=1.0, width=device-width" key="viewport" />
-          <meta httpEquiv="content-type" content="text/html; charset=utf-8" />
+          <meta name="google-site-verification" content={current.google.siteVerificationCode} key="google-site-verification" />
+          <meta httpEquiv="content-type" content="text/html; charset=utf-8" key="content-type" />
+
           <link rel="icon" href="/static/icons/favicon.ico" type="image/x-icon" />
           <link rel="alternate" type="application/rss+xml" title="RSS блоґу" href={`${current.clientURL}/rss`} />
 
