@@ -12,7 +12,7 @@ const CompactPost = (props) => {
   return (
     <article className="post post-compact">
       <div className="layout-row layout-align-space-between-start">
-        <h3 className="post-title layout-row layout-align-start-end">
+        <h3 className="post-title layout-row layout-align-start-start">
           <Link as={`/p/${props.path}`} href={`/post?path=${props.path}`} prefetch><a>{props.title}</a></Link>
           {
             props.private && <div className="post-title-icon"><HiddenIcon /></div>

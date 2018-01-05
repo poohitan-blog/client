@@ -9,6 +9,8 @@ const config = {
       shortname: 'new-poohitan',
       APIKey: 'yMQUyJ8OWzQhQdUQvU9UT1H2xtvaVbevBScMnaXkhkIauYUKjOoQGLL6usjy7Q3b',
     },
+
+    google: {},
   },
 
   production: {
