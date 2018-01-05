@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
-import config from '../config';
+import { current } from '../config';
 import Wrapper from '../components/Wrapper';
 import Header from '../components/Header';
 import Content from '../components/Content';
@@ -11,7 +11,7 @@ class Error extends React.Component {
   static getInitialProps({ res, error }) {
     const statusCode = (res && res.statusCode) || (error && error.statusCode);
 
-    if (config.current.environment !== 'production') {
+    if (current.environment !== 'production') {
       console.error(error);
     }
 

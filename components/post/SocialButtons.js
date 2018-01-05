@@ -3,7 +3,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import config from '../../config';
+import { current } from '../../config';
 import styles from '../../static/libs/social/jssocials.css';
 import themeStyles from '../../static/libs/social/jssocials-theme-minima.css';
 import '../../static/libs/social/jssocials.min';
@@ -14,7 +14,7 @@ class SocialButtons extends React.Component {
       shares: ['twitter', 'facebook', 'googleplus', 'vkontakte'],
       showLabel: false,
       showCount: false,
-      url: `${config.current.clientURL}/p/${this.props.path}`,
+      url: `${current.clientURL}/p/${this.props.path}`,
       text: this.props.title,
       shareIn: 'popup',
     });

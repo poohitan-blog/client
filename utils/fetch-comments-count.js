@@ -1,5 +1,5 @@
 import request from './request';
-import config from '../config';
+import { current } from '../config';
 
 let cache = null;
 
@@ -8,7 +8,7 @@ async function fetchCommentsCount(previousData = {}, cursor) {
     return cache;
   }
 
-  const { APIKey, shortname } = config.current.disqus;
+  const { APIKey, shortname } = current.disqus;
   const url = 'https://disqus.com/api/3.0/forums/listThreads.json';
   const query = {
     api_key: APIKey,

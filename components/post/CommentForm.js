@@ -1,15 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactDisqusComments from 'react-disqus-comments';
-import config from '../../config';
+import { current } from '../../config';
 
 const CommentForm = props => (
   <div className="post-comment-form" id="comments">
     <ReactDisqusComments
-      shortname={config.current.disqus.shortname}
+      shortname={current.disqus.shortname}
       identifier={props.path}
       title={props.title}
-      url={`${config.current.clientURL}/p/${props.path}`}
+      url={`${current.clientURL}/p/${props.path}`}
     />
   </div>
 );

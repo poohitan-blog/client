@@ -7,7 +7,7 @@ import Router from 'next/router';
 import API from '../../services/api';
 import Error from '../_error';
 import { getAllCookies } from '../../services/cookies';
-import config from '../../config';
+import { current } from '../../config';
 
 import ProtectedPage from '../_protected';
 import Wrapper from '../../components/Wrapper';
@@ -63,7 +63,7 @@ class PageEditor extends ProtectedPage {
   }
 
   getPageLinkMarkup() {
-    const prefix = `${config.current.clientURL}`;
+    const prefix = `${current.clientURL}`;
     const path = this.props.page.path || this.state.path || '';
     const fullLink = `${prefix}/${path}`;
     const isNewpage = !this.props.page.path;

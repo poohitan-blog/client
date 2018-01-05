@@ -3,7 +3,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import config from '../../config';
+import { current } from '../../config';
 
 import '../../static/libs/froala/froala_editor.pkgd.min';
 import '../../static/libs/froala/plugins/image.min';
@@ -31,7 +31,7 @@ class Editor extends React.Component {
       fileMaxSize: 15 * 1024 * 1024,
       fileUploadMethod: 'POST',
       fileUploadParam: 'files',
-      fileUploadURL: `${config.current.apiURL}/files/froala`,
+      fileUploadURL: `${current.apiURL}/files/froala`,
 
       htmlAllowedEmptyTags: ['iframe', 'object', 'video', 'cut', 'pre', 'code'],
       htmlAllowedTags: ['a', 'abbr', 'address', 'audio', 'b', 'blockquote', 'br', 'cite', 'code', 'cut', 'div', 'em', 'embed', 'figcaption', 'figure', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'hr', 'i', 'iframe', 'img', 'li', 'link', 'object', 'ol', 'p', 'pre', 's', 'span', 'small', 'source', 'strike', 'strong', 'sub', 'sup', 'table', 'tbody', 'td', 'textarea', 'tfoot', 'th', 'thead', 'time', 'title', 'tr', 'u', 'ul', 'video'],
@@ -46,7 +46,7 @@ class Editor extends React.Component {
       imagePasteProcess: true,
       imageUploadMethod: 'POST',
       imageUploadParam: 'images',
-      imageUploadURL: `${config.current.apiURL}/images/froala`,
+      imageUploadURL: `${current.apiURL}/images/froala`,
 
       language: 'uk',
 

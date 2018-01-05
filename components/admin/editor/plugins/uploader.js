@@ -1,7 +1,7 @@
-import config from '../../../../config';
+import { current } from '../../../../config';
 
 export default {
-  url: `${config.current.apiURL}/images`,
+  url: `${current.apiURL}/images`,
   prepareData(formData) {
     const file = formData.get('files[0]');
 

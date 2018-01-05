@@ -8,7 +8,7 @@ import moment from 'moment';
 import API from '../../services/api';
 import Error from '../_error';
 import { getAllCookies } from '../../services/cookies';
-import config from '../../config';
+import { current } from '../../config';
 
 import ProtectedPage from '../_protected';
 import Wrapper from '../../components/Wrapper';
@@ -90,7 +90,7 @@ class PostEditor extends ProtectedPage {
   }
 
   getPostLinkMarkup() {
-    const prefix = `${config.current.clientURL}/p`;
+    const prefix = `${current.clientURL}/p`;
     const path = this.props.post.path || this.state.path || '';
     const fullLink = `${prefix}/${path}`;
     const isNewPost = !this.props.post.path;

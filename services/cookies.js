@@ -1,4 +1,4 @@
-import config from '../config';
+import { current } from '../config';
 
 export function getCookie(name, req) {
   if (req) {
@@ -14,12 +14,12 @@ export function setCookie(name, value, options = {}, res) {
   const { expires, httpOnly = false } = options;
 
   if (res) {
-    res.cookie(name, value, { expires: new Date(expires), httpOnly, domain: config.current.cookiesDomain });
+    res.cookie(name, value, { expires: new Date(expires), httpOnly, domain: current.cookiesDomain });
 
     return;
   }
 
-  let cookie = `${name}=${encodeURIComponent(value)}; domain=${config.current.cookiesDomain}`;
+  let cookie = `${name}=${encodeURIComponent(value)}; domain=${current.cookiesDomain}`;
 
   if (expires) {
     cookie += `; expires=${expires}`;

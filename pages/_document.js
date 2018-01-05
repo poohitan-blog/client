@@ -1,7 +1,7 @@
 import React from 'react';
 import Document, { Head, Main, NextScript } from 'next/document';
 import Raspberries from '../services/raspberries';
-import config from '../config';
+import { current } from '../config';
 import styles from '../styles/main.scss';
 
 class MyDocument extends Document {
@@ -33,7 +33,7 @@ class MyDocument extends Document {
           <meta name="viewport" content="initial-scale=1.0, width=device-width" key="viewport" />
           <meta httpEquiv="content-type" content="text/html; charset=utf-8" />
           <link rel="icon" href="/static/icons/favicon.ico" type="image/x-icon" />
-          <link rel="alternate" type="application/rss+xml" title="RSS блоґу" href={`${config.current.clientURL}/rss`} />
+          <link rel="alternate" type="application/rss+xml" title="RSS блоґу" href={`${current.clientURL}/rss`} />
 
           <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML&locale=uk" />
 

@@ -1,6 +1,6 @@
 import pluralize from 'pluralize';
 
-import config from '../config';
+import { current } from '../config';
 import deserialize from '../utils/deserialize';
 import request from '../utils/request';
 import fetchCommentsCount from '../utils/fetch-comments-count';
@@ -10,7 +10,7 @@ import Page from '../models/page';
 import TrashPost from '../models/trash-post';
 import User from '../models/user';
 
-const API_URL = config.current.apiURL;
+const API_URL = current.apiURL;
 
 async function find({ model, query }, cookies) {
   const url = `${API_URL}/${pluralize(model.name)}`;

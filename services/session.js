@@ -1,11 +1,11 @@
 import Router from 'next/router';
-import config from '../config';
+import { current } from '../config';
 import Cookies from './cookies';
 import request from '../utils/request';
 
 async function authenticate({ login, password }) {
   return request({
-    url: `${config.current.apiURL}/authenticate`,
+    url: `${current.apiURL}/authenticate`,
     method: 'POST',
     body: {
       login,
