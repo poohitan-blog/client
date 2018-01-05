@@ -14,6 +14,10 @@ Router.onRouteChangeError = () => NProgress.done();
 
 class Wrapper extends React.Component {
   componentDidMount() {
+    if (this.context.isAuthenticated) {
+      return;
+    }
+
     if (!global.GA_INITIALIZED) {
       initGA();
       global.GA_INITIALIZED = true;
