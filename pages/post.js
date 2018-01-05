@@ -13,6 +13,8 @@ import Footer from '../components/Footer';
 import Post from '../components/Post';
 import CommentForm from '../components/post/CommentForm';
 
+import BlogPosting from '../components/jsonld/BlogPosting';
+
 class PostPage extends AuthenticatablePage {
   static async getInitialProps({ query, req }) {
     try {
@@ -36,6 +38,7 @@ class PostPage extends AuthenticatablePage {
       <Wrapper>
         <Head>
           <title>{this.props.post.title} - poohitan</title>
+          <BlogPosting {...this.props.post} />
         </Head>
         <Header />
         <Content>
