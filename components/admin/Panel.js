@@ -14,7 +14,6 @@ class Panel extends React.Component {
     const pages = !this.context
       ? []
       : this.context.pages
-        .sort((leftPage, rightPage) => Number(leftPage.title > rightPage.title))
         .sort(page => Number(page.private))
         .map(page => (
           <li key={page.id}>
