@@ -20,11 +20,20 @@ const buttons = [
 
 class Editor extends React.Component {
   componentDidMount() {
+    this.init();
+  }
+
+  componentWillUnmount() {
+    const $editor = $('.editor');
+
+    $editor.froalaEditor('destroy');
+  }
+
+  init() {
     const $editor = $('.editor');
 
     $editor.froalaEditor({
       charCounterCount: false,
-      editorClass: 'editor-inner',
       height: 350,
       heightMax: 350,
 

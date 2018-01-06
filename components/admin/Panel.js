@@ -11,25 +11,25 @@ class Panel extends React.Component {
   }
 
   render() {
-    const pages = !this.context
-      ? []
-      : this.context.pages
-        .sort(page => Number(page.private))
-        .map(page => (
-          <li key={page.id}>
-            <Link href={`/page?path=${page.path}`} as={`/${page.path}`}>
-              <a className="layout-row layout-align-start-center">
-                <div className="admin-panel-list-sentence">{page.title || page.path}</div>
-                {page.private && <div className="admin-panel-list-icon"><HiddenIcon /></div>}
-              </a>
-            </Link>
-          </li>
-        ));
+    const pages = this.context && this.context.pages ? this.context.pages : [];
+    const publicPages = pages.filter(page => !page.private);
+    const privatePages = pages.filter(page => page.private);
+    const pagesMarkup = publicPages.concat(...privatePages).map(page => (
+      <li key={page.id}>
+        <Link href={`/page?path=${page.path}`} as={`/${page.path}`}>
+          <a className="layout-row layout-align-start-center">
+            <div className="admin-panel-list-sentence">{page.title || page.path}</div>
+            {page.private && <div className="admin-panel-list-icon"><HiddenIcon /></div>}
+          </a>
+        </Link>
+      </li>
+    ));
+
     const pagesBlock = pages.length ? (
       <div className="admin-panel-block admin-panel-block-pages">
         <h3>Сторінки</h3>
         <ul>
-          {pages}
+          {pagesMarkup}
         </ul>
       </div>
     ) : null;
