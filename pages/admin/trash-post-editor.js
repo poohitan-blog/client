@@ -39,23 +39,25 @@ class TrashPostEditor extends ProtectedPage {
   }
 
   async submit() {
-    if (this.props.trashPost.id) {
-      await API.trashPosts.update(this.props.trashPost.id, this.state, getAllCookies());
-
-      Router.push('/trash');
-
-      return;
-    }
-
     if (!this.state.body) {
       // TODO: show error popup
 
       return;
     }
 
-    await API.trashPosts.create(this.state, getAllCookies());
+    const postId = this.props.trashPost.id;
 
-    Router.push('/trash');
+    if (postId) {
+      const updatedPost = await API.trashPosts.update(postId, this.state, getAllCookies());
+
+      Router.push(`/trash/${updatedPost.id}`);
+
+      return;
+    }
+
+    const newPost = await API.trashPosts.create(this.state, getAllCookies());
+
+    Router.push(`/trash/${newPost.id}`);
   }
 
   render() {

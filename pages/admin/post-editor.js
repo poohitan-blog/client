@@ -70,16 +70,18 @@ class PostEditor extends ProtectedPage {
   }
 
   async submit() {
-    if (this.props.post.path) {
-      const updatedPost = await API.posts.update(this.props.post.path, this.state, getAllCookies());
-
-      Router.push(`/post?path=${updatedPost.path}`, `/p/${updatedPost.path}`);
+    if (!(this.state.title && this.state.body)) {
+      // TODO: show error popup
 
       return;
     }
 
-    if (!(this.state.title && this.state.body)) {
-      // TODO: show error popup
+    const postPath = this.props.post.path;
+
+    if (postPath) {
+      const updatedPost = await API.posts.update(postPath, this.state, getAllCookies());
+
+      Router.push(`/post?path=${updatedPost.path}`, `/p/${updatedPost.path}`);
 
       return;
     }
