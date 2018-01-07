@@ -18,9 +18,31 @@ class Post extends React.Component {
   constructor(props) {
     super(props);
 
+    const bodyWithLightboxes = Text.wrapImagesInLinks(props.body, { imagesClass: LIGHTBOX_CLASS });
+    const bodyWithPreviewsAndLightboxes = Text.createImagePreviews(bodyWithLightboxes);
+
     this.state = {
-      body: Text.wrapImagesInLinks(props.body, { imagesClass: LIGHTBOX_CLASS }),
+      body: bodyWithPreviewsAndLightboxes,
     };
+  }
+
+  componentDidMount() {
+    const imageLinks = Text.getImagesFromHTML(this.props.body);
+
+    imageLinks.forEach((link) => {
+      const originalElement = global.document.querySelector(`img[src="${link}?preview=true"]`);
+
+      if (!originalElement) {
+        return;
+      }
+
+      const downloadingElement = global.document.createElement('img');
+
+      downloadingElement.onload = function () {
+        originalElement.src = this.src;
+      };
+      downloadingElement.src = link;
+    });
   }
 
   render() {

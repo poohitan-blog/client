@@ -107,9 +107,16 @@ export function wrapImagesInLinks(html, { imagesClass = '' } = {}) {
     resultHtml.replace(imageTag, `<a href="${imageLink}" class="${imagesClass}">${imageTag}</a>`), html);
 }
 
+export function createImagePreviews(html) {
+  const imageLinks = getImagesFromHTML(html);
+
+  return imageLinks.reduce((result, link) => result.replace(`src="${link}"`, `src="${link}?preview=true"`), html);
+}
+
 export default {
   stripHTML,
   getImagesFromHTML,
   wrapImagesInLinks,
   shorten,
+  createImagePreviews,
 };
