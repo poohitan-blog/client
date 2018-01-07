@@ -22,7 +22,7 @@ class Error extends React.Component {
     let message = 'Шось пішло не так…';
 
     if (this.props.statusCode) {
-      message += `Код помилки: ${this.props.statusCode}`;
+      message += ` Код помилки: ${this.props.statusCode}`;
     }
 
     return (
