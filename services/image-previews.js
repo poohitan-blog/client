@@ -11,7 +11,6 @@ export function replaceOriginalImagesWithPreviews(html) {
 
 export function loadOriginalImages(html) {
   const imageLinks = getImageLinksFromHTML(html);
-  console.log('loading original images', imageLinks);
 
   imageLinks.forEach((link, index) => {
     const previewImage = global.document.querySelector(`img[src="${link}?${PREVIEW_PARAM}"][data-preview-id="${index}"]`);
