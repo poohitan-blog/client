@@ -29,8 +29,8 @@ class Post extends React.Component {
   componentDidMount() {
     const imageLinks = Text.getImagesFromHTML(this.props.body);
 
-    imageLinks.forEach((link) => {
-      const originalElement = global.document.querySelector(`img[src="${link}?preview=true"]`);
+    imageLinks.forEach((link, index) => {
+      const originalElement = global.document.querySelector(`img[src="${link}?preview=true"][data-image-id="${index}"]`);
 
       if (!originalElement) {
         return;

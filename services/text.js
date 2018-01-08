@@ -110,7 +110,7 @@ export function wrapImagesInLinks(html, { imagesClass = '' } = {}) {
 export function createImagePreviews(html) {
   const imageLinks = getImagesFromHTML(html);
 
-  return imageLinks.reduce((result, link) => result.replace(`src="${link}"`, `src="${link}?preview=true"`), html);
+  return imageLinks.reduce((result, link, index) => result.replace(`src="${link}"`, `src="${link}?preview=true" data-image-id="${index}"`), html);
 }
 
 export default {
