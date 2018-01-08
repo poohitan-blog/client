@@ -79,7 +79,7 @@ export function getHighlightsOfKeywords({ text, keywords, margin = 7 }) {
   return highlights;
 }
 
-export function getImagesFromHTML(html) {
+export function getImageLinksFromHTML(html) {
   const regex = /<img(?:.+?)src="(.+?)"/gi;
   const images = [];
   let match = regex.exec(html);
@@ -107,16 +107,9 @@ export function wrapImagesInLinks(html, { imagesClass = '' } = {}) {
     resultHtml.replace(imageTag, `<a href="${imageLink}" class="${imagesClass}">${imageTag}</a>`), html);
 }
 
-export function createImagePreviews(html) {
-  const imageLinks = getImagesFromHTML(html);
-
-  return imageLinks.reduce((result, link, index) => result.replace(`src="${link}"`, `src="${link}?preview=true" data-image-id="${index}"`), html);
-}
-
 export default {
   stripHTML,
-  getImagesFromHTML,
+  getImageLinksFromHTML,
   wrapImagesInLinks,
   shorten,
-  createImagePreviews,
 };

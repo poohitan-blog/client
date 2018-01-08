@@ -5,6 +5,7 @@ import dynamic from 'next/dynamic';
 import moment from 'moment';
 import AdminControlButtons from './admin/ControlButtons';
 import * as Text from '../services/text';
+import * as ImagePreviews from '../services/image-previews';
 
 const LIGHTBOX_CLASS = 'lightbox-image';
 const Lightbox = dynamic(import('./ui/Lightbox'), { ssr: false, loading: () => null });
@@ -14,7 +15,7 @@ class TrashPost extends React.Component {
     super(props);
 
     const bodyWithLightboxes = Text.wrapImagesInLinks(props.body, { imagesClass: LIGHTBOX_CLASS });
-    const bodyWithPreviewsAndLightboxes = Text.createImagePreviews(bodyWithLightboxes);
+    const bodyWithPreviewsAndLightboxes = ImagePreviews.replaceOriginalImagesWithPreviews(bodyWithLightboxes);
 
     this.state = {
       body: bodyWithPreviewsAndLightboxes,
@@ -22,22 +23,7 @@ class TrashPost extends React.Component {
   }
 
   componentDidMount() {
-    const imageLinks = Text.getImagesFromHTML(this.props.body);
-
-    imageLinks.forEach((link) => {
-      const originalElement = global.document.querySelector(`img[src="${link}?preview=true"]`);
-
-      if (!originalElement) {
-        return;
-      }
-
-      const downloadingElement = global.document.createElement('img');
-
-      downloadingElement.onload = function () {
-        originalElement.src = this.src;
-      };
-      downloadingElement.src = link;
-    });
+    ImagePreviews.loadOriginalImages(this.props.body);
   }
 
   render() {

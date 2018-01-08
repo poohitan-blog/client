@@ -38,7 +38,7 @@ class PostPage extends AuthenticatablePage {
     const { post } = this.props;
     const title = `${post.title} - ${current.meta.title}`;
     const description = Text.stripHTML(Text.shorten(post.body, 60));
-    const image = Text.getImagesFromHTML(post.body)[0];
+    const image = Text.getImageLinksFromHTML(post.body)[0];
     const url = `${current.clientURL}/p/${post.path}`;
 
     return (

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { current } from '../../config';
-import { stripHTML, getImagesFromHTML } from '../../services/text';
+import { stripHTML, getImageLinksFromHTML } from '../../services/text';
 
 const BlogPosting = (props) => {
   const postURL = `${current.clientURL}/p/${props.path}`;
@@ -9,7 +9,7 @@ const BlogPosting = (props) => {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
     headline: props.title,
-    image: getImagesFromHTML(props.body)[0],
+    image: getImageLinksFromHTML(props.body)[0],
     keywords: props.tags.join(' '),
     articleBody: stripHTML(props.body),
     url: postURL,

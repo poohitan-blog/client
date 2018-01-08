@@ -7,6 +7,7 @@ import CutBody from './post/CutBody';
 import Footer from './post/Footer';
 import AdminControlButtons from './admin/ControlButtons';
 import * as Text from '../services/text';
+import * as ImagePreviews from '../services/image-previews';
 import HiddenIcon from '../static/icons/hidden.svg';
 
 const LIGHTBOX_CLASS = 'lightbox-image';
@@ -19,7 +20,7 @@ class Post extends React.Component {
     super(props);
 
     const bodyWithLightboxes = Text.wrapImagesInLinks(props.body, { imagesClass: LIGHTBOX_CLASS });
-    const bodyWithPreviewsAndLightboxes = Text.createImagePreviews(bodyWithLightboxes);
+    const bodyWithPreviewsAndLightboxes = ImagePreviews.replaceOriginalImagesWithPreviews(bodyWithLightboxes);
 
     this.state = {
       body: bodyWithPreviewsAndLightboxes,
@@ -27,22 +28,7 @@ class Post extends React.Component {
   }
 
   componentDidMount() {
-    const imageLinks = Text.getImagesFromHTML(this.props.body);
-
-    imageLinks.forEach((link, index) => {
-      const originalElement = global.document.querySelector(`img[src="${link}?preview=true"][data-image-id="${index}"]`);
-
-      if (!originalElement) {
-        return;
-      }
-
-      const downloadingElement = global.document.createElement('img');
-
-      downloadingElement.onload = function () {
-        originalElement.src = this.src;
-      };
-      downloadingElement.src = link;
-    });
+    ImagePreviews.loadOriginalImages(this.props.body);
   }
 
   render() {
