@@ -26,6 +26,12 @@
   font-style: italic;
 }
 
+@font-face {
+  font-family: 'Fira Mono';
+  src: url('/static/fonts/fira-mono-regular.ttf');
+  font-weight: normal;
+}
+
 body {
   background: $smoke-white;
   background-attachment: fixed;
@@ -101,6 +107,7 @@ blockquote {
 }
 
 pre {
+  font-family: $code-font-family;
   font-size: 0.8em;
   padding: 0.5em 1em !important;
 }
