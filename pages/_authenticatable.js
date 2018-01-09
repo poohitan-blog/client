@@ -10,31 +10,36 @@ class AuthenticatablePage extends React.Component {
     const props = { isAuthenticated };
 
     if (isAuthenticated) {
-      const { docs } = await API.pages.find(getAllCookies(req));
+      const pages = await API.pages.find(getAllCookies(req));
+      const drafts = await API.posts.find({ private: true }, getAllCookies(req));
 
-      props.pages = docs;
+      props.pages = pages.docs;
+      props.drafts = drafts.docs;
     }
 
     return props;
   }
 
   getChildContext() {
-    return { isAuthenticated: this.props.isAuthenticated, pages: this.props.pages };
+    return { isAuthenticated: this.props.isAuthenticated, pages: this.props.pages, drafts: this.props.drafts };
   }
 }
 
 AuthenticatablePage.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,
   pages: PropTypes.arrayOf(PropTypes.object),
+  drafts: PropTypes.arrayOf(PropTypes.object),
 };
 
 AuthenticatablePage.defaultProps = {
   pages: [],
+  drafts: [],
 };
 
 AuthenticatablePage.childContextTypes = {
   isAuthenticated: PropTypes.bool,
   pages: PropTypes.arrayOf(PropTypes.object),
+  drafts: PropTypes.arrayOf(PropTypes.object),
 };
 
 export default AuthenticatablePage;

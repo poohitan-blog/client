@@ -2,10 +2,12 @@
 
 $width: 15em;
 $margin: 3em;
+$padding: 1.8em;
 
 .admin-panel {
   box-sizing: border-box;
-  padding: 1.8em;
+  padding: $padding;
+  padding-bottom: 0;
 
   background-color: $white;
   border: 1px solid $light-grey;
@@ -13,7 +15,16 @@ $margin: 3em;
   position: fixed;
   top: $margin;
   left: calc(50% - #{$wrapper-width} / 2 - #{$width} - #{$margin});
+  overflow-y: auto;
+  max-height: calc(100vh - 2 * #{$margin});
   width: $width;
+
+  &:after {
+    content: "";
+    display: block;
+    height: $padding;
+    width: 100%;
+  }
 
   h3 {
     margin-top: 0;

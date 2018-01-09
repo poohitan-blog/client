@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 import Session from '../../services/session';
-import HiddenIcon from '../../static/icons/hidden.svg';
+import Page from './panel/Page';
+import Draft from './panel/Draft';
 
 class Panel extends React.Component {
   static logOut(event) {
@@ -14,25 +15,38 @@ class Panel extends React.Component {
     const pages = this.context && this.context.pages ? this.context.pages : [];
     const publicPages = pages.filter(page => !page.private);
     const privatePages = pages.filter(page => page.private);
-    const pagesMarkup = publicPages.concat(...privatePages).map(page => (
-      <li key={page.id}>
-        <Link href={`/page?path=${page.path}`} as={`/${page.path}`}>
-          <a className="layout-row layout-align-start-center">
-            <div className="admin-panel-list-sentence">{page.title || page.path}</div>
-            {page.private && <div className="admin-panel-list-icon"><HiddenIcon /></div>}
-          </a>
-        </Link>
-      </li>
-    ));
+    const allPages = publicPages.concat(...privatePages);
 
-    const pagesBlock = pages.length ? (
+    const pagesBlock = !pages.length ? null : (
       <div className="admin-panel-block admin-panel-block-pages">
         <h3>Сторінки</h3>
         <ul>
-          {pagesMarkup}
+          {
+            allPages.map(page => (
+              <li key={page.id}>
+                <Page {...page} />
+              </li>
+            ))
+          }
         </ul>
       </div>
-    ) : null;
+    );
+
+    const drafts = this.context && this.context.drafts ? this.context.drafts : [];
+    const draftsBlock = !drafts.length ? null : (
+      <div className="admin-panel-block admin-panel-block-drafts">
+        <h3>Чернетки</h3>
+        <ul>
+          {
+            drafts.map(draft => (
+              <li key={draft.id}>
+                <Draft {...draft} />
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    );
 
     return (
       <nav className="admin-panel">
@@ -54,6 +68,7 @@ class Panel extends React.Component {
           </ul>
         </div>
         {pagesBlock}
+        {draftsBlock}
       </nav>
     );
   }
@@ -61,6 +76,7 @@ class Panel extends React.Component {
 
 Panel.contextTypes = {
   pages: PropTypes.arrayOf(PropTypes.object),
+  drafts: PropTypes.arrayOf(PropTypes.object),
 };
 
 export default Panel;
