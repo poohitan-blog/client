@@ -36,11 +36,11 @@ export function formatPostDate(date) {
   const hoursPassed = todayStart.diff(target, 'hours');
   const oOrOb = target.hours() === 11 ? 'об' : 'о';
 
-  if (hoursPassed > 0 && hoursPassed < 24 && todayStart.date() === target.date()) {
+  if (todayStart.date() === target.date() && todayStart.month() === target.month() && todayStart.year() === target.year()) {
     return `Сьогодні ${oOrOb} ${target.format('HH:mm')}`;
   }
 
-  if (hoursPassed > 0 && hoursPassed < 48 && yesterdayStart.date() === target.date()) {
+  if (yesterdayStart.date() === target.date() && yesterdayStart.month() === target.month() && yesterdayStart.year() === target.year()) {
     return `Вчора ${oOrOb} ${target.format('HH:mm')}`;
   }
 
