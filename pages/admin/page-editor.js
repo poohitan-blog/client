@@ -13,8 +13,7 @@ import ProtectedPage from '../_protected';
 import Wrapper from '../../components/Wrapper';
 import Header from '../../components/Header';
 import Content from '../../components/Content';
-import Editor from '../../utils/editor';
-import Checkbox from '../../components/ui/Checkbox';
+import PageForm from '../../components/admin/PageForm';
 
 class PageEditor extends ProtectedPage {
   static async getInitialProps({ req, query }) {
@@ -42,24 +41,12 @@ class PageEditor extends ProtectedPage {
     this.submit = this.submit.bind(this);
   }
 
-  async submit() {
-    if (this.props.page.path) {
-      const updatedPage = await API.pages.update(this.props.page.path, this.state, getAllCookies());
+  async submit(page) {
+    const savedPage = page.id
+      ? await API.pages.update(this.props.page.path, page, getAllCookies())
+      : await API.pages.create(page, getAllCookies());
 
-      Router.push(`/page?path=${updatedPage.path}`, `/${updatedPage.path}`);
-
-      return;
-    }
-
-    if (!this.state.body || (!this.state.title && !this.state.path)) {
-      // TODO: show error popup
-
-      return;
-    }
-
-    const newPage = await API.pages.create(this.state, getAllCookies());
-
-    Router.push(`/page?path=${newPage.path}`, `/${newPage.path}`);
+    Router.push(`/page?path=${savedPage.path}`, `/${savedPage.path}`);
   }
 
   getPageLinkMarkup() {
@@ -81,7 +68,6 @@ class PageEditor extends ProtectedPage {
     }
 
     const title = this.props.page.path ? 'Редагувати сторінку' : 'Додати сторінку';
-    const link = this.getPageLinkMarkup();
 
     return (
       <Wrapper>
@@ -90,39 +76,7 @@ class PageEditor extends ProtectedPage {
         </Head>
         <Header />
         <Content>
-          <div className="children-equal-margin-vertical layout-row layout-wrap">
-            <h1>{title}</h1>
-            <input
-              type="text"
-              placeholder="Назва"
-              value={this.state.title}
-              onChange={event => this.setState({ title: event.target.value })}
-              className="flex-100"
-            />
-            <div className="smaller layout-row layout-align-start-center flex-100">
-              <input
-                type="text"
-                value={this.state.path}
-                placeholder="Адреса"
-                onChange={event => this.setState({ path: event.target.value })}
-                className="flex-50"
-              />
-              <div className="nowrap text-overflow-ellipsis margin-left flex-50">
-                {link}
-              </div>
-            </div>
-            <div className="flex-100">
-              <Editor key={this.props.page.path} html={this.state.body} onChange={body => this.setState({ body })} />
-            </div>
-            <div className="layout-row layout-align-space-between-center flex-100">
-              <Checkbox
-                label="Заховати"
-                checked={this.state.private}
-                onChange={hidden => this.setState({ private: hidden })}
-              />
-              <button onClick={this.submit} className="flex-30">Вйо</button>
-            </div>
-          </div>
+          <PageForm {...this.props.page} key={this.props.page.path} onChange={page => this.submit(page)} />
         </Content>
       </Wrapper>
     );

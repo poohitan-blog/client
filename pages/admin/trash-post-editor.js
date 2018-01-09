@@ -11,8 +11,7 @@ import ProtectedPage from '../_protected';
 import Wrapper from '../../components/Wrapper';
 import Header from '../../components/Header';
 import Content from '../../components/Content';
-
-import Editor from '../../utils/editor';
+import TrashPostForm from '../../components/admin/TrashPostForm';
 
 class TrashPostEditor extends ProtectedPage {
   static async getInitialProps({ req, query }) {
@@ -38,26 +37,12 @@ class TrashPostEditor extends ProtectedPage {
     this.submit = this.submit.bind(this);
   }
 
-  async submit() {
-    if (!this.state.body) {
-      // TODO: show error popup
+  async submit(trashPost) {
+    const savedTrashPost = trashPost.id
+      ? await API.trashPosts.update(this.props.trashPost.id, trashPost, getAllCookies())
+      : await API.trashPosts.create(trashPost, getAllCookies());
 
-      return;
-    }
-
-    const postId = this.props.trashPost.id;
-
-    if (postId) {
-      const updatedPost = await API.trashPosts.update(postId, this.state, getAllCookies());
-
-      Router.push(`/trash?id=${updatedPost.id}`, `/trash/${updatedPost.id}`);
-
-      return;
-    }
-
-    const newPost = await API.trashPosts.create(this.state, getAllCookies());
-
-    Router.push(`/trash?id=${newPost.id}`, `/trash/${newPost.id}`);
+    Router.push(`/trash?id=${savedTrashPost.id}`, `/trash/${savedTrashPost.id}`);
   }
 
   render() {
@@ -74,15 +59,11 @@ class TrashPostEditor extends ProtectedPage {
         </Head>
         <Header />
         <Content>
-          <div className="children-equal-margin-vertical layout-row layout-wrap">
-            <h1>{title}</h1>
-            <div className="flex-100">
-              <Editor key={this.props.trashPost.id} html={this.state.body} onChange={body => this.setState({ body })} />
-            </div>
-            <div className="layout-row layout-align-center-center flex-100">
-              <button onClick={this.submit} className="flex-30">Вйо</button>
-            </div>
-          </div>
+          <TrashPostForm
+            {...this.props.trashPost}
+            key={this.props.trashPost.id}
+            onChange={trashPost => this.submit(trashPost)}
+          />
         </Content>
       </Wrapper>
     );

@@ -31,15 +31,17 @@ class PagePage extends AuthenticatablePage {
       return <Error statusCode={this.props.error.status} />;
     }
 
+    const { page } = this.props;
+
     return (
       <Wrapper>
         <Head>
-          <title>{this.props.page.title} - {current.meta.title}</title>
-          <meta name="description" content={Text.stripHTML(Text.shorten(this.props.page.body, 60))} key="description" />
+          <title>{page.title} - {current.meta.title}</title>
+          <meta name="description" content={Text.stripHTML(Text.shorten(page.body, 60))} key="description" />
         </Head>
         <Header />
         <Content>
-          <Page {...this.props.page} key={page.path} />
+          <Page {...page} key={page.path} />
         </Content>
         <Footer />
       </Wrapper>
