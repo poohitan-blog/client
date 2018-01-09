@@ -50,14 +50,14 @@ class TrashPostEditor extends ProtectedPage {
     if (postId) {
       const updatedPost = await API.trashPosts.update(postId, this.state, getAllCookies());
 
-      Router.push(`/trash/${updatedPost.id}`);
+      Router.push(`/trash?id=${updatedPost.id}`, `/trash/${updatedPost.id}`);
 
       return;
     }
 
     const newPost = await API.trashPosts.create(this.state, getAllCookies());
 
-    Router.push(`/trash/${newPost.id}`);
+    Router.push(`/trash?id=${newPost.id}`, `/trash/${newPost.id}`);
   }
 
   render() {
