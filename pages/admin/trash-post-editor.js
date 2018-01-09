@@ -77,7 +77,7 @@ class TrashPostEditor extends ProtectedPage {
           <div className="children-equal-margin-vertical layout-row layout-wrap">
             <h1>{title}</h1>
             <div className="flex-100">
-              <Editor html={this.state.body} onChange={body => this.setState({ body })} />
+              <Editor key={this.props.trashPost.id} html={this.state.body} onChange={body => this.setState({ body })} />
             </div>
             <div className="layout-row layout-align-center-center flex-100">
               <button onClick={this.submit} className="flex-30">Вйо</button>

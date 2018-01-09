@@ -112,7 +112,7 @@ class PageEditor extends ProtectedPage {
               </div>
             </div>
             <div className="flex-100">
-              <Editor html={this.state.body} onChange={body => this.setState({ body })} />
+              <Editor key={this.props.page.path} html={this.state.body} onChange={body => this.setState({ body })} />
             </div>
             <div className="layout-row layout-align-space-between-center flex-100">
               <Checkbox

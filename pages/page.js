@@ -39,7 +39,7 @@ class PagePage extends AuthenticatablePage {
         </Head>
         <Header />
         <Content>
-          <Page {...this.props.page} />
+          <Page {...this.props.page} key={page.path} />
         </Content>
         <Footer />
       </Wrapper>

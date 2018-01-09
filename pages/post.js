@@ -67,7 +67,7 @@ class PostPage extends AuthenticatablePage {
         </Head>
         <Header />
         <Content>
-          <Post {...post} />
+          <Post {...post} key={post.path} />
           <CommentForm {...post} />
         </Content>
         <Footer />
