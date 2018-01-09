@@ -15,7 +15,7 @@ const Page = (props, context) => (
         props.private && <div className="page-title-icon"><HiddenIcon /></div>
       }
     </h1>
-    <div dangerouslySetInnerHTML={{ __html: props.body }} />
+    <div className="page-body" dangerouslySetInnerHTML={{ __html: props.body }} />
   </article>
 );
 
