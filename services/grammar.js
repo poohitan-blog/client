@@ -33,14 +33,19 @@ export function formatPostDate(date) {
   const todayStart = moment().startOf('day');
   const yesterdayStart = moment().startOf('day').subtract(1, 'days');
   const target = moment(date);
-  const hoursPassed = todayStart.diff(target, 'hours');
+  const targetDateIsToday = todayStart.date() === target.date()
+    && todayStart.month() === target.month()
+    && todayStart.year() === target.year();
+  const targetDateIsYesterday = yesterdayStart.date() === target.date()
+    && yesterdayStart.month() === target.month()
+    && yesterdayStart.year() === target.year();
   const oOrOb = target.hours() === 11 ? 'об' : 'о';
 
-  if (todayStart.date() === target.date() && todayStart.month() === target.month() && todayStart.year() === target.year()) {
+  if (targetDateIsToday) {
     return `Сьогодні ${oOrOb} ${target.format('HH:mm')}`;
   }
 
-  if (yesterdayStart.date() === target.date() && yesterdayStart.month() === target.month() && yesterdayStart.year() === target.year()) {
+  if (targetDateIsYesterday) {
     return `Вчора ${oOrOb} ${target.format('HH:mm')}`;
   }
 
