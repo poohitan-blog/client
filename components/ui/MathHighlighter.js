@@ -5,13 +5,13 @@ import React from 'react';
 
 class MathHighlighter extends React.Component {
   componentDidMount() {
-    const MathJax = global.MathJax;
+    const { MathJax } = global;
 
     if (!MathJax) {
       return;
     }
 
-    MathJax.Hub.Queue(['Typeset', global.MathJax.Hub]);
+    MathJax.Hub.Queue(['Typeset', MathJax.Hub]);
   }
 
   render() {

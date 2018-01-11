@@ -1,5 +1,5 @@
 const { argv } = require('yargs');
-const execSSH = require('../utils/exec-ssh');
+const execSSH = require('exec-ssh');
 const fs = require('fs');
 
 const env = argv.e || argv.env || argv.environment;
