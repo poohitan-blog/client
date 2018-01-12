@@ -13,6 +13,7 @@ import Header from '../components/Header';
 import Content from '../components/Content';
 import Footer from '../components/Footer';
 import Page from '../components/Page';
+import TagCloud from '../components/TagCloud';
 
 class PagePage extends AuthenticatablePage {
   static async getInitialProps({ query, req }) {

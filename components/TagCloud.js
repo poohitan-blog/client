@@ -70,7 +70,9 @@ class TagCloud extends React.Component {
       const $tag = $(event.target);
       const weight = Number($tag.data('weight'));
 
-      shake($tag, weight);
+      if (this.props.shake) {
+        shake($tag, weight);
+      }
     });
   }
 
@@ -96,7 +98,8 @@ class TagCloud extends React.Component {
 
   normalizeTagWeight(tagWeight, { maxWeight, minWeight }) {
     const relativeWeight = (tagWeight - minWeight) / (maxWeight - minWeight);
-    const { minFontSize, maxFontSize } = this.props;
+    const minFontSize = Number(this.props.minFontSize);
+    const maxFontSize = Number(this.props.maxFontSize);
 
     return ((maxFontSize - minFontSize) * relativeWeight) + minFontSize;
   }
@@ -112,8 +115,10 @@ class TagCloud extends React.Component {
     ));
 
     return (
-      <div className="tag-cloud">
-        {markup}
+      <div className="tag-cloud-wrapper">
+        <div className="tag-cloud" style={{ width: this.props.width }}>
+          {markup}
+        </div>
       </div>
     );
   }
@@ -122,11 +127,15 @@ class TagCloud extends React.Component {
 TagCloud.propTypes = {
   maxFontSize: PropTypes.number,
   minFontSize: PropTypes.number,
+  shake: PropTypes.bool,
+  width: PropTypes.string,
 };
 
 TagCloud.defaultProps = {
   maxFontSize: MAX_FONT_SIZE,
   minFontSize: MIN_FONT_SIZE,
+  shake: false,
+  width: '100%',
 };
 
 export default TagCloud;

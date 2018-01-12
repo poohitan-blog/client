@@ -56,3 +56,20 @@ export function formatPostDate(date) {
 
   return `${target.format('D MMMM YYYY')} ${oOrOb} ${target.format('HH:mm')}`;
 }
+
+const HTTPDescriptions = {
+  401: 'Вимітайся, тобі тут не раді.',
+  403: 'Вимітайся, тобі тут не раді.',
+  404: 'Такої сторінки тут немає.',
+};
+
+export function describeHTTPCode(code) {
+  return HTTPDescriptions[code] || 'З невідомої причини шось пішло не так.';
+}
+
+export default {
+  describeWordCount,
+  createWordCountDescriptor,
+  formatPostDate,
+  describeHTTPCode,
+};
