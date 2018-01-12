@@ -11,39 +11,53 @@ const MIN_FONT_SIZE = 1;
 
 const describePostsCount = Grammar.createWordCountDescriptor(['запис', 'записи', 'записів']);
 
-function shake($element, weight, duration = 7000) {
+function shift($element, { x, y }) {
+  $element.css('transform', `translate(${x}px, ${y}px)`);
+}
+
+function shake($element) {
   const isShaking = $element.hasClass('tag-shaking');
 
   if (isShaking) {
     return;
   }
 
-  const stepDuration = 150;
-  const steps = Math.round(duration / stepDuration);
-  let step = 0;
-
-  const angleDeg = random({ min: 0, max: 359 });
-  let angleRad = angleDeg / Math.PI;
-
   $element.addClass('tag-shaking');
 
-  const interval = setInterval(() => { // eslint-disable-line
-    const amplitude = Math.log((steps - step) * weight);
+  const stepDuration = 150;
+  let step = 1;
 
-    if (amplitude <= 0) {
-      $element.css('transform', 'translate(0, 0)');
+  const weight = Math.max(Number($element.data('weight')), 1);
+
+  let angle = random({ min: 0, max: 2 * Math.PI });
+
+  const initialAmplitude = Math.cbrt(weight) / Math.log10(step + 1); // +1 to avoid Infinity
+  const initialCoords = {
+    x: initialAmplitude * Math.cos(angle),
+    y: initialAmplitude * Math.sin(angle),
+  };
+
+  shift($element, initialCoords);
+
+  const interval = setInterval(() => { // eslint-disable-line
+    step += 1;
+    angle += Math.PI;
+
+    const amplitude = Math.cbrt(weight) / Math.log10(step);
+
+    if (amplitude <= 0.8) {
+      shift($element, { x: 0, y: 0 });
       $element.removeClass('tag-shaking');
 
       return clearInterval(interval);
     }
 
-    const x = amplitude * Math.cos(angleRad);
-    const y = amplitude * Math.sin(angleRad);
+    const coords = {
+      x: amplitude * Math.cos(angle),
+      y: amplitude * Math.sin(angle),
+    };
 
-    $element.css('transform', `translate(${x}px, ${y}px)`);
-
-    angleRad += Math.PI;
-    step += 1;
+    shift($element, coords);
   }, stepDuration);
 }
 
@@ -68,10 +82,9 @@ class TagCloud extends React.Component {
 
     $tags.on('mouseover', (event) => {
       const $tag = $(event.target);
-      const weight = Number($tag.data('weight'));
 
       if (this.props.shake) {
-        shake($tag, weight);
+        shake($tag);
       }
     });
   }
@@ -108,7 +121,7 @@ class TagCloud extends React.Component {
     const { tags } = this.state;
     const markup = tags.map(({ name, weight, normalizedWeight }) => (
       <Link href={`/tag?tag=${name}`} as={`/tag/${name}`} key={name}>
-        <a href={`/tag/${name}`} style={{ fontSize: `${normalizedWeight}em` }} data-weight={weight} title={`${describePostsCount(weight)}`} className="tag">
+        <a href={`/tag/${name}`} style={{ fontSize: `${normalizedWeight}em` }} data-weight={normalizedWeight} title={`${describePostsCount(weight)}`} className="tag">
           {name}
         </a>
       </Link>
