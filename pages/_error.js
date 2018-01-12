@@ -6,6 +6,7 @@ import Wrapper from '../components/Wrapper';
 import Header from '../components/Header';
 import Content from '../components/Content';
 import Footer from '../components/Footer';
+import TagCloud from '../components/TagCloud';
 
 class Error extends React.Component {
   static getInitialProps({ res, error }) {
@@ -34,6 +35,7 @@ class Error extends React.Component {
         <Content>
           <h1>Сталась помилка</h1>
           <p>{message}</p>
+          <TagCloud />
         </Content>
         <Footer />
       </Wrapper>

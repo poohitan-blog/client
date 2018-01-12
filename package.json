@@ -37,7 +37,8 @@
     "react-disqus-comments": "^1.1.1",
     "react-dom": "^16.2.0",
     "react-ga": "^2.4.0",
-    "sass-loader": "^6.0.6"
+    "sass-loader": "^6.0.6",
+    "shuffle-array": "^1.0.1"
   },
   "devDependencies": {
     "babel-eslint": "^7.2.3",

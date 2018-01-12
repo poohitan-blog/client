@@ -117,12 +117,24 @@ const users = {
   findOne: (id, cookies) => findOne({ model: User, param: id }, cookies),
 };
 
+const tags = {
+  getAll: () => {
+    const url = `${API_URL}/tags`;
+    return request({ url });
+  },
+  getCloud: () => {
+    const url = `${API_URL}/tags/cloud`;
+    return request({ url });
+  },
+};
+
 const API = {
   posts,
   pages,
   trashPosts,
   users,
   search,
+  tags,
 };
 
 export default API;

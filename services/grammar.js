@@ -1,30 +1,35 @@
 import moment from 'moment';
 
-export function describeCommentsCount(count) {
+// e.g.: pluralizeWord(5, ['ровер', 'ровери', 'роверів'])
+export function describeWordCount(count, [one, twoToFour, rest]) {
   if (!count) {
-    return 'Немає коментарів';
+    return `Немає ${rest}`;
   }
 
   if (count === 1) {
-    return 'Один коментар';
+    return `Один ${one}`;
   }
 
   const lastTwoDigits = count > 9 ? count % 100 : null;
   const lastDigit = count % 10;
 
   if (lastTwoDigits >= 10 && lastTwoDigits <= 20) {
-    return `${count} коментарів`;
+    return `${count} ${rest}`;
   }
 
   if (lastDigit === 1) {
-    return `${count} коментар`;
+    return `${count} ${one}`;
   }
 
   if (lastDigit >= 2 && lastDigit <= 4) {
-    return `${count} коментарі`;
+    return `${count} ${twoToFour}`;
   }
 
-  return `${count} коментарів`;
+  return `${count} ${rest}`;
+}
+
+export function createWordCountDescriptor([one, twoToFour, rest]) {
+  return count => describeWordCount(count, [one, twoToFour, rest]);
 }
 
 export function formatPostDate(date) {

@@ -8,6 +8,8 @@ import CalendarIcon from '../../static/icons/calendar.svg';
 
 const SocialButtons = dynamic(import('./SocialButtons'), { ssr: false, loading: () => null });
 
+const describeCommentsCount = Grammar.createWordCountDescriptor(['коментар', 'коментарі', 'коментарів']);
+
 class Footer extends React.Component {
   render() {
     const tags = this.props.tags
@@ -31,7 +33,7 @@ class Footer extends React.Component {
           <CommentIcon className="post-footer-icon post-footer-comments-icon" />
           <span className="flex-offset-5 nowrap">
             <Link as={`/p/${this.props.path}#comments`} href={{ pathname: '/post', query: { path: this.props.path }, href: '#comments' }}>
-              <a>{ Grammar.describeCommentsCount(this.props.commentsCount) }</a>
+              <a>{ describeCommentsCount(this.props.commentsCount) }</a>
             </Link>
           </span>
         </div>
