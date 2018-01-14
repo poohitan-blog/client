@@ -20,16 +20,16 @@ class Post extends React.Component {
     super(props);
 
     const bodyWithLightboxes = Text.wrapImagesInLinks(props.body, { imagesClass: LIGHTBOX_CLASS });
-    const bodyWithPreviewsAndLightboxes = ImagePreviews.replaceOriginalImagesWithPreviews(bodyWithLightboxes);
+    // const bodyWithPreviewsAndLightboxes = ImagePreviews.replaceOriginalImagesWithPreviews(bodyWithLightboxes);
 
     this.state = {
-      body: bodyWithPreviewsAndLightboxes,
+      body: bodyWithLightboxes,
     };
   }
 
-  componentDidMount() {
-    ImagePreviews.loadOriginalImages(this.props.body);
-  }
+  // componentDidMount() {
+  //   ImagePreviews.loadOriginalImages(this.props.body);
+  // }
 
   render() {
     const body = this.props.cut
