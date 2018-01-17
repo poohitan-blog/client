@@ -12,6 +12,7 @@ import Header from '../components/Header';
 import Content from '../components/Content';
 import Footer from '../components/Footer';
 import CompactPost from '../components/CompactPost';
+import TagCloud from '../components/TagCloud';
 
 const POSTS_PER_PAGE = 30;
 
@@ -41,7 +42,13 @@ class TagPage extends AuthenticatablePage {
     let content;
 
     if (nothingFound) {
-      content = <p className="fatty text-center">Нічого не знайшлося.</p>;
+      content = (
+        <div className="text-center">
+          <p className="fatty larger">Нічого не знайшлося.</p>
+          <p>Хмаринка теґів:</p>
+          <TagCloud shake minFontSize="1" maxFontSize="3" width="70%" />
+        </div>
+      );
     } else {
       content = this.props.posts
         .map(post => ({ id: post.id, component: <CompactPost {...post} key={post.id} /> }))
