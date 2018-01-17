@@ -20,8 +20,6 @@
     height: 100%;
     box-shadow: 0 0 10px $orange, 0 0 5px $orange;
     opacity: 1.0;
-    -webkit-transform: rotate(3deg) translate(0px, -4px);
-    -ms-transform: rotate(3deg) translate(0px, -4px);
     transform: rotate(3deg) translate(0px, -4px);
 }
 #nprogress .spinner {
@@ -39,7 +37,6 @@
     border-top-color: $orange;
     border-left-color: $orange;
     border-radius: 50%;
-    -webkit-animation: nprogress-spinner 400ms linear infinite;
     animation: nprogress-spinner 400ms linear infinite;
 }
 .nprogress-custom-parent {
@@ -50,6 +47,27 @@
 .nprogress-custom-parent #nprogress .bar {
     position: absolute;
 }
+
+body.raspberries {
+    #nprogress .bar {
+        background: $white;
+    }
+    #nprogress .peg {
+        box-shadow: 0 0 10px $white, 0 0 5px $white;
+    }
+    #nprogress .spinner {
+        display: block;
+        position: fixed;
+        z-index: 1031;
+        top: 15px;
+        right: 15px;
+    }
+    #nprogress .spinner-icon {
+        border-top-color: $white;
+        border-left-color: $white;
+    }
+}
+
 @-webkit-keyframes nprogress-spinner {
     0% {
         -webkit-transform: rotate(0deg);
