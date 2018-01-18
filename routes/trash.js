@@ -7,6 +7,10 @@ module.exports = (app) => {
     app.render(req, res, '/trash', req.query);
   });
 
+  router.get('/trash/index.php', (req, res) => {
+    app.render(req, res, '/trash', req.query);
+  });
+
   router.get('/trash/new', (req, res) => {
     app.render(req, res, '/admin/trash-post-editor', req.query);
   });
