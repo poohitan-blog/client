@@ -54,13 +54,16 @@ class Panel extends React.Component {
           <h3>Панель приладів</h3>
           <ul>
             <li>
-              <Link href="/admin/post-editor" as="/posts/new"><a>Додати запис</a></Link>
+              <Link href="/admin/edit-post" as="/posts/new"><a>Додати запис</a></Link>
             </li>
             <li>
-              <Link href="/admin/trash-post-editor" as="/trash/new"><a>Додати запис у смітник</a></Link>
+              <Link href="/admin/edit-trash-post" as="/trash/new"><a>Додати запис у смітник</a></Link>
             </li>
             <li>
-              <Link href="/admin/page-editor" as="/pages/new"><a>Додати сторінку</a></Link>
+              <Link href="/admin/edit-page" as="/pages/new"><a>Додати сторінку</a></Link>
+            </li>
+            <li>
+              <Link href="/admin/upload-files" as="/upload"><a>Завантажити файли</a></Link>
             </li>
             <li>
               <a href="#" role="button" onClick={Panel.logOut}>Вийти</a>

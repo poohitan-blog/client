@@ -128,6 +128,7 @@ cut {
 }
 
 input,
+textarea,
 button {
   color: $grey;
   border: 1px solid $light-grey;
@@ -164,6 +165,13 @@ button, *[role="button"] {
   &:active {
     transform: translateY(2px);
   }
+}
+
+textarea {
+  width: 100%;
+  padding: 1em;
+  box-sizing: border-box;
+  resize: none;
 }
 
 .smaller {

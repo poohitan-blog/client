@@ -13,7 +13,7 @@ import Header from '../../components/Header';
 import Content from '../../components/Content';
 import TrashPostForm from '../../components/admin/TrashPostForm';
 
-class TrashPostEditor extends ProtectedPage {
+class EditTrashPost extends ProtectedPage {
   static async getInitialProps({ req, query }) {
     try {
       const parentProps = await super.getInitialProps({ req });
@@ -70,12 +70,12 @@ class TrashPostEditor extends ProtectedPage {
   }
 }
 
-TrashPostEditor.propTypes = {
+EditTrashPost.propTypes = {
   trashPost: PropTypes.shape({}),
 };
 
-TrashPostEditor.defaultProps = {
+EditTrashPost.defaultProps = {
   trashPost: {},
 };
 
-export default TrashPostEditor;
+export default EditTrashPost;

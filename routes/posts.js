@@ -4,7 +4,7 @@ module.exports = (app) => {
   const router = express.Router();
 
   router.get('/posts/new', (req, res) => {
-    app.render(req, res, '/admin/post-editor', req.query);
+    app.render(req, res, '/admin/edit-post', req.query);
   });
 
   router.get('/p/:post_path', (req, res) => {
@@ -12,7 +12,7 @@ module.exports = (app) => {
   });
 
   router.get('/p/:post_path/edit', (req, res) => {
-    app.render(req, res, '/admin/post-editor', Object.assign({}, req.query, { path: req.params.post_path }));
+    app.render(req, res, '/admin/edit-post', Object.assign({}, req.query, { path: req.params.post_path }));
   });
 
   return router;

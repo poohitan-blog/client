@@ -15,7 +15,7 @@ import Header from '../../components/Header';
 import Content from '../../components/Content';
 import PageForm from '../../components/admin/PageForm';
 
-class PageEditor extends ProtectedPage {
+class EditPage extends ProtectedPage {
   static async getInitialProps({ req, query }) {
     try {
       const parentProps = await super.getInitialProps({ req });
@@ -83,12 +83,12 @@ class PageEditor extends ProtectedPage {
   }
 }
 
-PageEditor.propTypes = {
+EditPage.propTypes = {
   page: PropTypes.shape({}),
 };
 
-PageEditor.defaultProps = {
+EditPage.defaultProps = {
   page: {},
 };
 
-export default PageEditor;
+export default EditPage;
