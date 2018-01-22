@@ -38,6 +38,7 @@ app.prepare()
     server.get('/wardrobe', (req, res) => app.render(req, res, '/login', req.query));
     server.get('/archive', (req, res) => app.render(req, res, '/archive', req.query));
     server.get('/search', (req, res) => app.render(req, res, '/search', req.query));
+    server.get('/upload', (req, res) => app.render(req, res, '/admin/upload-files', req.query));
 
     server.get('/tag/:tag_name', (req, res) => {
       app.render(req, res, '/tag', Object.assign({}, req.query, { tag: req.params.tag_name }));

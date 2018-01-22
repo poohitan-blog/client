@@ -11,6 +11,7 @@ import TrashPost from '../models/trash-post';
 import User from '../models/user';
 
 const API_URL = current.apiURL;
+const INLINE_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/svg'];
 
 async function find({ model, query }, cookies) {
   const url = `${API_URL}/${pluralize(model.name)}`;
@@ -87,6 +88,45 @@ async function search(query, cookies) {
   return { docs: deserialized, meta };
 }
 
+async function upload(files, cookies) {
+  const images = files.filter(file => INLINE_IMAGE_TYPES.includes(file.type));
+  const restFiles = files.filter(file => !images.includes(file));
+
+  const imagesFormData = new FormData();
+  images.forEach(image => imagesFormData.append('image', image));
+
+  const restFilesFormData = new FormData();
+  restFiles.forEach(file => restFilesFormData.append('file', file));
+
+  const headers = { Cookie: cookies };
+
+  const uploadImages = !images.length
+    ? Promise.resolve([])
+    : request({
+      url: `${API_URL}/images`,
+      headers,
+      body: imagesFormData,
+      method: 'POST',
+      formData: true,
+    });
+
+  const uploadRestFiles = !restFiles.length
+    ? Promise.resolve([])
+    : request({
+      url: `${API_URL}/files`,
+      headers,
+      body: restFilesFormData,
+      method: 'POST',
+      formData: true,
+    });
+
+  return Promise.all([
+    uploadImages,
+    uploadRestFiles,
+  ])
+    .then(([uploadedImages, uploadedFiles]) => [...uploadedImages, ...uploadedFiles]);
+}
+
 const posts = {
   find: (query, cookies) => find({ model: Post, query }, cookies),
   findOne: (path, cookies) => findOne({ model: Post, param: path }, cookies),
@@ -135,6 +175,7 @@ const API = {
   users,
   search,
   tags,
+  upload,
 };
 
 export default API;

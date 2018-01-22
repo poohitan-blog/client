@@ -8,6 +8,7 @@ export default async function request(params) {
     method = 'GET',
     headers = {},
     body,
+    formData,
   } = params;
   let requestUrl = url;
 
@@ -15,12 +16,12 @@ export default async function request(params) {
     requestUrl += `?${queryString.stringify(query)}`;
   }
 
+  const defaultHeaders = formData ? {} : { 'Content-Type': 'application/json' };
+
   const response = await fetch(requestUrl, {
     method,
-    body: body ? JSON.stringify(body) : null,
-    headers: Object.assign({
-      'Content-Type': 'application/json',
-    }, headers),
+    body: formData ? body : JSON.stringify(body),
+    headers: Object.assign({}, defaultHeaders, headers),
     credentials: 'include',
   });
 
