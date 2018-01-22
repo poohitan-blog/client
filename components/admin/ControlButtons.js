@@ -12,15 +12,15 @@ import RemoveIcon from '../../static/icons/remove.svg';
 
 const linkGenerators = {
   page: {
-    href: path => `/admin/page-editor?path=${path}`,
+    href: path => `/admin/edit-page?path=${path}`,
     as: path => `/${path}/edit`,
   },
   post: {
-    href: path => `/admin/post-editor?path=${path}`,
+    href: path => `/admin/edit-post?path=${path}`,
     as: path => `/p/${path}/edit`,
   },
   trashPost: {
-    href: id => `/admin/trash-post-editor?id=${id}`,
+    href: id => `/admin/edit-trash-post?id=${id}`,
     as: id => `/trash/${id}/edit`,
   },
 };

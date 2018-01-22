@@ -30,7 +30,7 @@ class TrashPostForm extends React.Component {
         <div className="flex-100">
           <Editor key={this.props.id} html={this.state.body} onChange={body => this.setState({ body })} />
         </div>
-        <div className="layout-row layout-align-center-center flex-100">
+        <div className="layout-row layout-align-end-center flex-100">
           <button onClick={this.submit} className="flex-30">Вйо</button>
         </div>
       </div>

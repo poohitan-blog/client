@@ -13,7 +13,7 @@ import Header from '../../components/Header';
 import Content from '../../components/Content';
 import PostForm from '../../components/admin/PostForm';
 
-class PostEditor extends ProtectedPage {
+class EditPost extends ProtectedPage {
   static async getInitialProps({ req, query }) {
     try {
       const parentProps = await super.getInitialProps({ req });
@@ -65,12 +65,12 @@ class PostEditor extends ProtectedPage {
   }
 }
 
-PostEditor.propTypes = {
+EditPost.propTypes = {
   post: PropTypes.shape({}),
 };
 
-PostEditor.defaultProps = {
+EditPost.defaultProps = {
   post: {},
 };
 
-export default PostEditor;
+export default EditPost;
