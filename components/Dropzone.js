@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactDropzone from 'react-dropzone';
-import Loader from '../static/icons/three-dots.svg';
+import LoaderIcon from '../static/icons/three-dots.svg';
 
 class Dropzone extends React.Component {
   constructor(props) {
@@ -36,7 +36,7 @@ class Dropzone extends React.Component {
       >
         <div className="dropzone-content">
           <div className={`dropzone-loader ${loaderVisible && 'visible'}`}>
-            <Loader className="dropzone-loader-icon" />
+            <LoaderIcon className="dropzone-loader-icon" />
           </div>
           <div className={`dropzone-placeholder ${placeholderVisible && 'visible'}`}>
             Кидай сюди шо-небудь
