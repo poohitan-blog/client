@@ -21,10 +21,8 @@ class PostPage extends AuthenticatablePage {
     try {
       const parentProps = await super.getInitialProps({ req });
       const post = await API.posts.findOne(query.path, getAllCookies(req));
-      const commentsCountByPostPath = await API.posts.fetchCommentsCount();
-      const postWithCommentsCount = Object.assign({ commentsCount: commentsCountByPostPath[post.path] }, post);
 
-      return Object.assign(parentProps, { post: postWithCommentsCount });
+      return Object.assign(parentProps, { post });
     } catch (error) {
       return { error };
     }

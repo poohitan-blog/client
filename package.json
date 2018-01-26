@@ -23,7 +23,7 @@
     "jquery": "^3.2.1",
     "jwt-decode": "^2.2.0",
     "moment": "^2.20.1",
-    "next": "^4.2.1",
+    "next": "^4.2.3",
     "node-sass": "^4.4.0",
     "normalize.css": "^7.0.0",
     "nprogress": "^0.2.0",

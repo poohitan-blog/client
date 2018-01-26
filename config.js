@@ -25,8 +25,7 @@ const config = {
     cookiesDomain: 'localhost',
 
     disqus: {
-      shortname: 'new-poohitan',
-      APIKey: 'yMQUyJ8OWzQhQdUQvU9UT1H2xtvaVbevBScMnaXkhkIauYUKjOoQGLL6usjy7Q3b',
+      shortname: 'poohitan',
     },
 
     google: {},
@@ -40,7 +39,6 @@ const config = {
 
     disqus: {
       shortname: 'poohitan',
-      APIKey: 'yMQUyJ8OWzQhQdUQvU9UT1H2xtvaVbevBScMnaXkhkIauYUKjOoQGLL6usjy7Q3b',
     },
 
     server: {

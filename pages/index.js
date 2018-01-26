@@ -24,12 +24,8 @@ class IndexPage extends AuthenticatablePage {
       const parentProps = await super.getInitialProps({ query, req });
       const { page = 1 } = query;
       const { docs, meta } = await API.posts.find({ page, limit: POSTS_PER_PAGE }, getAllCookies(req));
-      const commentsCountByPostPath = await API.posts.fetchCommentsCount();
-      const posts = docs.map(post => Object.assign({
-        commentsCount: commentsCountByPostPath[post.path],
-      }, post));
 
-      return Object.assign(parentProps, { posts, meta });
+      return Object.assign(parentProps, { posts: docs, meta });
     } catch (error) {
       return { error };
     }
