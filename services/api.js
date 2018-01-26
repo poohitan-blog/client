@@ -3,7 +3,6 @@ import pluralize from 'pluralize';
 import { current } from '../config';
 import deserialize from '../utils/deserialize';
 import request from '../utils/request';
-import fetchCommentsCount from '../utils/fetch-comments-count';
 
 import Post from '../models/post';
 import Page from '../models/page';
@@ -133,7 +132,6 @@ const posts = {
   update: (path, body, cookies) => update({ model: Post, param: path, body }, cookies),
   create: (body, cookies) => create({ model: Post, body }, cookies),
   remove: (path, cookies) => remove({ model: Post, param: path }, cookies),
-  fetchCommentsCount,
 };
 
 const pages = {
