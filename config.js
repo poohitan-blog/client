@@ -11,7 +11,7 @@ const shared = {
       },
       facebook: {
         username: 'poohitan',
-        link: 'https://twitter.com/poohitan',
+        link: 'https://fb.com/poohitan',
       },
     },
   },
