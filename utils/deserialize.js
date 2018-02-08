@@ -2,7 +2,7 @@ const deserializers = {
   [String]: value => value,
   [Date]: value => new Date(value),
   [Number]: value => Number(value),
-  [Boolean]: value => value === 'true',
+  [Boolean]: value => value === true || value === 'true',
 };
 
 const deserializeOne = (data, schema) => Object.keys(data).reduce((result, fieldName) => {
