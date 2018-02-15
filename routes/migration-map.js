@@ -57,4 +57,8 @@ stuffList.forEach((stuffName) => {
   router.get(`/${stuffName}`, (req, res) => res.redirect(301, `/stuff/${stuffName}`));
 });
 
+router.get('/staff/*', (req, res) => {
+  res.redirect(301, req.path.replace('/staff', '/stuff'));
+});
+
 module.exports = router;
