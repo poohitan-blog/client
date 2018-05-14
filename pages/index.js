@@ -16,7 +16,7 @@ import Post from '../components/Post';
 
 import Blog from '../components/jsonld/Blog';
 
-const POSTS_PER_PAGE = 10;
+const POSTS_PER_PAGE = 20;
 
 class IndexPage extends AuthenticatablePage {
   static async getInitialProps({ query, req }) {

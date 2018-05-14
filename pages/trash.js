@@ -15,7 +15,7 @@ import Footer from '../components/Footer';
 import TrashPost from '../components/TrashPost';
 import Trashbin from '../components/header/Trashbin';
 
-const POSTS_PER_PAGE = 15;
+const POSTS_PER_PAGE = 30;
 
 class TrashPage extends AuthenticatablePage {
   static async getInitialProps({ query, req }) {
