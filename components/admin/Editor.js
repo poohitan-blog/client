@@ -9,13 +9,14 @@ import '../../static/libs/froala/froala_editor.pkgd.min';
 import '../../static/libs/froala/plugins/image.min';
 import '../../static/libs/froala/languages/uk';
 import './editor/buttons/cut';
+import './editor/buttons/quote';
 import editorStyles from '../../static/libs/froala/froala_editor.pkgd.min.css';
 import styles from '../../static/libs/froala/froala_style.min.css';
 import theme from '../../static/libs/froala/themes/custom.css';
 
 const buttons = [
   'bold', 'italic', 'underline', 'strikeThrough', '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', '|', 'subscript', 'superscript', '|', 'color', 'clearFormatting',
-  '|', '-', 'insertLink', 'insertImage', 'insertVideo', 'insertFile', 'quote', 'code', 'insertTable', '|', 'insertHR', 'fullscreen', 'html', 'cut',
+  '|', '-', 'insertLink', 'insertImage', 'insertVideo', 'insertFile', 'quote', 'custom-quote', 'code', 'insertTable', '|', 'insertHR', 'fullscreen', 'html', 'cut',
 ];
 
 class Editor extends React.Component {
