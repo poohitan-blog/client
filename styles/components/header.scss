@@ -11,11 +11,25 @@
     .menu-item {
       margin: 1.12em 0 0.4em 0;
 
+      .menu-item-content-mobile {
+        display: none;
+        height: 1em;
+        fill: $dark-grey;
+      }
+
       @media (max-width: 640px) {
         margin: 0.5em 0;
 
         .header-trashbin {
           margin-top: -0.4em;
+        }
+
+        .menu-item-content-desktop {
+          display: none;
+        }
+
+        .menu-item-content-mobile {
+          display: block;
         }
       }
     }
@@ -38,5 +52,10 @@
         text-decoration: none;
       }
     }
+  }
+
+  @media (max-width: 640px) {
+    font-size: 1.2em;
+    padding: 1.2em 0 2em 0;
   }
 }

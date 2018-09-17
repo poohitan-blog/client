@@ -32,6 +32,9 @@ $shadow-height: 6px;
 
 @media (max-width: 640px) {
   .wrapper {
-    width: calc(100% - 2em);
+    width: 100%;
+
+    margin: 0;
+    padding: 1em;
   }
 }

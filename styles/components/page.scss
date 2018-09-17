@@ -20,4 +20,10 @@
       margin: 1em 0;
     }
   }
+
+  @media (max-width: 640px) {
+    .page-body {
+      font-size: 1.2em;
+    }
+  }
 }

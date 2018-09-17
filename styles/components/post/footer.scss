@@ -11,8 +11,10 @@ $item-horizontal-margin: 0.8em;
   overflow: hidden;
   position: relative;
 
-  @media (max-width: 600px) {
+  @media (max-width: 640px) {
     flex-wrap: wrap;
+    font-size: 1em;
+    padding: 0.5em;
   }
 
   .post-footer-item {
@@ -20,7 +22,7 @@ $item-horizontal-margin: 0.8em;
     margin-left: $item-horizontal-margin;
     margin-right: $item-horizontal-margin;
 
-    @media (max-width: 600px) {
+    @media (max-width: 640px) {
       &:first-child {
         margin-left: 0;
       }
@@ -50,7 +52,7 @@ $item-horizontal-margin: 0.8em;
     overflow: hidden;
     text-overflow: ellipsis;
 
-    @media (min-width: 600px) {
+    @media (min-width: 640px) {
       &:hover {
         +.post-footer-social-wrapper,
         +.post-footer-social-wrapper * {
@@ -68,7 +70,7 @@ $item-horizontal-margin: 0.8em;
     pointer-events: all;
     transition: opacity 100ms linear;
 
-    @media (min-width: 600px) {
+    @media (min-width: 640px) {
       position: absolute;
       top: 0;
       right: 0;

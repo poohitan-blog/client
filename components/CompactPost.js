@@ -11,7 +11,7 @@ const CompactPost = (props) => {
 
   return (
     <article className="post post-compact">
-      <div className="layout-row layout-align-space-between-start">
+      <div className="layout-gt-xs-row layout-align-space-between-start">
         <h3 className="post-title layout-row layout-align-start-start">
           <Link as={`/p/${props.path}`} href={`/post?path=${props.path}`} prefetch><a>{props.title}</a></Link>
           {

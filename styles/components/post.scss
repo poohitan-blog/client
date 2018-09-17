@@ -35,6 +35,12 @@
       height: 100%;
     }
   }
+
+  @media (max-width: 640px) {
+    .post-body {
+      font-size: 1.2em;
+    }
+  }
 }
 
 .post.post-compact {
@@ -59,5 +65,13 @@
     color: $grey;
     margin-left: 1em;
     line-height: 2.1em;
+  }
+
+  @media (max-width: 640px) {
+    font-size: 1.2em;
+
+    .post-date {
+      margin-left: 0;
+    }
   }
 }
