@@ -54,6 +54,7 @@ $item-horizontal-margin: 0.8em;
       &:hover {
         +.post-footer-social-wrapper,
         +.post-footer-social-wrapper * {
+          transition: opacity 300ms linear;
           opacity: 0;
           pointer-events: none;
         }
