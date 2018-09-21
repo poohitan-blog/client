@@ -17,7 +17,7 @@
 
   .page-body {
     hr {
-      margin: 1em 0;
+      @include three-dots;
     }
   }
 
