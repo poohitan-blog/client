@@ -106,6 +106,7 @@ blockquote,
   margin: 1em 1.2em !important;
   padding: 2px 5px 5px 10px !important;
   border-left: 3px solid $lighter-grey !important;
+  white-space: pre-wrap;
 }
 
 pre {

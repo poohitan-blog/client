@@ -11,7 +11,7 @@ import '../../static/libs/social/jssocials.min';
 class SocialButtons extends React.Component {
   componentDidMount() {
     $(`.post-footer-social[data-path="${this.props.path}"]`).jsSocials({
-      shares: ['twitter', 'facebook', 'googleplus'],
+      shares: ['twitter', 'facebook', 'googleplus', 'telegram'],
       showLabel: false,
       showCount: false,
       url: `${current.clientURL}/p/${this.props.path}`,
