@@ -28,7 +28,7 @@ class SearchBox extends React.Component {
 
   handleKeyPress(event) {
     if (event.which === ENTER_KEY_CODE) {
-      Router.push(`/search?query=${this.state.query}`);
+      Router.push(`/search?query=${encodeURIComponent(this.state.query)}`);
     }
   }
 
