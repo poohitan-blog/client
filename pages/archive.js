@@ -6,7 +6,7 @@ import Error from './_error';
 import { current } from '../config';
 import { getAllCookies } from '../services/cookies';
 
-import AuthenticatablePage from './_authenticatable';
+import AuthenticatablePage from './mixins/authenticatable';
 import Wrapper from '../components/Wrapper';
 import Header from '../components/Header';
 import Content from '../components/Content';
@@ -16,9 +16,9 @@ import CompactPost from '../components/CompactPost';
 const POSTS_PER_PAGE = 30;
 
 class ArchivePage extends AuthenticatablePage {
-  static async getInitialProps({ query, req }) {
+  static async getInitialProps({ query, req, res, asPath }) {
     try {
-      const parentProps = await super.getInitialProps({ query, req });
+      const parentProps = await super.getInitialProps({ query, req, res, asPath });
       const { page = 1 } = query;
       const { docs, meta } = await API.posts.find({ page, limit: POSTS_PER_PAGE }, getAllCookies(req));
 

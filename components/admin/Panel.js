@@ -63,6 +63,9 @@ class Panel extends React.Component {
               <Link href="/admin/edit-page" as="/pages/new"><a>Додати сторінку</a></Link>
             </li>
             <li>
+              <Link href="/admin/redirects" as="/redirects"><a>Переадресування</a></Link>
+            </li>
+            <li>
               <Link href="/admin/upload-files" as="/upload"><a>Завантажити файли</a></Link>
             </li>
             <li>

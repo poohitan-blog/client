@@ -9,11 +9,12 @@ const dev = config.environment !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
 
-const migrationMap = require('./routes/migration-map.js');
+// const migrationMap = require('./routes/migration-map.js');
 
-const pagesRouter = require('./routes/pages.js');
-const postsRouter = require('./routes/posts.js');
-const trashRouter = require('./routes/trash.js');
+const pagesRouter = require('./routes/pages');
+const postsRouter = require('./routes/posts');
+const trashRouter = require('./routes/trash');
+const redirectsRouter = require('./routes/redirects');
 
 const staticDirPath = config.environment === 'development' ? '../stuff' : '../../stuff';
 
@@ -23,7 +24,9 @@ app.prepare()
 
     server.get('/robots.txt', (req, res) => res.sendFile(path.join(__dirname, '/robots.txt')));
 
-    server.use(migrationMap);
+    server.use(cookieParser());
+
+    server.use(redirectsRouter(app));
     server.use('/stuff', express.static(path.join(__dirname, staticDirPath)));
 
     server.get('/rss', async (req, res) => {
@@ -33,12 +36,11 @@ app.prepare()
       res.header({ 'Content-Type': 'application/rss+xml' }).send(xml);
     });
 
-    server.use(cookieParser());
-
     server.get('/wardrobe', (req, res) => app.render(req, res, '/login', req.query));
     server.get('/archive', (req, res) => app.render(req, res, '/archive', req.query));
     server.get('/search', (req, res) => app.render(req, res, '/search', req.query));
     server.get('/upload', (req, res) => app.render(req, res, '/admin/upload-files', req.query));
+    server.get('/redirects', (req, res) => app.render(req, res, '/admin/redirects', req.query));
 
     server.get('/tag/:tag_name', (req, res) => {
       app.render(req, res, '/tag', Object.assign({}, req.query, { tag: req.params.tag_name }));

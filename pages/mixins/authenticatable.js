@@ -1,13 +1,15 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import Session from '../services/session';
-import API from '../services/api';
-import { getAllCookies } from '../services/cookies';
+import Session from '../../services/session';
+import API from '../../services/api';
+import RedirectablePage from './redirectable';
+import { getAllCookies } from '../../services/cookies';
 
-class AuthenticatablePage extends React.Component {
-  static async getInitialProps({ req }) {
+class AuthenticatablePage extends RedirectablePage {
+  static async getInitialProps({ req, res, asPath }) {
+    const parentProps = await super.getInitialProps({ req, res, asPath });
+
     const isAuthenticated = Session.isAuthenticated(req);
-    const props = { isAuthenticated };
+    const props = { ...parentProps, isAuthenticated };
 
     if (isAuthenticated) {
       const pages = await API.pages.find(getAllCookies(req));

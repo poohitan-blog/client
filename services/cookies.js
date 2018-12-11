@@ -2,7 +2,7 @@ import { current } from '../config';
 
 export function getCookie(name, req) {
   if (req) {
-    return req.cookies[name];
+    return req.cookies ? req.cookies[name] : '';
   }
 
   const matches = global.document.cookie.match(new RegExp(`(?:^|; )${name.replace(/([.$?*|{}()[\]\\/+^])/g, '\\$1')}=([^;]*)`));
@@ -41,7 +41,7 @@ export function stringifyCookies(req) { // TODO: don't miss cookie options (http
     return global.document.cookies;
   }
 
-  const { cookies } = req;
+  const { cookies = {} } = req;
 
   return Object.keys(cookies).map(cookieName => `${cookieName}=${cookies[cookieName]}`).join('; ');
 }

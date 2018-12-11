@@ -3,7 +3,7 @@ import Head from 'next/head';
 
 import Error from '../_error';
 
-import ProtectedPage from '../_protected';
+import ProtectedPage from '../mixins/protected';
 import Wrapper from '../../components/Wrapper';
 import Header from '../../components/Header';
 import Content from '../../components/Content';

@@ -8,6 +8,7 @@ import Post from '../models/post';
 import Page from '../models/page';
 import TrashPost from '../models/trash-post';
 import User from '../models/user';
+import Redirect from '../models/redirect';
 
 const API_URL = current.apiURL;
 const INLINE_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/svg'];
@@ -166,6 +167,14 @@ const tags = {
   },
 };
 
+const redirects = {
+  find: (query, cookies) => find({ model: Redirect, query }, cookies),
+  findOne: (from, cookies) => findOne({ model: Redirect, param: from }, cookies),
+  update: (id, body, cookies) => update({ model: Redirect, param: id, body }, cookies),
+  create: (body, cookies) => create({ model: Redirect, body }, cookies),
+  remove: (id, cookies) => remove({ model: Redirect, param: id }, cookies),
+};
+
 const API = {
   posts,
   pages,
@@ -173,6 +182,7 @@ const API = {
   users,
   search,
   tags,
+  redirects,
   upload,
 };
 

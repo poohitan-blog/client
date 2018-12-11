@@ -14,11 +14,11 @@ class Checkbox extends React.Component {
   }
 
   render() {
-    const { checked, label } = this.props;
+    const { checked, label, className } = this.props;
     const checkboxId = `checkbox-${label}`;
 
     return (
-      <div className="checkbox">
+      <div className={`checkbox ${className}`}>
         <label htmlFor={checkboxId} className="layout-row layout-align-start-center">
           <input id={checkboxId} type="checkbox" checked={checked} onChange={this.change} className="checkbox-native" />
           <div className="checkbox-square">
@@ -35,10 +35,12 @@ Checkbox.propTypes = {
   checked: PropTypes.bool,
   label: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
+  className: PropTypes.string,
 };
 
 Checkbox.defaultProps = {
   checked: false,
+  className: '',
 };
 
 export default Checkbox;

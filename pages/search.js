@@ -6,7 +6,7 @@ import Error from './_error';
 import { current } from '../config';
 import { getAllCookies } from '../services/cookies';
 
-import AuthenticatablePage from './_authenticatable';
+import AuthenticatablePage from './mixins/authenticatable';
 import Wrapper from '../components/Wrapper';
 import Header from '../components/Header';
 import Content from '../components/Content';

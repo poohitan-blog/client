@@ -1,4 +1,4 @@
-import AuthenticatablePage from './mixins/authenticatable';
+import AuthenticatablePage from './authenticatable';
 
 class ProtectedPage extends AuthenticatablePage {
   static async getInitialProps({ req }) {

@@ -7,7 +7,7 @@ import API from '../services/api';
 import { getAllCookies } from '../services/cookies';
 import * as Text from '../services/text';
 
-import AuthenticatablePage from './_authenticatable';
+import AuthenticatablePage from './mixins/authenticatable';
 import Wrapper from '../components/Wrapper';
 import Header from '../components/Header';
 import Content from '../components/Content';
