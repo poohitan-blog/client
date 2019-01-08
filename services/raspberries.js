@@ -3,7 +3,7 @@ import Cookies from '../services/cookies';
 import random from '../helpers/random';
 
 const COOKIE_NAME = 'raspberriesDay';
-const LUCKY_NUMBER = { min: 1, max: 5 };
+const LUCKY_NUMBER = { min: 1, max: 7 };
 
 function getCookie(req) {
   const cookie = Cookies.get(COOKIE_NAME, req);
