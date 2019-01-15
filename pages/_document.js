@@ -34,6 +34,7 @@ class MyDocument extends Document {
 
           <link rel="icon" href="/static/icons/favicon.ico" type="image/x-icon" />
           <link rel="alternate" type="application/rss+xml" title="RSS блоґу" href={`${current.clientURL}/rss`} />
+          <link rel="author" href="humans.txt" />
 
           <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML&locale=uk" />
 
