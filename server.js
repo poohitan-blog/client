@@ -22,6 +22,7 @@ app.prepare()
     const server = express();
 
     server.get('/robots.txt', (req, res) => res.sendFile(path.join(__dirname, '/robots.txt')));
+    server.get('/humans.txt', (req, res) => res.sendFile(path.join(__dirname, '/humans.txt')));
 
     server.use(migrationMap);
     server.use('/stuff', express.static(path.join(__dirname, staticDirPath)));
