@@ -31,7 +31,12 @@ app.prepare()
       const response = await fetch(`${config.apiURL}/rss`);
       const xml = await response.text();
 
-      res.header({ 'Content-Type': 'application/rss+xml' }).send(xml);
+      res
+        .header({
+          'Content-Type': 'application/rss+xml',
+          'Content-Disposition': 'inline',
+        })
+        .send(xml);
     });
 
     server.use(cookieParser());

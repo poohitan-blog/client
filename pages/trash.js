@@ -56,7 +56,7 @@ class TrashPage extends AuthenticatablePage {
       return <Error statusCode={error.status} />;
     }
 
-    const postsMarkup = posts.map(post => <TrashPost {...post} key={post.id} />);
+    const postsMarkup = posts.map(post => <TrashPost {...post} key={post.id} collapsable={posts.length > 1} />);
     const paginationInfo = { ...meta, linkTexts: { next: 'Далі', previous: 'Назад' } };
 
     return (
