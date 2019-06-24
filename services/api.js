@@ -129,6 +129,11 @@ async function upload(files, cookies) {
 const posts = {
   find: (query, cookies) => find({ model: Post, query }, cookies),
   findOne: (path, cookies) => findOne({ model: Post, param: path }, cookies),
+  findSimilar: (path) => {
+    const url = `${API_URL}/posts/${path}/similar`;
+
+    return request({ url });
+  },
   update: (path, body, cookies) => update({ model: Post, param: path, body }, cookies),
   create: (body, cookies) => create({ model: Post, body }, cookies),
   remove: (path, cookies) => remove({ model: Post, param: path }, cookies),

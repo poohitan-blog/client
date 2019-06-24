@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
+import dynamic from 'next/dynamic';
 import Error from './_error';
 import { current } from '../config';
 import API from '../services/api';
@@ -16,13 +17,19 @@ import Post from '../components/Post';
 import CommentForm from '../components/post/CommentForm';
 import BlogPosting from '../components/jsonld/BlogPosting';
 
+const SimilarPostsGroup = dynamic(import('../components/SimilarPostsGroup'), {
+  ssr: false,
+  loading: () => null,
+});
+
 class PostPage extends AuthenticatablePage {
   static async getInitialProps({ query, req }) {
     try {
       const parentProps = await super.getInitialProps({ req });
       const post = await API.posts.findOne(query.path, getAllCookies(req));
+      const similarPosts = await API.posts.findSimilar(query.path);
 
-      return Object.assign(parentProps, { post });
+      return Object.assign(parentProps, { post, similarPosts });
     } catch (error) {
       return { error };
     }
@@ -33,7 +40,7 @@ class PostPage extends AuthenticatablePage {
       return <Error statusCode={this.props.error.status} />;
     }
 
-    const { post } = this.props;
+    const { post, similarPosts } = this.props;
     const title = `${post.title} - ${current.meta.title}`;
     const description = Text.stripHTML(Text.shorten(post.body, 60));
     const image = Text.getImageLinksFromHTML(post.body)[0];
@@ -66,6 +73,9 @@ class PostPage extends AuthenticatablePage {
         <Header />
         <Content>
           <Post {...post} key={post.path} />
+          {
+            similarPosts.length && <SimilarPostsGroup posts={similarPosts} />
+          }
           <CommentForm {...post} />
         </Content>
         <Footer />
@@ -78,6 +88,7 @@ PostPage.propTypes = {
   post: PropTypes.shape({
     title: PropTypes.string.isRequired,
   }),
+  similarPosts: PropTypes.arrayOf(PropTypes.object),
 
   error: PropTypes.shape({
     status: PropTypes.number,
