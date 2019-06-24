@@ -5,6 +5,7 @@ export default {
     body: String,
     path: String,
     tags: [String],
+    views: Number,
     draft: Boolean,
     createdAt: Date,
     updatedAt: Date,
