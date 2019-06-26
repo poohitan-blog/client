@@ -8,6 +8,8 @@ import Error from './_error';
 import { current } from '../config';
 
 import API from '../services/api';
+import { describeWordCount } from '../services/grammar';
+import { stripHTML } from '../services/text';
 import { getAllCookies } from '../services/cookies';
 
 import AuthenticatablePage from './_authenticatable';
@@ -16,16 +18,92 @@ import Header from '../components/Header';
 import Content from '../components/Content';
 import Footer from '../components/Footer';
 
+const calculatePostInterestingness = (post) => {
+  const ageInMilliseconds = moment().diff(post.publishedAt);
+  const age = moment.duration(ageInMilliseconds).asDays();
+
+  return Math.abs(post.views / age).toFixed(2);
+};
+
+const sortByAbsoluteViewsNumber = ((left, right) => {
+  if (left.views < right.views) {
+    return 1;
+  }
+
+  if (left.views > right.views) {
+    return -1;
+  }
+
+  return 0;
+});
+
+const sortByInterestingness = ((left, right) => {
+  const leftInterestingness = calculatePostInterestingness(left);
+  const rightInterestingness = calculatePostInterestingness(right);
+
+  if (leftInterestingness < rightInterestingness) {
+    return 1;
+  }
+
+  if (leftInterestingness > rightInterestingness) {
+    return -1;
+  }
+
+  return 0;
+});
+
+const sortByCommentsCount = ((left, right) => {
+  if (left.commentsCount < right.commentsCount) {
+    return 1;
+  }
+
+  if (left.commentsCount > right.commentsCount) {
+    return -1;
+  }
+
+  return 0;
+});
+
+const sortByLength = ((left, right) => {
+  const leftLength = stripHTML(left.body).length;
+  const rightLength = stripHTML(right.body).length;
+
+  if (leftLength < rightLength) {
+    return 1;
+  }
+
+  if (leftLength > rightLength) {
+    return -1;
+  }
+
+  return 0;
+});
+
+const SORTING_PREDICATES = {
+  views: sortByAbsoluteViewsNumber,
+  interestingness: sortByInterestingness,
+  commentness: sortByCommentsCount,
+  length: sortByLength,
+};
+
 class TopPage extends AuthenticatablePage {
   static async getInitialProps({ query, req }) {
     try {
       const parentProps = await super.getInitialProps({ query, req });
-      const { docs } = await API.posts.find({}, getAllCookies(req));
+      const { docs } = await API.posts.find({ private: false }, getAllCookies(req));
 
       return Object.assign(parentProps, { posts: docs });
     } catch (error) {
       return { error };
     }
+  }
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      sortBy: 'views',
+    };
   }
 
   render() {
@@ -34,56 +112,61 @@ class TopPage extends AuthenticatablePage {
     }
 
     const { posts } = this.props;
-    const {
-      title,
-      description,
-      keywords,
-      language,
-      social,
-    } = current.meta;
+    const { sortBy } = this.state;
+    const sortButtons = [
+      {
+        title: 'За кількістю переглядів',
+        param: 'views',
+      },
+      {
+        title: 'За цікавістю',
+        param: 'interestingness',
+      },
+      {
+        title: 'За обговорюваністю',
+        param: 'commentness',
+      },
+      {
+        title: 'За довжиною',
+        param: 'length',
+      },
+    ];
+    const sortButtonsSeparator = <span>&nbsp;/&nbsp;</span>;
 
     return (
       <Wrapper>
         <Head>
-          <title>{title}</title>
-          <meta name="description" content={description} key="description" />
-          <meta name="keywords" content={keywords.join(', ')} key="keywords" />
-
-          <meta name="twitter:card" content="summary" />
-          <meta name="twitter:title" content={title} />
-          <meta name="twitter:description" content={description} />
-          <meta name="twitter:site" content={social.twitter.username} />
-          <meta name="twitter:creator" content={social.twitter.username} />
-
-          <meta name="og:title" content={title} />
-          <meta name="og:description" content={description} />
-          <meta name="og:url" content={current.clientURL} />
-          <meta name="og:site_name" content={title} />
-          <meta name="og:locale" content={language} />
-          <meta name="og:type" content="website" />
+          <title>Рейтинг записів - {current.meta.title}</title>
         </Head>
         <Header />
         <Content>
-          <h1>Рейтинг записів за переглядами</h1>
+          <h1>Рейтинг записів</h1>
+          <div className="smaller">
+            {
+              sortButtons
+                .map(button => (
+                  <a className={`pointer ${sortBy === button.param ? 'disabled' : ''}`} onClick={() => this.setState({ sortBy: button.param })}>{button.title}</a>
+                ))
+                .reduce((array, item) => [array, sortButtonsSeparator, item])
+            }
+          </div>
+          <div className="smaller">(Цікавість — відношення кількості переглядів запису до його віку; обговорюваність — кількість коментарів під записом)</div>
           <ol>
             {
               posts
-                .sort((left, right) => {
-                  if (left.views < right.views) {
-                    return 1;
-                  }
+                .sort(SORTING_PREDICATES[sortBy])
+                .map((post) => {
+                  const diff = moment(post.publishedAt).diff(moment());
+                  const age = moment.duration(diff);
+                  const interestingness = Math.abs(post.views / age.asDays()).toFixed(2);
 
-                  if (left.views > right.views) {
-                    return -1;
-                  }
-
-                  return 0;
+                  return (
+                    <li key={post.id}>
+                      <Link href={`/post?path=${post.path}`} as={`/p/${post.path}`}><a>{post.title}</a></Link>
+                      <span className="smaller"><span className="nowrap">&nbsp;&mdash; переглядів: {post.views}</span>, <span className="nowrap">цікавість: {interestingness}</span>, <span className="nowrap">коментарів: {post.commentsCount}</span>, <span className="nowrap">вік: {age.locale('uk').humanize()}</span>, <span className="nowrap">довжина: {describeWordCount(stripHTML(post.body).length, ['символ', 'символи', 'символів'])}</span></span>
+                    </li>
+                  );
                 })
-                .map(post => (
-                  <li key={post.id}>
-                    <Link href="/top"><a>{post.title}</a></Link> &mdash; <span className="">{post.views} переглядів</span> <span className="smaller">({moment(post.publishedAt).format('DD.MM.YYYY')})</span>
-                  </li>
-                ))
             }
           </ol>
         </Content>
