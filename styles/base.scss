@@ -83,6 +83,16 @@ a {
     color: lighten($orange, 20%);
     text-decoration: underline;
   }
+
+  &.disabled {
+    color: $grey;
+    text-decoration: none;
+    pointer-events: none;
+  }
+
+  &.pointer {
+    cursor: pointer;
+  }
 }
 
 p {
