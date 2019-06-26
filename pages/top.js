@@ -22,7 +22,7 @@ const calculatePostInterestingness = (post) => {
   const ageInMilliseconds = moment().diff(post.publishedAt);
   const age = moment.duration(ageInMilliseconds).asDays();
 
-  return Math.abs(post.views / age).toFixed(2);
+  return Math.abs(post.views / age);
 };
 
 const sortByAbsoluteViewsNumber = ((left, right) => {
@@ -145,7 +145,7 @@ class TopPage extends AuthenticatablePage {
             {
               sortButtons
                 .map(button => (
-                  <a className={`pointer ${sortBy === button.param ? 'disabled' : ''}`} onClick={() => this.setState({ sortBy: button.param })}>{button.title}</a>
+                  <a className={`pointer ${sortBy === button.param ? 'disabled' : ''}`} onClick={() => this.setState({ sortBy: button.param })} key={button.param}>{button.title}</a>
                 ))
                 .reduce((array, item) => [array, sortButtonsSeparator, item])
             }
@@ -158,7 +158,7 @@ class TopPage extends AuthenticatablePage {
                 .map((post) => {
                   const diff = moment(post.publishedAt).diff(moment());
                   const age = moment.duration(diff);
-                  const interestingness = Math.abs(post.views / age.asDays()).toFixed(2);
+                  const interestingness = calculatePostInterestingness(post).toFixed(2);
 
                   return (
                     <li key={post.id}>
