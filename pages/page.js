@@ -15,12 +15,12 @@ import Footer from '../components/Footer';
 import Page from '../components/Page';
 
 class PagePage extends AuthenticatablePage {
-  static async getInitialProps({ query, req }) {
+  static async getInitialProps({ query, req, pathname }) {
     try {
       const parentProps = await super.getInitialProps({ req });
       const page = await API.pages.findOne(query.path, getAllCookies(req));
 
-      return Object.assign(parentProps, { page });
+      return Object.assign(parentProps, { page, pathname });
     } catch (error) {
       return { error };
     }
@@ -31,13 +31,14 @@ class PagePage extends AuthenticatablePage {
       return <Error statusCode={this.props.error.status} />;
     }
 
-    const { page } = this.props;
+    const { page, pathname } = this.props;
 
     return (
-      <Wrapper>
+      <Wrapper pathname={pathname}>
         <Head>
           <title>{page.title} - {current.meta.title}</title>
           <meta name="description" content={stripHTML(shorten(page.body, 60))} key="description" />
+          { page.customStyles && <style dangerouslySetInnerHTML={{ __html: page.customStyles }} /> }
         </Head>
         <Header />
         <Content>

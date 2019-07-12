@@ -23,7 +23,9 @@ const SimilarPostsGroup = dynamic(import('../components/SimilarPostsGroup'), {
 });
 
 class PostPage extends AuthenticatablePage {
-  static async getInitialProps({ query, req, res }) {
+  static async getInitialProps({
+    query, req, res, pathname,
+  }) {
     try {
       const parentProps = await super.getInitialProps({ req });
       const post = await API.posts.findOne(query.path, getAllCookies(req));
@@ -36,18 +38,26 @@ class PostPage extends AuthenticatablePage {
         return res.redirect(`/p/${post.path}`);
       }
 
-      return Object.assign(parentProps, { post, similarPosts, language: requestedLanguage });
+      return Object.assign(parentProps, {
+        post,
+        similarPosts,
+        pathname,
+        language: requestedLanguage,
+      });
     } catch (error) {
       return { error };
     }
   }
 
   render() {
-    if (this.props.error) {
-      return <Error statusCode={this.props.error.status} />;
+    const {
+      post, similarPosts, pathname, language, error,
+    } = this.props;
+
+    if (error) {
+      return <Error statusCode={error.status} />;
     }
 
-    const { post, similarPosts, language } = this.props;
     const translation = language && post.translations.find(item => item.lang === language);
     const title = `${translation ? translation.title : post.title} - ${current.meta.title}`;
     const body = translation ? translation.body : post.body;
@@ -56,7 +66,7 @@ class PostPage extends AuthenticatablePage {
     const url = `${current.clientURL}/p/${post.path}`;
 
     return (
-      <Wrapper>
+      <Wrapper pathname={pathname}>
         <Head>
           <title>{title}</title>
           <meta name="description" content={description} key="description" />
@@ -80,6 +90,7 @@ class PostPage extends AuthenticatablePage {
           <meta name="og:type" content="website" />
         </Head>
         <Header />
+        { post.customStyles && <style dangerouslySetInnerHTML={{ __html: post.customStyles }} /> }
         <Content>
           <Post {...post} key={post.path} language={language} />
           {

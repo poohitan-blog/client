@@ -19,24 +19,28 @@ import Blog from '../components/jsonld/Blog';
 const POSTS_PER_PAGE = 20;
 
 class IndexPage extends AuthenticatablePage {
-  static async getInitialProps({ query, req }) {
+  static async getInitialProps({ query, req, pathname }) {
     try {
       const parentProps = await super.getInitialProps({ query, req });
       const { page = 1 } = query;
       const { docs, meta } = await API.posts.find({ page, limit: POSTS_PER_PAGE }, getAllCookies(req));
 
-      return Object.assign(parentProps, { posts: docs, meta });
+      return Object.assign(parentProps, { posts: docs, meta, pathname });
     } catch (error) {
       return { error };
     }
   }
 
   render() {
-    if (this.props.error) {
-      return <Error statusCode={this.props.error.status} />;
+    const {
+      posts, meta, pathname, error,
+    } = this.props;
+
+    if (error) {
+      return <Error statusCode={error.status} />;
     }
 
-    const content = this.props.posts.map(post => <Post {...post} cut key={post.id} />);
+    const content = posts.map(post => <Post {...post} cut key={post.id} />);
     const {
       title,
       description,
@@ -46,7 +50,7 @@ class IndexPage extends AuthenticatablePage {
     } = current.meta;
 
     return (
-      <Wrapper>
+      <Wrapper pathname={pathname}>
         <Head>
           <title>{title}</title>
           <meta name="description" content={description} key="description" />
@@ -71,7 +75,7 @@ class IndexPage extends AuthenticatablePage {
         <Content>
           {content}
         </Content>
-        <Footer pagination={this.props.meta} />
+        <Footer pagination={meta} />
       </Wrapper>
     );
   }

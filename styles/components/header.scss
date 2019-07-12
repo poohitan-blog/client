@@ -14,7 +14,6 @@
       .menu-item-content-mobile {
         display: none;
         height: 1em;
-        fill: $dark-grey;
       }
 
       @media (max-width: 640px) {
@@ -45,10 +44,12 @@
 
     a {
       color: $dark-grey;
+      fill: $dark-grey;
       text-decoration: none;
 
       &:hover {
         color: lighten($dark-grey, 19%);
+        fill: lighten($dark-grey, 19%);
         text-decoration: none;
       }
     }

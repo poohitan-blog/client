@@ -2,9 +2,9 @@
 // Import it using dynamic import with "ssr: false"
 
 import React from 'react';
-import styles from '../../static/libs/highlight/monokai-sublime.css';
 
-const Highlighter = require('../../static/libs/highlight/highlight.min');
+import Highlighter from 'highlight.js';
+import styles from 'highlight.js/styles/monokai-sublime.css';
 
 class SyntaxHighlighter extends React.Component {
   componentDidMount() {

@@ -7,6 +7,7 @@ export default {
     tags: [String],
     views: Number,
     draft: Boolean,
+    customStyles: String,
     createdAt: Date,
     updatedAt: Date,
     deletedAt: Date,
