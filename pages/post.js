@@ -74,7 +74,7 @@ class PostPage extends AuthenticatablePage {
         <Content>
           <Post {...post} key={post.path} />
           {
-            similarPosts.length && <SimilarPostsGroup posts={similarPosts} />
+            similarPosts.length ? <SimilarPostsGroup posts={similarPosts} /> : null
           }
           <CommentForm {...post} />
         </Content>
