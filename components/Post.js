@@ -2,15 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
+
 import FullBody from './post/FullBody';
 import CutBody from './post/CutBody';
 import Footer from './post/Footer';
 import AdminControlButtons from './admin/ControlButtons';
-import * as Text from '../services/text';
-import * as ImagePreviews from '../services/image-previews';
+import { LIGHTBOX_CLASS } from '../services/image-previews';
 import HiddenIcon from '../static/icons/hidden.svg';
 
-const LIGHTBOX_CLASS = 'lightbox-image';
 const Lightbox = dynamic(import('./ui/Lightbox'), { ssr: false, loading: () => null });
 const SyntaxHighlighter = dynamic(import('./ui/SyntaxHighlighter'), { ssr: false, loading: () => null });
 const MathHighlighter = dynamic(import('./ui/MathHighlighter'), { ssr: false, loading: () => null });
@@ -19,16 +18,9 @@ class Post extends React.Component {
   constructor(props) {
     super(props);
 
-    const bodyWithLightboxes = Text.wrapImagesInLinks(props.body, { imagesClass: LIGHTBOX_CLASS });
-    const bodyWithPreviewsAndLightboxes = ImagePreviews.replaceOriginalImagesWithPreviews(bodyWithLightboxes);
-
     this.state = {
-      body: bodyWithPreviewsAndLightboxes,
+      body: props.body,
     };
-  }
-
-  componentDidMount() {
-    ImagePreviews.loadOriginalImages(this.props.body);
   }
 
   render() {
