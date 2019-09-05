@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
-import * as Text from '../services/text';
+import { stripHTML, shorten } from '../services/text';
 import { formatPostDate } from '../services/grammar';
 import HiddenIcon from '../static/icons/hidden.svg';
 
 const CompactPost = (props) => {
-  const bodyWithoutHTML = Text.stripHTML(props.body);
-  const shortenedBody = Text.shorten(bodyWithoutHTML, 70);
+  const bodyWithoutHTML = stripHTML(props.body);
+  const shortenedBody = shorten(bodyWithoutHTML, 70);
 
   return (
     <article className="post post-compact">

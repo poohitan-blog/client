@@ -6,7 +6,7 @@ import Error from './_error';
 import { current } from '../config';
 import API from '../services/api';
 import { getAllCookies } from '../services/cookies';
-import * as Text from '../services/text';
+import { getImageLinksFromHTML, shorten, stripHTML } from '../services/text';
 
 import AuthenticatablePage from './_authenticatable';
 import Wrapper from '../components/Wrapper';
@@ -42,8 +42,8 @@ class PostPage extends AuthenticatablePage {
 
     const { post, similarPosts } = this.props;
     const title = `${post.title} - ${current.meta.title}`;
-    const description = Text.stripHTML(Text.shorten(post.body, 60));
-    const image = Text.getImageLinksFromHTML(post.body)[0];
+    const description = stripHTML(shorten(post.body, 60));
+    const image = getImageLinksFromHTML(post.body)[0];
     const url = `${current.clientURL}/p/${post.path}`;
 
     return (

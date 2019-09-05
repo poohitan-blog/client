@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
 import { current } from '../config';
-import * as Grammar from '../services/grammar';
+import { describeHTTPCode } from '../services/grammar';
 import Wrapper from '../components/Wrapper';
 import Header from '../components/Header';
 import Content from '../components/Content';
@@ -21,7 +21,7 @@ class Error extends React.Component {
   }
 
   render() {
-    let message = Grammar.describeHTTPCode(this.props.statusCode);
+    let message = describeHTTPCode(this.props.statusCode);
 
     if (current.environment !== 'production') {
       message += ` Код помилки: ${this.props.statusCode}`;

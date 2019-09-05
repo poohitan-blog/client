@@ -2,14 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 import shuffle from 'shuffle-array';
-import * as Grammar from '../services/grammar';
+import { createWordCountDescriptor } from '../services/grammar';
 import API from '../services/api';
 import random from '../helpers/random';
 
 const MAX_FONT_SIZE = 5;
 const MIN_FONT_SIZE = 1;
 
-const describePostsCount = Grammar.createWordCountDescriptor(['запис', 'записи', 'записів']);
+const describePostsCount = createWordCountDescriptor(['запис', 'записи', 'записів']);
 
 function shift($element, { x, y }) {
   $element.css('transform', `translate(${x}px, ${y}px)`);

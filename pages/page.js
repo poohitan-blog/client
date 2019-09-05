@@ -5,7 +5,7 @@ import Error from './_error';
 import { current } from '../config';
 import API from '../services/api';
 import { getAllCookies } from '../services/cookies';
-import * as Text from '../services/text';
+import { stripHTML, shorten } from '../services/text';
 
 import AuthenticatablePage from './_authenticatable';
 import Wrapper from '../components/Wrapper';
@@ -37,7 +37,7 @@ class PagePage extends AuthenticatablePage {
       <Wrapper>
         <Head>
           <title>{page.title} - {current.meta.title}</title>
-          <meta name="description" content={Text.stripHTML(Text.shorten(page.body, 60))} key="description" />
+          <meta name="description" content={stripHTML(shorten(page.body, 60))} key="description" />
         </Head>
         <Header />
         <Content>

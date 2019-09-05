@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
-import * as Text from '../services/text';
+import { stripHTML, getHighlightsOfKeywords, shorten } from '../services/text';
 import { formatPostDate } from '../services/grammar';
 
 const searchResultTypes = {
@@ -103,20 +103,20 @@ const SearchResult = (props) => {
   } = props;
 
   const resultTitle = title ? highlightQueryInText(title, query) : '';
-  const bodyText = Text.stripHTML(body);
+  const bodyText = stripHTML(body);
   const queryWords = query.split(' ');
   const regexes = queryWords.map(queryWord => new RegExp(`(?:[\\s.,?!@#$%^&*()_+{}|\\[\\]]+?|^)${queryWord}(?:[\\s.,?!@#$%^&*()_+{}|\\[\\]]+?|$)`, 'i'));
 
   let resultBody;
 
   if (regexes.some(regex => regex.test(bodyText))) {
-    const highlights = Text.getHighlightsOfKeywords({ text: bodyText, keywords: queryWords })
+    const highlights = getHighlightsOfKeywords({ text: bodyText, keywords: queryWords })
       .map(highlight => highlightQueryInText(highlight, query))
       .join('<span class="search-result-highlight-separator"></span>');
 
-    resultBody = Text.shorten(highlights, BODY_MAX_LENGTH_WORDS);
+    resultBody = shorten(highlights, BODY_MAX_LENGTH_WORDS);
   } else {
-    resultBody = Text.shorten(bodyText, BODY_MAX_LENGTH_WORDS);
+    resultBody = shorten(bodyText, BODY_MAX_LENGTH_WORDS);
   }
 
   const { href, as } = generateLinkParams({ id, path, searchResultType });
