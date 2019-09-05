@@ -249,3 +249,16 @@ textarea {
     height: 100%;
   }
 }
+
+.lazy-load-image-wrapper {
+  background-color: $lighter-grey;
+  display: flex !important;
+  justify-content: center;
+  min-height: 350px;
+  width: 100%;
+
+  &.lazy-load-image-loaded {
+    background-color: transparent;
+    min-height: auto;
+  }
+}
