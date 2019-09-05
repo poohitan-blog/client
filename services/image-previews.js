@@ -17,6 +17,7 @@ export function generateLazyPreview(node, scrollPosition) {
         placeholderSrc={previewSrc}
         scrollPosition={scrollPosition}
         effect="blur"
+        wrapperClassName="lazy-load-image-wrapper"
       />
     </a>
   );
