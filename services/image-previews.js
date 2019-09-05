@@ -1,31 +1,29 @@
-import { getImageLinksFromHTML } from './text';
+import React from 'react';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
-const PREVIEW_PARAM = ':preview';
+export const LIGHTBOX_CLASS = 'lightbox-image';
+export const PREVIEW_PARAM = ':preview';
 
-export function replaceOriginalImagesWithPreviews(html) {
-  const imageLinks = getImageLinksFromHTML(html);
+export function generateLazyPreview(node, scrollPosition) {
+  const { src } = node.attribs;
+  const previewSrc = `${src}${PREVIEW_PARAM}`;
 
-  return imageLinks.reduce((result, link, index) =>
-    result.replace(`src="${link}"`, `src="${link}${PREVIEW_PARAM}" data-preview-id="${index}"`), html);
+  return (
+    <a href={src} className={LIGHTBOX_CLASS} key={src}>
+      <LazyLoadImage
+        src={src}
+        threshold="200"
+        placeholderSrc={previewSrc}
+        scrollPosition={scrollPosition}
+        effect="blur"
+      />
+    </a>
+  );
 }
 
-export function loadOriginalImages(html) {
-  const imageLinks = getImageLinksFromHTML(html);
-
-  imageLinks.forEach((link, index) => {
-    const previewImage = global.document.querySelector(`img[src="${link}${PREVIEW_PARAM}"][data-preview-id="${index}"]`);
-
-    if (!previewImage) {
-      return;
-    }
-
-    const originalImage = global.document.createElement('img');
-
-    originalImage.onload = function () {
-      previewImage.src = this.src;
-    };
-    originalImage.src = link;
-  });
-}
-
-export default { replaceOriginalImagesWithPreviews, loadOriginalImages };
+export default {
+  generateLazyPreview,
+  PREVIEW_PARAM,
+  LIGHTBOX_CLASS,
+};

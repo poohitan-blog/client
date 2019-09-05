@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import ReactHtmlParser from 'react-html-parser';
 import Link from 'next/link';
+
+import { generateLazyPreview } from '../../services/image-previews';
 
 const CUT_TAG = '<cut>';
 const READ_MORE = 'Читати повністю';
@@ -12,18 +15,25 @@ function cut(body) {
 }
 
 const CutBody = (props) => {
-  const markup = { __html: cut(props.body) };
+  const cutHtml = cut(props.body);
+  const body = ReactHtmlParser(cutHtml, {
+    transform(node) { // eslint-disable-line
+      if (node.type === 'tag' && node.name === 'img') {
+        return generateLazyPreview(node);
+      }
+    },
+  });
 
   return (
     <div>
-      <div dangerouslySetInnerHTML={markup} />
+      { body }
       <Link as={`/p/${props.path}`} href={`/post?path=${props.path}`} prefetch><a>{READ_MORE}</a></Link>
     </div>
   );
 };
 
 CutBody.propTypes = {
-  body: PropTypes.string.isRequired,
+  body: PropTypes.node.isRequired,
   path: PropTypes.string.isRequired,
 };
 
