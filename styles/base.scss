@@ -250,10 +250,24 @@ textarea {
   }
 }
 
+.strava-activity {
+  iframe {
+    width: 100%;
+    height: 100%;
+  }
+
+  @include aspect-ratio(4, 3);
+
+  @media (max-width: 640px) {
+    @include aspect-ratio(3, 4);
+  }
+}
+
 .lazy-load-image-wrapper {
   background-color: $lighter-grey;
   display: flex !important;
   justify-content: center;
+  align-items: center;
   min-height: 350px;
   width: 100%;
 
