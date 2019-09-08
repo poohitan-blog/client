@@ -98,6 +98,10 @@ a {
 p {
   margin: 0.5em 0;
   hyphens: auto;
+
+  @media (max-width: 640px) {
+    line-height: 1.35em;
+  }
 }
 
 hr {
