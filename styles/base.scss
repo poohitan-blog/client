@@ -251,15 +251,17 @@ textarea {
 }
 
 .strava-activity {
+  width: 100%;
+  height: 400px;
+  margin: 0.5em 0;
+
   iframe {
     width: 100%;
     height: 100%;
   }
 
-  @include aspect-ratio(4, 3);
-
-  @media (max-width: 640px) {
-    @include aspect-ratio(3, 4);
+  @media (max-width: 440px) {
+    height: 445px;
   }
 }
 
