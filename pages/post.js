@@ -29,7 +29,7 @@ class PostPage extends AuthenticatablePage {
       const post = await API.posts.findOne(query.path, getAllCookies(req));
       const similarPosts = await API.posts.findSimilar(query.path);
 
-      return Object.assign(parentProps, { post, similarPosts });
+      return Object.assign(parentProps, { post, similarPosts, language: query.language });
     } catch (error) {
       return { error };
     }
@@ -40,7 +40,7 @@ class PostPage extends AuthenticatablePage {
       return <Error statusCode={this.props.error.status} />;
     }
 
-    const { post, similarPosts } = this.props;
+    const { post, similarPosts, language } = this.props;
     const title = `${post.title} - ${current.meta.title}`;
     const description = stripHTML(shorten(post.body, 60));
     const image = getImageLinksFromHTML(post.body)[0];
@@ -72,7 +72,7 @@ class PostPage extends AuthenticatablePage {
         </Head>
         <Header />
         <Content>
-          <Post {...post} key={post.path} />
+          <Post {...post} key={post.path} language={language} />
           {
             similarPosts.length ? <SimilarPostsGroup posts={similarPosts} /> : null
           }

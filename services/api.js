@@ -5,6 +5,7 @@ import deserialize from '../utils/deserialize';
 import request from '../utils/request';
 
 import Post from '../models/post';
+import PostTranslation from '../models/post-translation';
 import Page from '../models/page';
 import TrashPost from '../models/trash-post';
 import User from '../models/user';
@@ -139,6 +140,14 @@ const posts = {
   remove: (path, cookies) => remove({ model: Post, param: path }, cookies),
 };
 
+const postTranslations = {
+  find: (query, cookies) => find({ model: PostTranslation, query }, cookies),
+  findOne: (id, cookies) => findOne({ model: PostTranslation, param: id }, cookies),
+  update: (id, body, cookies) => update({ model: PostTranslation, param: id, body }, cookies),
+  create: (body, cookies) => create({ model: PostTranslation, body }, cookies),
+  remove: (id, cookies) => remove({ model: PostTranslation, param: id }, cookies),
+};
+
 const pages = {
   find: cookies => find({ model: Page }, cookies),
   findOne: (path, cookies) => findOne({ model: Page, param: path }, cookies),
@@ -173,6 +182,7 @@ const tags = {
 
 const API = {
   posts,
+  postTranslations,
   pages,
   trashPosts,
   users,

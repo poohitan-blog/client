@@ -3,6 +3,7 @@
 .post.post-complete {
   .post-title {
     padding: 0;
+    position: relative;
 
     a {
       color: $light-orange;
@@ -10,6 +11,29 @@
 
       &:hover {
         color: lighten($light-orange, 10%);
+      }
+    }
+  }
+
+  .post-translations {
+    position: absolute;
+    left: -1.6em;
+    top: -0.3em;
+
+    .post-translation {
+      background-size: cover;
+      background-position: center center;
+      border: 1px solid $light-grey;
+      border-radius: 50%;
+      display: block;
+      margin: 0.2em 0;
+      width: 1em;
+      height: 1em;
+      transition: all 100ms linear;
+      transform-origin: center center;
+
+      &:hover {
+        transform: scale(1.1);
       }
     }
   }
@@ -39,6 +63,19 @@
   @media (max-width: 640px) {
     .post-body {
       font-size: 1.2em;
+    }
+
+    .post-translations {
+      position: relative;
+      left: auto;
+      top: auto;
+      margin-left: 0.4em;
+      margin-top: -0.1em;
+      display: flex;
+
+      .post-translation {
+        margin: 0 0.2em;
+      }
     }
   }
 }

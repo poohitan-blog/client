@@ -63,23 +63,31 @@ class PostForm extends React.Component {
   }
 
   render() {
-    const title = this.props.path ? 'Редагувати запис' : 'Додати запис';
+    const {
+      title,
+      path,
+      body,
+      tagsString,
+      dateString,
+      translations,
+    } = this.state;
+    const formTitle = this.props.path ? 'Редагувати запис' : 'Додати запис';
     const link = this.getPostLinkMarkup();
 
     return (
       <div className="children-equal-margin-vertical layout-row layout-wrap">
-        <h1>{title}</h1>
+        <h1>{formTitle}</h1>
         <input
           type="text"
           placeholder="Назва"
-          value={this.state.title}
+          value={title}
           onChange={event => this.setState({ title: event.target.value })}
           className="flex-100"
         />
         <div className="smaller layout-row layout-align-start-center flex-100">
           <input
             type="text"
-            value={this.state.path}
+            value={path}
             placeholder="Адреса"
             onChange={event => this.setState({ path: event.target.value })}
             className="flex-50"
@@ -89,23 +97,44 @@ class PostForm extends React.Component {
           </div>
         </div>
         <div className="flex-100">
-          <Editor html={this.state.body} onChange={body => this.setState({ body })} />
+          <Editor html={body} onChange={updatedBody => this.setState({ body: updatedBody })} />
         </div>
         <div className="children-equal-margin-vertical layout-row layout-wrap layout-align-center-center flex-100">
           <span>Теґи (через кому):</span>
           <input
             type="text"
-            value={this.state.tagsString}
+            value={tagsString}
             onChange={this.handleTagsChange}
             className="flex-100"
           />
+        </div>
+        <div className="layout-row layout-wrap layout-align-center-center flex-100">
+          <span>Переклади:</span>
+          {
+            translations.length
+              ? translations
+                  .map(translation => (
+                    <Link
+                      as={`/p/${path}/translations/${translation.lang}/edit`}
+                      href={`/admin/edit-post-translation?language=${translation.lang}&post=${path}`}
+                    >
+                      <a className="post-translation-link">
+                        {translation.lang}{translation.private ? <sup>(прих.)</sup> : null}
+                      </a>
+                    </Link>
+                  ))
+              : null
+          }
+          <Link as={`/p/${path}/translations/new`} href={`/admin/edit-post-translation?post=${path}`}>
+            <a className="post-translation-link">(Додати)</a>
+          </Link>
         </div>
         <div className="layout-row layout-align-space-between-center flex-100">
           <div className="layout-row layout-align-start-center flex-50">
             <input
               type="text"
               placeholder="DD.MM.YYYY HH:mm"
-              value={this.state.dateString}
+              value={dateString}
               onChange={this.handleDateChange}
               pattern="[0-3][0-9]\.[0-1][0-9]\.[1-2][0-9][0-9][0-9] [0-2][0-9]:[0-5][0-9]"
               className="text-center flex-50"
@@ -130,6 +159,7 @@ PostForm.propTypes = {
   path: PropTypes.string,
   tags: PropTypes.arrayOf(PropTypes.string),
   publishedAt: PropTypes.instanceOf(Date),
+  // translations: PropTypes.arrayOf(PropTypes.string),
   onChange: PropTypes.func.isRequired,
 };
 
@@ -137,6 +167,7 @@ PostForm.defaultProps = {
   id: '',
   path: '',
   tags: [],
+  // translations: [],
   publishedAt: null,
 };
 
