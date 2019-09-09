@@ -98,6 +98,10 @@ a {
 p {
   margin: 0.5em 0;
   hyphens: auto;
+
+  @media (max-width: 640px) {
+    line-height: 1.35em;
+  }
 }
 
 hr {
@@ -270,11 +274,16 @@ textarea {
   display: flex !important;
   justify-content: center;
   align-items: center;
-  min-height: 350px;
-  width: 100%;
+
+  &:not(.lazy-load-image-loaded) {
+    @include aspect-ratio(16, 10);
+  }
 
   &.lazy-load-image-loaded {
     background-color: transparent;
-    min-height: auto;
   }
+}
+
+.post-translation-link {
+  margin: 0 0.5em;
 }

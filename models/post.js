@@ -11,5 +11,6 @@ export default {
     updatedAt: Date,
     deletedAt: Date,
     publishedAt: Date,
+    translations: [String],
   },
 };
