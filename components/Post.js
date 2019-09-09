@@ -6,9 +6,9 @@ import dynamic from 'next/dynamic';
 import FullBody from './post/FullBody';
 import CutBody from './post/CutBody';
 import Footer from './post/Footer';
+import TranslationButtons from './post/TranslationButtons';
 import AdminControlButtons from './admin/ControlButtons';
 import { LIGHTBOX_CLASS } from '../services/image-previews';
-import { translatePostIsAvailableInThisLanguage, getCountryCodeByLanguageCode } from '../services/translations';
 import HiddenIcon from '../static/icons/hidden.svg';
 
 const Lightbox = dynamic(import('./ui/Lightbox'), { ssr: false, loading: () => null });
@@ -23,10 +23,11 @@ const Post = (props, context) => {
     translations,
   } = props;
 
-  const translation = translations.find(item => item.lang === language);
+  const translation = translations.find(item => item.lang === language) || {};
+  const isTranslation = Boolean(translation.lang);
 
-  const title = translation ? translation.title : props.title;
-  const body = translation ? translation.body : props.body;
+  const title = isTranslation ? translation.title : props.title;
+  const body = isTranslation ? translation.body : props.body;
 
   const bodyMarkup = cut
     ? <CutBody body={body} path={path} />
@@ -42,33 +43,23 @@ const Post = (props, context) => {
         </Link>
         {
           context.isAuthenticated &&
-          <div className="post-admin-control-buttons"><AdminControlButtons attachedTo="post" path={path} /></div>
+          <div className="post-admin-control-buttons">
+            <AdminControlButtons
+              attachedTo={isTranslation ? 'postTranslation' : 'post'}
+              tokens={[path, translation.lang]}
+            />
+          </div>
         }
         {
           props.private && <div className="post-title-icon"><HiddenIcon /></div>
         }
         {
-          translations.length
-            ? (
-              <div className="post-translations">
-                {
-                  translations
-                    .filter(item => item.lang !== language)
-                    .map(item => (
-                      <Link
-                        key={item.lang}
-                        href={`/post?path=${path}&language=${item.lang}`}
-                        as={`/p/${path}?language=${item.lang}`}
-                      >
-                        <a title={translatePostIsAvailableInThisLanguage(item.lang)}>
-                          <div className={`post-translation flag-icon flag-icon-background flag-icon-${getCountryCodeByLanguageCode(item.lang)}`} />
-                        </a>
-                      </Link>
-                    ))
-                }
-              </div>
-            )
-            : null
+          Boolean(translations.length)
+            && <TranslationButtons
+              path={path}
+              language={language}
+              translations={translations}
+            />
         }
       </h1>
       <div className="post-body">{bodyMarkup}</div>

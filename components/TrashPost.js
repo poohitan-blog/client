@@ -35,7 +35,7 @@ class TrashPost extends React.Component {
         {
           this.context.isAuthenticated &&
           <div className="trash-post-admin-control-buttons">
-            <AdminControlButtons attachedTo="trashPost" id={this.props.id} />
+            <AdminControlButtons attachedTo="trashPost" tokens={[this.props.id]} />
           </div>
         }
         <div className="trash-post-body">{ this.state.body }</div>

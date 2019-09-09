@@ -9,7 +9,7 @@ const Page = (props, context) => (
       {props.title}
       {
         context.isAuthenticated &&
-        <div className="page-admin-control-buttons"><AdminControlButtons attachedTo="page" path={props.path} /></div>
+        <div className="page-admin-control-buttons"><AdminControlButtons attachedTo="page" tokens={[props.path]} /></div>
       }
       {
         props.private && <div className="page-title-icon"><HiddenIcon /></div>

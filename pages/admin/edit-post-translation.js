@@ -23,7 +23,7 @@ class EditPostTranslation extends ProtectedPage {
         return Object.assign(parentProps, { post });
       }
 
-      const translationId = post.translations.find(translation => translation.lang === query.language)._id; // eslint-disable-line
+      const translationId = post.translations.find(translation => translation.lang === query.language).id;
       const translation = await API.postTranslations.findOne(translationId, getAllCookies(req));
 
       return Object.assign(parentProps, { translation, post });

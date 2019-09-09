@@ -19,6 +19,10 @@ const linkGenerators = {
     href: path => `/admin/edit-post?path=${path}`,
     as: path => `/p/${path}/edit`,
   },
+  postTranslation: {
+    href: (post, language) => `/admin/edit-post-translation?post=${post}&language=${language}`,
+    as: (post, language) => `/p/${post}/translations/${language}/edit`,
+  },
   trashPost: {
     href: id => `/admin/edit-trash-post?id=${id}`,
     as: id => `/trash/${id}/edit`,
@@ -47,8 +51,9 @@ class ControlButtons extends React.Component {
   }
 
   async remove() {
-    const { attachedTo, path, id } = this.props;
-    await API[pluralize(attachedTo)].remove(path || id, getAllCookies());
+    const { attachedTo, tokens } = this.props;
+
+    await API[pluralize(attachedTo)].remove(...tokens, getAllCookies());
     this.hideRemovePopup();
 
     if (attachedTo === 'trashPost') {
@@ -62,6 +67,7 @@ class ControlButtons extends React.Component {
     const { attachedTo } = this.props;
     const contentTypes = {
       post: 'запис',
+      postTranslation: 'переклад',
       page: 'сторінку',
       trashPost: 'запис',
     };
@@ -83,10 +89,10 @@ class ControlButtons extends React.Component {
   }
 
   render() {
-    const { attachedTo, path, id } = this.props;
+    const { attachedTo, tokens } = this.props;
     const linkGenerator = linkGenerators[attachedTo];
-    const href = linkGenerator.href(path || id);
-    const as = linkGenerator.as(path || id);
+    const href = linkGenerator.href(...tokens);
+    const as = linkGenerator.as(...tokens);
 
     const popupContent = this.renderPopupContent();
 
@@ -109,14 +115,8 @@ class ControlButtons extends React.Component {
 }
 
 ControlButtons.propTypes = {
-  path: PropTypes.string,
-  id: PropTypes.string,
+  tokens: PropTypes.arrayOf(PropTypes.string).isRequired,
   attachedTo: PropTypes.string.isRequired,
-};
-
-ControlButtons.defaultProps = {
-  path: '',
-  id: '',
 };
 
 export default ControlButtons;

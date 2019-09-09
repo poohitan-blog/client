@@ -1,0 +1,39 @@
+@import '../../variables';
+
+.post-translation-buttons {
+  position: absolute;
+  left: -1.6em;
+  top: -0.3em;
+
+  .post-translation-button {
+    background-size: cover;
+    background-position: center center;
+    border: 1px solid $light-grey;
+    border-radius: 50%;
+    display: block;
+    margin: 0.2em 0;
+    width: 1em;
+    height: 1em;
+    transition: all 100ms linear;
+    transform-origin: center center;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+}
+
+@media (max-width: 640px) {
+  .post-translation-buttons {
+    position: relative;
+    left: auto;
+    top: auto;
+    margin-left: 0.4em;
+    margin-top: -0.1em;
+    display: flex;
+
+    .post-translation-button {
+      margin: 0 0.2em;
+    }
+  }
+}
