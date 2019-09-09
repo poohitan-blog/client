@@ -1,9 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
-// import moment from 'moment';
-
-// import { current } from '../../config';
 
 import Checkbox from '../ui/Checkbox';
 import Editor from '../../utils/editor';

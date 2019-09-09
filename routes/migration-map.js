@@ -37,6 +37,7 @@ const postsMap = {
   3: '/p/validator-restoration',
   2: '/p/koran-quotes',
   1: '/p/hello-world',
+  'paris-brest-paris-on-a-film': '/p/paris-brest-paris-through-a-film-camera',
 };
 
 const router = express.Router();

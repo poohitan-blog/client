@@ -1,13 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
-// import Link from 'next/link';
 import Router from 'next/router';
 
 import API from '../../services/api';
 import Error from '../_error';
 import { getAllCookies } from '../../services/cookies';
-// import { current } from '../../config';
 
 import ProtectedPage from '../_protected';
 import Wrapper from '../../components/Wrapper';

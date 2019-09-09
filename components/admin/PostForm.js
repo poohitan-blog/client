@@ -159,7 +159,6 @@ PostForm.propTypes = {
   path: PropTypes.string,
   tags: PropTypes.arrayOf(PropTypes.string),
   publishedAt: PropTypes.instanceOf(Date),
-  // translations: PropTypes.arrayOf(PropTypes.string),
   onChange: PropTypes.func.isRequired,
 };
 
@@ -167,7 +166,6 @@ PostForm.defaultProps = {
   id: '',
   path: '',
   tags: [],
-  // translations: [],
   publishedAt: null,
 };
 
