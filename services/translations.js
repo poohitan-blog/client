@@ -6,7 +6,7 @@ const codes = {
 
 const postIsAvailableInThisLanguagePhrases = {
   en: 'This post is available in English',
-  uk: 'Цей запис можна прочитати українською',
+  uk: 'Читати українською',
 };
 
 export function getCountryCodeByLanguageCode(languageCode) {

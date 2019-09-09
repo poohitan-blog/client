@@ -7,11 +7,13 @@ const deserializers = {
 
 const deserializeOne = (data, schema) => Object.keys(data).reduce((result, fieldName) => {
   const fieldValue = data[fieldName];
-  const fieldType = schema[fieldName] || String;
+  let fieldType = schema[fieldName] || String;
   let deserializedValue;
 
   if (Array.isArray(fieldType)) {
-    const deserialize = deserializers[fieldType[0]];
+    [fieldType] = fieldType;
+
+    const deserialize = deserializers[fieldType];
     deserializedValue = fieldValue.map(item => deserialize(item));
   } else {
     const deserialize = deserializers[fieldType];

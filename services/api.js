@@ -145,7 +145,12 @@ const postTranslations = {
   findOne: (id, cookies) => findOne({ model: PostTranslation, param: id }, cookies),
   update: (id, body, cookies) => update({ model: PostTranslation, param: id, body }, cookies),
   create: (body, cookies) => create({ model: PostTranslation, body }, cookies),
-  remove: (id, cookies) => remove({ model: PostTranslation, param: id }, cookies),
+  remove: async (postPath, language, cookies) => {
+    const { translations } = await posts.findOne(postPath);
+    const { id } = translations.find(translation => translation.lang === language);
+
+    return remove({ model: PostTranslation, param: id }, cookies);
+  },
 };
 
 const pages = {
