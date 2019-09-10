@@ -44,7 +44,7 @@ class PostPage extends AuthenticatablePage {
     const translation = post.translations.find(item => item.lang === language);
     const title = `${translation ? translation.title : post.title} - ${current.meta.title}`;
     const description = stripHTML(shorten(post.body, 60));
-    const image = getImageLinksFromHTML(post.body)[0];
+    const [image] = getImageLinksFromHTML(post.body);
     const url = `${current.clientURL}/p/${post.path}`;
 
     return (

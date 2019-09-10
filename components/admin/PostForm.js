@@ -46,8 +46,9 @@ class PostForm extends React.Component {
 
     const tags = this.state.tagsString.split(',').map(tag => tag.trim());
     const publishedAt = this.state.dateString ? moment(this.state.dateString, DATE_FORMAT).toDate() : new Date();
+    const translations = this.state.translations.map(translation => translation.id || translation);
 
-    this.props.onChange(Object.assign({}, this.state, { tags, publishedAt }));
+    this.props.onChange(Object.assign({}, this.state, { tags, publishedAt, translations }));
   }
 
   handleTagsChange(event) {
