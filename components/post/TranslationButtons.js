@@ -4,16 +4,23 @@ import Link from 'next/link';
 
 import { translatePostIsAvailableInThisLanguage, getCountryCodeByLanguageCode } from '../../services/translations';
 
-const Button = ({ language, href, as }) => (
-  <Link
-    href={href}
-    as={as}
-  >
-    <a title={translatePostIsAvailableInThisLanguage(language)}>
-      <div className={`post-translation-button flag-icon flag-icon-background flag-icon-${getCountryCodeByLanguageCode(language)}`} />
-    </a>
-  </Link>
-);
+const Button = ({
+  language, title, href, as,
+}) => {
+  const postIsAvailableInThisLanguage = translatePostIsAvailableInThisLanguage(language);
+  const linkTitle = title ? ` "${title}" - ${postIsAvailableInThisLanguage}` : postIsAvailableInThisLanguage;
+
+  return (
+    <Link
+      href={href}
+      as={as}
+    >
+      <a title={linkTitle}>
+        <div className={`post-translation-button flag-icon flag-icon-background flag-icon-${getCountryCodeByLanguageCode(language)}`} />
+      </a>
+    </Link>
+  );
+};
 
 const TranslationButtons = ({ translations, language, path }) => (
   <div className="post-translation-buttons">
@@ -26,6 +33,7 @@ const TranslationButtons = ({ translations, language, path }) => (
         .map(item => (
           <Button
             key={item.lang}
+            title={item.title}
             language={item.lang}
             href={`/post?path=${path}&language=${item.lang}`}
             as={`/p/${path}?language=${item.lang}`}
@@ -36,6 +44,7 @@ const TranslationButtons = ({ translations, language, path }) => (
 );
 
 Button.propTypes = {
+  title: PropTypes.string,
   language: PropTypes.string.isRequired,
   href: PropTypes.string.isRequired,
   as: PropTypes.string.isRequired,
@@ -48,6 +57,7 @@ TranslationButtons.propTypes = {
 };
 
 TranslationButtons.defaultProps = {
+  title: '',
   language: 'uk',
 };
 
