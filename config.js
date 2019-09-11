@@ -29,6 +29,8 @@ const config = {
     },
 
     google: {},
+
+    facebook: {},
   }),
 
   production: Object.assign({}, shared, {
@@ -59,6 +61,10 @@ const config = {
     google: {
       analyticsTrackingId: 'UA-10797087-16',
       siteVerificationCode: 'bfS0NjYLa1mTldGwMWMUuG5RuIS1oIksGoVxJoFDZwY',
+    },
+
+    facebook: {
+      pixel: '323819744625621',
     },
   }),
 };

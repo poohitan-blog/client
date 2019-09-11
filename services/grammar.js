@@ -64,7 +64,7 @@ const HTTPDescriptions = {
 };
 
 export function describeHTTPCode(code) {
-  return HTTPDescriptions[code] || 'З невідомої причини шось пішло не так.';
+  return HTTPDescriptions[code] || 'З невідомої причини шось пішло не так. Спробуйте оновити сторінку.';
 }
 
 export default {
