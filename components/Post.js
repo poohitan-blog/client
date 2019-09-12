@@ -28,6 +28,9 @@ const Post = (props, context) => {
 
   const title = isTranslation ? translation.title : props.title;
   const body = isTranslation ? translation.body : props.body;
+  const link = isTranslation
+    ? { href: `/post?path=${path}&language=${translation.lang}`, as: `/p/${path}?language=${translation.lang}` }
+    : { href: `/post?path=${path}`, as: `/p/${path}` };
 
   const bodyMarkup = cut
     ? <CutBody body={body} path={path} />
@@ -38,7 +41,7 @@ const Post = (props, context) => {
   return (
     <article className="post post-complete" data-path={path}>
       <h1 className="post-title layout-row layout-align-start-start">
-        <Link as={`/p/${path}`} href={`/post?path=${path}`} prefetch>
+        <Link as={link.as} href={link.href} prefetch>
           <a>{title}</a>
         </Link>
         {
