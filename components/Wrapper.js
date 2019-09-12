@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Router from 'next/router';
 import NProgress from 'nprogress';
-import { initGA, logPageView } from '../utils/analytics';
+import * as Analytics from '../utils/analytics';
 
 import AdminPanel from './admin/Panel';
 import LoginButton from './LoginButton';
@@ -18,12 +18,13 @@ class Wrapper extends React.Component {
       return;
     }
 
-    if (!global.GA_INITIALIZED) {
-      initGA();
-      global.GA_INITIALIZED = true;
+    if (!global.ANALYTICS_INITIALIZED) {
+      Analytics.init();
+
+      global.ANALYTICS_INITIALIZED = true;
     }
 
-    logPageView();
+    Analytics.logPageView();
   }
 
   render() {
