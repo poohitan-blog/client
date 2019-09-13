@@ -23,13 +23,20 @@ const SimilarPostsGroup = dynamic(import('../components/SimilarPostsGroup'), {
 });
 
 class PostPage extends AuthenticatablePage {
-  static async getInitialProps({ query, req }) {
+  static async getInitialProps({ query, req, res }) {
     try {
       const parentProps = await super.getInitialProps({ req });
       const post = await API.posts.findOne(query.path, getAllCookies(req));
       const similarPosts = await API.posts.findSimilar(query.path);
 
-      return Object.assign(parentProps, { post, similarPosts, language: query.language });
+      const availableLanguages = post.translations.map(item => item.lang);
+      const requestedLanguage = query.language;
+
+      if (requestedLanguage && !availableLanguages.includes(requestedLanguage)) {
+        return res.redirect(`/p/${post.path}`);
+      }
+
+      return Object.assign(parentProps, { post, similarPosts, language: requestedLanguage });
     } catch (error) {
       return { error };
     }
