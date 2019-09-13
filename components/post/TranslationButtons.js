@@ -8,7 +8,7 @@ const Button = ({
   language, title, href, as,
 }) => {
   const postIsAvailableInThisLanguage = translatePostIsAvailableInThisLanguage(language);
-  const linkTitle = title ? ` "${title}" - ${postIsAvailableInThisLanguage}` : postIsAvailableInThisLanguage;
+  const linkTitle = title ? ` "${title}" — ${postIsAvailableInThisLanguage}` : postIsAvailableInThisLanguage;
 
   return (
     <Link
@@ -50,6 +50,10 @@ Button.propTypes = {
   as: PropTypes.string.isRequired,
 };
 
+Button.defaultProps = {
+  title: '',
+};
+
 TranslationButtons.propTypes = {
   path: PropTypes.string.isRequired,
   language: PropTypes.string,
@@ -57,7 +61,6 @@ TranslationButtons.propTypes = {
 };
 
 TranslationButtons.defaultProps = {
-  title: '',
   language: 'uk',
 };
 

@@ -1,12 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
-import dynamic from 'next/dynamic';
 import { formatPostDate, createWordCountDescriptor } from '../../services/grammar';
 import CommentIcon from '../../static/icons/comment.svg';
 import CalendarIcon from '../../static/icons/calendar.svg';
-
-const SocialButtons = dynamic(import('./SocialButtons'), { ssr: false, loading: () => null });
 
 const describeCommentsCount = createWordCountDescriptor(['коментар', 'коментарі', 'коментарів']);
 
@@ -42,14 +39,12 @@ class Footer extends React.Component {
           <span className="flex-offset-5 nowrap">{ formatPostDate(this.props.publishedAt) }</span>
         </div>
         <div className="post-footer-item post-footer-tags nowrap">{tagsMarkup}</div>
-        <SocialButtons title={this.props.title} path={this.props.path} />
       </div>
     );
   }
 }
 
 Footer.propTypes = {
-  title: PropTypes.string.isRequired,
   path: PropTypes.string.isRequired,
   commentsCount: PropTypes.number,
   publishedAt: PropTypes.oneOfType([
