@@ -10,7 +10,7 @@ const postIsAvailableInThisLanguagePhrases = {
 };
 
 export function getCountryCodeByLanguageCode(languageCode) {
-  return codes[languageCode];
+  return codes[languageCode] || languageCode;
 }
 
 export function translatePostIsAvailableInThisLanguage(languageCode) {

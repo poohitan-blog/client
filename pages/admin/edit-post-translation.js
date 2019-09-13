@@ -45,7 +45,7 @@ class EditPostTranslation extends ProtectedPage {
       await API.postTranslations.update(this.props.translation.id, translation, getAllCookies());
     } else {
       const newTranslation = await API.postTranslations.create(translation, getAllCookies());
-      const updatedListOfTranslations = [...post.translations, newTranslation.id];
+      const updatedListOfTranslations = [...post.translations.map(item => item.id || item), newTranslation.id];
 
       await API.posts.update(post.path, Object.assign({}, post, { translations: updatedListOfTranslations }));
     }
