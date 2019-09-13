@@ -8,7 +8,7 @@ const Button = ({
   language, title, href, as,
 }) => {
   const postIsAvailableInThisLanguage = translatePostIsAvailableInThisLanguage(language);
-  const linkTitle = title ? ` "${title}" — ${postIsAvailableInThisLanguage}` : postIsAvailableInThisLanguage;
+  const linkTitle = title ? `"${title}" — ${postIsAvailableInThisLanguage}` : postIsAvailableInThisLanguage;
 
   return (
     <Link
@@ -22,29 +22,27 @@ const Button = ({
   );
 };
 
-const TranslationButtons = ({ translations, language, path }, context) => {
-  return (
-    <div className="post-translation-buttons">
-      {
-        language && <Button key="uk" language="uk" href={`/post?path=${path}`} as={`/p/${path}`} />
-      }
-      {
-        translations
-          .filter(item => (context.isAuthenticated ? true : !item.private))
-          .filter(item => item.lang !== language)
-          .map(item => (
-            <Button
-              key={item.lang}
-              title={item.title}
-              language={item.lang}
-              href={`/post?path=${path}&language=${item.lang}`}
-              as={`/p/${path}?language=${item.lang}`}
-            />
-          ))
-      }
-    </div>
-  );
-};
+const TranslationButtons = ({ translations, language, path }, context) => (
+  <div className="post-translation-buttons">
+    {
+      language && <Button key="uk" language="uk" href={`/post?path=${path}`} as={`/p/${path}`} />
+    }
+    {
+      translations
+        .filter(item => (context.isAuthenticated ? true : !item.private))
+        .filter(item => item.lang !== language)
+        .map(item => (
+          <Button
+            key={item.lang}
+            title={item.title}
+            language={item.lang}
+            href={`/post?path=${path}&language=${item.lang}`}
+            as={`/p/${path}/${item.lang}`}
+          />
+        ))
+    }
+  </div>
+);
 
 Button.propTypes = {
   title: PropTypes.string,

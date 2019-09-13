@@ -14,7 +14,7 @@ export function getCountryCodeByLanguageCode(languageCode) {
 }
 
 export function translatePostIsAvailableInThisLanguage(languageCode) {
-  return postIsAvailableInThisLanguagePhrases[languageCode];
+  return postIsAvailableInThisLanguagePhrases[languageCode] || '';
 }
 
 export default {

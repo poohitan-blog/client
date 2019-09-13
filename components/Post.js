@@ -29,7 +29,7 @@ const Post = (props, context) => {
   const title = isTranslation ? translation.title : props.title;
   const body = isTranslation ? translation.body : props.body;
   const link = isTranslation
-    ? { href: `/post?path=${path}&language=${translation.lang}`, as: `/p/${path}?language=${translation.lang}` }
+    ? { href: `/post?path=${path}&language=${translation.lang}`, as: `/p/${path}/${translation.lang}` }
     : { href: `/post?path=${path}`, as: `/p/${path}` };
 
   const bodyMarkup = cut

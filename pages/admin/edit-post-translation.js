@@ -50,7 +50,7 @@ class EditPostTranslation extends ProtectedPage {
       await API.posts.update(post.path, Object.assign({}, post, { translations: updatedListOfTranslations }));
     }
 
-    Router.push(`/post?path=${post.path}&language=${translation.lang}`, `/p/${post.path}?language=${translation.lang}`);
+    Router.push(`/post?path=${post.path}&language=${translation.lang}`, `/p/${post.path}/${translation.lang}`);
   }
 
   render() {
