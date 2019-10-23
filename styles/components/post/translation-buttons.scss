@@ -2,14 +2,15 @@
 
 .post-translation-buttons {
   position: absolute;
-  left: -1.6em;
+  left: -1.7em;
   top: -0.3em;
 
   .post-translation-button {
     background-color: white;
     background-size: cover;
     background-position: center center;
-    border: 1px solid $light-grey;
+    background-clip: content-box;
+    border: 3px solid $light-grey;
     border-radius: 50%;
     display: block;
     margin: 0.2em 0;
@@ -19,7 +20,8 @@
     transform-origin: center center;
 
     &:hover {
-      transform: scale(1.1);
+      border-color: $white;
+      box-shadow: 0 0 0 3px $light-orange;
     }
   }
 }
