@@ -101,7 +101,7 @@ class PostForm extends React.Component {
           <Editor html={body} onChange={updatedBody => this.setState({ body: updatedBody })} />
         </div>
         <div className="children-equal-margin-vertical layout-row layout-wrap layout-align-center-center flex-100">
-          <span>Теґи (через кому):</span>
+          <span>Позначки (через кому):</span>
           <input
             type="text"
             value={tagsString}

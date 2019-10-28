@@ -37,7 +37,7 @@ class Error extends React.Component {
           <h1>Шось пішло не так</h1>
           <p className="fatty larger text-center">{message}</p>
           <div className="text-center">
-            <p>Хмаринка теґів:</p>
+            <p>Хмаринка позначок:</p>
             <TagCloud shake width="90%" />
           </div>
         </Content>

@@ -22,7 +22,7 @@ class Footer extends React.Component {
 
         return [...previousTags, ', ', currentTag];
       }, []);
-    const tagsMarkup = tags.length ? <span>Теґи: {tags}</span> : null;
+    const tagsMarkup = tags.length ? <span>Позначки: {tags}</span> : null;
 
     return (
       <div className="post-footer layout-row layout-align-xs-center-center smaller">

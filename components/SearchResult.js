@@ -75,7 +75,7 @@ function generateDescription(params) {
 
   if (searchResultType === 'post') {
     const highlightedTags = tags.map(tag => highlightQueryInText(tag, query)).join(', ');
-    tagsMarkup = `<span>Теґи: ${highlightedTags}</span>`;
+    tagsMarkup = `<span>Позначки: ${highlightedTags}</span>`;
   }
 
   return (

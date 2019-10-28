@@ -45,7 +45,7 @@ class TagPage extends AuthenticatablePage {
       content = (
         <div className="text-center">
           <p className="fatty larger">Нічого не знайшлося.</p>
-          <p>Хмаринка теґів:</p>
+          <p>Хмаринка позначок:</p>
           <TagCloud shake minFontSize="1" maxFontSize="3" width="70%" />
         </div>
       );
@@ -64,11 +64,11 @@ class TagPage extends AuthenticatablePage {
     return (
       <Wrapper>
         <Head>
-          <title>Записи з теґом «{this.props.tag}» - {current.meta.title}</title>
+          <title>Записи з позначкою «{this.props.tag}» - {current.meta.title}</title>
         </Head>
         <Header />
         <Content>
-          <h1>Записи з теґом «{this.props.tag}»</h1>
+          <h1>Записи з позначкою «{this.props.tag}»</h1>
           { content }
         </Content>
         <Footer pagination={this.props.meta} />
