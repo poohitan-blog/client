@@ -4,5 +4,6 @@ export default {
     title: String,
     body: String,
     path: String,
+    customStyles: String,
   },
 };

@@ -28,13 +28,22 @@ class Wrapper extends React.Component {
   }
 
   render() {
-    return (
-      <div className="wrapper">
-        {this.props.children}
-        {this.context.isAuthenticated && <AdminPanel />}
-        {!this.context.isAuthenticated && <LoginButton />}
+    const pathTokens = this.props.pathname
+      .slice(1)
+      .split('/')
+      .filter(token => token)
+      .map(token => `${token}-page-wrapper`);
+    const classList = ['page-wrapper', this.props.className, ...pathTokens];
 
-        <div className="wrapper-shadow" />
+    return (
+      <div className={classList.join(' ')}>
+        <div className="wrapper">
+          {this.props.children}
+          {this.context.isAuthenticated && <AdminPanel />}
+          {!this.context.isAuthenticated && <LoginButton />}
+
+          <div className="wrapper-shadow" />
+        </div>
       </div>
     );
   }
@@ -42,6 +51,13 @@ class Wrapper extends React.Component {
 
 Wrapper.propTypes = {
   children: PropTypes.node.isRequired,
+  pathname: PropTypes.string,
+  className: PropTypes.string,
+};
+
+Wrapper.defaultProps = {
+  pathname: '',
+  className: '',
 };
 
 Wrapper.contextTypes = {

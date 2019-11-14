@@ -2,11 +2,20 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 import moment from 'moment';
+import { Controlled as CodeMirror } from 'react-codemirror2';
+import codeMirrorStyles from 'codemirror/lib/codemirror.css';
+import codeMirrorThemeStyles from 'codemirror/theme/monokai.css';
 
 import { current } from '../../config';
 
 import Checkbox from '../ui/Checkbox';
 import Editor from '../../utils/editor';
+
+try {
+  require('codemirror/mode/css/css');
+} catch (error) {
+  console.error(error);
+}
 
 const DATE_FORMAT = 'DD.MM.YYYY HH:mm';
 
@@ -14,9 +23,12 @@ class PostForm extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { ...props };
-    this.state.tagsString = props.tags && props.tags.length ? props.tags.join(', ') : '';
-    this.state.dateString = props.publishedAt ? moment(props.publishedAt).format(DATE_FORMAT) : '';
+    this.state = {
+      ...props,
+      tagsString: props.tags && props.tags.length ? props.tags.join(', ') : '',
+      dateString: props.publishedAt ? moment(props.publishedAt).format(DATE_FORMAT) : '',
+      translations: [],
+    };
 
     this.handleTagsChange = this.handleTagsChange.bind(this);
     this.handleDateChange = this.handleDateChange.bind(this);
@@ -71,12 +83,14 @@ class PostForm extends React.Component {
       tagsString,
       dateString,
       translations,
+      customStyles,
     } = this.state;
     const formTitle = this.props.path ? 'Редагувати запис' : 'Додати запис';
     const link = this.getPostLinkMarkup();
 
     return (
-      <div className="children-equal-margin-vertical layout-row layout-wrap">
+      <div className="post-form children-equal-margin-vertical layout-row layout-wrap">
+        <style dangerouslySetInnerHTML={{ __html: codeMirrorStyles + codeMirrorThemeStyles }} />
         <h1>{formTitle}</h1>
         <input
           type="text"
@@ -101,6 +115,20 @@ class PostForm extends React.Component {
           <Editor html={body} onChange={updatedBody => this.setState({ body: updatedBody })} />
         </div>
         <div className="children-equal-margin-vertical layout-row layout-wrap layout-align-center-center flex-100">
+          <span>Стилі сторінки:</span>
+          <CodeMirror
+            value={customStyles}
+            options={{
+              mode: 'css',
+              theme: 'monokai',
+            }}
+            onBeforeChange={(editor, data, value) => {
+              this.setState({ customStyles: value });
+            }}
+            className={`code-editor ${customStyles ? '' : 'collapsed'}`}
+          />
+        </div>
+        <div className="children-equal-margin-vertical layout-row layout-wrap layout-align-center-center flex-100">
           <span>Позначки (через кому):</span>
           <input
             type="text"
@@ -112,7 +140,7 @@ class PostForm extends React.Component {
         <div className="layout-row layout-wrap layout-align-center-center flex-100">
           <span>Переклади:</span>
           {
-            translations.length
+            translations && translations.length
               ? translations
                   .map(translation => (
                     <Link

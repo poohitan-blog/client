@@ -87,12 +87,12 @@ const SORTING_PREDICATES = {
 };
 
 class TopPage extends AuthenticatablePage {
-  static async getInitialProps({ query, req }) {
+  static async getInitialProps({ query, req, pathname }) {
     try {
       const parentProps = await super.getInitialProps({ query, req });
       const { docs } = await API.posts.find({ private: false }, getAllCookies(req));
 
-      return Object.assign(parentProps, { posts: docs });
+      return Object.assign(parentProps, { posts: docs, pathname });
     } catch (error) {
       return { error };
     }
@@ -107,11 +107,16 @@ class TopPage extends AuthenticatablePage {
   }
 
   render() {
-    if (this.props.error) {
-      return <Error statusCode={this.props.error.status} />;
+    const {
+      posts,
+      pathname,
+      error,
+    } = this.props;
+
+    if (error) {
+      return <Error statusCode={error.status} />;
     }
 
-    const { posts } = this.props;
     const { sortBy } = this.state;
     const sortButtons = [
       {
@@ -134,7 +139,7 @@ class TopPage extends AuthenticatablePage {
     const sortButtonsSeparator = <span>&nbsp;/&nbsp;</span>;
 
     return (
-      <Wrapper>
+      <Wrapper pathname={pathname}>
         <Head>
           <title>Рейтинг записів - {current.meta.title}</title>
         </Head>

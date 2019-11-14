@@ -18,42 +18,49 @@ import Trashbin from '../components/header/Trashbin';
 const POSTS_PER_PAGE = 30;
 
 class TrashPage extends AuthenticatablePage {
-  static async getInitialProps({ query, req }) {
+  static async getInitialProps({ query, req, pathname }) {
     try {
       const parentProps = await super.getInitialProps({ req });
 
       if (query.id) {
         const posts = [await API.trashPosts.findOne(query.id, getAllCookies(req))];
 
-        return Object.assign(parentProps, { posts });
+        return Object.assign(parentProps, { posts, pathname });
       }
 
       if (query.permalink) { // keeps compatibility with old version of links
         const date = moment.utc(query.permalink, 'YYYYMMDD_HHmmss').toISOString();
         const { docs } = await API.trashPosts.find({ createdAt: date }, getAllCookies(req));
 
-        return Object.assign(parentProps, { posts: docs });
+        return Object.assign(parentProps, { posts: docs, pathname });
       }
 
       const { page = 1 } = query;
       const { docs, meta } = await API.trashPosts.find({ page, limit: POSTS_PER_PAGE }, getAllCookies(req));
 
-      return Object.assign(parentProps, { posts: docs, meta });
+      return Object.assign(parentProps, { posts: docs, meta, pathname });
     } catch (error) {
       return { error };
     }
   }
 
   render() {
-    if (this.props.error) {
-      return <Error statusCode={this.props.error.status} />;
+    const {
+      posts,
+      meta,
+      pathname,
+      error,
+    } = this.props;
+
+    if (error) {
+      return <Error statusCode={error.status} />;
     }
 
-    const postsMarkup = this.props.posts.map(post => <TrashPost {...post} key={post.id} />);
-    const paginationInfo = { ...this.props.meta, linkTexts: { next: 'Далі', previous: 'Назад' } };
+    const postsMarkup = posts.map(post => <TrashPost {...post} key={post.id} />);
+    const paginationInfo = { ...meta, linkTexts: { next: 'Далі', previous: 'Назад' } };
 
     return (
-      <Wrapper>
+      <Wrapper pathname={pathname}>
         <Head>
           <title>Смітник - {current.meta.title}</title>
         </Head>

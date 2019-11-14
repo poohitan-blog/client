@@ -17,24 +17,28 @@ import CompactPost from '../components/CompactPost';
 const POSTS_PER_PAGE = 30;
 
 class ArchivePage extends AuthenticatablePage {
-  static async getInitialProps({ query, req }) {
+  static async getInitialProps({ query, req, pathname }) {
     try {
       const parentProps = await super.getInitialProps({ query, req });
       const { page = 1 } = query;
       const { docs, meta } = await API.posts.find({ page, limit: POSTS_PER_PAGE }, getAllCookies(req));
 
-      return Object.assign(parentProps, { posts: docs, meta });
+      return Object.assign(parentProps, { posts: docs, meta, pathname });
     } catch (error) {
       return { error };
     }
   }
 
   render() {
-    if (this.props.error) {
-      return <Error statusCode={this.props.error.status} />;
+    const {
+      posts, error, meta, pathname,
+    } = this.props;
+
+    if (error) {
+      return <Error statusCode={error.status} />;
     }
 
-    const content = this.props.posts
+    const content = posts
       .map(post => ({ id: post.id, component: <CompactPost {...post} key={post.id} /> }))
       .reduce((previousPosts, { id, component }) => {
         if (!previousPosts.length) {
@@ -45,7 +49,7 @@ class ArchivePage extends AuthenticatablePage {
       }, []);
 
     return (
-      <Wrapper>
+      <Wrapper pathname={pathname}>
         <Head>
           <title>Архів - {current.meta.title}</title>
         </Head>
@@ -54,7 +58,7 @@ class ArchivePage extends AuthenticatablePage {
           <h1>Архів</h1>
           { content }
         </Content>
-        <Footer pagination={this.props.meta} />
+        <Footer pagination={meta} />
       </Wrapper>
     );
   }

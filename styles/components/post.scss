@@ -4,15 +4,6 @@
   .post-title {
     padding: 0;
     position: relative;
-
-    a {
-      color: $light-orange;
-      text-decoration: none;
-
-      &:hover {
-        color: lighten($light-orange, 10%);
-      }
-    }
   }
 
   .post-body {

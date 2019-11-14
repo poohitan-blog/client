@@ -17,7 +17,7 @@ import TagCloud from '../components/TagCloud';
 const POSTS_PER_PAGE = 10;
 
 class SearchPage extends AuthenticatablePage {
-  static async getInitialProps({ query, req }) {
+  static async getInitialProps({ query, req, pathname }) {
     try {
       const parentProps = await super.getInitialProps({ req });
       const { page = 1 } = query;
@@ -30,6 +30,7 @@ class SearchPage extends AuthenticatablePage {
 
       return Object.assign(parentProps, {
         searchResults: docs,
+        pathname,
         meta,
         searchQuery,
       });
@@ -39,11 +40,19 @@ class SearchPage extends AuthenticatablePage {
   }
 
   render() {
-    if (this.props.error) {
-      return <Error statusCode={this.props.error.status} />;
+    const {
+      searchQuery,
+      searchResults,
+      meta,
+      pathname,
+      error,
+    } = this.props;
+
+    if (error) {
+      return <Error statusCode={error.status} />;
     }
 
-    const nothingFound = !this.props.searchResults.length;
+    const nothingFound = !searchResults.length;
     let content;
 
     if (nothingFound) {
@@ -55,20 +64,20 @@ class SearchPage extends AuthenticatablePage {
         </div>
       );
     } else {
-      content = this.props.searchResults
-        .map(searchResult => <SearchResult {...searchResult} key={searchResult.id} query={this.props.searchQuery} />);
+      content = searchResults
+        .map(searchResult => <SearchResult {...searchResult} key={searchResult.id} query={searchQuery} />);
     }
 
-    const paginationInfo = { ...this.props.meta, linkTexts: { next: 'Далі', previous: 'Назад' } };
+    const paginationInfo = { ...meta, linkTexts: { next: 'Далі', previous: 'Назад' } };
 
     return (
-      <Wrapper>
+      <Wrapper pathname={pathname}>
         <Head>
-          <title>Пошук за запитом «{this.props.searchQuery}» - {current.meta.title}</title>
+          <title>Пошук за запитом «{searchQuery}» - {current.meta.title}</title>
         </Head>
         <Header />
         <Content>
-          <h1>Пошук за запитом «{this.props.searchQuery}»</h1>
+          <h1>Пошук за запитом «{searchQuery}»</h1>
           <div>
             { content }
           </div>

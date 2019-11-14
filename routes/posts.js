@@ -11,13 +11,6 @@ module.exports = (app) => {
     app.render(req, res, '/post', Object.assign({}, req.query, { path: req.params.post_path }));
   });
 
-  router.get('/p/:post_path/:post_language', (req, res) => {
-    app.render(req, res, '/post', Object.assign({}, req.query, {
-      path: req.params.post_path,
-      language: req.params.post_language,
-    }));
-  });
-
   router.get('/p/:post_path/edit', (req, res) => {
     app.render(req, res, '/admin/edit-post', Object.assign({}, req.query, {
       path: req.params.post_path,
@@ -34,6 +27,13 @@ module.exports = (app) => {
     app.render(req, res, '/admin/edit-post-translation', Object.assign({}, req.query, {
       post: req.params.post_path,
       language: req.params.translation_language,
+    }));
+  });
+
+  router.get('/p/:post_path/:post_language', (req, res) => {
+    app.render(req, res, '/post', Object.assign({}, req.query, {
+      path: req.params.post_path,
+      language: req.params.post_language,
     }));
   });
 

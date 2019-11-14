@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Head from 'next/head';
 import Router from 'next/router';
 
@@ -32,12 +33,12 @@ const LOGIN_ATTEMPTS_MESSAGES = [
 ];
 
 class LoginPage extends React.Component {
-  static async getInitialProps({ req, res }) {
+  static async getInitialProps({ req, res, pathname }) {
     if (Session.isAuthenticated(req)) {
       res.redirect('/');
     }
 
-    return {};
+    return { pathname };
   }
 
   constructor(props) {
@@ -77,7 +78,7 @@ class LoginPage extends React.Component {
 
   render() {
     return (
-      <Wrapper>
+      <Wrapper pathname={this.props.pathname}>
         <Head>
           <title>Вхід у Нарнію</title>
         </Head>
@@ -92,5 +93,13 @@ class LoginPage extends React.Component {
     );
   }
 }
+
+LoginPage.propTypes = {
+  pathname: PropTypes.string,
+};
+
+LoginPage.defaultProps = {
+  pathname: '',
+};
 
 export default LoginPage;

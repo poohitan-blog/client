@@ -95,6 +95,18 @@ a {
   }
 }
 
+h1, h2 {
+  a {
+    color: $light-orange;
+    text-decoration: none;
+
+    &:hover {
+      color: lighten($light-orange, 10%);
+      text-decoration: none;
+    }
+  }
+}
+
 p {
   margin: 0.5em 0;
   hyphens: auto;

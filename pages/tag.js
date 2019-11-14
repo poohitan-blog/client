@@ -17,7 +17,7 @@ import TagCloud from '../components/TagCloud';
 const POSTS_PER_PAGE = 30;
 
 class TagPage extends AuthenticatablePage {
-  static async getInitialProps({ query, req }) {
+  static async getInitialProps({ query, req, pathname }) {
     try {
       const parentProps = await super.getInitialProps({ req });
       const { tag, page = 1 } = query;
@@ -27,6 +27,7 @@ class TagPage extends AuthenticatablePage {
         posts: docs,
         meta,
         tag,
+        pathname,
       });
     } catch (error) {
       return { error };
@@ -34,11 +35,15 @@ class TagPage extends AuthenticatablePage {
   }
 
   render() {
-    if (this.props.error) {
-      return <Error statusCode={this.props.error.status} />;
+    const {
+      posts, meta, tag, pathname, error,
+    } = this.props;
+
+    if (error) {
+      return <Error statusCode={error.status} />;
     }
 
-    const nothingFound = !this.props.posts.length;
+    const nothingFound = !posts.length;
     let content;
 
     if (nothingFound) {
@@ -50,7 +55,7 @@ class TagPage extends AuthenticatablePage {
         </div>
       );
     } else {
-      content = this.props.posts
+      content = posts
         .map(post => ({ id: post.id, component: <CompactPost {...post} key={post.id} /> }))
         .reduce((previousPosts, { id, component }) => {
           if (!previousPosts.length) {
@@ -62,16 +67,16 @@ class TagPage extends AuthenticatablePage {
     }
 
     return (
-      <Wrapper>
+      <Wrapper pathname={pathname}>
         <Head>
-          <title>Записи з позначкою «{this.props.tag}» - {current.meta.title}</title>
+          <title>Записи з позначкою «{tag}» - {current.meta.title}</title>
         </Head>
         <Header />
         <Content>
-          <h1>Записи з позначкою «{this.props.tag}»</h1>
+          <h1>Записи з позначкою «{tag}»</h1>
           { content }
         </Content>
-        <Footer pagination={this.props.meta} />
+        <Footer pagination={meta} />
       </Wrapper>
     );
   }

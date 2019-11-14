@@ -1,5 +1,7 @@
-export function stripHTML(html) {
-  return html.replace(/<.+?>|\n/g, ' ').replace(/ +/g, ' ').trim();
+export function stripHTML(html, { preserveWhitespace = false } = {}) {
+  return preserveWhitespace
+    ? html.replace(/<.+?>/g, '')
+    : html.replace(/<.+?>|\n/g, ' ').replace(/ +/g, ' ').trim();
 }
 
 export function shorten(text, wordsCount) {
