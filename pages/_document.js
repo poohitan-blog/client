@@ -36,9 +36,9 @@ class MyDocument extends Document {
           <link rel="alternate" type="application/rss+xml" title="poohitan.com" href={`${current.clientURL}/rss`} />
           <link rel="author" href="humans.txt" />
 
-          <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML&locale=uk" />
+          <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML&locale=uk" />
 
-          <link type="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+          <link media="all" type="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 
           <style dangerouslySetInnerHTML={{ __html: styles }} />
         </Head>
