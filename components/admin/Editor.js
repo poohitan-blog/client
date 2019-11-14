@@ -16,7 +16,7 @@ import theme from '../../static/libs/froala/themes/custom.css';
 
 const buttons = [
   'bold', 'italic', 'underline', 'strikeThrough', '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', '|', 'subscript', 'superscript', '|', 'color', 'clearFormatting',
-  '|', '-', 'insertLink', 'insertImage', 'insertVideo', 'insertFile', 'quote', 'custom-quote', 'code', 'insertTable', '|', 'insertHR', 'fullscreen', 'html', 'cut',
+  '|', '-', 'insertLink', 'insertImage', 'insertVideo', 'insertFile', 'custom-quote', 'code', 'insertTable', '|', 'insertHR', 'fullscreen', 'html', 'cut',
 ];
 
 class Editor extends React.Component {
