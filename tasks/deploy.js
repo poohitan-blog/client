@@ -21,13 +21,14 @@ const privateKey = fs.readFileSync('/Users/poohitan/.ssh/id_rsa');
 
 const exec = command => execSSH({ host, username, privateKey })(`source ~/.profile && ${command}`);
 
-exec(`git clone -b ${branch} ${repo} ${folder}/new`)
-  .then(() => exec(`npm install --prefix ${folder}/new`))
-  .then(() => exec(`rm -rf ${folder}/current`))
-  .then(() => exec(`mv ${folder}/new ${folder}/current`))
-  .then(() => exec(`npm run build --prefix ${folder}/current`))
-  .then(() => exec(`pm2 stop ${appName}`))
-  .then(() => exec(`export NODE_ENV=${env} && cd ${folder}/current && pm2 start server.js --name ${appName} --update-env`))
+const deploymentId = Date.now();
+
+exec(`git clone -b ${branch} ${repo} ${folder}/${deploymentId}`)
+  .then(() => exec(`npm install --prefix ${folder}/${deploymentId}`))
+  .then(() => exec(`npm run build --prefix ${folder}/${deploymentId}`))
+  .then(() => exec(`pm2 delete ${appName}`))
+  .then(() => exec(`export NODE_ENV=${env} && cd ${folder}/${deploymentId} && pm2 start server.js --name ${appName} --update-env`))
+  .then(() => exec(`cd ${folder} && ls | grep -v ${deploymentId} | xargs rm -rf`))
   .then(() => console.log('Deployed successfully.'))
   .catch(error => console.error(error))
   .then(() => process.exit());
