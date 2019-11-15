@@ -6,29 +6,22 @@ class Popup extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      visible: props.visible,
-    };
-
     this.close = this.close.bind(this);
   }
 
-  componentWillReceiveProps(props) {
-    this.setState({ visible: props.visible });
-  }
-
   close() {
-    this.setState({ visible: false });
+    this.props.onClose();
   }
 
   render() {
-    const visibilityClassName = this.state.visible ? 'popup-wrapper-visible' : '';
+    const { visible, children } = this.props;
+    const visibilityClassName = visible ? 'popup-wrapper-visible' : '';
 
     return (
       <div className={`popup-wrapper ${visibilityClassName}`}>
         <div className="popup">
           <button className="popup-close-button" onClick={this.close}><CloseIcon /></button>
-          {this.props.children}
+          {children}
         </div>
         <div className="popup-shadow" onClick={this.close} />
       </div>
@@ -39,6 +32,7 @@ class Popup extends React.Component {
 Popup.propTypes = {
   children: PropTypes.node.isRequired,
   visible: PropTypes.bool,
+  onClose: PropTypes.func.isRequired,
 };
 
 Popup.defaultProps = {
