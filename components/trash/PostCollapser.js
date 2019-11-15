@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import AngleIcon from '../../public/icons/angle-down.svg';
+import AngleIcon from '../../public/static/icons/angle-down.svg';
 
 const PostCollapser = ({ isPostCollapsed, onClick }) => {
   const text = isPostCollapsed ? 'Розгорнути' : 'Згорнути';

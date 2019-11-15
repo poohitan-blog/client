@@ -4,9 +4,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { current } from '../../config';
-import styles from '../../public/libs/social/jssocials.css';
-import themeStyles from '../../public/libs/social/jssocials-theme-minima.css';
-import '../../public/libs/social/jssocials.min';
+import styles from '../../public/static/libs/social/jssocials.css';
+import themeStyles from '../../public/static/libs/social/jssocials-theme-minima.css';
+import '../../public/static/libs/social/jssocials.min';
 
 class SocialButtons extends React.Component {
   componentDidMount() {

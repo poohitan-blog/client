@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactDropzone from 'react-dropzone';
-import LoaderIcon from '../public/icons/three-dots.svg';
+import LoaderIcon from '../public/static/icons/three-dots.svg';
 
 class Dropzone extends React.Component {
   constructor(props) {

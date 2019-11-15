@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import CloseIcon from '../public/icons/remove.svg';
+import CloseIcon from '../public/static/icons/remove.svg';
 
 class Popup extends React.Component {
   constructor(props) {

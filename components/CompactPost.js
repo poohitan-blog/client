@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Link from 'next/link';
 import { stripHTML, shorten } from '../services/text';
 import { formatPostDate } from '../services/grammar';
-import HiddenIcon from '../public/icons/hidden.svg';
+import HiddenIcon from '../public/static/icons/hidden.svg';
 
 const CompactPost = (props) => {
   const bodyWithoutHTML = stripHTML(props.body);

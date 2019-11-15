@@ -3,10 +3,10 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import '../../public/libs/lightbox/featherlight.min';
-import '../../public/libs/lightbox/featherlight.gallery.uk.min';
-import styles from '../../public/libs/lightbox/featherlight.min.css';
-import galleryStyles from '../../public/libs/lightbox/featherlight.gallery.min.css';
+import '../../public/static/libs/lightbox/featherlight.min';
+import '../../public/static/libs/lightbox/featherlight.gallery.uk.min';
+import styles from '../../public/static/libs/lightbox/featherlight.min.css';
+import galleryStyles from '../../public/static/libs/lightbox/featherlight.gallery.min.css';
 
 class Lightbox extends React.Component {
   componentDidMount() {

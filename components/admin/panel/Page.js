@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
-import HiddenIcon from '../../../public/icons/hidden.svg';
+import HiddenIcon from '../../../public/static/icons/hidden.svg';
 
 const Page = props => (
   <Link href={`/page?path=${props.path}`} as={`/${props.path}`}>

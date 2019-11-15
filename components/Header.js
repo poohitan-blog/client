@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 import Trashbin from './header/Trashbin';
-import HomeIcon from '../public/icons/home.svg';
-import ArchiveIcon from '../public/icons/list.svg';
-import SecretAgentIcon from '../public/icons/secret-agent.svg';
+import HomeIcon from '../public/static/icons/home.svg';
+import ArchiveIcon from '../public/static/icons/list.svg';
+import SecretAgentIcon from '../public/static/icons/secret-agent.svg';
 
 const Header = props => (
   <nav className="header">

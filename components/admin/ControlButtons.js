@@ -7,8 +7,8 @@ import pluralize from 'pluralize';
 import Popup from '../Popup';
 import API from '../../services/api';
 import { getAllCookies } from '../../services/cookies';
-import EditIcon from '../../public/icons/edit.svg';
-import RemoveIcon from '../../public/icons/remove.svg';
+import EditIcon from '../../public/static/icons/edit.svg';
+import RemoveIcon from '../../public/static/icons/remove.svg';
 
 const linkGenerators = {
   page: {
