@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import CheckIcon from '../../static/icons/check.svg';
+import CheckIcon from '../../public/icons/check.svg';
 
 class Checkbox extends React.Component {
   constructor(props) {

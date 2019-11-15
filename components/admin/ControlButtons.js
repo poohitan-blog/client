@@ -7,8 +7,8 @@ import pluralize from 'pluralize';
 import Popup from '../Popup';
 import API from '../../services/api';
 import { getAllCookies } from '../../services/cookies';
-import EditIcon from '../../static/icons/edit.svg';
-import RemoveIcon from '../../static/icons/remove.svg';
+import EditIcon from '../../public/icons/edit.svg';
+import RemoveIcon from '../../public/icons/remove.svg';
 
 const linkGenerators = {
   page: {
@@ -99,7 +99,7 @@ class ControlButtons extends React.Component {
     return (
       <span className="admin-control-buttons layout-row layout-align-start-center">
         <div className="admin-control-button">
-          <Link as={as} href={href} prefetch>
+          <Link as={as} href={href}>
             <a><EditIcon /></a>
           </Link>
         </div>

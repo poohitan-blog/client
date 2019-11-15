@@ -41,7 +41,7 @@ app.prepare()
 
     server.use(cookieParser());
 
-    server.use('/static/flags', express.static(path.join(__dirname, 'node_modules/flag-icon-css/flags'), { maxAge: 31557600000 }));
+    server.use('/public/flags', express.static(path.join(__dirname, 'node_modules/flag-icon-css/flags'), { maxAge: 31557600000 }));
 
     server.get('/wardrobe', (req, res) => app.render(req, res, '/login', req.query));
     server.get('/archive', (req, res) => app.render(req, res, '/archive', req.query));

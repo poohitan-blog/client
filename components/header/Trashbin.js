@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import TrashbinClosedIcon from '../../static/icons/trashbin.svg';
-import TrashbinSemiOpenIcon from '../../static/icons/trashbin-semi-open.svg';
-import TrashbinFullyOpenIcon from '../../static/icons/trashbin-fully-open.svg';
+import TrashbinClosedIcon from '../../public/icons/trashbin.svg';
+import TrashbinSemiOpenIcon from '../../public/icons/trashbin-semi-open.svg';
+import TrashbinFullyOpenIcon from '../../public/icons/trashbin-fully-open.svg';
 
 class Trashbin extends React.Component {
   constructor(props) {

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Link from 'next/link';
 import { stripHTML, shorten } from '../services/text';
 import { formatPostDate } from '../services/grammar';
-import HiddenIcon from '../static/icons/hidden.svg';
+import HiddenIcon from '../public/icons/hidden.svg';
 
 const CompactPost = (props) => {
   const bodyWithoutHTML = stripHTML(props.body);
@@ -13,7 +13,7 @@ const CompactPost = (props) => {
     <article className="post post-compact">
       <div className="layout-gt-xs-row layout-align-space-between-start">
         <h3 className="post-title layout-row layout-align-start-start">
-          <Link as={`/p/${props.path}`} href={`/post?path=${props.path}`} prefetch><a>{props.title}</a></Link>
+          <Link as={`/p/${props.path}`} href={`/post?path=${props.path}`}><a>{props.title}</a></Link>
           {
             props.private && <div className="post-title-icon"><HiddenIcon /></div>
           }

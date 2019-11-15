@@ -1,6 +1,6 @@
 import React from 'react';
 import Router from 'next/router';
-import SearchIcon from '../static/icons/search.svg';
+import SearchIcon from '../public/icons/search.svg';
 
 const PLACEHOLDER = 'пошук';
 const ENTER_KEY_CODE = 13;

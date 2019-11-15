@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 import { formatPostDate, createWordCountDescriptor } from '../../services/grammar';
-import CommentIcon from '../../static/icons/comment.svg';
-import CalendarIcon from '../../static/icons/calendar.svg';
+import CommentIcon from '../../public/icons/comment.svg';
+import CalendarIcon from '../../public/icons/calendar.svg';
 
 const describeCommentsCount = createWordCountDescriptor(['коментар', 'коментарі', 'коментарів']);
 
