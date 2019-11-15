@@ -31,12 +31,17 @@ app.prepare()
       const response = await fetch(`${config.apiURL}/rss`);
       const xml = await response.text();
 
-      res.header({ 'Content-Type': 'application/rss+xml' }).send(xml);
+      res
+        .header({
+          'Content-Type': 'application/rss+xml',
+          'Content-Disposition': 'inline',
+        })
+        .send(xml);
     });
 
     server.use(cookieParser());
 
-    server.use('/static/flags', express.static(path.join(__dirname, 'node_modules/flag-icon-css/flags'), { maxAge: 31557600000 }));
+    server.use('/public/flags', express.static(path.join(__dirname, 'node_modules/flag-icon-css/flags'), { maxAge: 31557600000 }));
 
     server.get('/wardrobe', (req, res) => app.render(req, res, '/login', req.query));
     server.get('/archive', (req, res) => app.render(req, res, '/archive', req.query));

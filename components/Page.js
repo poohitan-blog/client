@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import AdminControlButtons from './admin/ControlButtons';
-import HiddenIcon from '../static/icons/hidden.svg';
+import HiddenIcon from '../public/icons/hidden.svg';
 
 const Page = (props, context) => (
   <article className="page">

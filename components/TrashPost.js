@@ -6,10 +6,13 @@ import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import moment from 'moment';
 import AdminControlButtons from './admin/ControlButtons';
+import PostCollapser from './trash/PostCollapser';
 
 import { generateLazyPreview, LIGHTBOX_CLASS } from '../services/image-previews';
 
 const Lightbox = dynamic(import('./ui/Lightbox'), { ssr: false, loading: () => null });
+
+const MAX_UNCOLLAPSED_HEIGHT = 1000;
 
 class TrashPost extends React.Component {
   constructor(props) {
@@ -23,23 +26,88 @@ class TrashPost extends React.Component {
           }
         },
       }),
+      collapsed: false,
+      collapsable: false,
     };
+
+    this.collapse = this.collapse.bind(this);
+    this.unroll = this.unroll.bind(this);
+    this.checkIfLongEnoughToCollapse = this.checkIfLongEnoughToCollapse.bind(this);
+
+    this.rootElement = React.createRef();
+  }
+
+  componentDidMount() {
+    if (this.props.collapsable) {
+      this.checkIfLongEnoughToCollapse();
+    }
+  }
+
+  checkIfLongEnoughToCollapse() {
+    const currentHeight = this.rootElement.current.clientHeight;
+
+    if (currentHeight > MAX_UNCOLLAPSED_HEIGHT) {
+      this.setState({
+        collapsable: true,
+        collapsed: true,
+      });
+    }
+  }
+
+  collapse() {
+    const fullHeight = this.rootElement.current.clientHeight;
+
+    this.setState({
+      collapsed: true,
+    }, () => {
+      const { collapsedHeight } = this.state;
+
+      window.scrollTo(0, window.scrollY - (fullHeight - collapsedHeight));
+    });
+  }
+
+  unroll() {
+    const collapsedHeight = this.rootElement.current.clientHeight;
+
+    this.setState({
+      collapsed: false,
+      collapsedHeight,
+    });
   }
 
   render() {
+    const { collapsable, collapsed, body } = this.state;
+
+    const classList = ['trash-post'];
+
+    if (collapsable) {
+      classList.push('trash-post-collapsable');
+    }
+
+    if (collapsed) {
+      classList.push('trash-post-collapsed');
+    }
+
     const formattedDate = moment(this.props.createdAt).format('DD:MM:YYYY, HH:mm');
     const lightboxImageSelector = `.trash-post-body a.${LIGHTBOX_CLASS}`;
 
     return (
-      <div className="trash-post">
+      <div className={classList.join(' ')} ref={this.rootElement}>
         {
           this.context.isAuthenticated &&
           <div className="trash-post-admin-control-buttons">
             <AdminControlButtons attachedTo="trashPost" tokens={[this.props.id]} />
           </div>
         }
-        <div className="trash-post-body">{ this.state.body }</div>
+        <div className="trash-post-body-wrapper">
+          <div className="trash-post-body">{ body }</div>
+          <div className="trash-post-body-overlay-gradient" />
+        </div>
         <Lightbox selector={lightboxImageSelector} />
+        {
+          this.state.collapsable &&
+          <PostCollapser isPostCollapsed={collapsed} onClick={() => (collapsed ? this.unroll() : this.collapse())} />
+        }
         <div className="trash-post-footer smaller layout-row layout-align-space-between-center">
           <span className="nowrap">
             <Link as={`/trash/${this.props.id}`} href={`/trash?id=${this.props.id}`}><a>постійне посилання</a></Link>
@@ -60,9 +128,11 @@ TrashPost.propTypes = {
     PropTypes.instanceOf(Date),
   ]).isRequired,
   scrollPosition: PropTypes.shape({}),
+  collapsable: PropTypes.bool,
 };
 
 TrashPost.defaultProps = {
+  collapsable: true,
   scrollPosition: null,
 };
 

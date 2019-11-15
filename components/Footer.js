@@ -22,7 +22,7 @@ const Footer = ({ pagination, router }) => {
 
   if (hasPreviousPage) {
     previousPagelink = (
-      <Link href={{ query: Object.assign({}, query, { page: currentPage - 1 }) }} prefetch>
+      <Link href={{ query: Object.assign({}, query, { page: currentPage - 1 }) }}>
         <a className="larger">&larr; {previous}</a>
       </Link>
     );
@@ -30,7 +30,7 @@ const Footer = ({ pagination, router }) => {
 
   if (hasNextPage) {
     nextPageLink = (
-      <Link href={{ query: Object.assign({}, query, { page: currentPage + 1 }) }} prefetch>
+      <Link href={{ query: Object.assign({}, query, { page: currentPage + 1 }) }}>
         <a className="larger">{next} &rarr;</a>
       </Link>
     );

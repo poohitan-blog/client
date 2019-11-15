@@ -27,7 +27,7 @@ const CutBody = (props) => {
   return (
     <div>
       { body }
-      <Link as={`/p/${props.path}`} href={`/post?path=${props.path}`} prefetch><a>{READ_MORE}</a></Link>
+      <Link as={`/p/${props.path}`} href={`/post?path=${props.path}`}><a>{READ_MORE}</a></Link>
     </div>
   );
 };

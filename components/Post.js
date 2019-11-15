@@ -9,7 +9,7 @@ import Footer from './post/Footer';
 import TranslationButtons from './post/TranslationButtons';
 import AdminControlButtons from './admin/ControlButtons';
 import { LIGHTBOX_CLASS } from '../services/image-previews';
-import HiddenIcon from '../static/icons/hidden.svg';
+import HiddenIcon from '../public/icons/hidden.svg';
 
 const Lightbox = dynamic(import('./ui/Lightbox'), { ssr: false, loading: () => null });
 const SyntaxHighlighter = dynamic(import('./ui/SyntaxHighlighter'), { ssr: false, loading: () => null });
@@ -41,7 +41,7 @@ const Post = (props, context) => {
   return (
     <article className="post post-complete" data-path={path}>
       <h1 className="post-title layout-row layout-align-start-start">
-        <Link as={link.as} href={link.href} prefetch>
+        <Link as={link.as} href={link.href}>
           <a>{title}</a>
         </Link>
         {

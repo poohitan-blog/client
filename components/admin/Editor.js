@@ -5,14 +5,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { current } from '../../config';
 
-import '../../static/libs/froala/froala_editor.pkgd.min';
-import '../../static/libs/froala/plugins/image.min';
-import '../../static/libs/froala/languages/uk';
+import '../../public/libs/froala/froala_editor.pkgd.min';
+import '../../public/libs/froala/plugins/image.min';
+import '../../public/libs/froala/languages/uk';
 import './editor/buttons/cut';
 import './editor/buttons/quote';
-import editorStyles from '../../static/libs/froala/froala_editor.pkgd.min.css';
-import styles from '../../static/libs/froala/froala_style.min.css';
-import theme from '../../static/libs/froala/themes/custom.css';
+import editorStyles from '../../public/libs/froala/froala_editor.pkgd.min.css';
+import styles from '../../public/libs/froala/froala_style.min.css';
+import theme from '../../public/libs/froala/themes/custom.css';
 
 const buttons = [
   'bold', 'italic', 'underline', 'strikeThrough', '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', '|', 'subscript', 'superscript', '|', 'color', 'clearFormatting',

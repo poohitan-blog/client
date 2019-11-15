@@ -2,13 +2,13 @@
 
 @font-face {
   font-family: 'Movavi Grotesque';
-  src: url('/static/fonts/movavi-grotesque.ttf');
+  src: url('/fonts/movavi-grotesque.ttf');
   font-display: swap;
 }
 
 @font-face {
   font-family: 'PT Sans';
-  src: url('/static/fonts/pt-sans-reqular.ttf');
+  src: url('/fonts/pt-sans-reqular.ttf');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -16,7 +16,7 @@
 
 @font-face {
   font-family: 'PT Sans';
-  src: url('/static/fonts/pt-sans-bold.ttf');
+  src: url('/fonts/pt-sans-bold.ttf');
   font-weight: bold;
   font-style: normal;
   font-display: swap;
@@ -24,7 +24,7 @@
 
 @font-face {
   font-family: 'PT Sans';
-  src: url('/static/fonts/pt-sans-italic.ttf');
+  src: url('/fonts/pt-sans-italic.ttf');
   font-weight: normal;
   font-style: italic;
   font-display: swap;
@@ -32,7 +32,7 @@
 
 @font-face {
   font-family: 'Fira Mono';
-  src: url('/static/fonts/fira-mono-regular.ttf');
+  src: url('/fonts/fira-mono-regular.ttf');
   font-weight: normal;
   font-display: swap;
 }
@@ -53,7 +53,7 @@ body {
   }
 
   &.raspberries {
-    background-image: url('/static/images/raspberry.gif');
+    background-image: url('/images/raspberry.gif');
   }
 }
 

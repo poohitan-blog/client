@@ -17,6 +17,8 @@
   "globals": {
     "$": false,
     "jQuery": false,
-    "FormData": false
+    "FormData": false,
+    "window": false,
+    "document": false
   }
 }
