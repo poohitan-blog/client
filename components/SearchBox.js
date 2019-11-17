@@ -2,7 +2,7 @@ import React from 'react';
 import Router from 'next/router';
 import SearchIcon from '../public/static/icons/search.svg';
 
-const PLACEHOLDER = 'пошук';
+const PLACEHOLDER = 'бісовий пошук';
 const ENTER_KEY_CODE = 13;
 
 class SearchBox extends React.Component {

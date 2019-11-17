@@ -24,17 +24,17 @@ class Error extends React.Component {
     let message = describeHTTPCode(this.props.statusCode);
 
     if (current.environment !== 'production') {
-      message += ` Код помилки: ${this.props.statusCode}`;
+      message += ` HTTP код помилки: ${this.props.statusCode}`;
     }
 
     return (
       <Wrapper>
         <Head>
-          <title>Шось пішло не так - {current.meta.title}</title>
+          <title>От халепа - {current.meta.title}</title>
         </Head>
         <Header />
         <Content>
-          <h1>Шось пішло не так</h1>
+          <h1>От халепа</h1>
           <p className="fatty larger text-center">{message}</p>
           <div className="text-center">
             <p>Хмаринка позначок:</p>
