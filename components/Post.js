@@ -45,6 +45,9 @@ const Post = (props, context) => {
           <a>{title}</a>
         </Link>
         {
+          props.private && <div className="post-title-icon"><HiddenIcon /></div>
+        }
+        {
           context.isAuthenticated &&
           <div className="post-admin-control-buttons">
             <AdminControlButtons
@@ -52,9 +55,6 @@ const Post = (props, context) => {
               tokens={[path, translation.lang]}
             />
           </div>
-        }
-        {
-          props.private && <div className="post-title-icon"><HiddenIcon /></div>
         }
         {
           Boolean(translations.length)
