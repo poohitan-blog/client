@@ -14,21 +14,25 @@
     }
   }
 
+  .post-title-icons {
+    display: flex;
+    margin-left: 0.5em;
+
+    .post-title-icon {
+      height: 1em;
+      margin-right: 0.3em;
+
+      svg {
+        fill: $grey;
+        height: 100%;
+      }
+    }
+  }
+
   .post-admin-control-buttons {
-    margin-left: 0.6em;
     opacity: 0;
     pointer-events: none;
     transition: opacity 100ms linear;
-  }
-
-  .post-title-icon {
-    margin-left: 0.2em;
-    height: 1em;
-
-    svg {
-      fill: $grey;
-      height: 100%;
-    }
   }
 
   &:hover {
@@ -52,14 +56,17 @@
     margin-top: 0;
   }
 
-  .post-title-icon {
-    margin-left: 0.2em;
-    height: 1em;
-    line-height: 1.7em;
+  .post-title-icons {
+    margin-left: 0.5em;
 
-    svg {
-      fill: $grey;
-      height: 100%;
+    .post-title-icon {
+      line-height: 1.6em;
+      height: 1em;
+
+      svg {
+        fill: $grey;
+        height: 100%;
+      }
     }
   }
 

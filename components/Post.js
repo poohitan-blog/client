@@ -44,18 +44,20 @@ const Post = (props, context) => {
         <Link as={link.as} href={link.href}>
           <a>{title}</a>
         </Link>
-        {
-          props.private && <div className="post-title-icon"><HiddenIcon /></div>
-        }
-        {
-          context.isAuthenticated &&
-          <div className="post-admin-control-buttons">
-            <AdminControlButtons
-              attachedTo={isTranslation ? 'postTranslation' : 'post'}
-              tokens={[path, translation.lang]}
-            />
-          </div>
-        }
+        <div className="post-title-icons">
+          {
+            props.private && <div className="post-title-icon"><HiddenIcon /></div>
+          }
+          {
+            context.isAuthenticated &&
+            <div className="post-admin-control-buttons">
+              <AdminControlButtons
+                attachedTo={isTranslation ? 'postTranslation' : 'post'}
+                tokens={[path, translation.lang]}
+              />
+            </div>
+          }
+        </div>
         {
           Boolean(translations.length)
             && <TranslationButtons

@@ -15,7 +15,10 @@ const CompactPost = (props) => {
         <h3 className="post-title layout-row layout-align-start-start">
           <Link as={`/p/${props.path}`} href={`/post?path=${props.path}`}><a>{props.title}</a></Link>
           {
-            props.private && <div className="post-title-icon"><HiddenIcon /></div>
+            props.private &&
+            <div className="post-title-icons">
+              <div className="post-title-icon"><HiddenIcon /></div>
+            </div>
           }
         </h3>
         <div className="post-date smaller nowrap">{formatPostDate(props.publishedAt)}</div>
