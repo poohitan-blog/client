@@ -33,7 +33,7 @@ const Post = (props, context) => {
     : { href: `/post?path=${path}`, as: `/p/${path}` };
 
   const bodyMarkup = cut
-    ? <CutBody body={body} path={path} />
+    ? <CutBody title={title} body={body} path={path} />
     : <FullBody body={body} />;
 
   const lightboxImageSelector = `.post[data-path="${path}"] .post-body a.${LIGHTBOX_CLASS}`;
@@ -42,7 +42,7 @@ const Post = (props, context) => {
     <article className="post post-complete" data-path={path}>
       <h1 className="post-title layout-row layout-align-start-start">
         <Link as={link.as} href={link.href}>
-          <a>{title}</a>
+          <a title={title}>{title}</a>
         </Link>
         <div className="post-title-icons">
           {

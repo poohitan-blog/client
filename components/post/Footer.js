@@ -9,11 +9,22 @@ const describeCommentsCount = createWordCountDescriptor(['коментар', 'к
 
 class Footer extends React.Component {
   render() {
-    const tags = this.props.tags
+    const {
+      tags,
+      path,
+      commentsCount,
+      publishedAt,
+    } = this.props;
+
+    const tagsMarkup = tags
       .map((tag) => {
         const encodedTag = encodeURIComponent(tag);
 
-        return <Link key={tag} as={`/tag/${encodedTag}`} href={`/tag?tag=${encodedTag}`}><a>{tag}</a></Link>;
+        return (
+          <Link key={tag} as={`/tag/${encodedTag}`} href={`/tag?tag=${encodedTag}`}>
+            <a title={`Записи із позначкою «${tag}»`}>{tag}</a>
+          </Link>
+        );
       })
       .reduce((previousTags, currentTag) => {
         if (!previousTags.length) {
@@ -22,23 +33,26 @@ class Footer extends React.Component {
 
         return [...previousTags, ', ', currentTag];
       }, []);
-    const tagsMarkup = tags.length ? <span>Позначки: {tags}</span> : null;
 
     return (
       <div className="post-footer layout-row layout-align-xs-center-center smaller">
         <div className="post-footer-item post-footer-comments layout-row layout-align-start-center">
           <CommentIcon className="post-footer-icon post-footer-comments-icon" />
           <span className="flex-offset-5 nowrap">
-            <Link as={`/p/${this.props.path}#comments`} href={{ pathname: '/post', query: { path: this.props.path }, href: '#comments' }}>
-              <a>{ describeCommentsCount(this.props.commentsCount) }</a>
+            <Link as={`/p/${path}#comments`} href={{ pathname: '/post', query: { path }, href: '#comments' }}>
+              <a title="Коментарі до запису">{ describeCommentsCount(commentsCount) }</a>
             </Link>
           </span>
         </div>
         <div className="post-footer-item post-footer-date layout-row layout-align-start-center">
           <CalendarIcon className="post-footer-icon post-footer-date-icon" />
-          <span className="flex-offset-5 nowrap">{ formatPostDate(this.props.publishedAt) }</span>
+          <span className="flex-offset-5 nowrap">{ formatPostDate(publishedAt) }</span>
         </div>
-        <div className="post-footer-item post-footer-tags nowrap">{tagsMarkup}</div>
+        <div className="post-footer-item post-footer-tags nowrap">
+          {
+            tags.length ? <span>Позначки: {tagsMarkup}</span> : null
+          }
+        </div>
       </div>
     );
   }

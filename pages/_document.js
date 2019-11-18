@@ -1,5 +1,5 @@
 import React from 'react';
-import Document, { Head, Main, NextScript } from 'next/document';
+import Document, { Html, Head, Main, NextScript } from 'next/document';
 import Raspberries from '../services/raspberries';
 import { current } from '../config';
 import styles from '../styles/main.scss';
@@ -26,7 +26,7 @@ class MyDocument extends Document {
 
   render() {
     return (
-      <html lang={current.meta.language}>
+      <Html lang={current.meta.language}>
         <Head>
           <meta name="viewport" content="initial-scale=1.0, width=device-width" key="viewport" />
           <meta name="google-site-verification" content={current.google.siteVerificationCode} key="google-site-verification" />
@@ -46,7 +46,7 @@ class MyDocument extends Document {
           <Main />
           <NextScript />
         </body>
-      </html>
+      </Html>
     );
   }
 }
