@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { formatPostDate } from '../services/grammar';
 
 const MAX_TITLE_LENGTH = 50;
+const IMAGE_WIDTH = 600;
 
 const TinyPost = ({
   title, path, image, publishedAt,
@@ -14,7 +15,7 @@ const TinyPost = ({
 
   return (
     <Link as={`/p/${path}`} href={`/post?path=${path}`}>
-      <a className="tiny-post" title={title} style={{ backgroundImage: `url("${image}")` }}>
+      <a className="tiny-post" title={title} style={{ backgroundImage: `url("${image}?width=${IMAGE_WIDTH}")` }}>
         <div className="tiny-post-content">
           <div><span className="tiny-post-title">{cutTitle}</span></div>
           <div><span className="tiny-post-date smaller nowrap">{formatPostDate(publishedAt)}</span></div>

@@ -286,18 +286,50 @@ textarea {
   }
 }
 
-.lazy-load-image-wrapper {
-  background-color: $lighter-grey;
-  display: flex !important;
-  justify-content: center;
-  align-items: center;
+.lightbox-image {
+  width: 100%;
+}
 
-  &:not(.lazy-load-image-loaded) {
-    @include aspect-ratio(16, 10);
+.lazy-load-image-wrapper {
+  display: block;
+  margin: auto;
+  position: relative;
+
+  .lazy-load-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: block !important;
+
+    img {
+      display: block;
+      margin: auto;
+    }
+
+    &.lazy-load-image-loaded {
+      position: relative;
+    }
+
+    &.lazy-load-image-loaded + * {
+      display: none;
+    }
   }
 
-  &.lazy-load-image-loaded {
-    background-color: transparent;
+  .lazy-load-image-placeholder {
+    background-color: $lighter-grey;
+    display: block;
+  }
+
+  &.lazy-load-image-wrapper-unknown-height {
+    .lazy-load-image-placeholder {
+      display: none;
+    }
+
+    .lazy-load-image-loaded {
+      position: relative;
+    }
   }
 }
 

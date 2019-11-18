@@ -97,6 +97,7 @@ class Editor extends React.Component {
 
     $editor.on('froalaEditor.video.inserted', (e, editor, $video) => {
       const videoSource = $video.contents().get(0).src;
+
       $video.html(`<p class="video-16-9"><iframe src="${videoSource}" frameborder="0" allowfullscreen></iframe></p>`);
     });
   }

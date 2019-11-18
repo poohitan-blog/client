@@ -36,7 +36,7 @@ const Header = (props) => {
       <ul className="menu layout-row layout-wrap layout-align-center-center">
         {
           items.map(item => (
-            <li>
+            <li key={item.title}>
               <h1 className="menu-item">
                 <Link href={item.href} as={item.as || item.href}>
                   <a title={item.title}>

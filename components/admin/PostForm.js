@@ -27,7 +27,7 @@ class PostForm extends React.Component {
       ...props,
       tagsString: props.tags && props.tags.length ? props.tags.join(', ') : '',
       dateString: props.publishedAt ? moment(props.publishedAt).format(DATE_FORMAT) : '',
-      translations: [],
+      translations: props.translations || [],
     };
 
     this.handleTagsChange = this.handleTagsChange.bind(this);
@@ -188,6 +188,7 @@ PostForm.propTypes = {
   path: PropTypes.string,
   tags: PropTypes.arrayOf(PropTypes.string),
   publishedAt: PropTypes.instanceOf(Date),
+  translations: PropTypes.arrayOf(PropTypes.object),
   onChange: PropTypes.func.isRequired,
 };
 
@@ -196,6 +197,7 @@ PostForm.defaultProps = {
   path: '',
   tags: [],
   publishedAt: null,
+  translations: [],
 };
 
 export default PostForm;
