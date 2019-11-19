@@ -11,16 +11,23 @@
     .menu-item {
       margin: 1.12em 0 0.4em 0;
 
+      svg {
+        height: 100%;
+      }
+
       .menu-item-content-mobile {
         display: none;
-        height: 1em;
+      }
+
+      .header-trashbin {
+        margin-top: -0.3em;
       }
 
       @media (max-width: 640px) {
         margin: 0.5em 0;
 
         .header-trashbin {
-          margin-top: -0.4em;
+          margin-top: -0.2em;
         }
 
         .menu-item-content-desktop {
@@ -29,6 +36,7 @@
 
         .menu-item-content-mobile {
           display: block;
+          height: 1em;
         }
       }
     }

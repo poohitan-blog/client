@@ -27,12 +27,15 @@ const CutBody = (props) => {
   return (
     <div>
       { body }
-      <Link as={`/p/${props.path}`} href={`/post?path=${props.path}`}><a>{READ_MORE}</a></Link>
+      <Link as={`/p/${props.path}`} href={`/post?path=${props.path}`}>
+        <a title={`Читати повністю «${props.title}»`}>{READ_MORE}</a>
+      </Link>
     </div>
   );
 };
 
 CutBody.propTypes = {
+  title: PropTypes.string.isRequired,
   body: PropTypes.node.isRequired,
   path: PropTypes.string.isRequired,
 };

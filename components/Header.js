@@ -6,47 +6,59 @@ import HomeIcon from '../public/static/icons/home.svg';
 import ArchiveIcon from '../public/static/icons/list.svg';
 import SecretAgentIcon from '../public/static/icons/secret-agent.svg';
 
-const Header = props => (
-  <nav className="header">
-    <ul className="menu layout-row layout-wrap layout-align-center-center">
-      <li>
-        <h1 className="menu-item">
-          <Link href="/">
-            <a>
-              <span className="menu-item-content menu-item-content-desktop">Головна</span>
-              <HomeIcon className="menu-item-content menu-item-content-mobile" />
-            </a>
-          </Link>
-        </h1>
-      </li>
-      <li>
-        <h1 className="menu-item">
-          <Link href="/archive">
-            <a>
-              <span className="menu-item-content menu-item-content-desktop">Архів</span>
-              <ArchiveIcon className="menu-item-content menu-item-content-mobile" />
-            </a>
-          </Link>
-        </h1>
-      </li>
-      <li>
-        <h1 className="menu-item">
-          <Link as="/about" href="/page?path=about">
-            <a>
-              <span className="menu-item-content menu-item-content-desktop">Про</span>
-              <SecretAgentIcon className="menu-item-content menu-item-content-mobile" />
-            </a>
-          </Link>
-        </h1>
-      </li>
-      <li>
-        <div className="menu-item">
-          <Link href="/trash"><a><Trashbin state={props.trashBinState} /></a></Link>
-        </div>
-      </li>
-    </ul>
-  </nav>
-);
+const Header = (props) => {
+  const items = [
+    {
+      title: 'Головна',
+      href: '/',
+      icon: <HomeIcon />,
+    },
+    {
+      title: 'Архів',
+      href: '/archive',
+      icon: <ArchiveIcon />,
+    },
+    {
+      title: 'Про',
+      href: '/path?path=about',
+      as: '/about',
+      icon: <SecretAgentIcon />,
+    },
+    {
+      title: 'Смітник',
+      href: '/trash',
+      markup: <Trashbin state={props.trashBinState} />,
+    },
+  ];
+
+  return (
+    <nav className="header">
+      <ul className="menu layout-row layout-wrap layout-align-center-center">
+        {
+          items.map(item => (
+            <li key={item.title}>
+              <h1 className="menu-item">
+                <Link href={item.href} as={item.as || item.href}>
+                  <a title={item.title}>
+                    {
+                      item.markup ||
+                      (
+                        <div className="menu-item-content">
+                          <span className="menu-item-content-desktop">{item.title}</span>
+                          <span className="menu-item-content-mobile">{item.icon}</span>
+                        </div>
+                      )
+                    }
+                  </a>
+                </Link>
+              </h1>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  );
+};
 
 Header.propTypes = {
   trashBinState: PropTypes.string,
