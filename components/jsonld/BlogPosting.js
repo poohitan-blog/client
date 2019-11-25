@@ -11,7 +11,7 @@ const BlogPosting = (props) => {
     headline: props.title,
     image: getImageLinksFromHTML(props.body)[0],
     keywords: props.tags.join(' '),
-    articleBody: stripHTML(props.body),
+    articleBody: stripHTML(props.body, { decodeHTMLEntities: true }),
     url: postURL,
     mainEntityOfPage: postURL,
     datePublished: props.publishedAt.toISOString(),

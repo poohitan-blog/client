@@ -65,8 +65,8 @@ const sortByCommentsCount = ((left, right) => {
 });
 
 const sortByLength = ((left, right) => {
-  const leftLength = stripHTML(left.body).length;
-  const rightLength = stripHTML(right.body).length;
+  const leftLength = stripHTML(left.body, { decodeHTMLEntities: true }).length;
+  const rightLength = stripHTML(right.body, { decodeHTMLEntities: true }).length;
 
   if (leftLength < rightLength) {
     return 1;

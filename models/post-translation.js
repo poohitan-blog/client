@@ -3,6 +3,7 @@ export default {
   schema: {
     lang: String,
     title: String,
+    description: String,
     body: String,
     draft: Boolean,
   },

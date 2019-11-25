@@ -18,6 +18,7 @@ try {
 }
 
 const DATE_FORMAT = 'DD.MM.YYYY HH:mm';
+const MAX_DESCRIPTION_LENGTH = 160;
 
 class PostForm extends React.Component {
   constructor(props) {
@@ -28,10 +29,12 @@ class PostForm extends React.Component {
       tagsString: props.tags && props.tags.length ? props.tags.join(', ') : '',
       dateString: props.publishedAt ? moment(props.publishedAt).format(DATE_FORMAT) : '',
       translations: props.translations || [],
+      descriptionSymbolsLeft: MAX_DESCRIPTION_LENGTH,
     };
 
     this.handleTagsChange = this.handleTagsChange.bind(this);
     this.handleDateChange = this.handleDateChange.bind(this);
+    this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
     this.getPostLinkMarkup = this.getPostLinkMarkup.bind(this);
     this.submit = this.submit.bind(this);
   }
@@ -75,6 +78,19 @@ class PostForm extends React.Component {
     });
   }
 
+  handleDescriptionChange(event) {
+    const { value } = event.target;
+
+    if (value.length > MAX_DESCRIPTION_LENGTH) {
+      return;
+    }
+
+    this.setState({
+      description: value,
+      descriptionSymbolsLeft: MAX_DESCRIPTION_LENGTH - value.length,
+    });
+  }
+
   render() {
     const {
       title,
@@ -84,99 +100,110 @@ class PostForm extends React.Component {
       dateString,
       translations,
       customStyles,
+      descriptionSymbolsLeft,
     } = this.state;
     const formTitle = this.props.path ? 'Редагувати запис' : 'Додати запис';
     const link = this.getPostLinkMarkup();
 
     return (
-      <div className="post-form children-equal-margin-vertical layout-row layout-wrap">
+      <div className="post-form">
         <style dangerouslySetInnerHTML={{ __html: codeMirrorStyles + codeMirrorThemeStyles }} />
         <h1>{formTitle}</h1>
-        <input
-          type="text"
-          placeholder="Назва"
-          value={title}
-          onChange={event => this.setState({ title: event.target.value })}
-          className="flex-100"
-        />
-        <div className="smaller layout-row layout-align-start-center flex-100">
+        <div className="form">
           <input
             type="text"
-            value={path}
-            placeholder="Адреса"
-            onChange={event => this.setState({ path: event.target.value })}
-            className="flex-50"
+            placeholder="Назва"
+            value={title}
+            onChange={event => this.setState({ title: event.target.value })}
           />
-          <div className="nowrap text-overflow-ellipsis margin-left flex-50">
-            {link}
-          </div>
-        </div>
-        <div className="flex-100">
-          <Editor html={body} onChange={updatedBody => this.setState({ body: updatedBody })} />
-        </div>
-        <div className="children-equal-margin-vertical layout-row layout-wrap layout-align-center-center flex-100">
-          <span>Стилі сторінки:</span>
-          <CodeMirror
-            value={customStyles}
-            options={{
-              mode: 'css',
-              theme: 'monokai',
-            }}
-            onBeforeChange={(editor, data, value) => {
-              this.setState({ customStyles: value });
-            }}
-            className={`code-editor ${customStyles ? '' : 'collapsed'}`}
-          />
-        </div>
-        <div className="children-equal-margin-vertical layout-row layout-wrap layout-align-center-center flex-100">
-          <span>Позначки (через кому):</span>
-          <input
-            type="text"
-            value={tagsString}
-            onChange={this.handleTagsChange}
-            className="flex-100"
-          />
-        </div>
-        <div className="layout-row layout-wrap layout-align-center-center flex-100">
-          <span>Переклади:</span>
-          {
-            translations && translations.length
-              ? translations
-                  .map(translation => (
-                    <Link
-                      as={`/p/${path}/translations/${translation.lang}/edit`}
-                      href={`/admin/edit-post-translation?language=${translation.lang}&post=${path}`}
-                    >
-                      <a className="post-translation-link">
-                        {translation.lang}{translation.private ? <sup>(прих.)</sup> : null}
-                      </a>
-                    </Link>
-                  ))
-              : null
-          }
-          <Link as={`/p/${path}/translations/new`} href={`/admin/edit-post-translation?post=${path}`}>
-            <a className="post-translation-link">(Додати)</a>
-          </Link>
-        </div>
-        <div className="layout-row layout-align-space-between-center flex-100">
-          <div className="layout-row layout-align-start-center flex-50">
+          <div className="post-form-path smaller layout-row layout-align-start-center">
             <input
               type="text"
-              placeholder="DD.MM.YYYY HH:mm"
-              value={dateString}
-              onChange={this.handleDateChange}
-              pattern="[0-3][0-9]\.[0-1][0-9]\.[1-2][0-9][0-9][0-9] [0-2][0-9]:[0-5][0-9]"
-              className="text-center flex-50"
+              value={path}
+              placeholder="Адреса"
+              onChange={event => this.setState({ path: event.target.value })}
+              className="flex-50"
             />
-            <div className="flex-offset-5">
-              <Checkbox
-                label="Заховати"
-                checked={this.state.private}
-                onChange={hidden => this.setState({ private: hidden })}
-              />
+            <div className="nowrap text-overflow-ellipsis margin-left flex-50">
+              {link}
             </div>
           </div>
-          <button onClick={this.submit} className="flex-30">Вйо</button>
+          <Editor html={body} onChange={updatedBody => this.setState({ body: updatedBody })} />
+          <div>
+            <p>Стилі сторінки:</p>
+            <CodeMirror
+              value={customStyles}
+              options={{
+                mode: 'css',
+                theme: 'monokai',
+              }}
+              onBeforeChange={(editor, data, value) => {
+                this.setState({ customStyles: value });
+              }}
+              className={`code-editor ${customStyles ? '' : 'collapsed'}`}
+            />
+          </div>
+          <div>
+            <div className="layout-row layout-align-space-between-center">
+              <p>Короткий опис:</p>
+              <span className="smaller">Залишилось символів: {descriptionSymbolsLeft}</span>
+            </div>
+            <textarea
+              rows="3"
+              maxLength={MAX_DESCRIPTION_LENGTH}
+              value={this.state.description}
+              onChange={event => this.handleDescriptionChange(event)}
+            />
+          </div>
+          <div>
+            <p>Позначки (через кому):</p>
+            <input
+              type="text"
+              value={tagsString}
+              onChange={this.handleTagsChange}
+            />
+          </div>
+          <div className="layout-row layout-wrap layout-align-center-center">
+            <p>Переклади:</p>
+            {
+              translations && translations.length
+                ? translations
+                    .map(translation => (
+                      <Link
+                        as={`/p/${path}/translations/${translation.lang}/edit`}
+                        href={`/admin/edit-post-translation?language=${translation.lang}&post=${path}`}
+                      >
+                        <a className="post-translation-link">
+                          {translation.lang}{translation.private ? <sup>(прих.)</sup> : null}
+                        </a>
+                      </Link>
+                    ))
+                : null
+            }
+            <Link as={`/p/${path}/translations/new`} href={`/admin/edit-post-translation?post=${path}`}>
+              <a className="post-translation-link">(Додати)</a>
+            </Link>
+          </div>
+          <div className="layout-row layout-align-space-between-center flex-100">
+            <div className="layout-row layout-align-start-center flex-50">
+              <input
+                type="text"
+                placeholder="DD.MM.YYYY HH:mm"
+                value={dateString}
+                onChange={this.handleDateChange}
+                pattern="[0-3][0-9]\.[0-1][0-9]\.[1-2][0-9][0-9][0-9] [0-2][0-9]:[0-5][0-9]"
+                className="text-center flex-50"
+              />
+              <div className="flex-offset-5">
+                <Checkbox
+                  label="Заховати"
+                  checked={this.state.private}
+                  onChange={hidden => this.setState({ private: hidden })}
+                />
+              </div>
+            </div>
+            <button onClick={this.submit} className="flex-30">Вйо</button>
+          </div>
         </div>
       </div>
     );

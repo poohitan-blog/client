@@ -171,7 +171,7 @@ button {
   border: 1px solid $light-grey;
   font-family: $main-font-family;
   outline: none;
-  padding: 4px;
+  padding: 0.3em;
 
   &:focus {
     border-color: $orange;
@@ -186,7 +186,7 @@ button {
 button {
   background-color: $white;
   padding: 10px 15px;
-  border-radius: 5px;
+  border-radius: 0.4em;
   transition: all 100ms linear;
 
   &:hover {
@@ -204,10 +204,15 @@ button, *[role="button"] {
   }
 }
 
+input[type="text"],
 textarea {
   width: 100%;
-  padding: 1em;
   box-sizing: border-box;
+
+}
+
+textarea {
+  padding: 1em;
   resize: none;
 }
 
@@ -227,6 +232,10 @@ textarea {
   padding: 2em;
 }
 
+.error {
+  color: $bloody-red;
+}
+
 .text-center {
   text-align: center;
 }
@@ -235,18 +244,10 @@ textarea {
   display: none;
 }
 
-.children-equal-margin-vertical {
-  > * {
-    margin: 0.5em 0;
-
-    &:first-child {
-      margin-top: 1em;
-    }
-
-    &:last-child {
-      margin-bottom: 1em;
-    }
-  }
+.form {
+  display: grid;
+  grid-gap: 1em;
+  grid-template-columns: minmax(0, 1fr);
 }
 
 .margin-left {
@@ -257,9 +258,17 @@ textarea {
   margin-top: 1em;
 }
 
+.margin-bottom {
+  margin-bottom: 1em;
+}
+
 .text-overflow-ellipsis {
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.post-translation-link {
+  margin: 0 0.5em;
 }
 
 .video-16-9 {
@@ -331,8 +340,4 @@ textarea {
       position: relative;
     }
   }
-}
-
-.post-translation-link {
-  margin: 0 0.5em;
 }

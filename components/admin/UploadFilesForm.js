@@ -32,22 +32,27 @@ class UploadFilesForm extends React.Component {
   }
 
   render() {
-    const links = !this.state.links.length ? null
-      : <textarea className="upload-files-form-links-textarea margin-top flex-100" readOnly value={this.state.links.join('\n')} />;
+    const links = this.state.links.length
+      ? <textarea className="upload-files-form-links-textarea" readOnly value={this.state.links.join('\n')} />
+      : null;
 
     return (
-      <div className="upload-files-form children-equal-margin-vertical layout-row layout-wrap">
+      <div>
         <h1>{this.props.title}</h1>
-        <Dropzone
-          loading={this.state.loading}
-          files={this.state.queue}
-          onDrop={files => this.setState({ queue: files })}
-          className="upload-files-form-dropzone flex-100"
-        />
-        <div className="layout-row layout-align-end-center flex-100">
-          <button onClick={() => this.submit()} className="flex-30">Вйо</button>
+        <div className="form">
+          <Dropzone
+            loading={this.state.loading}
+            files={this.state.queue}
+            onDrop={files => this.setState({ queue: files })}
+            className="upload-files-form-dropzone"
+          />
+          <div className="layout-row layout-align-end-center">
+            <button onClick={() => this.submit()} className="flex-30">Вйо</button>
+          </div>
+          {
+            links
+          }
         </div>
-        {links}
       </div>
     );
   }

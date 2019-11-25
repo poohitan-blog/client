@@ -15,6 +15,10 @@
     }
   }
 
+  p {
+    hyphens: none;
+  }
+
   pre {
     background: $dark-grey;
     color: $white;

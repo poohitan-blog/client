@@ -84,9 +84,13 @@ class LoginPage extends React.Component {
         </Head>
         <Content>
           <h1 className="text-center">Вхід у Нарнію</h1>
-          <div className="fatty layout-row layout-wrap layout-align-center-center">
+          <div className="margin-top margin-bottom layout-column layout-align-center-center">
             <input type="password" onChange={this.setPassword} onKeyPress={this.handleKeyPress} />
-            {this.state.error && <p className="flex-100 text-center">{this.state.error}</p>}
+            {
+              this.state.error
+                ? <p className="flex-100 text-center error">{this.state.error}</p>
+                : null
+            }
           </div>
         </Content>
       </Wrapper>

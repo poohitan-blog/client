@@ -45,37 +45,36 @@ class PageForm extends React.Component {
     const link = this.getPageLinkMarkup();
 
     return (
-      <div className="children-equal-margin-vertical layout-row layout-wrap">
+      <div>
         <h1>{title}</h1>
-        <input
-          type="text"
-          placeholder="Назва"
-          value={this.state.title}
-          onChange={event => this.setState({ title: event.target.value })}
-          className="flex-100"
-        />
-        <div className="smaller layout-row layout-align-start-center flex-100">
+        <div className="form">
           <input
             type="text"
-            value={this.state.path}
-            placeholder="Адреса"
-            onChange={event => this.setState({ path: event.target.value })}
-            className="flex-50"
+            placeholder="Назва"
+            value={this.state.title}
+            onChange={event => this.setState({ title: event.target.value })}
           />
-          <div className="nowrap text-overflow-ellipsis margin-left flex-50">
-            {link}
+          <div className="smaller layout-row layout-align-start-center flex-100">
+            <input
+              type="text"
+              value={this.state.path}
+              placeholder="Адреса"
+              onChange={event => this.setState({ path: event.target.value })}
+              className="flex-50"
+            />
+            <div className="nowrap text-overflow-ellipsis margin-left flex-50">
+              {link}
+            </div>
           </div>
-        </div>
-        <div className="flex-100">
           <Editor key={this.props.path} html={this.state.body} onChange={body => this.setState({ body })} />
-        </div>
-        <div className="layout-row layout-align-space-between-center flex-100">
-          <Checkbox
-            label="Заховати"
-            checked={this.state.private}
-            onChange={hidden => this.setState({ private: hidden })}
-          />
-          <button onClick={this.submit} className="flex-30">Вйо</button>
+          <div className="layout-row layout-align-space-between-center">
+            <Checkbox
+              label="Заховати"
+              checked={this.state.private}
+              onChange={hidden => this.setState({ private: hidden })}
+            />
+            <button onClick={this.submit} className="flex-30">Вйо</button>
+          </div>
         </div>
       </div>
     );

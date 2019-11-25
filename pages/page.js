@@ -37,7 +37,7 @@ class PagePage extends AuthenticatablePage {
       <Wrapper pathname={pathname}>
         <Head>
           <title>{page.title} - {current.meta.title}</title>
-          <meta name="description" content={stripHTML(shorten(page.body, 60))} key="description" />
+          <meta name="description" content={shorten(stripHTML(page.body, { decodeHTMLEntities: true }), 20)} key="description" />
           { page.customStyles && <style dangerouslySetInnerHTML={{ __html: page.customStyles }} /> }
         </Head>
         <Header />

@@ -1,7 +1,19 @@
-export function stripHTML(html, { preserveWhitespace = false } = {}) {
-  return preserveWhitespace
-    ? html.replace(/<.+?>/g, '')
-    : html.replace(/<.+?>|\n/g, ' ').replace(/ +/g, ' ').trim();
+import { decode } from 'he';
+
+export function stripHTML(html, { preserveWhitespace = false, decodeHTMLEntities = false } = {}) {
+  let result;
+
+  if (preserveWhitespace) {
+    result = html.replace(/<.+?>/g, '');
+  } else {
+    result = html.replace(/<.+?>|\n/g, ' ').replace(/ +/g, ' ').trim();
+  }
+
+  if (decodeHTMLEntities) {
+    result = decode(result);
+  }
+
+  return result;
 }
 
 export function shorten(text, wordsCount) {

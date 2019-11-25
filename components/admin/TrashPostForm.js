@@ -25,13 +25,13 @@ class TrashPostForm extends React.Component {
     const title = this.props.id ? 'Редагувати запис' : 'Додати запис у смітник';
 
     return (
-      <div className="children-equal-margin-vertical layout-row layout-wrap">
+      <div>
         <h1>{title}</h1>
-        <div className="flex-100">
+        <div className="form">
           <Editor key={this.props.id} html={this.state.body} onChange={body => this.setState({ body })} />
-        </div>
-        <div className="layout-row layout-align-end-center flex-100">
-          <button onClick={this.submit} className="flex-30">Вйо</button>
+          <div className="layout-row layout-align-end-center">
+            <button onClick={this.submit} className="flex-30">Вйо</button>
+          </div>
         </div>
       </div>
     );

@@ -36,22 +36,20 @@ const Header = (props) => {
       <ul className="menu layout-row layout-wrap layout-align-center-center">
         {
           items.map(item => (
-            <li key={item.title}>
-              <h1 className="menu-item">
-                <Link href={item.href} as={item.as || item.href}>
-                  <a title={item.title}>
-                    {
-                      item.markup ||
-                      (
-                        <div className="menu-item-content">
-                          <span className="menu-item-content-desktop">{item.title}</span>
-                          <span className="menu-item-content-mobile">{item.icon}</span>
-                        </div>
-                      )
-                    }
-                  </a>
-                </Link>
-              </h1>
+            <li key={item.title} className="menu-item">
+              <Link href={item.href} as={item.as || item.href}>
+                <a title={item.title}>
+                  {
+                    item.markup ||
+                    (
+                      <div className="menu-item-content">
+                        <span className="menu-item-content-desktop">{item.title}</span>
+                        <span className="menu-item-content-mobile">{item.icon}</span>
+                      </div>
+                    )
+                  }
+                </a>
+              </Link>
             </li>
           ))
         }

@@ -58,12 +58,14 @@ class PostPage extends AuthenticatablePage {
       return <Error statusCode={error.status} />;
     }
 
-    const translation = language && post.translations.find(item => item.lang === language);
-    const title = `${translation ? translation.title : post.title} - ${current.meta.title}`;
-    const body = translation ? translation.body : post.body;
-    const description = stripHTML(shorten(body, 60));
+    const translation = language && post.translations.find(item => item.lang === language) || {};
+    const title = `${translation.title || post.title} - ${current.meta.title}`;
+    const body = translation.body || post.body;
     const [image] = getImageLinksFromHTML(body);
-    const url = `${current.clientURL}/p/${post.path}`;
+    const description = translation.description || post.description || shorten(stripHTML(body, { decodeHTMLEntities: true }), 20);
+    const url = language
+      ? `${current.clientURL}/p/${post.path}/${language}`
+      : `${current.clientURL}/p/${post.path}`;
 
     return (
       <Wrapper pathname={pathname}>

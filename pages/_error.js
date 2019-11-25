@@ -21,10 +21,12 @@ class Error extends React.Component {
   }
 
   render() {
-    let message = describeHTTPCode(this.props.statusCode);
+    const { statusCode } = this.props;
 
-    if (current.environment !== 'production') {
-      message += ` HTTP код помилки: ${this.props.statusCode}`;
+    let message = describeHTTPCode(statusCode);
+
+    if (statusCode && current.environment !== 'production') {
+      message += ` HTTP код помилки: ${statusCode}`;
     }
 
     return (
@@ -35,7 +37,7 @@ class Error extends React.Component {
         <Header />
         <Content>
           <h1>От халепа</h1>
-          <p className="fatty larger text-center">{message}</p>
+          <p className="fatty larger error text-center">{message}</p>
           <div className="text-center">
             <p>Хмаринка позначок:</p>
             <TagCloud shake width="90%" />

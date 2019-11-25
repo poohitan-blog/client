@@ -2,6 +2,7 @@ export default {
   name: 'post',
   schema: {
     title: String,
+    description: String,
     body: String,
     path: String,
     tags: [String],
