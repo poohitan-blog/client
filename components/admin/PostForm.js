@@ -81,10 +81,6 @@ class PostForm extends React.Component {
   handleDescriptionChange(event) {
     const { value } = event.target;
 
-    if (value.length > MAX_DESCRIPTION_LENGTH) {
-      return;
-    }
-
     this.setState({
       description: value,
       descriptionSymbolsLeft: MAX_DESCRIPTION_LENGTH - value.length,
@@ -150,7 +146,6 @@ class PostForm extends React.Component {
             </div>
             <textarea
               rows="3"
-              maxLength={MAX_DESCRIPTION_LENGTH}
               value={this.state.description}
               onChange={event => this.handleDescriptionChange(event)}
             />
