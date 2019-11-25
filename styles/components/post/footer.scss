@@ -1,13 +1,13 @@
 @import '../../variables';
 
-$vertical-padding: 0.28em;
-$horizontal-padding: 0.6em;
-$item-horizontal-margin: 0.8em;
+$item-padding: 0.3em;
+$wrapper-padding: 0.6em;
+$item-horizontal-margin: 0.6em;
 
 .post-footer {
   background-color: $yellowy-grey;
   line-height: 1.55em;
-  padding: 0 $horizontal-padding;
+  padding: 0 $wrapper-padding;
   overflow: hidden;
   position: relative;
 
@@ -18,7 +18,7 @@ $item-horizontal-margin: 0.8em;
   }
 
   .post-footer-item {
-    padding: $vertical-padding 0;
+    padding: $item-padding;
     margin-left: $item-horizontal-margin;
     margin-right: $item-horizontal-margin;
 
@@ -76,7 +76,7 @@ $item-horizontal-margin: 0.8em;
       right: 0;
       background: linear-gradient(to left, $yellowy-grey, $yellowy-grey 70%, transparent);
       padding-left: 3.5em;
-      padding-right: $horizontal-padding;
+      padding-right: $wrapper-padding;
     }
 
     .jssocials-shares {
