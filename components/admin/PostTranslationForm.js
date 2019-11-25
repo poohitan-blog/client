@@ -13,7 +13,7 @@ class PostTranslationForm extends React.Component {
 
     this.state = {
       ...props.translation,
-      descriptionSymbolsLeft: MAX_DESCRIPTION_LENGTH,
+      descriptionSymbolsLeft: MAX_DESCRIPTION_LENGTH - props.translation.description.length,
     };
 
     this.submit = this.submit.bind(this);
@@ -97,7 +97,9 @@ class PostTranslationForm extends React.Component {
 }
 
 PostTranslationForm.propTypes = {
-  translation: PropTypes.shape({}),
+  translation: PropTypes.shape({
+    description: PropTypes.string,
+  }),
   post: PropTypes.shape({}).isRequired,
   onChange: PropTypes.func.isRequired,
 };
