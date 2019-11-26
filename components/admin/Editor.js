@@ -117,6 +117,7 @@ class Editor extends React.Component {
   render() {
     return (
       <div className="editor-wrapper">
+        <link media="all" type="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
         <style>{ editorStyles + styles + theme }</style>
         <div className="editor" />
       </div>

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
 import dynamic from 'next/dynamic';
+
 import Error from './_error';
 import { current } from '../config';
 import API from '../services/api';
@@ -51,7 +52,11 @@ class PostPage extends AuthenticatablePage {
 
   render() {
     const {
-      post, similarPosts, pathname, language, error,
+      post,
+      similarPosts,
+      pathname,
+      language,
+      error,
     } = this.props;
 
     if (error) {

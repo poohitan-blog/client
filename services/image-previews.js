@@ -34,7 +34,6 @@ export function generateLazyPreview(node, scrollPosition) {
           key={thumbnailSource}
           placeholderSrc={placeholderSource}
           alt={alt}
-          threshold="200"
           effect="blur"
           scrollPosition={scrollPosition}
           wrapperClassName="lazy-load-image"

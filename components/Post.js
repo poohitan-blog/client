@@ -9,6 +9,7 @@ import Footer from './post/Footer';
 import TranslationButtons from './post/TranslationButtons';
 import AdminControlButtons from './admin/ControlButtons';
 import { LIGHTBOX_CLASS } from '../services/image-previews';
+
 import HiddenIcon from '../public/static/icons/hidden.svg';
 
 const Lightbox = dynamic(import('./ui/Lightbox'), { ssr: false, loading: () => null });

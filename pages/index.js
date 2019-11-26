@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
+
 import Error from './_error';
 import { current } from '../config';
 
@@ -33,7 +34,10 @@ class IndexPage extends AuthenticatablePage {
 
   render() {
     const {
-      posts, meta, pathname, error,
+      posts,
+      meta,
+      pathname,
+      error,
     } = this.props;
 
     if (error) {
