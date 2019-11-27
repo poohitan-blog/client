@@ -43,7 +43,7 @@ export function stringifyCookies(req) { // TODO: don't miss cookie options (http
 
   const { cookies } = req;
 
-  return Object.keys(cookies).map(cookieName => `${cookieName}=${cookies[cookieName]}`).join('; ');
+  return Object.keys(cookies).map((cookieName) => `${cookieName}=${cookies[cookieName]}`).join('; ');
 }
 
 export function getAllCookies(req) {

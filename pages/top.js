@@ -92,7 +92,11 @@ class TopPage extends AuthenticatablePage {
       const parentProps = await super.getInitialProps({ query, req });
       const { docs } = await API.posts.find({ private: false }, getAllCookies(req));
 
-      return Object.assign(parentProps, { posts: docs, pathname });
+      return {
+        ...parentProps,
+        posts: docs,
+        pathname,
+      };
     } catch (error) {
       return { error };
     }
@@ -141,7 +145,7 @@ class TopPage extends AuthenticatablePage {
     return (
       <Wrapper pathname={pathname}>
         <Head>
-          <title>Рейтинг записів - {current.meta.title}</title>
+          <title>{`Рейтинг записів - ${current.meta.title}`}</title>
         </Head>
         <Header />
         <Content>
@@ -149,8 +153,14 @@ class TopPage extends AuthenticatablePage {
           <div className="smaller">
             {
               sortButtons
-                .map(button => (
-                  <a className={`pointer ${sortBy === button.param ? 'disabled' : ''}`} onClick={() => this.setState({ sortBy: button.param })} key={button.param}>{button.title}</a>
+                .map((button) => (
+                  <a
+                    className={`pointer ${sortBy === button.param ? 'disabled' : ''}`}
+                    onClick={() => this.setState({ sortBy: button.param })}
+                    key={button.param}
+                  >
+                    {button.title}
+                  </a>
                 ))
                 .reduce((array, item) => [array, sortButtonsSeparator, item])
             }
@@ -167,8 +177,21 @@ class TopPage extends AuthenticatablePage {
 
                   return (
                     <li key={post.id}>
-                      <Link href={`/post?path=${post.path}`} as={`/p/${post.path}`}><a>{post.title}</a></Link>
-                      <span className="smaller"><span className="nowrap">&nbsp;&mdash; переглядів: {post.views}</span>, <span className="nowrap">цікавість: {interestingness}</span>, <span className="nowrap">коментарів: {post.commentsCount}</span>, <span className="nowrap">вік: {age.locale('uk').humanize()}</span>, <span className="nowrap">довжина: {describeWordCount(stripHTML(post.body).length, ['символ', 'символи', 'символів'])}</span></span>
+                      <Link href={`/post?path=${post.path}`} as={`/p/${post.path}`}><a title={post.title}>{post.title}</a></Link>
+                      <span className="smaller">
+                        {' '}
+                        <span className="nowrap">{`— переглядів: ${post.views || 0},`}</span>
+                        {' '}
+                        <span className="nowrap">{`цікавість: ${interestingness},`}</span>
+                        {' '}
+                        <span className="nowrap">{`коментарів: ${post.commentsCount || 0},`}</span>
+                        {' '}
+                        <span className="nowrap">{`вік: ${age.locale('uk').humanize()},`}</span>
+                        {' '}
+                        <span className="nowrap">
+                          {`довжина: ${describeWordCount(stripHTML(post.body).length, ['символ', 'символи', 'символів'])}`}
+                        </span>
+                      </span>
                     </li>
                   );
                 })

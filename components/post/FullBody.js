@@ -9,7 +9,7 @@ const FullBody = ({ body, scrollPosition }) => (
   <>
     {
       ReactHtmlParser(body, {
-        transform(node, index) { // eslint-disable-line
+        transform(node) { // eslint-disable-line
           if (node.type === 'tag' && node.name === 'img') {
             return generateLazyPreview(node, scrollPosition);
           }

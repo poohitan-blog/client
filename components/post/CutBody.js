@@ -14,9 +14,9 @@ function cut(body) {
   return cutPosition > 0 ? body.slice(0, cutPosition) : body;
 }
 
-const CutBody = (props) => {
-  const cutHtml = cut(props.body);
-  const body = ReactHtmlParser(cutHtml, {
+const CutBody = ({ title, path, body }) => {
+  const cutHtml = cut(body);
+  const transformedBody = ReactHtmlParser(cutHtml, {
     transform(node) { // eslint-disable-line
       if (node.type === 'tag' && node.name === 'img') {
         return generateLazyPreview(node);
@@ -25,12 +25,12 @@ const CutBody = (props) => {
   });
 
   return (
-    <div>
-      { body }
-      <Link as={`/p/${props.path}`} href={`/post?path=${props.path}`}>
-        <a title={`Читати повністю «${props.title}»`}>{READ_MORE}</a>
+    <>
+      { transformedBody }
+      <Link as={`/p/${path}`} href={`/post?path=${path}`}>
+        <a title={`Читати повністю «${title}»`}>{READ_MORE}</a>
       </Link>
-    </div>
+    </>
   );
 };
 

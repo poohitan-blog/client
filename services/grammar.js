@@ -29,7 +29,7 @@ export function describeWordCount(count, [one, twoToFour, rest]) {
 }
 
 export function createWordCountDescriptor([one, twoToFour, rest]) {
-  return count => describeWordCount(count, [one, twoToFour, rest]);
+  return (count) => describeWordCount(count, [one, twoToFour, rest]);
 }
 
 export function formatPostDate(date) {

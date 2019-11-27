@@ -12,25 +12,31 @@ class TrashPostForm extends React.Component {
   }
 
   async submit() {
-    if (!this.state.body) {
+    const { body } = this.state;
+
+    if (!body) {
       // TODO: show error popup
 
       return;
     }
 
-    this.props.onChange(this.state);
+    const { onChange } = this.props;
+
+    onChange(this.state);
   }
 
   render() {
-    const title = this.props.id ? 'Редагувати запис' : 'Додати запис у смітник';
+    const { id } = this.props;
+    const { body } = this.state;
+    const title = id ? 'Редагувати запис' : 'Додати запис у смітник';
 
     return (
       <>
         <h1>{title}</h1>
         <div className="form">
-          <Editor key={this.props.id} html={this.state.body} onChange={body => this.setState({ body })} />
+          <Editor key={id} html={body} onChange={(value) => this.setState({ body: value })} />
           <div className="layout-row layout-align-end-center">
-            <button onClick={this.submit} className="flex-30">Вйо</button>
+            <button type="submit" onClick={this.submit} className="flex-30">Вйо</button>
           </div>
         </div>
       </>

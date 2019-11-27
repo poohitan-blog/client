@@ -32,7 +32,7 @@ class Error extends React.Component {
     return (
       <Wrapper>
         <Head>
-          <title>От халепа - {current.meta.title}</title>
+          <title>{`От халепа - ${current.meta.title}`}</title>
         </Head>
         <Header />
         <Content>

@@ -8,7 +8,7 @@ const Blog = () => {
     name: current.meta.title,
     url: current.clientURL,
     description: current.meta.description,
-    sameAs: Object.keys(current.meta.social).map(socialName => current.meta.social[socialName].link),
+    sameAs: Object.keys(current.meta.social).map((socialName) => current.meta.social[socialName].link),
     publisher: {
       '@type': 'Organization',
       name: current.meta.title,

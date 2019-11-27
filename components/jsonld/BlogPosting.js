@@ -3,20 +3,26 @@ import PropTypes from 'prop-types';
 import { current } from '../../config';
 import { stripHTML, getImageLinksFromHTML } from '../../services/text';
 
-const BlogPosting = (props) => {
-  const postURL = `${current.clientURL}/p/${props.path}`;
+const BlogPosting = ({
+  title,
+  path,
+  body,
+  tags,
+  publishedAt,
+}) => {
+  const postURL = `${current.clientURL}/p/${path}`;
   const data = {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
-    headline: props.title,
-    image: getImageLinksFromHTML(props.body)[0],
-    keywords: props.tags.join(' '),
-    articleBody: stripHTML(props.body, { decodeHTMLEntities: true }),
+    headline: title,
+    image: getImageLinksFromHTML(body)[0],
+    keywords: tags.join(' '),
+    articleBody: stripHTML(body, { decodeHTMLEntities: true }),
     url: postURL,
     mainEntityOfPage: postURL,
-    datePublished: props.publishedAt.toISOString(),
-    dateCreated: props.publishedAt.toISOString(),
-    dateModified: props.publishedAt.toISOString(),
+    datePublished: publishedAt.toISOString(),
+    dateCreated: publishedAt.toISOString(),
+    dateModified: publishedAt.toISOString(),
     author: {
       '@type': 'Person',
       name: 'Bohdan Prokopovych',

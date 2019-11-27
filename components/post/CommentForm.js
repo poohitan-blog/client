@@ -13,14 +13,14 @@ const placeholder = (
   </div>
 );
 
-const CommentForm = props => (
+const CommentForm = ({ title, path }) => (
   <div className="post-comment-form" id="comments">
-    <LazyLoadComponent threshold="200" placeholder={placeholder}>
+    <LazyLoadComponent threshold={200} placeholder={placeholder}>
       <ReactDisqusComments
         shortname={current.disqus.shortname}
-        identifier={props.path}
-        title={props.title}
-        url={`${current.clientURL}/p/${props.path}`}
+        identifier={path}
+        title={title}
+        url={`${current.clientURL}/p/${path}`}
       />
     </LazyLoadComponent>
   </div>

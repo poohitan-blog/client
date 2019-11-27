@@ -26,7 +26,12 @@ class IndexPage extends AuthenticatablePage {
       const { page = 1 } = query;
       const { docs, meta } = await API.posts.find({ page, limit: POSTS_PER_PAGE }, getAllCookies(req));
 
-      return Object.assign(parentProps, { posts: docs, meta, pathname });
+      return {
+        ...parentProps,
+        posts: docs,
+        meta,
+        pathname,
+      };
     } catch (error) {
       return { error };
     }
@@ -44,7 +49,21 @@ class IndexPage extends AuthenticatablePage {
       return <Error statusCode={error.status} />;
     }
 
-    const content = posts.map(post => <Post {...post} cut key={post.id} />);
+    const content = posts.map((post) => (
+      <Post
+        cut
+        key={post.id}
+        title={post.title}
+        body={post.body}
+        path={post.path}
+        private={post.private}
+        language={post.language}
+        translations={post.translations}
+        commentsCount={post.commentsCount}
+        publishedAt={post.publishedAt}
+        tags={post.tags}
+      />
+    ));
     const {
       title,
       description,

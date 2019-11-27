@@ -20,7 +20,7 @@ const TinyPost = ({
     : title;
 
   return (
-    <LazyLoadComponent threshold="300" scrollPosition={scrollPosition}>
+    <LazyLoadComponent threshold={300} scrollPosition={scrollPosition}>
       <Link as={`/p/${path}`} href={`/post?path=${path}`}>
         <a className="tiny-post" title={title} style={{ backgroundImage: `url("${image}?width=${IMAGE_WIDTH}")` }}>
           <div className="tiny-post-content">
@@ -42,10 +42,12 @@ TinyPost.propTypes = {
     PropTypes.instanceOf(Date),
   ]).isRequired,
   image: PropTypes.string,
+  scrollPosition: PropTypes.shape({}),
 };
 
 TinyPost.defaultProps = {
   image: '',
+  scrollPosition: null,
 };
 
 export default TinyPost;

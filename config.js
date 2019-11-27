@@ -18,7 +18,8 @@ const shared = {
 };
 
 const config = {
-  development: Object.assign({}, shared, {
+  development: {
+    ...shared,
     port: 7000,
     clientURL: 'http://localhost:7000',
     apiURL: 'http://localhost:3100',
@@ -31,9 +32,10 @@ const config = {
     google: {},
 
     facebook: {},
-  }),
+  },
 
-  production: Object.assign({}, shared, {
+  production: {
+    ...shared,
     port: 4000,
     clientURL: 'https://poohitan.com',
     apiURL: 'https://api.poohitan.com',
@@ -66,11 +68,9 @@ const config = {
     facebook: {
       pixel: '323819744625621',
     },
-  }),
+  },
 };
 
 const environment = process.env.NODE_ENV;
 
-module.exports = Object.assign({}, config, {
-  current: Object.assign({ environment }, config[environment]),
-});
+module.exports = { ...config, current: { environment, ...config[environment] } };

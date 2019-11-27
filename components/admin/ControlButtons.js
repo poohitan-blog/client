@@ -12,20 +12,20 @@ import RemoveIcon from '../../public/static/icons/remove.svg';
 
 const linkGenerators = {
   page: {
-    href: path => `/admin/edit-page?path=${path}`,
-    as: path => `/${path}/edit`,
+    href: (path) => `/admin/edit-page?path=${path}`,
+    as: (path) => `/${path}/edit`,
   },
   post: {
-    href: path => `/admin/edit-post?path=${path}`,
-    as: path => `/p/${path}/edit`,
+    href: (path) => `/admin/edit-post?path=${path}`,
+    as: (path) => `/p/${path}/edit`,
   },
   postTranslation: {
     href: (post, language) => `/admin/edit-post-translation?post=${post}&language=${language}`,
     as: (post, language) => `/p/${post}/translations/${language}/edit`,
   },
   trashPost: {
-    href: id => `/admin/edit-trash-post?id=${id}`,
-    as: id => `/trash/${id}/edit`,
+    href: (id) => `/admin/edit-trash-post?id=${id}`,
+    as: (id) => `/trash/${id}/edit`,
   },
 };
 
@@ -74,13 +74,13 @@ class ControlButtons extends React.Component {
 
     return (
       <>
-        <h1>Видалити {contentTypes[attachedTo]}?</h1>
+        <h1>{`Видалити ${contentTypes[attachedTo]}?`}</h1>
         <p>Якшо шо, можна буде відновити з бази.</p>
         <div className="layout-row">
-          <button onClick={this.hideRemovePopup} className="flex-50">
+          <button type="button" onClick={this.hideRemovePopup} className="flex-50">
             Не треба
           </button>
-          <button onClick={this.remove} className="flex-50 flex-offset-5">
+          <button type="button" onClick={this.remove} className="flex-50 flex-offset-5">
             Видалити
           </button>
         </div>
@@ -90,6 +90,8 @@ class ControlButtons extends React.Component {
 
   render() {
     const { attachedTo, tokens } = this.props;
+    const { removePopupVisible } = this.state;
+
     const linkGenerator = linkGenerators[attachedTo];
     const href = linkGenerator.href(...tokens);
     const as = linkGenerator.as(...tokens);
@@ -106,7 +108,7 @@ class ControlButtons extends React.Component {
         <div className="admin-control-button" onClick={this.showRemovePopup}>
           <RemoveIcon />
         </div>
-        <Popup visible={this.state.removePopupVisible} onClose={() => this.setState({ removePopupVisible: false })}>
+        <Popup visible={removePopupVisible} onClose={() => this.setState({ removePopupVisible: false })}>
           {popupContent}
         </Popup>
       </span>

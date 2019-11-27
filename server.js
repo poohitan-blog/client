@@ -50,7 +50,7 @@ app.prepare()
     server.get('/upload', (req, res) => app.render(req, res, '/admin/upload-files', req.query));
 
     server.get('/tag/:tag_name', (req, res) => {
-      app.render(req, res, '/tag', Object.assign({}, req.query, { tag: req.params.tag_name }));
+      app.render(req, res, '/tag', { ...req.query, tag: req.params.tag_name });
     });
 
     server.use(trashRouter(app));

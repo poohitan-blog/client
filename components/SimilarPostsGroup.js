@@ -12,7 +12,7 @@ import TinyPost from './TinyPost';
 const NUMBER_OF_POSTS_TO_DISPLAY = 3;
 
 const SimilarPostsGroup = ({ posts, scrollPosition }) => {
-  const postsWithImages = posts.filter(post => post.image);
+  const postsWithImages = posts.filter((post) => post.image);
   const postsToDisplay = postsWithImages.length >= NUMBER_OF_POSTS_TO_DISPLAY
     ? postsWithImages
     : posts;
@@ -21,13 +21,26 @@ const SimilarPostsGroup = ({ posts, scrollPosition }) => {
     <div className="similar-posts-group">
       <div className="similar-posts-group-header">
         <span>Може шось з цього теж буде цікаво:</span>
-        <span>Більше — в <Link href="/archive"><a>Архіві</a></Link></span>
+        <span>
+          <span>Більше — в</span>
+          {' '}
+          <Link href="/archive"><a title="Архів">Архіві</a></Link>
+        </span>
       </div>
       <div className="similar-posts-group-container">
         {
           shuffle(postsToDisplay)
             .slice(0, NUMBER_OF_POSTS_TO_DISPLAY)
-            .map(post => <TinyPost key={post.id} {...post} scrollPosition={scrollPosition} />)
+            .map((post) => (
+              <TinyPost
+                key={post.id}
+                title={post.title}
+                path={post.path}
+                publishedAt={post.publishedAt}
+                image={post.image}
+                scrollPosition={scrollPosition}
+              />
+            ))
         }
       </div>
     </div>

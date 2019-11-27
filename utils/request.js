@@ -21,7 +21,7 @@ export default async function request(params) {
   const response = await fetch(requestUrl, {
     method,
     body: formData ? body : JSON.stringify(body),
-    headers: Object.assign({}, defaultHeaders, headers),
+    headers: { ...defaultHeaders, ...headers },
     credentials: 'include',
   });
 

@@ -22,16 +22,24 @@ const Footer = ({ pagination, router }) => {
 
   if (hasPreviousPage) {
     previousPagelink = (
-      <Link href={{ query: Object.assign({}, query, { page: currentPage - 1 }) }}>
-        <a className="larger">&larr; {previous}</a>
+      <Link href={{ query: { ...query, page: currentPage - 1 } }}>
+        <a className="larger">
+          &larr;
+          {' '}
+          {previous}
+        </a>
       </Link>
     );
   }
 
   if (hasNextPage) {
     nextPageLink = (
-      <Link href={{ query: Object.assign({}, query, { page: currentPage + 1 }) }}>
-        <a className="larger">{next} &rarr;</a>
+      <Link href={{ query: { ...query, page: currentPage + 1 } }}>
+        <a className="larger">
+          {next}
+          {' '}
+          &rarr;
+        </a>
       </Link>
     );
   }
@@ -58,7 +66,9 @@ Footer.propTypes = {
     }),
   }),
 
-  router: PropTypes.shape({}).isRequired,
+  router: PropTypes.shape({
+    query: PropTypes.object,
+  }).isRequired,
 };
 
 Footer.defaultProps = {

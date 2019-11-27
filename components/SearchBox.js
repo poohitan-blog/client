@@ -27,8 +27,10 @@ class SearchBox extends React.Component {
   }
 
   handleKeyPress(event) {
+    const { query } = this.state;
+
     if (event.which === ENTER_KEY_CODE) {
-      Router.push(`/search?query=${encodeURIComponent(this.state.query)}`);
+      Router.push(`/search?query=${encodeURIComponent(query)}`);
     }
   }
 
@@ -45,8 +47,10 @@ class SearchBox extends React.Component {
   }
 
   render() {
+    const { isFocused } = this.state;
+
     return (
-      <div className={`search-box ${this.state.isFocused ? 'search-box-focused' : ''} smaller layout-row layout-align-start-center`}>
+      <div className={`search-box ${isFocused ? 'search-box-focused' : ''} smaller layout-row layout-align-start-center`}>
         <SearchIcon className="search-box-icon" />
         <input
           onFocus={this.focus}

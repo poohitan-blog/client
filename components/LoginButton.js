@@ -43,7 +43,7 @@ export default class LoginButton extends React.Component {
   render() {
     return (
       <Link href="/login" as="/wardrobe">
-        <a title="Не натискати" onClick={event => this.handleClick(event)}>
+        <a title="Не натискати" onClick={(event) => this.handleClick(event)}>
           <div className="login-button" />
         </a>
       </Link>

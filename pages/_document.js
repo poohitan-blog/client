@@ -1,5 +1,7 @@
 import React from 'react';
-import Document, { Html, Head, Main, NextScript } from 'next/document';
+import Document, {
+  Html, Head, Main, NextScript,
+} from 'next/document';
 import Raspberries from '../services/raspberries';
 import { current } from '../config';
 import styles from '../styles/main.scss';

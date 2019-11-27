@@ -18,17 +18,25 @@ const MathHighlighter = dynamic(import('./ui/MathHighlighter'), { ssr: false, lo
 
 const Post = (props, context) => {
   const {
+    title: originalPostTitle,
+    body: originalPostBody,
     path,
     cut,
     language,
     translations,
+    private: hidden,
+    commentsCount,
+    publishedAt,
+    tags,
   } = props;
 
-  const translation = translations.find(item => item.lang === language) || {};
+  const { isAuthenticated } = context;
+
+  const translation = translations.find((item) => item.lang === language) || {};
   const isTranslation = Boolean(translation.lang);
 
-  const title = isTranslation ? translation.title : props.title;
-  const body = isTranslation ? translation.body : props.body;
+  const title = isTranslation ? translation.title : originalPostTitle;
+  const body = isTranslation ? translation.body : originalPostBody;
   const link = isTranslation
     ? { href: `/post?path=${path}&language=${translation.lang}`, as: `/p/${path}/${translation.lang}` }
     : { href: `/post?path=${path}`, as: `/p/${path}` };
@@ -47,32 +55,41 @@ const Post = (props, context) => {
         </Link>
         <div className="post-title-icons">
           {
-            props.private && <div className="post-title-icon"><HiddenIcon /></div>
+            hidden && <div className="post-title-icon"><HiddenIcon /></div>
           }
           {
-            context.isAuthenticated &&
-            <div className="post-admin-control-buttons">
-              <AdminControlButtons
-                attachedTo={isTranslation ? 'postTranslation' : 'post'}
-                tokens={[path, translation.lang]}
-              />
-            </div>
+            isAuthenticated
+            && (
+              <div className="post-admin-control-buttons">
+                <AdminControlButtons
+                  attachedTo={isTranslation ? 'postTranslation' : 'post'}
+                  tokens={[path, translation.lang]}
+                />
+              </div>
+            )
           }
         </div>
         {
           Boolean(translations.length)
-            && <TranslationButtons
-              path={path}
-              language={language}
-              translations={translations}
-            />
+            && (
+              <TranslationButtons
+                path={path}
+                language={language}
+                translations={translations}
+              />
+            )
         }
       </h1>
       <div className="post-body">{bodyMarkup}</div>
       <Lightbox selector={lightboxImageSelector} />
       <SyntaxHighlighter />
       <MathHighlighter />
-      <Footer {...props} />
+      <Footer
+        path={path}
+        commentsCount={commentsCount}
+        publishedAt={publishedAt}
+        tags={tags}
+      />
     </article>
   );
 };
@@ -85,6 +102,12 @@ Post.propTypes = {
   private: PropTypes.bool,
   language: PropTypes.string,
   translations: PropTypes.arrayOf(PropTypes.object),
+  commentsCount: PropTypes.number,
+  publishedAt: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.instanceOf(Date),
+  ]).isRequired,
+  tags: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 Post.defaultProps = {
@@ -92,6 +115,7 @@ Post.defaultProps = {
   private: false,
   language: '',
   translations: [],
+  commentsCount: 0,
 };
 
 Post.contextTypes = {

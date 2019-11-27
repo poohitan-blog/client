@@ -8,11 +8,11 @@ module.exports = (app) => {
   });
 
   router.get('/:page_path', (req, res) => {
-    app.render(req, res, '/page', Object.assign({}, req.query, { path: req.params.page_path }));
+    app.render(req, res, '/page', { ...req.query, path: req.params.page_path });
   });
 
   router.get('/:page_path/edit', (req, res) => {
-    app.render(req, res, '/admin/edit-page', Object.assign({}, req.query, { path: req.params.page_path }));
+    app.render(req, res, '/admin/edit-page', { ...req.query, path: req.params.page_path });
   });
 
   return router;

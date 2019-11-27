@@ -12,6 +12,6 @@ export default {
     return response.length;
   },
   process(images) {
-    images.forEach(image => this.jodit.selection.insertImage(image));
+    images.forEach((image) => this.jodit.selection.insertImage(image));
   },
 };

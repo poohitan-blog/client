@@ -17,11 +17,13 @@ class Trashbin extends React.Component {
   }
 
   getTrashbinIcon() {
-    if (this.state.state === 'fully-open') {
+    const { state } = this.state;
+
+    if (state === 'fully-open') {
       return <TrashbinFullyOpenIcon className="trashbin-icon" />;
     }
 
-    if (this.state.state === 'semi-open') {
+    if (state === 'semi-open') {
       return <TrashbinSemiOpenIcon className="trashbin-icon" />;
     }
 
@@ -29,7 +31,9 @@ class Trashbin extends React.Component {
   }
 
   semiOpen() {
-    if (this.state.state === Trashbin.STATES.FULLY_OPEN) {
+    const { state } = this.state;
+
+    if (state === Trashbin.STATES.FULLY_OPEN) {
       return;
     }
 
@@ -39,7 +43,9 @@ class Trashbin extends React.Component {
   }
 
   close() {
-    if (this.state.state === Trashbin.STATES.FULLY_OPEN) {
+    const { state } = this.state;
+
+    if (state === Trashbin.STATES.FULLY_OPEN) {
       return;
     }
 

@@ -6,24 +6,33 @@ import { formatPostDate } from '../services/grammar';
 import HiddenIcon from '../public/static/icons/hidden.svg';
 
 const CompactPost = (props) => {
-  const bodyWithoutHTML = stripHTML(props.body);
+  const {
+    title,
+    body,
+    path,
+    publishedAt,
+    private: hidden,
+  } = props;
+  const bodyWithoutHTML = stripHTML(body);
   const shortenedBody = shorten(bodyWithoutHTML, 70);
 
   return (
     <article className="post post-compact">
       <div className="layout-gt-xs-row layout-align-space-between-start">
         <h3 className="post-title layout-row layout-align-start-start">
-          <Link as={`/p/${props.path}`} href={`/post?path=${props.path}`}>
-            <a title={props.title}>{props.title}</a>
+          <Link as={`/p/${path}`} href={`/post?path=${path}`}>
+            <a title={title}>{title}</a>
           </Link>
           {
-            props.private &&
-            <div className="post-title-icons">
-              <div className="post-title-icon"><HiddenIcon /></div>
-            </div>
+            hidden
+            && (
+              <div className="post-title-icons">
+                <div className="post-title-icon"><HiddenIcon /></div>
+              </div>
+            )
           }
         </h3>
-        <div className="post-date smaller nowrap">{formatPostDate(props.publishedAt)}</div>
+        <div className="post-date smaller nowrap">{formatPostDate(publishedAt)}</div>
       </div>
       <div className="post-body" dangerouslySetInnerHTML={{ __html: shortenedBody }} />
     </article>

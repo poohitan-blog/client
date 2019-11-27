@@ -3,21 +3,31 @@ import PropTypes from 'prop-types';
 import AdminControlButtons from './admin/ControlButtons';
 import HiddenIcon from '../public/static/icons/hidden.svg';
 
-const Page = (props, context) => (
-  <article className="page">
-    <h1 className="layout-row layout-align-start-start">
-      {props.title}
-      {
-        context.isAuthenticated &&
-        <div className="page-admin-control-buttons"><AdminControlButtons attachedTo="page" tokens={[props.path]} /></div>
-      }
-      {
-        props.private && <div className="page-title-icon"><HiddenIcon /></div>
-      }
-    </h1>
-    <div className="page-body" dangerouslySetInnerHTML={{ __html: props.body }} />
-  </article>
-);
+const Page = (props, context) => {
+  const {
+    title,
+    path,
+    body,
+    private: hidden,
+  } = props;
+  const { isAuthenticated } = context;
+
+  return (
+    <article className="page">
+      <h1 className="layout-row layout-align-start-start">
+        {title}
+        {
+          isAuthenticated
+          && <div className="page-admin-control-buttons"><AdminControlButtons attachedTo="page" tokens={[path]} /></div>
+        }
+        {
+          hidden && <div className="page-title-icon"><HiddenIcon /></div>
+        }
+      </h1>
+      <div className="page-body" dangerouslySetInnerHTML={{ __html: body }} />
+    </article>
+  );
+};
 
 Page.propTypes = {
   title: PropTypes.string,

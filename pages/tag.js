@@ -23,12 +23,13 @@ class TagPage extends AuthenticatablePage {
       const { tag, page = 1 } = query;
       const { docs, meta } = await API.posts.find({ tag, page, limit: POSTS_PER_PAGE }, getAllCookies(req));
 
-      return Object.assign(parentProps, {
+      return {
+        ...parentProps,
         posts: docs,
         meta,
         tag,
         pathname,
-      });
+      };
     } catch (error) {
       return { error };
     }
@@ -51,12 +52,24 @@ class TagPage extends AuthenticatablePage {
         <div className="text-center">
           <p className="fatty larger">Нічого не знайшлося.</p>
           <p>Хмаринка позначок:</p>
-          <TagCloud shake minFontSize="1" maxFontSize="3" width="70%" />
+          <TagCloud shake minFontSize={1} maxFontSize={3} width="70%" />
         </div>
       );
     } else {
       content = posts
-        .map(post => ({ id: post.id, component: <CompactPost {...post} key={post.id} /> }))
+        .map((post) => ({
+          id: post.id,
+          component: (
+            <CompactPost
+              key={post.id}
+              title={post.title}
+              body={post.body}
+              path={post.path}
+              publishedAt={post.publishedAt}
+              private={post.private}
+            />
+          ),
+        }))
         .reduce((previousPosts, { id, component }) => {
           if (!previousPosts.length) {
             return [component];
@@ -69,11 +82,11 @@ class TagPage extends AuthenticatablePage {
     return (
       <Wrapper pathname={pathname}>
         <Head>
-          <title>Записи з позначкою «{tag}» - {current.meta.title}</title>
+          <title>{`Записи з позначкою «${tag}» - ${current.meta.title}`}</title>
         </Head>
         <Header />
         <Content>
-          <h1>Записи з позначкою «{tag}»</h1>
+          <h1>{`Записи з позначкою «${tag}»`}</h1>
           { content }
         </Content>
         <Footer pagination={meta} />

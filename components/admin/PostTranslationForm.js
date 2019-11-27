@@ -11,9 +11,11 @@ class PostTranslationForm extends React.Component {
   constructor(props) {
     super(props);
 
+    const translationDescription = props.translation.description || '';
+
     this.state = {
       ...props.translation,
-      descriptionSymbolsLeft: MAX_DESCRIPTION_LENGTH - props.translation.description.length,
+      descriptionSymbolsLeft: MAX_DESCRIPTION_LENGTH - translationDescription.length,
     };
 
     this.submit = this.submit.bind(this);
@@ -21,13 +23,17 @@ class PostTranslationForm extends React.Component {
   }
 
   async submit() {
-    if (!(this.state.title && this.state.body)) {
+    const { title, body } = this.state;
+
+    if (!(title && body)) {
       // TODO: show error popup
 
       return;
     }
 
-    this.props.onChange(this.state);
+    const { onChange } = this.props;
+
+    onChange(this.state);
   }
 
   handleDescriptionChange(event) {
@@ -43,8 +49,10 @@ class PostTranslationForm extends React.Component {
     const {
       id,
       title,
+      description,
       body,
       lang,
+      private: hidden,
       descriptionSymbolsLeft,
     } = this.state;
     const { post } = this.props;
@@ -52,43 +60,51 @@ class PostTranslationForm extends React.Component {
 
     return (
       <>
-        <h1>{formTitle} <Link href={`/admin/edit-post?path=${post.path}`} as={`/p/${post.path}/edit`}><a>&laquo;{post.title}&raquo;</a></Link></h1>
+        <h1>
+          {formTitle}
+          {' '}
+          <Link href={`/admin/edit-post?path=${post.path}`} as={`/p/${post.path}/edit`}>
+            <a>{`«${post.title}»`}</a>
+          </Link>
+        </h1>
         <div className="form">
           <input
             type="text"
             placeholder="Назва"
             value={title}
-            onChange={event => this.setState({ title: event.target.value })}
+            onChange={(event) => this.setState({ title: event.target.value })}
           />
           <div className="smaller layout-row layout-align-start-center">
             <input
               type="text"
               value={lang}
               placeholder="ISO 639-1 код мови"
-              onChange={event => this.setState({ lang: event.target.value })}
+              onChange={(event) => this.setState({ lang: event.target.value })}
             />
           </div>
-          <Editor html={body} onChange={updatedBody => this.setState({ body: updatedBody })} />
+          <Editor html={body} onChange={(value) => this.setState({ body: value })} />
           <div>
             <div className="layout-row layout-align-space-between-center">
               <p>Короткий опис:</p>
-              <span className="smaller">Залишилось символів: {descriptionSymbolsLeft}</span>
+              <span className="smaller">
+                {`Залишилось символів: ${descriptionSymbolsLeft}`}
+              </span>
             </div>
             <textarea
               rows="3"
-              value={this.state.description}
-              onChange={event => this.handleDescriptionChange(event)}
+              value={description}
+              onChange={(event) => this.handleDescriptionChange(event)}
             />
           </div>
           <div className="layout-row layout-align-space-between-center">
             <div className="flex-70">
               <Checkbox
                 label="Заховати"
-                checked={this.state.private}
-                onChange={hidden => this.setState({ private: hidden })}
+                checked={hidden}
+                onChange={(value) => this.setState({ private: value })}
               />
             </div>
-            <button onClick={this.submit} className="flex-30">Вйо</button>
+            <button type="submit" onClick={this.submit} className="flex-30">Вйо</button>
           </div>
         </div>
       </>
@@ -100,7 +116,10 @@ PostTranslationForm.propTypes = {
   translation: PropTypes.shape({
     description: PropTypes.string,
   }),
-  post: PropTypes.shape({}).isRequired,
+  post: PropTypes.shape({
+    title: PropTypes.string,
+    path: PropTypes.string,
+  }).isRequired,
   onChange: PropTypes.func.isRequired,
 };
 

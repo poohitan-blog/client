@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 
-const Draft = props => (
-  <Link href={`/post?path=${props.path}`} as={`/p/${props.path}`}>
+const Draft = ({ title, path }) => (
+  <Link href={`/post?path=${path}`} as={`/p/${path}`}>
     <a className="layout-row layout-align-start-center">
-      <div className="admin-panel-list-sentence">{props.title}</div>
+      <div className="admin-panel-list-sentence">{title}</div>
     </a>
   </Link>
 );

@@ -5,9 +5,9 @@ import { trackWindowScroll } from 'react-lazy-load-image-component';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import moment from 'moment';
+
 import AdminControlButtons from './admin/ControlButtons';
 import PostCollapser from './trash/PostCollapser';
-
 import { generateLazyPreview, LIGHTBOX_CLASS } from '../services/image-previews';
 
 const Lightbox = dynamic(import('./ui/Lightbox'), { ssr: false, loading: () => null });
@@ -38,7 +38,9 @@ class TrashPost extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.collapsable) {
+    const { collapsable } = this.props;
+
+    if (collapsable) {
       this.checkIfLongEnoughToCollapse();
     }
   }
@@ -76,7 +78,9 @@ class TrashPost extends React.Component {
   }
 
   render() {
+    const { id, createdAt } = this.props;
     const { collapsable, collapsed, body } = this.state;
+    const { isAuthenticated } = this.context;
 
     const classList = ['trash-post'];
 
@@ -88,16 +92,18 @@ class TrashPost extends React.Component {
       classList.push('trash-post-collapsed');
     }
 
-    const formattedDate = moment(this.props.createdAt).format('DD:MM:YYYY, HH:mm');
+    const formattedDate = moment(createdAt).format('DD:MM:YYYY, HH:mm');
     const lightboxImageSelector = `.trash-post-body a.${LIGHTBOX_CLASS}`;
 
     return (
       <div className={classList.join(' ')} ref={this.rootElement}>
         {
-          this.context.isAuthenticated &&
+          isAuthenticated
+          && (
           <div className="trash-post-admin-control-buttons">
-            <AdminControlButtons attachedTo="trashPost" tokens={[this.props.id]} />
+            <AdminControlButtons attachedTo="trashPost" tokens={[id]} />
           </div>
+          )
         }
         <div className="trash-post-body-wrapper">
           <div className="trash-post-body">{ body }</div>
@@ -105,12 +111,12 @@ class TrashPost extends React.Component {
         </div>
         <Lightbox selector={lightboxImageSelector} />
         {
-          this.state.collapsable &&
-          <PostCollapser isPostCollapsed={collapsed} onClick={() => (collapsed ? this.unroll() : this.collapse())} />
+          collapsable
+          && <PostCollapser isPostCollapsed={collapsed} onClick={() => (collapsed ? this.unroll() : this.collapse())} />
         }
         <div className="trash-post-footer smaller layout-row layout-align-space-between-center">
           <span className="nowrap">
-            <Link as={`/trash/${this.props.id}`} href={`/trash?id=${this.props.id}`}><a>постійне посилання</a></Link>
+            <Link as={`/trash/${id}`} href={`/trash?id=${id}`}><a title="Постійне посилання">постійне посилання</a></Link>
           </span>
           <hr className="trash-post-footer-line flex-100" />
           <span className="nowrap">{ formattedDate }</span>

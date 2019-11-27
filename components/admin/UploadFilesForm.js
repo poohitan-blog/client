@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import API from '../../services/api';
 import { getAllCookies } from '../../services/cookies';
 
-import Dropzone from '../../components/Dropzone';
+import Dropzone from '../Dropzone';
 
 class UploadFilesForm extends React.Component {
   constructor(props) {
@@ -21,8 +21,10 @@ class UploadFilesForm extends React.Component {
   async submit() {
     this.setState({ loading: true });
 
-    const newLinks = await API.upload(this.state.queue, getAllCookies());
-    const updatedLinksList = [...this.state.links, ...newLinks];
+    const { queue, links } = this.state;
+
+    const newLinks = await API.upload(queue, getAllCookies());
+    const updatedLinksList = [...links, ...newLinks];
 
     this.setState({
       links: updatedLinksList,
@@ -32,25 +34,28 @@ class UploadFilesForm extends React.Component {
   }
 
   render() {
-    const links = this.state.links.length
-      ? <textarea className="upload-files-form-links-textarea" readOnly value={this.state.links.join('\n')} />
+    const { links, loading, queue } = this.state;
+    const { title } = this.props;
+
+    const linksMarkup = links.length
+      ? <textarea className="upload-files-form-links-textarea" rows="10" readOnly value={links.join('\n')} />
       : null;
 
     return (
       <div>
-        <h1>{this.props.title}</h1>
+        <h1>{title}</h1>
         <div className="form">
           <Dropzone
-            loading={this.state.loading}
-            files={this.state.queue}
-            onDrop={files => this.setState({ queue: files })}
+            loading={loading}
+            files={queue}
+            onDrop={(files) => this.setState({ queue: files })}
             className="upload-files-form-dropzone"
           />
           <div className="layout-row layout-align-end-center">
-            <button onClick={() => this.submit()} className="flex-30">Вйо</button>
+            <button type="submit" onClick={() => this.submit()} className="flex-30">Вйо</button>
           </div>
           {
-            links
+            linksMarkup
           }
         </div>
       </div>

@@ -10,29 +10,38 @@ class Dropzone extends React.Component {
     this.onDrop = this.onDrop.bind(this);
   }
 
-  onDrop(files) {
-    const currentFiles = this.props.files;
-    const newFiles = files.filter(file => !currentFiles.some(currentFile =>
-      file.name === currentFile.name && file.size === currentFile.size && file.type === currentFile.type));
+  onDrop(droppedFiles) {
+    const { files: currentFiles, onDrop } = this.props;
+    const newFiles = droppedFiles
+      .filter((file) => !currentFiles
+        .some((currentFile) => file.name === currentFile.name
+          && file.size === currentFile.size
+          && file.type === currentFile.type));
     const updatedFilesList = [...currentFiles, ...newFiles];
 
-    this.props.onDrop(updatedFilesList);
+    onDrop(updatedFilesList);
   }
 
   render() {
-    const placeholderVisible = !this.props.files.length;
-    const loaderVisible = this.props.loading;
+    const {
+      files,
+      loading,
+      accept,
+      className,
+    } = this.props;
+    const placeholderVisible = !files.length;
+    const loaderVisible = loading;
 
     return (
       <ReactDropzone
         onDrop={this.onDrop}
-        accept={this.props.accept}
-        className={`dropzone ${this.props.className}`}
+        accept={accept}
+        className={`dropzone ${className}`}
         activeClassName="dropzone-active"
         acceptClassName="dropzone-accept"
         rejectClassName="dropzone-reject"
         disablePreview
-        disabled={this.props.loading}
+        disabled={loading}
       >
         <div className="dropzone-content">
           <div className={`dropzone-loader ${loaderVisible && 'visible'}`}>
@@ -41,7 +50,7 @@ class Dropzone extends React.Component {
           <div className={`dropzone-placeholder ${placeholderVisible && 'visible'}`}>
             Кидай сюди шо-небудь
           </div>
-          <div className="dropzone-filelist">{this.props.files.map(file => <div key={file.name}>{file.name}</div>)}</div>
+          <div className="dropzone-filelist">{files.map((file) => <div key={file.name}>{file.name}</div>)}</div>
         </div>
       </ReactDropzone>
     );

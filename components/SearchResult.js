@@ -13,10 +13,10 @@ const searchResultTypes = {
 const BODY_MAX_LENGTH_WORDS = 70;
 
 function highlightQueryInText(text, query) {
-  const regexes = query.split(' ').map(queryWord => new RegExp(`(?:[\\s.,?!@#$%^&*()_+{}|\\[\\]]+?|^)${queryWord}(?:[\\s.,?!@#$%^&*()_+{}|\\[\\]]+?|$)`, 'i'));
+  const regexes = query.split(' ').map((queryWord) => new RegExp(`(?:[\\s.,?!@#$%^&*()_+{}|\\[\\]]+?|^)${queryWord}(?:[\\s.,?!@#$%^&*()_+{}|\\[\\]]+?|$)`, 'i'));
 
   return text.split(' ')
-    .map(word => (regexes.some(regex => regex.test(word)) ? ({ text: word, highlighted: true }) : ({ text: word })))
+    .map((word) => (regexes.some((regex) => regex.test(word)) ? ({ text: word, highlighted: true }) : ({ text: word })))
     .reduce((previousWords, word) => {
       if (!previousWords.length) {
         return [word];
@@ -32,7 +32,7 @@ function highlightQueryInText(text, query) {
 
       return [...wordsBeforeLastWord, { text: [lastWord.text, word.text].join(' '), highlighted: true }];
     }, [])
-    .map(word => (word.highlighted
+    .map((word) => (word.highlighted
       ? `<span class="search-result-highlight">${word.text}</span>`
       : word.text))
     .join(' ');
@@ -74,7 +74,7 @@ function generateDescription(params) {
   let tagsMarkup;
 
   if (searchResultType === 'post') {
-    const highlightedTags = tags.map(tag => highlightQueryInText(tag, query)).join(', ');
+    const highlightedTags = tags.map((tag) => highlightQueryInText(tag, query)).join(', ');
     tagsMarkup = `<span>Позначки: ${highlightedTags}</span>`;
   }
 
@@ -105,13 +105,13 @@ const SearchResult = (props) => {
   const resultTitle = title ? highlightQueryInText(title, query) : '';
   const bodyText = stripHTML(body);
   const queryWords = query.split(' ');
-  const regexes = queryWords.map(queryWord => new RegExp(`(?:[\\s.,?!@#$%^&*()_+{}|\\[\\]]+?|^)${queryWord}(?:[\\s.,?!@#$%^&*()_+{}|\\[\\]]+?|$)`, 'i'));
+  const regexes = queryWords.map((queryWord) => new RegExp(`(?:[\\s.,?!@#$%^&*()_+{}|\\[\\]]+?|^)${queryWord}(?:[\\s.,?!@#$%^&*()_+{}|\\[\\]]+?|$)`, 'i'));
 
   let resultBody;
 
-  if (regexes.some(regex => regex.test(bodyText))) {
+  if (regexes.some((regex) => regex.test(bodyText))) {
     const highlights = getHighlightsOfKeywords({ text: bodyText, keywords: queryWords })
-      .map(highlight => highlightQueryInText(highlight, query))
+      .map((highlight) => highlightQueryInText(highlight, query))
       .join('<span class="search-result-highlight-separator"></span>');
 
     resultBody = shorten(highlights, BODY_MAX_LENGTH_WORDS);
@@ -131,7 +131,7 @@ const SearchResult = (props) => {
   return (
     <div className="search-result">
       <Link href={href} as={as}>
-        <a>
+        <a title={resultTitle}>
           <div className="search-result-inner">
             <h3 dangerouslySetInnerHTML={{ __html: resultTitle }} />
             <p dangerouslySetInnerHTML={{ __html: resultBody }} />

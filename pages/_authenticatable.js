@@ -21,7 +21,9 @@ class AuthenticatablePage extends React.Component {
   }
 
   getChildContext() {
-    return { isAuthenticated: this.props.isAuthenticated, pages: this.props.pages, drafts: this.props.drafts };
+    const { pages, drafts, isAuthenticated } = this.props;
+
+    return { isAuthenticated, pages, drafts };
   }
 }
 
