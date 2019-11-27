@@ -6,7 +6,7 @@ import { trackWindowScroll } from 'react-lazy-load-image-component';
 import { generateLazyPreview } from '../../services/image-previews';
 
 const FullBody = ({ body, scrollPosition }) => (
-  <div>
+  <>
     {
       ReactHtmlParser(body, {
         transform(node, index) { // eslint-disable-line
@@ -20,7 +20,7 @@ const FullBody = ({ body, scrollPosition }) => (
         },
       })
     }
-  </div>
+  </>
 );
 
 FullBody.propTypes = {

@@ -51,7 +51,7 @@ class PostTranslationForm extends React.Component {
     const formTitle = id ? 'Редагувати переклад' : 'Додати переклад';
 
     return (
-      <div>
+      <>
         <h1>{formTitle} <Link href={`/admin/edit-post?path=${post.path}`} as={`/p/${post.path}/edit`}><a>&laquo;{post.title}&raquo;</a></Link></h1>
         <div className="form">
           <input
@@ -91,7 +91,7 @@ class PostTranslationForm extends React.Component {
             <button onClick={this.submit} className="flex-30">Вйо</button>
           </div>
         </div>
-      </div>
+      </>
     );
   }
 }

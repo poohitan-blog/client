@@ -25,7 +25,7 @@ class TrashPostForm extends React.Component {
     const title = this.props.id ? 'Редагувати запис' : 'Додати запис у смітник';
 
     return (
-      <div>
+      <>
         <h1>{title}</h1>
         <div className="form">
           <Editor key={this.props.id} html={this.state.body} onChange={body => this.setState({ body })} />
@@ -33,7 +33,7 @@ class TrashPostForm extends React.Component {
             <button onClick={this.submit} className="flex-30">Вйо</button>
           </div>
         </div>
-      </div>
+      </>
     );
   }
 }

@@ -73,7 +73,7 @@ class ControlButtons extends React.Component {
     };
 
     return (
-      <div>
+      <>
         <h1>Видалити {contentTypes[attachedTo]}?</h1>
         <p>Якшо шо, можна буде відновити з бази.</p>
         <div className="layout-row">
@@ -84,7 +84,7 @@ class ControlButtons extends React.Component {
             Видалити
           </button>
         </div>
-      </div>
+      </>
     );
   }
 

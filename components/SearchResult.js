@@ -79,13 +79,13 @@ function generateDescription(params) {
   }
 
   return (
-    <div>
+    <>
       <div className="layout-row layout-align-space-between-center">
         <b>{type}</b>
         {dateMarkup}
       </div>
       <div className="smaller nowrap" dangerouslySetInnerHTML={{ __html: tagsMarkup }} />
-    </div>
+    </>
   );
 }
 

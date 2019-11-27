@@ -45,7 +45,7 @@ class PageForm extends React.Component {
     const link = this.getPageLinkMarkup();
 
     return (
-      <div>
+      <>
         <h1>{title}</h1>
         <div className="form">
           <input
@@ -76,7 +76,7 @@ class PageForm extends React.Component {
             <button onClick={this.submit} className="flex-30">Вйо</button>
           </div>
         </div>
-      </div>
+      </>
     );
   }
 }
