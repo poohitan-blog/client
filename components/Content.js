@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Content = props => (
+const Content = ({ children }) => (
   <section className="content">
-    {props.children}
+    {children}
   </section>
 );
 

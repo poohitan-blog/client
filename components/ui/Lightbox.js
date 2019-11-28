@@ -10,7 +10,9 @@ import galleryStyles from '../../public/static/libs/lightbox/featherlight.galler
 
 class Lightbox extends React.Component {
   componentDidMount() {
-    $(this.props.selector).featherlightGallery({
+    const { selector } = this.props;
+
+    $(selector).featherlightGallery({
       galleryFadeIn: 100,
       galleryFadeOut: 200,
       type: 'image',

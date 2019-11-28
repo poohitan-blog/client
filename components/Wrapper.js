@@ -14,7 +14,9 @@ Router.onRouteChangeError = () => NProgress.done();
 
 class Wrapper extends React.Component {
   componentDidMount() {
-    if (this.context.isAuthenticated) {
+    const { isAuthenticated } = this.context;
+
+    if (isAuthenticated) {
       return;
     }
 
@@ -28,19 +30,28 @@ class Wrapper extends React.Component {
   }
 
   render() {
-    const pathTokens = this.props.pathname
+    const { isAuthenticated } = this.context;
+    const { pathname, children, className } = this.props;
+
+    const pathTokens = pathname
       .slice(1)
       .split('/')
-      .filter(token => token)
-      .map(token => `${token}-page-wrapper`);
-    const classList = ['page-wrapper', this.props.className, ...pathTokens];
+      .filter((token) => token)
+      .map((token) => `${token}-page-wrapper`);
+    const classList = ['page-wrapper', className, ...pathTokens];
 
     return (
       <div className={classList.join(' ')}>
         <div className="wrapper">
-          {this.props.children}
-          {this.context.isAuthenticated && <AdminPanel />}
-          {!this.context.isAuthenticated && <LoginButton />}
+          {
+            children
+          }
+          {
+            isAuthenticated && <AdminPanel />
+          }
+          {
+            !isAuthenticated && <LoginButton />
+          }
 
           <div className="wrapper-shadow" />
         </div>

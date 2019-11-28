@@ -1,5 +1,7 @@
 import React from 'react';
-import Document, { Html, Head, Main, NextScript } from 'next/document';
+import Document, {
+  Html, Head, Main, NextScript,
+} from 'next/document';
 import Raspberries from '../services/raspberries';
 import { current } from '../config';
 import styles from '../styles/main.scss';
@@ -36,9 +38,10 @@ class MyDocument extends Document {
           <link rel="alternate" type="application/rss+xml" title="poohitan.com" href={`${current.clientURL}/rss`} />
           <link rel="author" href="humans.txt" />
 
-          <link media="all" type="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+          <link rel="preconnect" href="https://www.google-analytics.com" />
+          <link rel="dns-prefetch" href="https://www.google-analytics.com" />
 
-          <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML&locale=uk" />
+          <script defer src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML&locale=uk" />
 
           <style dangerouslySetInnerHTML={{ __html: styles }} />
         </Head>

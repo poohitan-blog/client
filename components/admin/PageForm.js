@@ -18,10 +18,13 @@ class PageForm extends React.Component {
   }
 
   getPageLinkMarkup() {
+    const { id, path: propsPath } = this.props;
+    const { path: statePath } = this.state;
+
     const prefix = `${current.clientURL}`;
-    const path = this.props.path || this.state.path || '';
+    const path = propsPath || statePath || '';
     const fullLink = `${prefix}/${path}`;
-    const isNewPage = !this.props.id;
+    const isNewPage = !id;
 
     if (isNewPage) {
       return <span>{fullLink}</span>;
@@ -31,52 +34,63 @@ class PageForm extends React.Component {
   }
 
   async submit() {
-    if (!this.state.body || (!this.state.title && !this.state.path)) {
+    const { title, body, path } = this.state;
+    const { onChange } = this.props;
+
+    if (!body || (!title && !path)) {
       // TODO: show error popup
 
       return;
     }
 
-    this.props.onChange(this.state);
+    onChange(this.state);
   }
 
   render() {
-    const title = this.props.path ? 'Редагувати сторінку' : 'Додати сторінку';
+    const { id } = this.props;
+    const {
+      title,
+      path,
+      body,
+      private: hidden,
+    } = this.state;
+
+    const pageTitle = id ? 'Редагувати сторінку' : 'Додати сторінку';
     const link = this.getPageLinkMarkup();
 
     return (
-      <div>
-        <h1>{title}</h1>
+      <>
+        <h1>{pageTitle}</h1>
         <div className="form">
           <input
             type="text"
             placeholder="Назва"
-            value={this.state.title}
-            onChange={event => this.setState({ title: event.target.value })}
+            value={title}
+            onChange={(event) => this.setState({ title: event.target.value })}
           />
           <div className="smaller layout-row layout-align-start-center flex-100">
             <input
               type="text"
-              value={this.state.path}
+              value={path}
               placeholder="Адреса"
-              onChange={event => this.setState({ path: event.target.value })}
+              onChange={(event) => this.setState({ path: event.target.value })}
               className="flex-50"
             />
             <div className="nowrap text-overflow-ellipsis margin-left flex-50">
               {link}
             </div>
           </div>
-          <Editor key={this.props.path} html={this.state.body} onChange={body => this.setState({ body })} />
+          <Editor key={id} html={body} onChange={(value) => this.setState({ body: value })} />
           <div className="layout-row layout-align-space-between-center">
             <Checkbox
               label="Заховати"
-              checked={this.state.private}
-              onChange={hidden => this.setState({ private: hidden })}
+              checked={hidden}
+              onChange={(value) => this.setState({ private: value })}
             />
-            <button onClick={this.submit} className="flex-30">Вйо</button>
+            <button type="submit" onClick={this.submit} className="flex-30">Вйо</button>
           </div>
         </div>
-      </div>
+      </>
     );
   }
 }

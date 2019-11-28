@@ -43,6 +43,7 @@ body {
   font-family: $main-font-family;
   font-size: $main-font-size;
   line-height: 1.35em;
+  hyphens: auto;
   color: $black;
   margin: 0;
   padding: 0;
@@ -50,6 +51,7 @@ body {
 
   @media (max-width: 640px) {
     font-size: 14px;
+    line-height: 1.45em;
   }
 
   &.raspberries {
@@ -114,11 +116,10 @@ h1, h2 {
 
 p {
   margin: 0.5em 0;
-  hyphens: auto;
+}
 
-  @media (max-width: 640px) {
-    line-height: 1.35em;
-  }
+li {
+  margin: 0.2em 0;
 }
 
 hr {

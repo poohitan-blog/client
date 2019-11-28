@@ -16,11 +16,11 @@ module.exports = (app) => {
   });
 
   router.get('/trash/:trash_post_id', (req, res) => {
-    app.render(req, res, '/trash', Object.assign({}, req.query, { id: req.params.trash_post_id }));
+    app.render(req, res, '/trash', { ...req.query, id: req.params.trash_post_id });
   });
 
   router.get('/trash/:trash_post_id/edit', (req, res) => {
-    app.render(req, res, '/admin/edit-trash-post', Object.assign({}, req.query, { id: req.params.trash_post_id }));
+    app.render(req, res, '/admin/edit-trash-post', { ...req.query, id: req.params.trash_post_id });
   });
 
   return router;

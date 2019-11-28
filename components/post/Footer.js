@@ -50,7 +50,13 @@ class Footer extends React.Component {
         </div>
         <div className="post-footer-item post-footer-tags nowrap">
           {
-            tags.length ? <span>Позначки: {tagsMarkup}</span> : null
+            tags.length ? (
+              <>
+                Позначки:
+                {' '}
+                {tagsMarkup}
+              </>
+            ) : null
           }
         </div>
       </div>

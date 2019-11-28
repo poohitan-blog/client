@@ -24,7 +24,7 @@ class EditPost extends ProtectedPage {
 
       const post = await API.posts.findOne(query.path, getAllCookies(req));
 
-      return Object.assign(parentProps, { post });
+      return { ...parentProps, post };
     } catch (error) {
       return { error };
     }
@@ -45,11 +45,13 @@ class EditPost extends ProtectedPage {
   }
 
   render() {
-    if (this.props.error) {
-      return <Error statusCode={this.props.error.status} />;
+    const { post, error } = this.props;
+
+    if (error) {
+      return <Error statusCode={error.status} />;
     }
 
-    const title = this.props.post.path ? 'Редагувати запис' : 'Додати запис';
+    const title = post.id ? 'Редагувати запис' : 'Додати запис';
 
     return (
       <Wrapper>
@@ -58,7 +60,20 @@ class EditPost extends ProtectedPage {
         </Head>
         <Header />
         <Content>
-          <PostForm {...this.props.post} key={this.props.post.path} onChange={post => this.submit(post)} />
+          <PostForm
+            key={post.path}
+            id={post.id}
+            title={post.title}
+            path={post.path}
+            description={post.description}
+            body={post.body}
+            tags={post.tags}
+            customStyles={post.customStyles}
+            private={post.private}
+            publishedAt={post.publishedAt}
+            translations={post.translations}
+            onChange={(value) => this.submit(value)}
+          />
         </Content>
       </Wrapper>
     );

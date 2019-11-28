@@ -31,10 +31,10 @@ export function shorten(text, wordsCount) {
 export function getHighlightsOfKeywords({ text, keywords, margin = 7 }) {
   const words = text.split(' ');
   const occurencesOfKeyword = [];
-  const regexes = keywords.map(keyword => new RegExp(keyword, 'i'));
+  const regexes = keywords.map((keyword) => new RegExp(keyword, 'i'));
 
   words.forEach((word, position) => {
-    if (regexes.some(regex => regex.test(word))) {
+    if (regexes.some((regex) => regex.test(word))) {
       occurencesOfKeyword.push({ position, word });
     }
   });
@@ -117,8 +117,7 @@ export function wrapImagesInLinks(html, { imagesClass = '' } = {}) {
     match = regex.exec(html);
   }
 
-  return matches.reduce((resultHtml, [imageTag, imageLink]) =>
-    resultHtml.replace(imageTag, `<a href="${imageLink}" class="${imagesClass}">${imageTag}</a>`), html);
+  return matches.reduce((resultHtml, [imageTag, imageLink]) => resultHtml.replace(imageTag, `<a href="${imageLink}" class="${imagesClass}">${imageTag}</a>`), html);
 }
 
 export default {

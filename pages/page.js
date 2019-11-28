@@ -20,7 +20,7 @@ class PagePage extends AuthenticatablePage {
       const parentProps = await super.getInitialProps({ req });
       const page = await API.pages.findOne(query.path, getAllCookies(req));
 
-      return Object.assign(parentProps, { page, pathname });
+      return { ...parentProps, page, pathname };
     } catch (error) {
       return { error };
     }
@@ -36,13 +36,19 @@ class PagePage extends AuthenticatablePage {
     return (
       <Wrapper pathname={pathname}>
         <Head>
-          <title>{page.title} - {current.meta.title}</title>
+          <title>{`${page.title} - ${current.meta.title}`}</title>
           <meta name="description" content={shorten(stripHTML(page.body, { decodeHTMLEntities: true }), 20)} key="description" />
           { page.customStyles && <style dangerouslySetInnerHTML={{ __html: page.customStyles }} /> }
         </Head>
         <Header />
         <Content>
-          <Page {...page} key={page.path} />
+          <Page
+            key={page.path}
+            path={page.path}
+            title={page.title}
+            body={page.body}
+            private={page.private}
+          />
         </Content>
         <Footer />
       </Wrapper>

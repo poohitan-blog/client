@@ -29,9 +29,9 @@ const TranslationButtons = ({ translations, language, path }, context) => (
     }
     {
       translations
-        .filter(item => (context.isAuthenticated ? true : !item.private))
-        .filter(item => item.lang !== language)
-        .map(item => (
+        .filter((item) => (context.isAuthenticated ? true : !item.private))
+        .filter((item) => item.lang !== language)
+        .map((item) => (
           <Button
             key={item.lang}
             title={item.title}

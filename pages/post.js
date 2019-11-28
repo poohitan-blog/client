@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
 import dynamic from 'next/dynamic';
+
 import Error from './_error';
 import { current } from '../config';
 import API from '../services/api';
@@ -31,19 +32,20 @@ class PostPage extends AuthenticatablePage {
       const post = await API.posts.findOne(query.path, getAllCookies(req));
       const similarPosts = await API.posts.findSimilar(query.path);
 
-      const availableLanguages = post.translations.map(item => item.lang);
+      const availableLanguages = post.translations.map((item) => item.lang);
       const requestedLanguage = query.language;
 
       if (requestedLanguage && !availableLanguages.includes(requestedLanguage)) {
         return res.redirect(`/p/${post.path}`);
       }
 
-      return Object.assign(parentProps, {
+      return {
+        ...parentProps,
         post,
         similarPosts,
         pathname,
         language: requestedLanguage,
-      });
+      };
     } catch (error) {
       return { error };
     }
@@ -51,14 +53,18 @@ class PostPage extends AuthenticatablePage {
 
   render() {
     const {
-      post, similarPosts, pathname, language, error,
+      post,
+      similarPosts,
+      pathname,
+      language,
+      error,
     } = this.props;
 
     if (error) {
       return <Error statusCode={error.status} />;
     }
 
-    const translation = (language && post.translations.find(item => item.lang === language)) || {};
+    const translation = (language && post.translations.find((item) => item.lang === language)) || {};
     const title = `${translation.title || post.title} - ${current.meta.title}`;
     const body = translation.body || post.body;
     const [image] = getImageLinksFromHTML(body);
@@ -76,7 +82,13 @@ class PostPage extends AuthenticatablePage {
           <meta name="description" content={description} key="description" />
           <meta name="keywords" content={post.tags.join(', ')} key="keywords" />
 
-          <BlogPosting {...post} />
+          <BlogPosting
+            title={post.title}
+            path={post.path}
+            body={post.body}
+            tags={post.tags}
+            publishedAt={post.publishedAt}
+          />
 
           <meta name="twitter:card" content="summary" />
           <meta name="twitter:title" content={title} />
@@ -96,11 +108,22 @@ class PostPage extends AuthenticatablePage {
         <Header />
         { post.customStyles && <style dangerouslySetInnerHTML={{ __html: post.customStyles }} /> }
         <Content>
-          <Post {...post} key={post.path} language={language} />
+          <Post
+            title={post.title}
+            body={post.body}
+            path={post.path}
+            private={post.private}
+            translations={post.translations}
+            commentsCount={post.commentsCount}
+            publishedAt={post.publishedAt}
+            tags={post.tags}
+            key={post.path}
+            language={language}
+          />
           {
             similarPosts.length ? <SimilarPostsGroup posts={similarPosts} /> : null
           }
-          <CommentForm {...post} />
+          <CommentForm title={post.title} path={post.path} />
         </Content>
         <Footer />
       </Wrapper>

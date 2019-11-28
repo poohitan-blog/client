@@ -2,4 +2,17 @@
 
 .post-comment-form {
   margin-top: 1em;
+
+  .post-comment-form-loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 4em 0 3em 0;
+    width: 100%;
+
+    svg {
+      fill: $orange;
+      width: 3em;
+    }
+  }
 }

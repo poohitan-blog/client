@@ -90,7 +90,9 @@ class Editor extends React.Component {
       width: '100%',
     });
 
-    $editor.froalaEditor('html.set', this.props.html);
+    const { html } = this.props;
+
+    $editor.froalaEditor('html.set', html);
 
     $editor.on('keyup', () => this.sendContent($editor));
     $editor.on('froalaEditor.contentChanged', () => this.sendContent($editor));
@@ -111,12 +113,15 @@ class Editor extends React.Component {
       content = $editor.froalaEditor('html.get');
     }
 
-    this.props.onChange(content);
+    const { onChange } = this.props;
+
+    onChange(content);
   }
 
   render() {
     return (
       <div className="editor-wrapper">
+        <link media="all" type="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
         <style>{ editorStyles + styles + theme }</style>
         <div className="editor" />
       </div>

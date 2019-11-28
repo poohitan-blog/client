@@ -78,12 +78,13 @@ class TagCloud extends React.Component {
   }
 
   componentDidUpdate() {
+    const { shake: shouldShake } = this.props;
     const $tags = $('.tag-cloud .tag');
 
     $tags.on('mouseover', (event) => {
       const $tag = $(event.target);
 
-      if (this.props.shake) {
+      if (shouldShake) {
         shake($tag);
       }
     });
@@ -92,8 +93,8 @@ class TagCloud extends React.Component {
   async setTags() {
     const tagCloud = await API.tags.getCloud();
     const tagsArray = Object.keys(tagCloud)
-      .map(tagName => ({ name: tagName, weight: tagCloud[tagName] }));
-    const tagWeights = tagsArray.map(tag => tag.weight);
+      .map((tagName) => ({ name: tagName, weight: tagCloud[tagName] }));
+    const tagWeights = tagsArray.map((tag) => tag.weight);
     const maxWeight = Math.max(...tagWeights);
     const minWeight = Math.min(...tagWeights);
 
@@ -110,15 +111,15 @@ class TagCloud extends React.Component {
   }
 
   normalizeTagWeight(tagWeight, { maxWeight, minWeight }) {
+    const { minFontSize, maxFontSize } = this.props;
     const relativeWeight = (tagWeight - minWeight) / (maxWeight - minWeight);
-    const minFontSize = Number(this.props.minFontSize);
-    const maxFontSize = Number(this.props.maxFontSize);
 
     return ((maxFontSize - minFontSize) * relativeWeight) + minFontSize;
   }
 
   render() {
     const { tags } = this.state;
+    const { width } = this.props;
     const markup = tags.map(({ name, weight, normalizedWeight }) => (
       <Link href={`/tag?tag=${name}`} as={`/tag/${name}`} key={name}>
         <a href={`/tag/${name}`} style={{ fontSize: `${normalizedWeight}em` }} data-weight={normalizedWeight} title={`${describePostsCount(weight)}`} className="tag">
@@ -129,7 +130,7 @@ class TagCloud extends React.Component {
 
     return (
       <div className="tag-cloud-wrapper">
-        <div className="tag-cloud" style={{ width: this.props.width }}>
+        <div className="tag-cloud" style={{ width }}>
           {markup}
         </div>
       </div>

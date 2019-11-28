@@ -10,7 +10,9 @@ class Popup extends React.Component {
   }
 
   close() {
-    this.props.onClose();
+    const { onClose } = this.props;
+
+    onClose();
   }
 
   render() {
@@ -20,7 +22,9 @@ class Popup extends React.Component {
     return (
       <div className={`popup-wrapper ${visibilityClassName}`}>
         <div className="popup">
-          <button className="popup-close-button" onClick={this.close}><CloseIcon /></button>
+          <button type="button" className="popup-close-button" onClick={this.close}>
+            <CloseIcon />
+          </button>
           {children}
         </div>
         <div className="popup-shadow" onClick={this.close} />

@@ -28,12 +28,13 @@ class SearchPage extends AuthenticatablePage {
         limit: POSTS_PER_PAGE,
       }, getAllCookies(req));
 
-      return Object.assign(parentProps, {
+      return {
+        ...parentProps,
         searchResults: docs,
         pathname,
         meta,
         searchQuery,
-      });
+      };
     } catch (error) {
       return { error };
     }
@@ -60,12 +61,25 @@ class SearchPage extends AuthenticatablePage {
         <div className="text-center">
           <p className="fatty larger">Нічого не знайшлося.</p>
           <p>Хмаринка позначок:</p>
-          <TagCloud shake minFontSize="1" maxFontSize="3" width="70%" />
+          <TagCloud shake minFontSize={1} maxFontSize={3} width="70%" />
         </div>
       );
     } else {
       content = searchResults
-        .map(searchResult => <SearchResult {...searchResult} key={searchResult.id} query={searchQuery} />);
+        .map((searchResult) => (
+          <SearchResult
+            id={searchResult.id}
+            key={searchResult.id}
+            query={searchQuery}
+            title={searchResult.title}
+            body={searchResult.body}
+            path={searchResult.path}
+            searchResultType={searchResult.searchResultType}
+            tags={searchResult.tags}
+            publishedAt={searchResult.publishedAt}
+            createdAt={searchResult.createdAt}
+          />
+        ));
     }
 
     const paginationInfo = { ...meta, linkTexts: { next: 'Далі', previous: 'Назад' } };
@@ -73,14 +87,14 @@ class SearchPage extends AuthenticatablePage {
     return (
       <Wrapper pathname={pathname}>
         <Head>
-          <title>Пошук за запитом «{searchQuery}» - {current.meta.title}</title>
+          <title>{`Пошук за запитом «${searchQuery}» - ${current.meta.title}`}</title>
         </Head>
         <Header />
         <Content>
-          <h1>Пошук за запитом «{searchQuery}»</h1>
-          <div>
+          <h1>{`Пошук за запитом «${searchQuery}»`}</h1>
+          <>
             { content }
-          </div>
+          </>
         </Content>
         <Footer pagination={paginationInfo} />
       </Wrapper>

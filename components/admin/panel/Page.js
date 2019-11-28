@@ -3,14 +3,20 @@ import PropTypes from 'prop-types';
 import Link from 'next/link';
 import HiddenIcon from '../../../public/static/icons/hidden.svg';
 
-const Page = props => (
-  <Link href={`/page?path=${props.path}`} as={`/${props.path}`}>
-    <a className="layout-row layout-align-start-center">
-      <div className="admin-panel-list-sentence">{props.title || props.path}</div>
-      {props.private && <div className="admin-panel-list-icon"><HiddenIcon /></div>}
-    </a>
-  </Link>
-);
+const Page = (props) => {
+  const { title, path, private: hidden } = props;
+
+  return (
+    <Link href={`/page?path=${path}`} as={`/${path}`}>
+      <a className="layout-row layout-align-start-center">
+        <div className="admin-panel-list-sentence">{title || path}</div>
+        {
+          hidden && <div className="admin-panel-list-icon"><HiddenIcon /></div>
+        }
+      </a>
+    </Link>
+  );
+};
 
 Page.propTypes = {
   path: PropTypes.string.isRequired,

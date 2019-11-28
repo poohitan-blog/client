@@ -10,21 +10,25 @@ import '../../public/static/libs/social/jssocials.min';
 
 class SocialButtons extends React.Component {
   componentDidMount() {
-    $(`.post-footer-social[data-path="${this.props.path}"]`).jsSocials({
+    const { title, path } = this.props;
+
+    $(`.post-footer-social[data-path="${path}"]`).jsSocials({
       shares: ['twitter', 'facebook'],
       showLabel: false,
       showCount: false,
-      url: `${current.clientURL}/p/${this.props.path}`,
-      text: `${this.props.title} - ${current.meta.title}`,
+      url: `${current.clientURL}/p/${path}`,
+      text: `${title} - ${current.meta.title}`,
       shareIn: 'popup',
     });
   }
 
   render() {
+    const { path } = this.props;
+
     return (
       <div className="post-footer-social-wrapper nowrap">
         <style>{styles + themeStyles}</style>
-        <div className="post-footer-item post-footer-social" data-path={this.props.path} />
+        <div className="post-footer-item post-footer-social" data-path={path} />
       </div>
     );
   }

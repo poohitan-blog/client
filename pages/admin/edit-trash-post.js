@@ -24,7 +24,7 @@ class EditTrashPost extends ProtectedPage {
 
       const trashPost = await API.trashPosts.findOne(query.id, getAllCookies(req));
 
-      return Object.assign(parentProps, { trashPost });
+      return { ...parentProps, trashPost };
     } catch (error) {
       return { error };
     }
@@ -46,11 +46,13 @@ class EditTrashPost extends ProtectedPage {
   }
 
   render() {
+    const { trashPost, error } = this.props;
+
     if (this.props.error) {
-      return <Error statusCode={this.props.error.status} />;
+      return <Error statusCode={error.status} />;
     }
 
-    const title = this.props.trashPost.id ? 'Редагувати запис' : 'Додати запис у смітник';
+    const title = trashPost.id ? 'Редагувати запис' : 'Додати запис у смітник';
 
     return (
       <Wrapper>
@@ -60,9 +62,10 @@ class EditTrashPost extends ProtectedPage {
         <Header />
         <Content>
           <TrashPostForm
-            {...this.props.trashPost}
-            key={this.props.trashPost.id}
-            onChange={trashPost => this.submit(trashPost)}
+            id={trashPost.id}
+            body={trashPost.body}
+            key={trashPost.id}
+            onChange={(value) => this.submit(value)}
           />
         </Content>
       </Wrapper>

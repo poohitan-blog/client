@@ -12,9 +12,9 @@ class Panel extends React.Component {
   }
 
   render() {
-    const pages = this.context && this.context.pages ? this.context.pages : [];
-    const publicPages = pages.filter(page => !page.private);
-    const privatePages = pages.filter(page => page.private);
+    const { pages = [] } = this.context;
+    const publicPages = pages.filter((page) => !page.private);
+    const privatePages = pages.filter((page) => page.private);
     const allPages = publicPages.concat(...privatePages);
 
     const pagesBlock = !pages.length ? null : (
@@ -22,9 +22,9 @@ class Panel extends React.Component {
         <h3>Сторінки</h3>
         <ul>
           {
-            allPages.map(page => (
+            allPages.map((page) => (
               <li key={page.id}>
-                <Page {...page} />
+                <Page path={page.path} title={page.title} private={page.private} />
               </li>
             ))
           }
@@ -32,15 +32,15 @@ class Panel extends React.Component {
       </div>
     );
 
-    const drafts = this.context && this.context.drafts ? this.context.drafts : [];
+    const { drafts = [] } = this.context;
     const draftsBlock = !drafts.length ? null : (
       <div className="admin-panel-block admin-panel-block-drafts">
         <h3>Чернетки</h3>
         <ul>
           {
-            drafts.map(draft => (
+            drafts.map((draft) => (
               <li key={draft.id}>
-                <Draft {...draft} />
+                <Draft path={draft.path} title={draft.title} />
               </li>
             ))
           }

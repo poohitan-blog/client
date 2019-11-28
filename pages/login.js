@@ -64,21 +64,26 @@ class LoginPage extends React.Component {
   }
 
   async authenticate() {
-    return Session.authenticate({ login: 'poohitan', password: this.state.password })
+    const { password, failedLoginAttempts } = this.state;
+
+    return Session.authenticate({ login: 'poohitan', password })
       .then(() => Router.push('/'))
       .catch((error) => {
         if (error.status === 403) {
           this.setState({
-            error: LOGIN_ATTEMPTS_MESSAGES[this.state.failedLoginAttempts],
-            failedLoginAttempts: this.state.failedLoginAttempts + 1,
+            error: LOGIN_ATTEMPTS_MESSAGES[failedLoginAttempts],
+            failedLoginAttempts: failedLoginAttempts + 1,
           });
         }
       });
   }
 
   render() {
+    const { pathname } = this.props;
+    const { error } = this.state;
+
     return (
-      <Wrapper pathname={this.props.pathname}>
+      <Wrapper pathname={pathname}>
         <Head>
           <title>Вхід у Нарнію</title>
         </Head>
@@ -87,8 +92,8 @@ class LoginPage extends React.Component {
           <div className="margin-top margin-bottom layout-column layout-align-center-center">
             <input type="password" onChange={this.setPassword} onKeyPress={this.handleKeyPress} />
             {
-              this.state.error
-                ? <p className="flex-100 text-center error">{this.state.error}</p>
+              error
+                ? <p className="flex-100 text-center error">{error}</p>
                 : null
             }
           </div>

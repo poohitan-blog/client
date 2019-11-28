@@ -40,10 +40,12 @@ class PostForm extends React.Component {
   }
 
   getPostLinkMarkup() {
+    const { id, path: propsPath } = this.props;
+    const { path: statePath } = this.state;
     const prefix = `${current.clientURL}/p`;
-    const path = this.props.path || this.state.path || '';
+    const path = propsPath || statePath || '';
     const fullLink = `${prefix}/${path}`;
-    const isNewPost = !this.props.id;
+    const isNewPost = !id;
 
     if (isNewPost) {
       return <span>{fullLink}</span>;
@@ -53,17 +55,32 @@ class PostForm extends React.Component {
   }
 
   async submit() {
-    if (!(this.state.title && this.state.body)) {
+    const {
+      title,
+      body,
+      tagsString,
+      dateString,
+      translations,
+    } = this.state;
+
+    if (!(title && body)) {
       // TODO: show error popup
 
       return;
     }
 
-    const tags = this.state.tagsString.split(',').map(tag => tag.trim());
-    const publishedAt = this.state.dateString ? moment(this.state.dateString, DATE_FORMAT).toDate() : new Date();
-    const translations = this.state.translations.map(translation => translation.id || translation);
+    const tags = tagsString.split(',').map((tag) => tag.trim());
+    const publishedAt = dateString ? moment(dateString, DATE_FORMAT).toDate() : new Date();
+    const preparedTranslations = translations.map((translation) => translation.id || translation);
 
-    this.props.onChange(Object.assign({}, this.state, { tags, publishedAt, translations }));
+    const { onChange } = this.props;
+
+    onChange({
+      ...this.state,
+      tags,
+      publishedAt,
+      translations: preparedTranslations,
+    });
   }
 
   handleTagsChange(event) {
@@ -90,6 +107,7 @@ class PostForm extends React.Component {
   render() {
     const {
       title,
+      description,
       path,
       body,
       tagsString,
@@ -97,8 +115,10 @@ class PostForm extends React.Component {
       translations,
       customStyles,
       descriptionSymbolsLeft,
+      private: hidden,
     } = this.state;
-    const formTitle = this.props.path ? 'Редагувати запис' : 'Додати запис';
+    const { id } = this.props;
+    const formTitle = id ? 'Редагувати запис' : 'Додати запис';
     const link = this.getPostLinkMarkup();
 
     return (
@@ -110,21 +130,21 @@ class PostForm extends React.Component {
             type="text"
             placeholder="Назва"
             value={title}
-            onChange={event => this.setState({ title: event.target.value })}
+            onChange={(event) => this.setState({ title: event.target.value })}
           />
           <div className="post-form-path smaller layout-row layout-align-start-center">
             <input
               type="text"
               value={path}
               placeholder="Адреса"
-              onChange={event => this.setState({ path: event.target.value })}
+              onChange={(event) => this.setState({ path: event.target.value })}
               className="flex-50"
             />
             <div className="nowrap text-overflow-ellipsis margin-left flex-50">
               {link}
             </div>
           </div>
-          <Editor html={body} onChange={updatedBody => this.setState({ body: updatedBody })} />
+          <Editor html={body} onChange={(value) => this.setState({ body: value })} />
           <div>
             <p>Стилі сторінки:</p>
             <CodeMirror
@@ -142,12 +162,12 @@ class PostForm extends React.Component {
           <div>
             <div className="layout-row layout-align-space-between-center">
               <p>Короткий опис:</p>
-              <span className="smaller">Залишилось символів: {descriptionSymbolsLeft}</span>
+              <span className="smaller">{`Залишилось символів: ${descriptionSymbolsLeft}`}</span>
             </div>
             <textarea
               rows="3"
-              value={this.state.description}
-              onChange={event => this.handleDescriptionChange(event)}
+              value={description}
+              onChange={(event) => this.handleDescriptionChange(event)}
             />
           </div>
           <div>
@@ -163,16 +183,17 @@ class PostForm extends React.Component {
             {
               translations && translations.length
                 ? translations
-                    .map(translation => (
-                      <Link
-                        as={`/p/${path}/translations/${translation.lang}/edit`}
-                        href={`/admin/edit-post-translation?language=${translation.lang}&post=${path}`}
-                      >
-                        <a className="post-translation-link">
-                          {translation.lang}{translation.private ? <sup>(прих.)</sup> : null}
-                        </a>
-                      </Link>
-                    ))
+                  .map((translation) => (
+                    <Link
+                      as={`/p/${path}/translations/${translation.lang}/edit`}
+                      href={`/admin/edit-post-translation?language=${translation.lang}&post=${path}`}
+                    >
+                      <a className="post-translation-link">
+                        {translation.lang}
+                        {translation.private ? <sup>(прих.)</sup> : null}
+                      </a>
+                    </Link>
+                  ))
                 : null
             }
             <Link as={`/p/${path}/translations/new`} href={`/admin/edit-post-translation?post=${path}`}>
@@ -192,12 +213,12 @@ class PostForm extends React.Component {
               <div className="flex-offset-5">
                 <Checkbox
                   label="Заховати"
-                  checked={this.state.private}
-                  onChange={hidden => this.setState({ private: hidden })}
+                  checked={hidden}
+                  onChange={(value) => this.setState({ private: value })}
                 />
               </div>
             </div>
-            <button onClick={this.submit} className="flex-30">Вйо</button>
+            <button type="submit" onClick={this.submit} className="flex-30">Вйо</button>
           </div>
         </div>
       </div>

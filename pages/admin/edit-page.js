@@ -26,7 +26,7 @@ class EditPage extends ProtectedPage {
 
       const page = await API.pages.findOne(query.path, getAllCookies(req));
 
-      return Object.assign(parentProps, { page });
+      return { ...parentProps, page };
     } catch (error) {
       return { error };
     }
@@ -63,11 +63,13 @@ class EditPage extends ProtectedPage {
   }
 
   render() {
-    if (this.props.error) {
-      return <Error statusCode={this.props.error.status} />;
+    const { page, error } = this.props;
+
+    if (error) {
+      return <Error statusCode={error.status} />;
     }
 
-    const title = this.props.page.path ? 'Редагувати сторінку' : 'Додати сторінку';
+    const title = page.id ? 'Редагувати сторінку' : 'Додати сторінку';
 
     return (
       <Wrapper>
@@ -76,7 +78,15 @@ class EditPage extends ProtectedPage {
         </Head>
         <Header />
         <Content>
-          <PageForm {...this.props.page} key={this.props.page.path} onChange={page => this.submit(page)} />
+          <PageForm
+            id={page.id}
+            title={page.title}
+            body={page.body}
+            path={page.path}
+            private={page.private}
+            key={page.path}
+            onChange={(value) => this.submit(value)}
+          />
         </Content>
       </Wrapper>
     );

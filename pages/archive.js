@@ -23,7 +23,12 @@ class ArchivePage extends AuthenticatablePage {
       const { page = 1 } = query;
       const { docs, meta } = await API.posts.find({ page, limit: POSTS_PER_PAGE }, getAllCookies(req));
 
-      return Object.assign(parentProps, { posts: docs, meta, pathname });
+      return {
+        ...parentProps,
+        posts: docs,
+        meta,
+        pathname,
+      };
     } catch (error) {
       return { error };
     }
@@ -39,7 +44,19 @@ class ArchivePage extends AuthenticatablePage {
     }
 
     const content = posts
-      .map(post => ({ id: post.id, component: <CompactPost {...post} key={post.id} /> }))
+      .map((post) => ({
+        id: post.id,
+        component: (
+          <CompactPost
+            key={post.id}
+            title={post.title}
+            body={post.body}
+            path={post.path}
+            publishedAt={post.publishedAt}
+            private={post.private}
+          />
+        ),
+      }))
       .reduce((previousPosts, { id, component }) => {
         if (!previousPosts.length) {
           return [component];
@@ -51,7 +68,7 @@ class ArchivePage extends AuthenticatablePage {
     return (
       <Wrapper pathname={pathname}>
         <Head>
-          <title>Архів - {current.meta.title}</title>
+          <title>{`Архів - ${current.meta.title}`}</title>
         </Head>
         <Header />
         <Content>

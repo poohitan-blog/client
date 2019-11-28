@@ -1,5 +1,5 @@
 import moment from 'moment';
-import Cookies from '../services/cookies';
+import Cookies from './cookies';
 import random from '../helpers/random';
 
 const COOKIE_NAME = 'raspberriesDay';

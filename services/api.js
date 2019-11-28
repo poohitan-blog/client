@@ -89,14 +89,14 @@ async function search(query, cookies) {
 }
 
 async function upload(files, cookies) {
-  const images = files.filter(file => INLINE_IMAGE_TYPES.includes(file.type));
-  const restFiles = files.filter(file => !images.includes(file));
+  const images = files.filter((file) => INLINE_IMAGE_TYPES.includes(file.type));
+  const restFiles = files.filter((file) => !images.includes(file));
 
   const imagesFormData = new FormData();
-  images.forEach(image => imagesFormData.append('image', image));
+  images.forEach((image) => imagesFormData.append('image', image));
 
   const restFilesFormData = new FormData();
-  restFiles.forEach(file => restFilesFormData.append('file', file));
+  restFiles.forEach((file) => restFilesFormData.append('file', file));
 
   const headers = { Cookie: cookies };
 
@@ -147,14 +147,14 @@ const postTranslations = {
   create: (body, cookies) => create({ model: PostTranslation, body }, cookies),
   remove: async (postPath, language, cookies) => {
     const { translations } = await posts.findOne(postPath);
-    const { id } = translations.find(translation => translation.lang === language);
+    const { id } = translations.find((translation) => translation.lang === language);
 
     return remove({ model: PostTranslation, param: id }, cookies);
   },
 };
 
 const pages = {
-  find: cookies => find({ model: Page }, cookies),
+  find: (cookies) => find({ model: Page }, cookies),
   findOne: (path, cookies) => findOne({ model: Page, param: path }, cookies),
   update: (path, body, cookies) => update({ model: Page, param: path, body }, cookies),
   create: (body, cookies) => create({ model: Page, body }, cookies),

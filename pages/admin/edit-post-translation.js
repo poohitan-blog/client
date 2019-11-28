@@ -20,13 +20,13 @@ class EditPostTranslation extends ProtectedPage {
       const post = await API.posts.findOne(query.post, getAllCookies(req));
 
       if (!query.language) {
-        return Object.assign(parentProps, { post });
+        return { ...parentProps, post };
       }
 
-      const translationId = post.translations.find(translation => translation.lang === query.language).id;
+      const translationId = post.translations.find((translation) => translation.lang === query.language).id;
       const translation = await API.postTranslations.findOne(translationId, getAllCookies(req));
 
-      return Object.assign(parentProps, { translation, post });
+      return { ...parentProps, translation, post };
     } catch (error) {
       return { error };
     }
@@ -45,9 +45,9 @@ class EditPostTranslation extends ProtectedPage {
       await API.postTranslations.update(this.props.translation.id, translation, getAllCookies());
     } else {
       const newTranslation = await API.postTranslations.create(translation, getAllCookies());
-      const updatedListOfTranslations = [...post.translations.map(item => item.id || item), newTranslation.id];
+      const updatedListOfTranslations = [...post.translations.map((item) => item.id || item), newTranslation.id];
 
-      await API.posts.update(post.path, Object.assign({}, post, { translations: updatedListOfTranslations }));
+      await API.posts.update(post.path, { ...post, translations: updatedListOfTranslations });
     }
 
     Router.push(`/post?path=${post.path}&language=${translation.lang}`, `/p/${post.path}/${translation.lang}`);
@@ -71,7 +71,7 @@ class EditPostTranslation extends ProtectedPage {
             translation={this.props.translation}
             post={this.props.post}
             key={this.props.translation.id}
-            onChange={translation => this.submit(translation)}
+            onChange={(translation) => this.submit(translation)}
           />
         </Content>
       </Wrapper>
