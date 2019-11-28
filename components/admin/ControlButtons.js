@@ -108,7 +108,7 @@ class ControlButtons extends React.Component {
         <div className="admin-control-button" onClick={this.showRemovePopup}>
           <RemoveIcon />
         </div>
-        <Popup visible={removePopupVisible} onClose={() => this.setState({ removePopupVisible: false })}>
+        <Popup visible={removePopupVisible} onClose={this.hideRemovePopup}>
           {popupContent}
         </Popup>
       </span>
