@@ -9,7 +9,7 @@ $shadow-height: 6px;
 
   width: $wrapper-width;
   margin: 1em auto 2em auto;
-  padding: 2em;
+  padding: $wrapper-padding;
   position: relative;
 
   transition: width 200ms linear;
@@ -27,6 +27,12 @@ $shadow-height: 6px;
     bottom: -$shadow-height;
     left: calc((100% - #{$width}) / 2);
     width: $width;
+  }
+}
+
+@media (max-width: calc(#{$wrapper-width} + #{$wrapper-padding} * 2 + 2em)) {
+  .wrapper {
+    width: calc(100% - 3em);
   }
 }
 

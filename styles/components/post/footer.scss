@@ -1,6 +1,5 @@
 @import '../../variables';
 
-$item-padding: 0.1em;
 $wrapper-padding: 0.6em;
 $item-horizontal-margin: 0.6em;
 
@@ -18,18 +17,12 @@ $item-horizontal-margin: 0.6em;
   }
 
   .post-footer-item {
-    padding: $item-padding;
+    padding: 0.3em;
     margin-left: $item-horizontal-margin;
     margin-right: $item-horizontal-margin;
 
     @media (max-width: 640px) {
-      &:first-child {
-        margin-left: 0;
-      }
-
-      &:last-child {
-        margin-right: 0;
-      }
+      padding: 0.1em;
     }
   }
 
