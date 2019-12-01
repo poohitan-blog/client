@@ -43,7 +43,6 @@ body {
   font-family: $main-font-family;
   font-size: $main-font-size;
   line-height: 1.35em;
-  hyphens: auto;
   color: $black;
   margin: 0;
   padding: 0;
@@ -120,6 +119,10 @@ p {
 
 li {
   margin: 0.1em 0;
+}
+
+p, li, blockquote, .blockquote {
+  hyphens: auto;
 }
 
 hr {
@@ -304,6 +307,7 @@ textarea {
   display: block;
   margin: auto;
   position: relative;
+  overflow: hidden;
 
   .lazy-load-image {
     position: absolute;

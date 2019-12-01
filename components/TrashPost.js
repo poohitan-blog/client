@@ -22,7 +22,7 @@ class TrashPost extends React.Component {
       body: ReactHtmlParser(props.body, {
         transform(node) { // eslint-disable-line
           if (node.type === 'tag' && node.name === 'img') {
-            return generateLazyPreview(node, props.scrollPosition);
+            return generateLazyPreview(node, { scrollPosition: props.scrollPosition });
           }
         },
       }),

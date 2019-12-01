@@ -119,6 +119,7 @@ class PostPage extends AuthenticatablePage {
             tags={post.tags}
             key={post.path}
             language={language}
+            imagesWidth={post.imagesWidth}
           />
           {
             similarPosts.length ? <SimilarPostsGroup posts={similarPosts} /> : null

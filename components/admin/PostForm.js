@@ -114,6 +114,7 @@ class PostForm extends React.Component {
       dateString,
       translations,
       customStyles,
+      imagesWidth,
       descriptionSymbolsLeft,
       private: hidden,
     } = this.state;
@@ -146,19 +147,14 @@ class PostForm extends React.Component {
           </div>
           <Editor html={body} onChange={(value) => this.setState({ body: value })} />
           <div>
-            <p>Стилі сторінки:</p>
-            <CodeMirror
-              value={customStyles}
-              options={{
-                mode: 'css',
-                theme: 'monokai',
-              }}
-              onBeforeChange={(editor, data, value) => {
-                this.setState({ customStyles: value });
-              }}
-              className={`code-editor ${customStyles ? '' : 'collapsed'}`}
+            <p>Позначки (через кому):</p>
+            <input
+              type="text"
+              value={tagsString}
+              onChange={this.handleTagsChange}
             />
           </div>
+          <hr />
           <div>
             <div className="layout-row layout-align-space-between-center">
               <p>Короткий опис:</p>
@@ -171,14 +167,36 @@ class PostForm extends React.Component {
             />
           </div>
           <div>
-            <p>Позначки (через кому):</p>
-            <input
-              type="text"
-              value={tagsString}
-              onChange={this.handleTagsChange}
+            <p>Стилі сторінки:</p>
+            <CodeMirror
+              value={customStyles}
+              options={{
+                mode: 'css',
+                theme: 'monokai',
+              }}
+              onBeforeChange={(editor, data, value) => this.setState({ customStyles: value })}
+              className={`code-editor ${customStyles ? '' : 'collapsed'}`}
             />
           </div>
-          <div className="layout-row layout-wrap layout-align-center-center">
+          {
+            customStyles
+              ? (
+                <div className="layout-row layout-align-start-center">
+                  <span className="nowrap">Ширина зображень (у нерозгорнутому вигляді):</span>
+                  <input
+                    type="number"
+                    min={100}
+                    max={5000}
+                    value={imagesWidth}
+                    onChange={(event) => this.setState({ imagesWidth: event.target.value })}
+                    className="margin-left"
+                  />
+                </div>
+              )
+              : null
+          }
+          <hr />
+          <div className="layout-row layout-wrap layout-align-start-center">
             <p>Переклади:</p>
             {
               translations && translations.length

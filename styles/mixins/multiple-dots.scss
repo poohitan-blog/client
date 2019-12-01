@@ -1,0 +1,22 @@
+@mixin multiple-dots($number: 3, $color: $lighter-grey) {
+  border: none;
+  margin: 2em 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:after {
+    $content: " ";
+
+    @for $i from 1 through $number {
+      $content: $content + "● ";
+    }
+    content: $content;
+
+    display: block;
+    color: $color;
+    font-size: 0.9em;
+    white-space: nowrap;
+  }
+}

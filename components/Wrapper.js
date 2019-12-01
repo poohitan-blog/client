@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Router from 'next/router';
 import NProgress from 'nprogress';
+import lazyLoadBlurEffect from 'react-lazy-load-image-component/src/effects/blur.css';
+
 import * as Analytics from '../utils/analytics';
 
 import AdminPanel from './admin/Panel';
@@ -42,6 +44,7 @@ class Wrapper extends React.Component {
 
     return (
       <div className={classList.join(' ')}>
+        <style>{lazyLoadBlurEffect}</style>
         <div className="wrapper">
           {
             children

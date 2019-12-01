@@ -9,6 +9,7 @@ export default {
     views: Number,
     draft: Boolean,
     customStyles: String,
+    imagesWidth: Number,
     createdAt: Date,
     updatedAt: Date,
     deletedAt: Date,

@@ -1,12 +1,10 @@
 import React from 'react';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
-import 'react-lazy-load-image-component/src/effects/blur.css';
 
 export const LIGHTBOX_CLASS = 'lightbox-image';
+export const DEFAULT_THUMBNAIL_WIDTH = 800;
 
-const THUMBNAIL_WIDTH = 800;
-
-export function generateLazyPreview(node, scrollPosition) {
+export function generateLazyPreview(node, { scrollPosition, thumbnailWidth = DEFAULT_THUMBNAIL_WIDTH } = {}) {
   const {
     src: originalSource,
     alt,
@@ -16,7 +14,7 @@ export function generateLazyPreview(node, scrollPosition) {
   } = node.attribs;
 
   const placeholderSource = `${originalSource}?placeholder=true`;
-  const thumbnailSource = `${originalSource}?width=${THUMBNAIL_WIDTH}`;
+  const thumbnailSource = `${originalSource}?width=${thumbnailWidth}`;
 
   const relativeThumbnailHeight = (originalHeight * 100) / originalWidth;
 

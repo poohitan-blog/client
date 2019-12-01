@@ -8,7 +8,7 @@ import CutBody from './post/CutBody';
 import Footer from './post/Footer';
 import TranslationButtons from './post/TranslationButtons';
 import AdminControlButtons from './admin/ControlButtons';
-import { LIGHTBOX_CLASS } from '../services/image-previews';
+import { LIGHTBOX_CLASS, DEFAULT_THUMBNAIL_WIDTH } from '../services/image-previews';
 
 import HiddenIcon from '../public/static/icons/hidden.svg';
 
@@ -22,6 +22,7 @@ const Post = (props, context) => {
     body: originalPostBody,
     path,
     cut,
+    imagesWidth,
     language,
     translations,
     private: hidden,
@@ -43,7 +44,7 @@ const Post = (props, context) => {
 
   const bodyMarkup = cut
     ? <CutBody title={title} body={body} path={path} />
-    : <FullBody body={body} />;
+    : <FullBody body={body} imagesWidth={imagesWidth} />;
 
   const lightboxImageSelector = `.post[data-path="${path}"] .post-body a.${LIGHTBOX_CLASS}`;
 
@@ -103,6 +104,7 @@ Post.propTypes = {
   language: PropTypes.string,
   translations: PropTypes.arrayOf(PropTypes.object),
   commentsCount: PropTypes.number,
+  imagesWidth: PropTypes.number,
   publishedAt: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.instanceOf(Date),
@@ -116,6 +118,7 @@ Post.defaultProps = {
   language: '',
   translations: [],
   commentsCount: 0,
+  imagesWidth: DEFAULT_THUMBNAIL_WIDTH,
 };
 
 Post.contextTypes = {
