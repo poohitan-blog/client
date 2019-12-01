@@ -32,12 +32,13 @@ const TagSuggestions = ({ tags, count, onClick }) => {
 };
 
 TagSuggestions.propTypes = {
-  tags: PropTypes.shape({}).isRequired,
+  tags: PropTypes.shape({}),
   count: PropTypes.number,
   onClick: PropTypes.func,
 };
 
 TagSuggestions.defaultProps = {
+  tags: {},
   count: Number.MAX_SAFE_INTEGER,
   onClick: () => {},
 };

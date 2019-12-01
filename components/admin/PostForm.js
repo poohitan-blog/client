@@ -92,10 +92,16 @@ class PostForm extends React.Component {
       return;
     }
 
+    const tags = [
+      ...tagsString
+        .split(',')
+        .map((tag) => tag.trim())
+        .filter((tag) => tag !== ''),
+      value,
+    ];
+
     this.setState({
-      tagsString: tagsString.trim().slice(-1) === ','
-        ? `${tagsString.trim()} ${value}`
-        : `${tagsString.trim()}, ${value}`,
+      tagsString: tags.join(', '),
     });
   }
 
@@ -127,7 +133,6 @@ class PostForm extends React.Component {
       path,
       body,
       tagsString,
-      tagCloud,
       dateString,
       translations,
       customStyles,
@@ -135,7 +140,7 @@ class PostForm extends React.Component {
       descriptionSymbolsLeft,
       private: hidden,
     } = this.state;
-    const { id } = this.props;
+    const { id, tagCloud } = this.props;
     const formTitle = id ? 'Редагувати запис' : 'Додати запис';
     const link = this.getPostLinkMarkup();
 

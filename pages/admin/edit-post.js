@@ -17,13 +17,13 @@ class EditPost extends ProtectedPage {
   static async getInitialProps({ req, query }) {
     try {
       const parentProps = await super.getInitialProps({ req });
+      const tagCloud = await API.tags.getCloud();
 
       if (!query.path) {
-        return parentProps;
+        return { ...parentProps, tagCloud };
       }
 
       const post = await API.posts.findOne(query.path, getAllCookies(req));
-      const tagCloud = await API.tags.getCloud();
 
       return { ...parentProps, post, tagCloud };
     } catch (error) {
