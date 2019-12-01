@@ -1,0 +1,23 @@
+@import '../../variables';
+
+.tag-suggestions {
+  font-size: 0.7em;
+  display: flex;
+  flex-wrap: wrap;
+
+  .tag-suggestion {
+    color: $orange;
+    border-bottom: 1px dotted $orange;
+    margin-left: 0.2em;
+    line-height: 1.5em;
+    height: 1.5em;
+    transition: all 100ms linear;
+    user-select: none;
+
+    &:hover {
+      cursor: pointer;
+      color: $light-orange;
+      border-bottom-color: $light-orange;
+    }
+  }
+}

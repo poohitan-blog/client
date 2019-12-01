@@ -23,8 +23,9 @@ class EditPost extends ProtectedPage {
       }
 
       const post = await API.posts.findOne(query.path, getAllCookies(req));
+      const tagCloud = await API.tags.getCloud();
 
-      return { ...parentProps, post };
+      return { ...parentProps, post, tagCloud };
     } catch (error) {
       return { error };
     }
@@ -45,7 +46,7 @@ class EditPost extends ProtectedPage {
   }
 
   render() {
-    const { post, error } = this.props;
+    const { post, tagCloud, error } = this.props;
 
     if (error) {
       return <Error statusCode={error.status} />;
@@ -68,6 +69,7 @@ class EditPost extends ProtectedPage {
             description={post.description}
             body={post.body}
             tags={post.tags}
+            tagCloud={tagCloud}
             customStyles={post.customStyles}
             private={post.private}
             publishedAt={post.publishedAt}
@@ -82,6 +84,7 @@ class EditPost extends ProtectedPage {
 
 EditPost.propTypes = {
   post: PropTypes.shape({}),
+  tagCloud: PropTypes.shape({}).isRequired,
 };
 
 EditPost.defaultProps = {

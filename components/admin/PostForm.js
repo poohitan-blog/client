@@ -10,6 +10,7 @@ import { current } from '../../config';
 
 import Checkbox from '../ui/Checkbox';
 import Editor from '../../utils/editor';
+import TagSuggestions from './TagSuggestions';
 
 try {
   require('codemirror/mode/css/css');
@@ -33,6 +34,7 @@ class PostForm extends React.Component {
     };
 
     this.handleTagsChange = this.handleTagsChange.bind(this);
+    this.addTag = this.addTag.bind(this);
     this.handleDateChange = this.handleDateChange.bind(this);
     this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
     this.getPostLinkMarkup = this.getPostLinkMarkup.bind(this);
@@ -83,6 +85,20 @@ class PostForm extends React.Component {
     });
   }
 
+  addTag(value) {
+    const { tagsString } = this.state;
+
+    if (tagsString.includes(value)) {
+      return;
+    }
+
+    this.setState({
+      tagsString: tagsString.trim().slice(-1) === ','
+        ? `${tagsString.trim()} ${value}`
+        : `${tagsString.trim()}, ${value}`,
+    });
+  }
+
   handleTagsChange(event) {
     this.setState({
       tagsString: event.target.value,
@@ -111,6 +127,7 @@ class PostForm extends React.Component {
       path,
       body,
       tagsString,
+      tagCloud,
       dateString,
       translations,
       customStyles,
@@ -153,6 +170,7 @@ class PostForm extends React.Component {
               value={tagsString}
               onChange={this.handleTagsChange}
             />
+            <TagSuggestions tags={tagCloud} onClick={this.addTag} />
           </div>
           <hr />
           <div>
@@ -249,6 +267,7 @@ PostForm.propTypes = {
   path: PropTypes.string,
   description: PropTypes.string,
   tags: PropTypes.arrayOf(PropTypes.string),
+  tagCloud: PropTypes.shape({}).isRequired,
   publishedAt: PropTypes.instanceOf(Date),
   translations: PropTypes.arrayOf(PropTypes.object),
   onChange: PropTypes.func.isRequired,
