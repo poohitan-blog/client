@@ -77,7 +77,7 @@ class TrashPage extends AuthenticatablePage {
     const postsMarkup = posts.map((post) => (
       <TrashPost
         id={post.id}
-        key={post.id}
+        key={`${post.id}-${single}`}
         collapsable={posts.length > 1}
         body={post.body}
         createdAt={post.createdAt}
