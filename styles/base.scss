@@ -155,7 +155,7 @@ svg {
 }
 
 ol, ul {
-  margin: 1em 0;
+  margin: 0.5em 0;
   padding: 0 0 0 2.5em;
 
   ol, ul {
@@ -164,7 +164,8 @@ ol, ul {
   }
 }
 
-cut {
+cut,
+#cut {
   display: none;
 }
 
@@ -334,15 +335,5 @@ textarea {
   .lazy-load-image-placeholder {
     background-color: $lighter-grey;
     display: block;
-  }
-
-  &.lazy-load-image-wrapper-unknown-height {
-    .lazy-load-image-placeholder {
-      display: none;
-    }
-
-    .lazy-load-image-loaded {
-      position: relative;
-    }
   }
 }

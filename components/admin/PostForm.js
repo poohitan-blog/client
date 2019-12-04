@@ -71,7 +71,7 @@ class PostForm extends React.Component {
       return;
     }
 
-    const tags = tagsString.split(',').map((tag) => tag.trim());
+    const tags = tagsString.split(',').map((tag) => tag.trim()).filter((tag) => tag !== '');
     const publishedAt = dateString ? moment(dateString, DATE_FORMAT).toDate() : new Date();
     const preparedTranslations = translations.map((translation) => translation.id || translation);
 
@@ -177,7 +177,7 @@ class PostForm extends React.Component {
             />
             <TagSuggestions tags={tagCloud} onClick={this.addTag} />
           </div>
-          <hr />
+          <hr className="separator" />
           <div>
             <div className="layout-row layout-align-space-between-center">
               <p>Короткий опис:</p>
@@ -218,7 +218,7 @@ class PostForm extends React.Component {
               )
               : null
           }
-          <hr />
+          <hr className="separator" />
           <div className="layout-row layout-wrap layout-align-start-center">
             <p>Переклади:</p>
             {

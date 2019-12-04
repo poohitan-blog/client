@@ -4,25 +4,28 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 export const LIGHTBOX_CLASS = 'lightbox-image';
 export const DEFAULT_THUMBNAIL_WIDTH = 800;
 
-export function generateLazyPreview(node, { scrollPosition, thumbnailWidth = DEFAULT_THUMBNAIL_WIDTH } = {}) {
+export function generateLazyPreview(node, { altLanguage = 'uk', scrollPosition, thumbnailWidth = DEFAULT_THUMBNAIL_WIDTH } = {}) {
   const {
     src: originalSource,
     alt,
     'data-averagecolor': averageColor,
     'data-originalwidth': originalWidth,
     'data-originalheight': originalHeight,
+    'data-captionen': captionEn,
+    'data-captionuk': captionUk,
   } = node.attribs;
 
   const placeholderSource = `${originalSource}?placeholder=true`;
   const thumbnailSource = `${originalSource}?width=${thumbnailWidth}`;
 
-  const relativeThumbnailHeight = (originalHeight * 100) / originalWidth;
+  const relativeThumbnailHeight = originalWidth && originalHeight
+    ? (originalHeight * 100) / originalWidth
+    : 60;
 
   const classList = ['lazy-load-image-wrapper'];
 
-  if (!relativeThumbnailHeight) {
-    classList.push('lazy-load-image-wrapper-unknown-height');
-  }
+  const caption = altLanguage === 'uk' ? captionUk : captionEn;
+  const alternativeText = alt || caption || captionEn;
 
   return (
     <a href={originalSource} className={LIGHTBOX_CLASS} key={originalSource}>
@@ -31,8 +34,9 @@ export function generateLazyPreview(node, { scrollPosition, thumbnailWidth = DEF
           src={thumbnailSource}
           key={thumbnailSource}
           placeholderSrc={placeholderSource}
-          alt={alt}
+          alt={alternativeText}
           effect="blur"
+          threshold={200}
           scrollPosition={scrollPosition}
           wrapperClassName="lazy-load-image"
         />

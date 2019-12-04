@@ -44,12 +44,12 @@ const Post = (props, context) => {
 
   const bodyMarkup = cut
     ? <CutBody title={title} body={body} path={path} />
-    : <FullBody body={body} imagesWidth={imagesWidth} />;
+    : <FullBody language={language} body={body} imagesWidth={imagesWidth} />;
 
   const lightboxImageSelector = `.post[data-path="${path}"] .post-body a.${LIGHTBOX_CLASS}`;
 
   return (
-    <article className="post post-complete" data-path={path}>
+    <article className="post post-complete" data-path={path} id={cut ? null : 'beginning'}>
       <h1 className="post-title layout-row layout-align-start-start">
         <Link as={link.as} href={link.href}>
           <a title={title}>{title}</a>
@@ -115,7 +115,7 @@ Post.propTypes = {
 Post.defaultProps = {
   cut: false,
   private: false,
-  language: '',
+  language: 'uk',
   translations: [],
   commentsCount: 0,
   imagesWidth: DEFAULT_THUMBNAIL_WIDTH,

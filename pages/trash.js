@@ -78,7 +78,7 @@ class TrashPage extends AuthenticatablePage {
       <TrashPost
         id={post.id}
         key={`${post.id}-${single}`}
-        collapsable={posts.length > 1}
+        collapsable={!single}
         body={post.body}
         createdAt={post.createdAt}
       />

@@ -25,7 +25,9 @@ const Button = ({
 const TranslationButtons = ({ translations, language, path }, context) => (
   <div className="post-translation-buttons">
     {
-      language && <Button key="uk" language="uk" href={`/post?path=${path}`} as={`/p/${path}`} />
+      language === 'uk'
+        ? null
+        : <Button key="uk" language="uk" href={`/post?path=${path}`} as={`/p/${path}`} />
     }
     {
       translations
