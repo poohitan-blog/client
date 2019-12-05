@@ -28,7 +28,7 @@ export function generateLazyPreview(node, { altLanguage = 'uk', scrollPosition, 
   const alternativeText = alt || caption || captionEn;
 
   return (
-    <a href={originalSource} className={LIGHTBOX_CLASS} key={originalSource}>
+    <a href={originalSource} className={LIGHTBOX_CLASS} key={originalSource} title="Клацніть, аби збільшити">
       <span className={classList.join(' ')}>
         <LazyLoadImage
           src={thumbnailSource}

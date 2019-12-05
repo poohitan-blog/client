@@ -1,4 +1,6 @@
 @import '../variables';
+@import '../mixins/readable-content';
+@import '../mixins/readable-content-extended-features';
 
 .page {
   .page-admin-control-buttons {
@@ -16,15 +18,7 @@
   }
 
   .page-body {
-    hr {
-      @include multiple-dots;
-      margin: 2em 0;
-    }
-  }
-
-  @media (max-width: 640px) {
-    .page-body {
-      font-size: 1.2em;
-    }
+    @include readable-content;
+    @include readable-content-extended-features;
   }
 }
