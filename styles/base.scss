@@ -48,11 +48,6 @@ body {
   padding: 0;
   word-wrap: break-word;
 
-  @media (max-width: 640px) {
-    font-size: 14px;
-    line-height: 1.45em;
-  }
-
   &.raspberries {
     background-image: url('/static/images/raspberry.gif');
   }
@@ -144,6 +139,7 @@ blockquote,
 }
 
 pre {
+  box-sizing: border-box;
   font-family: $code-font-family;
   font-size: 0.8em;
   padding: 0.5em 1em !important;
@@ -161,14 +157,6 @@ ol, ul {
   ol, ul {
     margin: 0.5em 0;
     padding: 0 0 0 2em;
-  }
-
-  @media (max-width: 640px) {
-    padding: 0 0 0 2em;
-
-    ol, ul {
-      padding: 0 0 0 1.5em;
-    }
   }
 }
 
@@ -280,68 +268,22 @@ textarea {
   text-overflow: ellipsis;
 }
 
-.post-translation-link {
-  margin: 0 0.5em;
-}
-
-.video-16-9 {
-  @include aspect-ratio(16, 9);
-
-  iframe {
-    width: 100%;
-    height: 100%;
-  }
-}
-
-.strava-activity {
-  width: 100%;
-  height: 400px;
-  margin: 0.5em 0;
-
-  iframe {
-    width: 100%;
-    height: 100%;
+@media (max-width: 640px) {
+  body {
+    font-size: 14px;
+    line-height: 1.45em;
   }
 
-  @media (max-width: 440px) {
-    height: 445px;
+  blockquote,
+  .blockquote {
+    margin: 0.5em 0.5em !important;
   }
-}
 
-.lightbox-image {
-  width: 100%;
-}
+  ol, ul {
+    padding: 0 0 0 2em;
 
-.lazy-load-image-wrapper {
-  display: block;
-  margin: auto;
-  position: relative;
-  overflow: hidden;
-
-  .lazy-load-image {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: block !important;
-
-    img {
-      display: block;
-      margin: auto;
+    ol, ul {
+      padding: 0 0 0 1.5em;
     }
-
-    &.lazy-load-image-loaded {
-      position: relative;
-    }
-
-    &.lazy-load-image-loaded + * {
-      display: none;
-    }
-  }
-
-  .lazy-load-image-placeholder {
-    background-color: $lighter-grey;
-    display: block;
   }
 }

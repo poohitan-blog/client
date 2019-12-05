@@ -1,4 +1,6 @@
 @import '../variables';
+@import '../mixins/readable-content';
+@import '../mixins/readable-content-extended-features';
 
 .trash-post {
   padding: 0.5em 0;
@@ -11,10 +13,8 @@
   .trash-post-body {
     margin: 0.5em 0;
 
-    hr {
-      @include multiple-dots;
-      margin: 2em 0;
-    }
+    @include readable-content;
+    @include readable-content-extended-features;
   }
 
   .trash-post-footer {
@@ -111,8 +111,8 @@
 
     &.trash-post-collapsed {
       .trash-post-body {
-        height: 70em;
-        max-height: 70em;
+        height: 1000px;
+        max-height: 1000px;
         overflow: hidden;
       }
 

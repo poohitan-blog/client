@@ -1,4 +1,5 @@
 @import '../../variables';
+@import '../../mixins/multiple-dots';
 
 .post-form {
   .code-editor {
@@ -14,6 +15,11 @@
 
   .separator {
     @include multiple-dots(5);
+
     margin: 1.5em 0 0 0;
+  }
+
+  .post-translation-link {
+    margin: 0 0.5em;
   }
 }

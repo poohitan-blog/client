@@ -34,7 +34,7 @@ class TrashPost extends React.Component {
     this.unroll = this.unroll.bind(this);
     this.checkIfLongEnoughToCollapse = this.checkIfLongEnoughToCollapse.bind(this);
 
-    this.rootElement = React.createRef();
+    this.bodyElement = React.createRef();
   }
 
   componentDidMount() {
@@ -46,7 +46,7 @@ class TrashPost extends React.Component {
   }
 
   checkIfLongEnoughToCollapse() {
-    const currentHeight = this.rootElement.current.clientHeight;
+    const currentHeight = this.bodyElement.current.clientHeight;
 
     if (currentHeight > MAX_UNCOLLAPSED_HEIGHT) {
       this.setState({
@@ -57,7 +57,7 @@ class TrashPost extends React.Component {
   }
 
   collapse() {
-    const fullHeight = this.rootElement.current.clientHeight;
+    const fullHeight = this.bodyElement.current.clientHeight;
 
     this.setState({
       collapsed: true,
@@ -69,7 +69,7 @@ class TrashPost extends React.Component {
   }
 
   unroll() {
-    const collapsedHeight = this.rootElement.current.clientHeight;
+    const collapsedHeight = this.bodyElement.current.clientHeight;
 
     this.setState({
       collapsed: false,
@@ -96,7 +96,7 @@ class TrashPost extends React.Component {
     const lightboxImageSelector = `.trash-post-body a.${LIGHTBOX_CLASS}`;
 
     return (
-      <div className={classList.join(' ')} ref={this.rootElement}>
+      <div className={classList.join(' ')}>
         {
           isAuthenticated
           && (
@@ -106,7 +106,7 @@ class TrashPost extends React.Component {
           )
         }
         <div className="trash-post-body-wrapper">
-          <div className="trash-post-body">{ body }</div>
+          <div className="trash-post-body" ref={this.bodyElement}>{ body }</div>
           <div className="trash-post-body-overlay-gradient" />
         </div>
         <Lightbox selector={lightboxImageSelector} />

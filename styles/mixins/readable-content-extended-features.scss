@@ -1,0 +1,61 @@
+@import 'aspect-ratio';
+
+@mixin readable-content-extended-features {
+  .video-16-9 {
+    @include aspect-ratio(16, 9);
+
+    iframe {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .strava-activity {
+    width: 100%;
+    height: 400px;
+    margin: 0.5em 0;
+
+    iframe {
+      width: 100%;
+      height: 100%;
+    }
+
+    @media (max-width: 440px) {
+      height: 445px;
+    }
+  }
+
+  .lazy-load-image-wrapper {
+    display: block;
+    margin: auto;
+    position: relative;
+    overflow: hidden;
+
+    .lazy-load-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: block !important;
+
+      img {
+        display: block;
+        margin: auto;
+      }
+
+      &.lazy-load-image-loaded {
+        position: relative;
+      }
+
+      &.lazy-load-image-loaded + * {
+        display: none;
+      }
+    }
+
+    .lazy-load-image-placeholder {
+      background-color: $lighter-grey;
+      display: block;
+    }
+  }
+}

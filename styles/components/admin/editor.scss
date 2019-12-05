@@ -1,4 +1,5 @@
 @import '../../variables';
+@import '../../mixins/multiple-dots';
 
 .editor-wrapper {
   cut {
@@ -26,6 +27,7 @@
 
   hr {
     @include multiple-dots;
+
     margin: 2em 0;
   }
 }

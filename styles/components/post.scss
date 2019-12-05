@@ -1,4 +1,6 @@
 @import '../variables';
+@import '../mixins/readable-content';
+@import '../mixins/readable-content-extended-features';
 
 .post.post-complete {
   .post-title {
@@ -9,10 +11,8 @@
   .post-body {
     margin: 1em 0;
 
-    hr {
-      @include multiple-dots;
-      margin: 2em 0;
-    }
+    @include readable-content;
+    @include readable-content-extended-features;
   }
 
   .post-title-icons {
@@ -40,19 +40,6 @@
     .post-admin-control-buttons {
       opacity: 1;
       pointer-events: all;
-    }
-  }
-
-  @media (max-width: 640px) {
-    .post-body {
-      font-size: 1.2em;
-      line-height: 1.35em;
-
-      .lightbox-image {
-        display: block;
-        margin-left: calc((100% - 100vw) / 2);
-        width: 100vw;
-      }
     }
   }
 }
@@ -84,8 +71,25 @@
     line-height: 2.1em;
   }
 
-  @media (max-width: 640px) {
-    font-size: 1.2em;
+  @include readable-content;
+}
+
+@media (max-width: 640px) {
+  .post.post-complete {
+    .post-body {
+      .lightbox-image,
+      .video-16-9,
+      pre {
+        margin-left: calc((100% - 100vw) / 2);
+        width: calc(100% + 1.7em);
+      }
+    }
+  }
+
+  .post.post-compact {
+    .post-title {
+      margin-bottom: 0;
+    }
 
     .post-date {
       margin-left: 0;
