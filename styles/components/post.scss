@@ -81,7 +81,15 @@
       .video-16-9,
       pre {
         margin-left: calc((100% - 100vw) / 2);
-        width: calc(100% + 1.7em);
+      }
+
+      .lightbox-image,
+      .video-16-9 {
+        width: calc(100% + 1.7em); // TODO: investigate why not 2em
+      }
+
+      pre {
+        width: calc(100% + 2em);
       }
     }
   }
