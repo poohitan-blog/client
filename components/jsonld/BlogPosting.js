@@ -17,7 +17,7 @@ const BlogPosting = ({
     headline: title,
     image: getImageLinksFromHTML(body)[0],
     keywords: tags.join(' '),
-    articleBody: stripHTML(body, { decodeHTMLEntities: true }),
+    articleBody: stripHTML(body),
     url: postURL,
     mainEntityOfPage: postURL,
     datePublished: publishedAt.toISOString(),
