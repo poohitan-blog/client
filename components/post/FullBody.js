@@ -5,13 +5,19 @@ import { trackWindowScroll } from 'react-lazy-load-image-component';
 
 import { generateLazyPreview } from '../../services/image-previews';
 
-const FullBody = ({ body, scrollPosition, imagesWidth }) => (
+const FullBody = ({
+  language, body, scrollPosition, imagesWidth,
+}) => (
   <>
     {
       ReactHtmlParser(body, {
         transform(node) { // eslint-disable-line
           if (node.type === 'tag' && node.name === 'img') {
-            return generateLazyPreview(node, { scrollPosition, thumbnailWidth: imagesWidth });
+            return generateLazyPreview(node, {
+              altLanguage: language,
+              thumbnailWidth: imagesWidth,
+              scrollPosition,
+            });
           }
 
           if (node.type === 'tag' && node.name === 'cut') {
@@ -24,6 +30,7 @@ const FullBody = ({ body, scrollPosition, imagesWidth }) => (
 );
 
 FullBody.propTypes = {
+  language: PropTypes.string.isRequired,
   body: PropTypes.node.isRequired,
   scrollPosition: PropTypes.shape({}),
   imagesWidth: PropTypes.number.isRequired,

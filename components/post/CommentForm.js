@@ -15,7 +15,7 @@ const placeholder = (
 
 const CommentForm = ({ title, path }) => (
   <div className="post-comment-form" id="comments">
-    <LazyLoadComponent threshold={500} placeholder={placeholder}>
+    <LazyLoadComponent threshold={1000} placeholder={placeholder}>
       <ReactDisqusComments
         shortname={current.disqus.shortname}
         identifier={path}

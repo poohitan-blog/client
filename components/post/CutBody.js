@@ -27,8 +27,8 @@ const CutBody = ({ title, path, body }) => {
   return (
     <>
       { transformedBody }
-      <Link as={`/p/${path}`} href={`/post?path=${path}`}>
-        <a title={`Читати повністю «${title}»`}>{READ_MORE}</a>
+      <Link as={`/p/${path}`} href={`/post?path=${path}#cut`}>
+        <a title={`${READ_MORE} «${title}»`}>{READ_MORE}</a>
       </Link>
     </>
   );
