@@ -46,6 +46,13 @@
   @media (max-width: 640px) {
     .post-body {
       font-size: 1.2em;
+      line-height: 1.35em;
+
+      .lightbox-image {
+        display: block;
+        margin-left: calc((100% - 100vw) / 2);
+        width: 100vw;
+      }
     }
   }
 }

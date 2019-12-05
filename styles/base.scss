@@ -162,6 +162,14 @@ ol, ul {
     margin: 0.5em 0;
     padding: 0 0 0 2em;
   }
+
+  @media (max-width: 640px) {
+    padding: 0 0 0 2em;
+
+    ol, ul {
+      padding: 0 0 0 1.5em;
+    }
+  }
 }
 
 cut,

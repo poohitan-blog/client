@@ -36,7 +36,7 @@ export function generateLazyPreview(node, { altLanguage = 'uk', scrollPosition, 
           placeholderSrc={placeholderSource}
           alt={alternativeText}
           effect="blur"
-          threshold={200}
+          threshold={300}
           scrollPosition={scrollPosition}
           wrapperClassName="lazy-load-image"
         />
