@@ -85,11 +85,11 @@
 
       .lightbox-image,
       .video-16-9 {
-        width: calc(100% + 1.7em); // TODO: investigate why not 2em
+        width: calc(100% + 2em);
       }
 
       pre {
-        width: calc(100% + 2em);
+        width: 100vw;
       }
     }
   }
