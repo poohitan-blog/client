@@ -53,13 +53,13 @@ class SearchBox extends React.Component {
       <div className={`search-box ${isFocused ? 'search-box-focused' : ''} smaller layout-row layout-align-start-center`}>
         <SearchIcon className="search-box-icon" />
         <input
+          type="text"
+          placeholder={PLACEHOLDER}
           onFocus={this.focus}
           onBlur={this.blur}
           onKeyPress={this.handleKeyPress}
           onChange={this.setQuery}
           className="search-box-input"
-          type="text"
-          placeholder={PLACEHOLDER}
         />
       </div>
     );

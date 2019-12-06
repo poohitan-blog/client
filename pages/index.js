@@ -60,7 +60,7 @@ class IndexPage extends AuthenticatablePage {
         language={post.language}
         translations={post.translations}
         commentsCount={post.commentsCount}
-        publishedAt={post.publishedAt}
+        publishedAt={new Date(post.publishedAt)}
         tags={post.tags}
       />
     ));
@@ -68,12 +68,12 @@ class IndexPage extends AuthenticatablePage {
       title,
       description,
       keywords,
-      language,
+      languageTerritory,
       social,
     } = current.meta;
 
     return (
-      <Wrapper pathname={pathname}>
+      <>
         <Head>
           <title>{title}</title>
           <meta name="description" content={description} key="description" />
@@ -91,15 +91,17 @@ class IndexPage extends AuthenticatablePage {
           <meta name="og:description" content={description} />
           <meta name="og:url" content={current.clientURL} />
           <meta name="og:site_name" content={title} />
-          <meta name="og:locale" content={language} />
+          <meta name="og:locale" content={languageTerritory} />
           <meta name="og:type" content="website" />
         </Head>
-        <Header />
-        <Content>
-          {content}
-        </Content>
-        <Footer pagination={meta} />
-      </Wrapper>
+        <Wrapper pathname={pathname}>
+          <Header />
+          <Content>
+            {content}
+          </Content>
+          <Footer pagination={meta} />
+        </Wrapper>
+      </>
     );
   }
 }

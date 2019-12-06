@@ -71,8 +71,9 @@ class EditPost extends ProtectedPage {
             tags={post.tags}
             tagCloud={tagCloud}
             customStyles={post.customStyles}
+            imagesWidth={post.imagesWidth}
             private={post.private}
-            publishedAt={post.publishedAt}
+            publishedAt={new Date(post.publishedAt)}
             translations={post.translations}
             onChange={(value) => this.submit(value)}
           />

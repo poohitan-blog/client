@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
+
 import Error from './_error';
 import { current } from '../config';
 import API from '../services/api';
@@ -37,7 +38,7 @@ class PagePage extends AuthenticatablePage {
       <Wrapper pathname={pathname}>
         <Head>
           <title>{`${page.title} - ${current.meta.title}`}</title>
-          <meta name="description" content={shorten(stripHTML(page.body, { decodeHTMLEntities: true }), 20)} key="description" />
+          <meta name="description" content={shorten(stripHTML(page.body), 20)} key="description" />
           { page.customStyles && <style dangerouslySetInnerHTML={{ __html: page.customStyles }} /> }
         </Head>
         <Header />

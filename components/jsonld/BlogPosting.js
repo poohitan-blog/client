@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { current } from '../../config';
 import { stripHTML, getImageLinksFromHTML } from '../../services/text';
 

@@ -7,7 +7,7 @@ import Error from './_error';
 import { current } from '../config';
 import API from '../services/api';
 import { getAllCookies } from '../services/cookies';
-import { getImageLinksFromHTML, shorten, stripHTML } from '../services/text';
+import { stripHTML, getImageLinksFromHTML, shorten } from '../services/text';
 
 import AuthenticatablePage from './_authenticatable';
 import Wrapper from '../components/Wrapper';
@@ -70,25 +70,17 @@ class PostPage extends AuthenticatablePage {
     const [image] = getImageLinksFromHTML(body);
     const description = translation.description
       || post.description
-      || shorten(stripHTML(body, { decodeHTMLEntities: true }), 20);
+      || shorten(stripHTML(body), 20);
     const url = language
       ? `${current.clientURL}/p/${post.path}/${language}`
       : `${current.clientURL}/p/${post.path}`;
 
     return (
-      <Wrapper pathname={pathname}>
+      <>
         <Head>
           <title>{title}</title>
           <meta name="description" content={description} key="description" />
           <meta name="keywords" content={post.tags.join(', ')} key="keywords" />
-
-          <BlogPosting
-            title={post.title}
-            path={post.path}
-            body={post.body}
-            tags={post.tags}
-            publishedAt={post.publishedAt}
-          />
 
           <meta name="twitter:card" content="summary" />
           <meta name="twitter:title" content={title} />
@@ -104,30 +96,40 @@ class PostPage extends AuthenticatablePage {
           <meta name="og:site_name" content={current.meta.title} />
           <meta name="og:locale" content={current.meta.language} />
           <meta name="og:type" content="website" />
-        </Head>
-        <Header />
-        { post.customStyles && <style dangerouslySetInnerHTML={{ __html: post.customStyles }} /> }
-        <Content>
-          <Post
+
+          <BlogPosting
             title={post.title}
-            body={post.body}
             path={post.path}
-            private={post.private}
-            translations={post.translations}
-            commentsCount={post.commentsCount}
-            publishedAt={post.publishedAt}
+            body={post.body}
             tags={post.tags}
-            key={post.path}
-            language={language}
-            imagesWidth={post.imagesWidth}
+            publishedAt={new Date(post.publishedAt)}
           />
-          {
-            similarPosts.length ? <SimilarPostsGroup posts={similarPosts} /> : null
-          }
-          <CommentForm title={post.title} path={post.path} />
-        </Content>
-        <Footer />
-      </Wrapper>
+        </Head>
+        <Wrapper pathname={pathname}>
+          <Header />
+          { post.customStyles && <style dangerouslySetInnerHTML={{ __html: post.customStyles }} /> }
+          <Content>
+            <Post
+              title={post.title}
+              body={post.body}
+              path={post.path}
+              private={post.private}
+              translations={post.translations}
+              commentsCount={post.commentsCount}
+              publishedAt={new Date(post.publishedAt)}
+              tags={post.tags}
+              key={post.path}
+              language={language}
+              imagesWidth={post.imagesWidth}
+            />
+            {
+              similarPosts.length ? <SimilarPostsGroup posts={similarPosts} /> : null
+            }
+            <CommentForm title={post.title} path={post.path} />
+          </Content>
+          <Footer />
+        </Wrapper>
+      </>
     );
   }
 }

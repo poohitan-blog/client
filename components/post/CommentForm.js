@@ -14,16 +14,16 @@ const placeholder = (
 );
 
 const CommentForm = ({ title, path }) => (
-  <div className="post-comment-form" id="comments">
-    <LazyLoadComponent threshold={1000} placeholder={placeholder}>
-      <ReactDisqusComments
-        shortname={current.disqus.shortname}
-        identifier={path}
-        title={title}
-        url={`${current.clientURL}/p/${path}`}
-      />
-    </LazyLoadComponent>
-  </div>
+  <LazyLoadComponent threshold={1000} placeholder={placeholder}>
+    <ReactDisqusComments
+      shortname={current.disqus.shortname}
+      identifier={path}
+      title={title}
+      url={`${current.clientURL}/p/${path}`}
+      className="post-comment-form"
+      id="comments"
+    />
+  </LazyLoadComponent>
 );
 
 CommentForm.propTypes = {

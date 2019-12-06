@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
-import moment from 'moment';
+import { format, parse } from 'date-fns';
 import { Controlled as CodeMirror } from 'react-codemirror2';
 import codeMirrorStyles from 'codemirror/lib/codemirror.css';
 import codeMirrorThemeStyles from 'codemirror/theme/monokai.css';
@@ -18,7 +18,7 @@ try {
   console.error(error);
 }
 
-const DATE_FORMAT = 'DD.MM.YYYY HH:mm';
+const DATE_FORMAT = 'dd.MM.yyyy HH:mm';
 const MAX_DESCRIPTION_LENGTH = 160;
 
 class PostForm extends React.Component {
@@ -28,7 +28,7 @@ class PostForm extends React.Component {
     this.state = {
       ...props,
       tagsString: props.tags && props.tags.length ? props.tags.join(', ') : '',
-      dateString: props.publishedAt ? moment(props.publishedAt).format(DATE_FORMAT) : '',
+      dateString: props.publishedAt ? format(props.publishedAt, DATE_FORMAT) : '',
       translations: props.translations || [],
       descriptionSymbolsLeft: MAX_DESCRIPTION_LENGTH - props.description.length,
     };
@@ -72,7 +72,7 @@ class PostForm extends React.Component {
     }
 
     const tags = tagsString.split(',').map((tag) => tag.trim()).filter((tag) => tag !== '');
-    const publishedAt = dateString ? moment(dateString, DATE_FORMAT).toDate() : new Date();
+    const publishedAt = dateString ? parse(dateString, DATE_FORMAT, new Date()) : new Date();
     const preparedTranslations = translations.map((translation) => translation.id || translation);
 
     const { onChange } = this.props;
@@ -146,7 +146,7 @@ class PostForm extends React.Component {
 
     return (
       <div className="post-form">
-        <style dangerouslySetInnerHTML={{ __html: codeMirrorStyles + codeMirrorThemeStyles }} />
+        <style>{codeMirrorStyles + codeMirrorThemeStyles}</style>
         <h1>{formTitle}</h1>
         <div className="form">
           <input
@@ -226,6 +226,7 @@ class PostForm extends React.Component {
                 ? translations
                   .map((translation) => (
                     <Link
+                      key={translation.lang}
                       as={`/p/${path}/translations/${translation.lang}/edit`}
                       href={`/admin/edit-post-translation?language=${translation.lang}&post=${path}`}
                     >

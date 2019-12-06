@@ -37,10 +37,7 @@ const TinyPost = ({
 TinyPost.propTypes = {
   title: PropTypes.string.isRequired,
   path: PropTypes.string.isRequired,
-  publishedAt: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.instanceOf(Date),
-  ]).isRequired,
+  publishedAt: PropTypes.instanceOf(Date).isRequired,
   image: PropTypes.string,
   scrollPosition: PropTypes.shape({}),
 };

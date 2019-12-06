@@ -20,12 +20,12 @@ const SimilarPostsGroup = ({ posts, scrollPosition }) => {
   return (
     <div className="similar-posts-group">
       <div className="similar-posts-group-header">
-        <span>Може шось з цього теж буде цікаво:</span>
-        <span>
+        <div className="nowrap">Може шось з цього теж буде цікаво:</div>
+        <div className="nowrap">
           <span>Більше — в</span>
           {' '}
           <Link href="/archive"><a title="Архів">Архіві</a></Link>
-        </span>
+        </div>
       </div>
       <div className="similar-posts-group-container">
         {
@@ -36,7 +36,7 @@ const SimilarPostsGroup = ({ posts, scrollPosition }) => {
                 key={post.id}
                 title={post.title}
                 path={post.path}
-                publishedAt={post.publishedAt}
+                publishedAt={new Date(post.publishedAt)}
                 image={post.image}
                 scrollPosition={scrollPosition}
               />

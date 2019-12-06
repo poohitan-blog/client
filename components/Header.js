@@ -42,10 +42,10 @@ const Header = ({ trashBinState }) => {
                   {
                     item.markup
                     || (
-                      <div className="menu-item-content">
+                      <>
                         <span className="menu-item-content-desktop">{item.title}</span>
                         <span className="menu-item-content-mobile">{item.icon}</span>
-                      </div>
+                      </>
                     )
                   }
                 </a>

@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
+import HTMLReactParser from 'html-react-parser';
+import { isValid } from 'date-fns';
+
 import { stripHTML, getHighlightsOfKeywords, shorten } from '../services/text';
 import { formatPostDate } from '../services/grammar';
 
@@ -68,13 +71,16 @@ function generateDescription(params) {
     query,
   } = params;
   const type = searchResultTypes[searchResultType];
+  const date = isValid(publishedAt) ? publishedAt : createdAt;
+
   const dateMarkup = (
-    <div className="search-result-description-date smaller">{formatPostDate(publishedAt || createdAt)}</div>
+    <div className="search-result-description-date smaller">{formatPostDate(date)}</div>
   );
   let tagsMarkup;
 
   if (searchResultType === 'post') {
     const highlightedTags = tags.map((tag) => highlightQueryInText(tag, query)).join(', ');
+
     tagsMarkup = `<span>Позначки: ${highlightedTags}</span>`;
   }
 
@@ -84,7 +90,7 @@ function generateDescription(params) {
         <b>{type}</b>
         {dateMarkup}
       </div>
-      <div className="smaller nowrap" dangerouslySetInnerHTML={{ __html: tagsMarkup }} />
+      { tagsMarkup ? <div className="smaller nowrap">{HTMLReactParser(tagsMarkup)}</div> : null }
     </>
   );
 }
@@ -133,8 +139,8 @@ const SearchResult = (props) => {
       <Link href={href} as={as}>
         <a title={resultTitle}>
           <div className="search-result-inner">
-            <h3 dangerouslySetInnerHTML={{ __html: resultTitle }} />
-            <p dangerouslySetInnerHTML={{ __html: resultBody }} />
+            <h3>{resultTitle}</h3>
+            <p>{HTMLReactParser(resultBody)}</p>
           </div>
           <div className="search-result-description">
             {description}
@@ -152,18 +158,9 @@ SearchResult.propTypes = {
   path: PropTypes.string,
   query: PropTypes.string.isRequired,
   searchResultType: PropTypes.string.isRequired,
-
   tags: PropTypes.arrayOf(PropTypes.string),
-
-  publishedAt: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.instanceOf(Date),
-  ]),
-
-  createdAt: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.instanceOf(Date),
-  ]),
+  publishedAt: PropTypes.instanceOf(Date),
+  createdAt: PropTypes.instanceOf(Date),
 };
 
 SearchResult.defaultProps = {

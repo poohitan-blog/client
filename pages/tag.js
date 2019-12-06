@@ -65,7 +65,7 @@ class TagPage extends AuthenticatablePage {
               title={post.title}
               body={post.body}
               path={post.path}
-              publishedAt={post.publishedAt}
+              publishedAt={new Date(post.publishedAt)}
               private={post.private}
             />
           ),

@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ReactHtmlParser from 'react-html-parser';
+import HTMLReactParser from 'html-react-parser';
 import { trackWindowScroll } from 'react-lazy-load-image-component';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
-import moment from 'moment';
+import { format } from 'date-fns';
 
 import AdminControlButtons from './admin/ControlButtons';
 import PostCollapser from './trash/PostCollapser';
@@ -19,11 +19,13 @@ class TrashPost extends React.Component {
     super(props);
 
     this.state = {
-      body: ReactHtmlParser(props.body, {
-        transform(node) { // eslint-disable-line
+      body: HTMLReactParser(props.body, {
+        replace(node) {
           if (node.type === 'tag' && node.name === 'img') {
             return generateLazyPreview(node, { scrollPosition: props.scrollPosition });
           }
+
+          return null;
         },
       }),
       collapsed: false,
@@ -92,18 +94,14 @@ class TrashPost extends React.Component {
       classList.push('trash-post-collapsed');
     }
 
-    const formattedDate = moment(createdAt).format('DD:MM:YYYY, HH:mm');
+    const formattedDate = format(createdAt, 'dd:MM:yyyy, HH:mm');
     const lightboxImageSelector = `.trash-post-body a.${LIGHTBOX_CLASS}`;
 
     return (
       <div className={classList.join(' ')}>
         {
           isAuthenticated
-          && (
-          <div className="trash-post-admin-control-buttons">
-            <AdminControlButtons attachedTo="trashPost" tokens={[id]} />
-          </div>
-          )
+          && <AdminControlButtons attachedTo="trashPost" tokens={[id]} className="trash-post-admin-control-buttons" />
         }
         <div className="trash-post-body-wrapper">
           <div className="trash-post-body" ref={this.bodyElement}>{ body }</div>
@@ -115,9 +113,9 @@ class TrashPost extends React.Component {
           && <PostCollapser isPostCollapsed={collapsed} onClick={() => (collapsed ? this.unroll() : this.collapse())} />
         }
         <div className="trash-post-footer smaller layout-row layout-align-space-between-center">
-          <span className="nowrap">
-            <Link as={`/trash/${id}`} href={`/trash?id=${id}`}><a title="Постійне посилання">постійне посилання</a></Link>
-          </span>
+          <Link as={`/trash/${id}`} href={`/trash?id=${id}`}>
+            <a title="Постійне посилання" className="nowrap">постійне посилання</a>
+          </Link>
           <hr className="trash-post-footer-line flex-100" />
           <span className="nowrap">{ formattedDate }</span>
         </div>
@@ -129,10 +127,7 @@ class TrashPost extends React.Component {
 TrashPost.propTypes = {
   id: PropTypes.string.isRequired,
   body: PropTypes.string.isRequired,
-  createdAt: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.instanceOf(Date),
-  ]).isRequired,
+  createdAt: PropTypes.instanceOf(Date).isRequired,
   scrollPosition: PropTypes.shape({}),
   collapsable: PropTypes.bool,
 };

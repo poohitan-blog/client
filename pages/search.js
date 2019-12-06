@@ -76,8 +76,8 @@ class SearchPage extends AuthenticatablePage {
             path={searchResult.path}
             searchResultType={searchResult.searchResultType}
             tags={searchResult.tags}
-            publishedAt={searchResult.publishedAt}
-            createdAt={searchResult.createdAt}
+            publishedAt={new Date(searchResult.publishedAt)}
+            createdAt={new Date(searchResult.createdAt)}
           />
         ));
     }

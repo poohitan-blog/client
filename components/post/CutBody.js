@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ReactHtmlParser from 'react-html-parser';
+import HTMLReactParser from 'html-react-parser';
 import Link from 'next/link';
 
 import { generateLazyPreview } from '../../services/image-previews';
@@ -16,17 +16,20 @@ function cut(body) {
 
 const CutBody = ({ title, path, body }) => {
   const cutHtml = cut(body);
-  const transformedBody = ReactHtmlParser(cutHtml, {
-    transform(node) { // eslint-disable-line
-      if (node.type === 'tag' && node.name === 'img') {
-        return generateLazyPreview(node);
-      }
-    },
-  });
 
   return (
     <>
-      { transformedBody }
+      {
+        HTMLReactParser(cutHtml, {
+          replace(node) {
+            if (node.type === 'tag' && node.name === 'img') {
+              return generateLazyPreview(node);
+            }
+
+            return null;
+          },
+        })
+      }
       <Link as={`/p/${path}`} href={`/post?path=${path}#cut`}>
         <a title={`${READ_MORE} «${title}»`}>{READ_MORE}</a>
       </Link>
