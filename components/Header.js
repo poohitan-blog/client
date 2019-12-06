@@ -33,7 +33,7 @@ const Header = ({ trashBinState }) => {
 
   return (
     <nav className="header">
-      <ul className="menu layout-row layout-wrap layout-align-center-center">
+      <ul className="menu layout-row layout-align-center-center">
         {
           items.map((item) => (
             <li key={item.title} className="menu-item">
