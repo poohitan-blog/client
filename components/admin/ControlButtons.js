@@ -89,7 +89,7 @@ class ControlButtons extends React.Component {
   }
 
   render() {
-    const { attachedTo, tokens } = this.props;
+    const { attachedTo, tokens, className } = this.props;
     const { removePopupVisible } = this.state;
 
     const linkGenerator = linkGenerators[attachedTo];
@@ -99,7 +99,7 @@ class ControlButtons extends React.Component {
     const popupContent = this.renderPopupContent();
 
     return (
-      <span className="admin-control-buttons layout-row layout-align-start-center">
+      <span className={`admin-control-buttons layout-row layout-align-start-center ${className}`}>
         <div className="admin-control-button">
           <Link as={as} href={href}>
             <a><EditIcon /></a>
@@ -119,6 +119,11 @@ class ControlButtons extends React.Component {
 ControlButtons.propTypes = {
   tokens: PropTypes.arrayOf(PropTypes.string).isRequired,
   attachedTo: PropTypes.string.isRequired,
+  className: PropTypes.string,
+};
+
+ControlButtons.defaultProps = {
+  className: '',
 };
 
 export default ControlButtons;

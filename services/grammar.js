@@ -1,4 +1,11 @@
-import moment from 'moment';
+import {
+  format,
+  isValid,
+  isToday,
+  isYesterday,
+  getHours,
+} from 'date-fns';
+import { uk } from 'date-fns/locale';
 
 // e.g.: pluralizeWord(5, ['ровер', 'ровери', 'роверів'])
 export function describeWordCount(count, [one, twoToFour, rest]) {
@@ -33,28 +40,21 @@ export function createWordCountDescriptor([one, twoToFour, rest]) {
 }
 
 export function formatPostDate(date) {
-  moment.locale('uk');
-
-  const todayStart = moment().startOf('day');
-  const yesterdayStart = moment().startOf('day').subtract(1, 'days');
-  const target = moment(date);
-  const targetDateIsToday = todayStart.date() === target.date()
-    && todayStart.month() === target.month()
-    && todayStart.year() === target.year();
-  const targetDateIsYesterday = yesterdayStart.date() === target.date()
-    && yesterdayStart.month() === target.month()
-    && yesterdayStart.year() === target.year();
-  const oOrOb = target.hours() === 11 ? 'об' : 'о';
-
-  if (targetDateIsToday) {
-    return `Сьогодні ${oOrOb} ${target.format('HH:mm')}`;
+  if (!isValid(date)) {
+    return 'Неправильна дата';
   }
 
-  if (targetDateIsYesterday) {
-    return `Вчора ${oOrOb} ${target.format('HH:mm')}`;
+  const timePrefix = getHours(date) === 11 ? 'об' : 'о';
+
+  if (isToday(date)) {
+    return `Сьогодні ${timePrefix} ${format(date, 'HH:mm')}`;
   }
 
-  return `${target.format('D MMMM YYYY')} ${oOrOb} ${target.format('HH:mm')}`;
+  if (isYesterday(date)) {
+    return `Вчора ${timePrefix} ${format(date, 'HH:mm')}`;
+  }
+
+  return format(date, 'd MMMM yyyy', { locale: uk });
 }
 
 const HTTPDescriptions = {

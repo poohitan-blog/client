@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment';
+import { parse } from 'date-fns';
 import Head from 'next/head';
 
 import Error from './_error';
 import { current } from '../config';
 import API from '../services/api';
 import { getAllCookies } from '../services/cookies';
-import { shorten, stripHTML } from '../services/text';
+import { stripHTML, shorten } from '../services/text';
 
 import AuthenticatablePage from './_authenticatable';
 import Wrapper from '../components/Wrapper';
@@ -36,7 +36,7 @@ class TrashPage extends AuthenticatablePage {
       }
 
       if (query.permalink) { // keeps compatibility with old version of links
-        const date = moment.utc(query.permalink, 'YYYYMMDD_HHmmss').toISOString();
+        const date = parse(query.permalink, 'yyyyMMdd_HHmmss').toISOString();
         const { docs } = await API.trashPosts.find({ createdAt: date }, getAllCookies(req));
 
         return {
@@ -80,12 +80,12 @@ class TrashPage extends AuthenticatablePage {
         key={`${post.id}-${single}`}
         collapsable={!single}
         body={post.body}
-        createdAt={post.createdAt}
+        createdAt={new Date(post.createdAt)}
       />
     ));
     const paginationInfo = { ...meta, linkTexts: { next: 'Далі', previous: 'Назад' } };
 
-    const postTitle = single ? shorten(stripHTML(posts[0].body, { decodeHTMLEntities: true }), 10) : null;
+    const postTitle = single ? shorten(stripHTML(posts[0].body), 10) : null;
     const pageTitle = [postTitle, 'Смітник', current.meta.title].filter((item) => item).join(' - ');
 
     return (

@@ -61,12 +61,11 @@ const Post = (props, context) => {
           {
             isAuthenticated
             && (
-              <div className="post-admin-control-buttons">
-                <AdminControlButtons
-                  attachedTo={isTranslation ? 'postTranslation' : 'post'}
-                  tokens={[path, translation.lang]}
-                />
-              </div>
+              <AdminControlButtons
+                attachedTo={isTranslation ? 'postTranslation' : 'post'}
+                tokens={[path, translation.lang]}
+                className="post-admin-control-buttons"
+              />
             )
           }
         </div>
@@ -88,7 +87,7 @@ const Post = (props, context) => {
       <Footer
         path={path}
         commentsCount={commentsCount}
-        publishedAt={publishedAt}
+        publishedAt={new Date(publishedAt)}
         tags={tags}
       />
     </article>
@@ -105,10 +104,7 @@ Post.propTypes = {
   translations: PropTypes.arrayOf(PropTypes.object),
   commentsCount: PropTypes.number,
   imagesWidth: PropTypes.number,
-  publishedAt: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.instanceOf(Date),
-  ]).isRequired,
+  publishedAt: PropTypes.instanceOf(Date).isRequired,
   tags: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 

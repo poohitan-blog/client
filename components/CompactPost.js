@@ -13,8 +13,7 @@ const CompactPost = (props) => {
     publishedAt,
     private: hidden,
   } = props;
-  const bodyWithoutHTML = stripHTML(body);
-  const shortenedBody = shorten(bodyWithoutHTML, 70);
+  const shortenedBody = shorten(stripHTML(body), 70);
 
   return (
     <article className="post post-compact">
@@ -34,7 +33,7 @@ const CompactPost = (props) => {
         </h3>
         <div className="post-date smaller nowrap">{formatPostDate(publishedAt)}</div>
       </div>
-      <div className="post-body" dangerouslySetInnerHTML={{ __html: shortenedBody }} />
+      <div className="post-body">{shortenedBody}</div>
     </article>
   );
 };
@@ -43,10 +42,7 @@ CompactPost.propTypes = {
   title: PropTypes.string.isRequired,
   body: PropTypes.string.isRequired,
   path: PropTypes.string.isRequired,
-  publishedAt: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.instanceOf(Date),
-  ]).isRequired,
+  publishedAt: PropTypes.instanceOf(Date).isRequired,
   private: PropTypes.bool,
 };
 

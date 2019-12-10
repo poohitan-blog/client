@@ -1,19 +1,7 @@
-import { decode } from 'he';
+import { decodeHTML } from 'entities';
 
-export function stripHTML(html, { preserveWhitespace = false, decodeHTMLEntities = false } = {}) {
-  let result;
-
-  if (preserveWhitespace) {
-    result = html.replace(/<.+?>/g, '');
-  } else {
-    result = html.replace(/<.+?>|\n/g, ' ').replace(/ +/g, ' ').trim();
-  }
-
-  if (decodeHTMLEntities) {
-    result = decode(result);
-  }
-
-  return result;
+export function stripHTML(html) {
+  return decodeHTML(html).replace(/<.+?>|\n/g, ' ').replace(/ +/g, ' ').trim();
 }
 
 export function shorten(text, wordsCount) {
@@ -107,22 +95,8 @@ export function getImageLinksFromHTML(html) {
   return images;
 }
 
-export function wrapImagesInLinks(html, { imagesClass = '' } = {}) {
-  const regex = /<img .*?src="(.+?)".*?\/?>/g;
-  const matches = [];
-  let match = regex.exec(html);
-
-  while (match) {
-    matches.push(match);
-    match = regex.exec(html);
-  }
-
-  return matches.reduce((resultHtml, [imageTag, imageLink]) => resultHtml.replace(imageTag, `<a href="${imageLink}" class="${imagesClass}">${imageTag}</a>`), html);
-}
-
 export default {
-  stripHTML,
+  getHighlightsOfKeywords,
   getImageLinksFromHTML,
-  wrapImagesInLinks,
   shorten,
 };

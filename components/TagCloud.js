@@ -39,7 +39,7 @@ function shake($element) {
 
   shift($element, initialCoords);
 
-  const interval = setInterval(() => { // eslint-disable-line
+  const interval = setInterval(() => {
     step += 1;
     angle += Math.PI;
 
@@ -49,7 +49,9 @@ function shake($element) {
       shift($element, { x: 0, y: 0 });
       $element.removeClass('tag-shaking');
 
-      return clearInterval(interval);
+      clearInterval(interval);
+
+      return;
     }
 
     const coords = {

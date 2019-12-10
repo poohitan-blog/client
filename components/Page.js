@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import HTMLReactParser from 'html-react-parser';
 import AdminControlButtons from './admin/ControlButtons';
 import HiddenIcon from '../public/static/icons/hidden.svg';
 
@@ -18,13 +19,13 @@ const Page = (props, context) => {
         {title}
         {
           isAuthenticated
-          && <div className="page-admin-control-buttons"><AdminControlButtons attachedTo="page" tokens={[path]} /></div>
+          && <AdminControlButtons attachedTo="page" tokens={[path]} className="page-admin-control-buttons" />
         }
         {
           hidden && <div className="page-title-icon"><HiddenIcon /></div>
         }
       </h1>
-      <div className="page-body" dangerouslySetInnerHTML={{ __html: body }} />
+      <div className="page-body">{HTMLReactParser(body)}</div>
     </article>
   );
 };

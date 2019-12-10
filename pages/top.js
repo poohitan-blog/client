@@ -2,15 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
 import Link from 'next/link';
-import moment from 'moment';
+import { differenceInCalendarDays, formatDistanceStrict } from 'date-fns';
+import { uk } from 'date-fns/locale';
 
 import Error from './_error';
 import { current } from '../config';
 
 import API from '../services/api';
 import { describeWordCount } from '../services/grammar';
-import { stripHTML } from '../services/text';
 import { getAllCookies } from '../services/cookies';
+import { stripHTML } from '../services/text';
 
 import AuthenticatablePage from './_authenticatable';
 import Wrapper from '../components/Wrapper';
@@ -19,10 +20,9 @@ import Content from '../components/Content';
 import Footer from '../components/Footer';
 
 const calculatePostInterestingness = (post) => {
-  const ageInMilliseconds = moment().diff(post.publishedAt);
-  const age = moment.duration(ageInMilliseconds).asDays();
+  const age = Math.max(differenceInCalendarDays(new Date(), new Date(post.publishedAt)), 1);
 
-  return Math.abs(post.views / age);
+  return post.views / age;
 };
 
 const sortByAbsoluteViewsNumber = ((left, right) => {
@@ -65,8 +65,8 @@ const sortByCommentsCount = ((left, right) => {
 });
 
 const sortByLength = ((left, right) => {
-  const leftLength = stripHTML(left.body, { decodeHTMLEntities: true }).length;
-  const rightLength = stripHTML(right.body, { decodeHTMLEntities: true }).length;
+  const leftLength = left.bodyLength;
+  const rightLength = right.bodyLength;
 
   if (leftLength < rightLength) {
     return 1;
@@ -94,7 +94,10 @@ class TopPage extends AuthenticatablePage {
 
       return {
         ...parentProps,
-        posts: docs,
+        posts: docs.map((post) => ({
+          ...post,
+          bodyLength: stripHTML(post.body).length,
+        })),
         pathname,
       };
     } catch (error) {
@@ -171,8 +174,6 @@ class TopPage extends AuthenticatablePage {
               posts
                 .sort(SORTING_PREDICATES[sortBy])
                 .map((post) => {
-                  const diff = moment(post.publishedAt).diff(moment());
-                  const age = moment.duration(diff);
                   const interestingness = calculatePostInterestingness(post).toFixed(2);
 
                   return (
@@ -186,10 +187,10 @@ class TopPage extends AuthenticatablePage {
                         {' '}
                         <span className="nowrap">{`коментарів: ${post.commentsCount || 0},`}</span>
                         {' '}
-                        <span className="nowrap">{`вік: ${age.locale('uk').humanize()},`}</span>
+                        <span className="nowrap">{`вік: ${formatDistanceStrict(new Date(post.publishedAt), new Date(), { locale: uk })},`}</span>
                         {' '}
                         <span className="nowrap">
-                          {`довжина: ${describeWordCount(stripHTML(post.body).length, ['символ', 'символи', 'символів'])}`}
+                          {`довжина: ${describeWordCount(post.bodyLength, ['символ', 'символи', 'символів'])}`}
                         </span>
                       </span>
                     </li>
@@ -206,11 +207,6 @@ class TopPage extends AuthenticatablePage {
 
 TopPage.propTypes = {
   posts: PropTypes.arrayOf(PropTypes.object).isRequired,
-
-  meta: PropTypes.shape({
-    currentPage: PropTypes.number,
-    totalPages: PropTypes.number,
-  }).isRequired,
 
   error: PropTypes.shape({
     status: PropTypes.number,

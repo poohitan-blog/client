@@ -39,13 +39,13 @@ class Wrapper extends React.Component {
       .slice(1)
       .split('/')
       .filter((token) => token)
-      .map((token) => `${token}-page-wrapper`);
-    const classList = ['page-wrapper', className, ...pathTokens];
+      .map((token) => `${token}-wrapper`);
+    const classList = ['wrapper', className, ...pathTokens];
 
     return (
-      <div className={classList.join(' ')}>
+      <>
         <style>{lazyLoadBlurEffect}</style>
-        <div className="wrapper">
+        <div className={classList.join(' ')}>
           {
             children
           }
@@ -55,10 +55,9 @@ class Wrapper extends React.Component {
           {
             !isAuthenticated && <LoginButton />
           }
-
           <div className="wrapper-shadow" />
         </div>
-      </div>
+      </>
     );
   }
 }

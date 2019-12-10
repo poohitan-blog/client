@@ -44,7 +44,12 @@ module.exports = {
       'window.jQuery': 'jquery',
     });
 
-    config.plugins.push(jQueryPlugin);
+    const dateFnsLocalesPlugin = new webpack.ContextReplacementPlugin(
+      /date-fns[/\\]/,
+      new RegExp(`[/\\\\](${['uk'].join('|')})[/\\\\]`),
+    );
+
+    config.plugins.push(jQueryPlugin, dateFnsLocalesPlugin);
 
     return config;
   },

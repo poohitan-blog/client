@@ -1,4 +1,4 @@
-import moment from 'moment';
+import { endOfToday } from 'date-fns';
 import Cookies from './cookies';
 import random from '../helpers/random';
 
@@ -12,7 +12,7 @@ function getCookie(req) {
 }
 
 function setCookie(wonLottery, res) {
-  const expires = moment().endOf('day').toDate().toUTCString();
+  const expires = endOfToday().toUTCString();
 
   Cookies.set(COOKIE_NAME, wonLottery, { expires }, res);
 }

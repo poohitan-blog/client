@@ -38,11 +38,9 @@ class Footer extends React.Component {
       <div className="post-footer layout-row layout-align-xs-center-center smaller">
         <div className="post-footer-item post-footer-comments layout-row layout-align-start-center">
           <CommentIcon className="post-footer-icon post-footer-comments-icon" />
-          <span className="flex-offset-5 nowrap">
-            <Link as={`/p/${path}#comments`} href={{ pathname: '/post', query: { path }, href: '#comments' }}>
-              <a title="Коментарі до запису">{ describeCommentsCount(commentsCount) }</a>
-            </Link>
-          </span>
+          <Link as={`/p/${path}#comments`} href={{ pathname: '/post', query: { path }, href: '#comments' }}>
+            <a title="Коментарі до запису" className="flex-offset-5 nowrap">{ describeCommentsCount(commentsCount) }</a>
+          </Link>
         </div>
         <div className="post-footer-item post-footer-date layout-row layout-align-start-center">
           <CalendarIcon className="post-footer-icon post-footer-date-icon" />
@@ -67,10 +65,7 @@ class Footer extends React.Component {
 Footer.propTypes = {
   path: PropTypes.string.isRequired,
   commentsCount: PropTypes.number,
-  publishedAt: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.instanceOf(Date),
-  ]).isRequired,
+  publishedAt: PropTypes.instanceOf(Date).isRequired,
   tags: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
