@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Router from 'next/router';
 import SearchIcon from '../public/static/icons/search.svg';
 
@@ -11,7 +12,7 @@ class SearchBox extends React.Component {
 
     this.state = {
       isFocused: false,
-      query: '',
+      query: props.query,
     };
 
     this.focus = this.focus.bind(this);
@@ -21,16 +22,22 @@ class SearchBox extends React.Component {
   }
 
   setQuery(event) {
+    const { value } = event.target;
+
     this.setState({
-      query: event.target.value,
+      query: value,
     });
   }
 
   handleKeyPress(event) {
     const { query } = this.state;
 
+    if (!query.trim()) {
+      return;
+    }
+
     if (event.which === ENTER_KEY_CODE) {
-      Router.push(`/search?query=${encodeURIComponent(query)}`);
+      Router.push(`/search?query=${encodeURIComponent(query.trim())}`);
     }
   }
 
@@ -47,13 +54,15 @@ class SearchBox extends React.Component {
   }
 
   render() {
-    const { isFocused } = this.state;
+    const { query, isFocused } = this.state;
+    const { className } = this.props;
 
     return (
-      <div className={`search-box ${isFocused ? 'search-box-focused' : ''} smaller layout-row layout-align-start-center`}>
+      <div className={`search-box ${isFocused ? 'search-box-focused' : ''} smaller layout-row layout-align-start-center ${className}`}>
         <SearchIcon className="search-box-icon" />
         <input
           type="text"
+          value={query}
           placeholder={PLACEHOLDER}
           onFocus={this.focus}
           onBlur={this.blur}
@@ -65,5 +74,15 @@ class SearchBox extends React.Component {
     );
   }
 }
+
+SearchBox.propTypes = {
+  query: PropTypes.string,
+  className: PropTypes.string,
+};
+
+SearchBox.defaultProps = {
+  query: '',
+  className: '',
+};
 
 export default SearchBox;

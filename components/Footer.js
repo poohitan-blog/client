@@ -9,7 +9,7 @@ const DEFAULT_LINK_TEXTS = {
   previous: 'Новіші записи',
 };
 
-const Footer = ({ pagination, router }) => {
+const Footer = ({ pagination, searchBox, router }) => {
   const { currentPage, totalPages } = pagination;
   const { query } = router;
   const hasNextPage = currentPage < totalPages;
@@ -50,7 +50,9 @@ const Footer = ({ pagination, router }) => {
         {previousPagelink}
         {nextPageLink}
       </div>
-      <div className="flex-35 flex-xs-100"><SearchBox /></div>
+      {
+        searchBox ? <div className="flex-35 flex-xs-100"><SearchBox /></div> : null
+      }
     </div>
   );
 };
@@ -66,6 +68,8 @@ Footer.propTypes = {
     }),
   }),
 
+  searchBox: PropTypes.bool,
+
   router: PropTypes.shape({
     query: PropTypes.object,
   }).isRequired,
@@ -73,6 +77,7 @@ Footer.propTypes = {
 
 Footer.defaultProps = {
   pagination: {},
+  searchBox: true,
 };
 
 export default withRouter(Footer);

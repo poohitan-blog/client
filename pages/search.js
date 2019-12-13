@@ -12,6 +12,7 @@ import Header from '../components/Header';
 import Content from '../components/Content';
 import Footer from '../components/Footer';
 import SearchResult from '../components/SearchResult';
+import SearchBox from '../components/SearchBox';
 import TagCloud from '../components/TagCloud';
 
 const POSTS_PER_PAGE = 10;
@@ -54,18 +55,15 @@ class SearchPage extends AuthenticatablePage {
     }
 
     const nothingFound = !searchResults.length;
-    let content;
-
-    if (nothingFound) {
-      content = (
+    const content = nothingFound
+      ? (
         <div className="text-center">
           <p className="fatty larger">Нічого не знайшлося.</p>
           <p>Хмаринка позначок:</p>
           <TagCloud shake minFontSize={1} maxFontSize={3} width="70%" />
         </div>
-      );
-    } else {
-      content = searchResults
+      )
+      : searchResults
         .map((searchResult) => (
           <SearchResult
             id={searchResult.id}
@@ -80,9 +78,9 @@ class SearchPage extends AuthenticatablePage {
             createdAt={new Date(searchResult.createdAt)}
           />
         ));
-    }
 
     const paginationInfo = { ...meta, linkTexts: { next: 'Далі', previous: 'Назад' } };
+    const title = searchQuery ? `Пошук за запитом «${searchQuery}»` : 'Пошук';
 
     return (
       <Wrapper pathname={pathname}>
@@ -91,12 +89,15 @@ class SearchPage extends AuthenticatablePage {
         </Head>
         <Header />
         <Content>
-          <h1>{`Пошук за запитом «${searchQuery}»`}</h1>
+          <h1>{title}</h1>
           <>
+            <SearchBox query={searchQuery} className="margin-bottom margin-top" />
             { content }
           </>
         </Content>
-        <Footer pagination={paginationInfo} />
+        {
+          searchResults.length ? <Footer searchBox={false} pagination={paginationInfo} /> : null
+        }
       </Wrapper>
     );
   }
