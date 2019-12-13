@@ -63,6 +63,7 @@
     background-color: $light-orange;
     padding: 1px 5px;
     border-radius: 7px;
+    box-decoration-break: clone;
   }
 
   .search-result-highlight-separator {
