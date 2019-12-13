@@ -139,7 +139,7 @@ const SearchResult = (props) => {
       <Link href={href} as={as}>
         <a title={resultTitle}>
           <div className="search-result-inner">
-            <h3>{resultTitle}</h3>
+            <h3>{HTMLReactParser(resultTitle)}</h3>
             <p>{HTMLReactParser(resultBody)}</p>
           </div>
           <div className="search-result-description">
