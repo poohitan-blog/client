@@ -1,12 +1,10 @@
 @import '../variables';
 
 .header {
-  padding: 3em 0 4em 0;
-  border-bottom: 1px solid $lighter-grey;
-
   .menu {
     padding: 0;
     margin: 0;
+    padding: 3em 0 4em 0;
 
     .menu-item {
       font-family: $header-font-family;
@@ -62,8 +60,25 @@
     }
   }
 
+  .header-border {
+    height: 0;
+    line-height: 0;
+  }
+
+  .header-goodness-generator {
+    display: none;
+    justify-content: center;
+  }
+
   @media (max-width: 640px) {
     font-size: 1.2em;
-    padding: 1.2em 0 2em 0;
+
+    .menu {
+      padding: 1.2em 0 2em 0;
+    }
+
+    .header-goodness-generator {
+      display: none !important;
+    }
   }
 }

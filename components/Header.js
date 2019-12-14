@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
+
+import GoodnessGenerator from './GoodnessGenerator';
 import Trashbin from './header/Trashbin';
 import HomeIcon from '../public/static/icons/home.svg';
 import ArchiveIcon from '../public/static/icons/list.svg';
@@ -54,6 +56,11 @@ const Header = ({ trashBinState }) => {
           ))
         }
       </ul>
+      <div className="header-border layout-row layout-align-center-center">
+        <hr className="flex-100" />
+        <GoodnessGenerator className="header-goodness-generator" />
+        <hr className="flex-100" />
+      </div>
     </nav>
   );
 };

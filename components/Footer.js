@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 import { withRouter } from 'next/router';
+
+import GoodnessGenerator from './GoodnessGenerator';
 import SearchBox from './SearchBox';
 
 const DEFAULT_LINK_TEXTS = {
@@ -53,6 +55,7 @@ const Footer = ({ pagination, searchBox, router }) => {
       {
         searchBox ? <div className="flex-35 flex-xs-100"><SearchBox /></div> : null
       }
+      <GoodnessGenerator className="footer-goodness-generator" />
     </div>
   );
 };

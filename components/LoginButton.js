@@ -31,7 +31,7 @@ export default class LoginButton extends React.Component {
 
     event.preventDefault();
 
-    const emojiIndex = random({ min: 0, max: angryEmojis.length });
+    const emojiIndex = random({ min: 0, max: angryEmojis.length - 1 });
 
     global.alert(angryEmojis[emojiIndex]);
 

@@ -4,7 +4,8 @@ import Router from 'next/router';
 import NProgress from 'nprogress';
 import lazyLoadBlurEffect from 'react-lazy-load-image-component/src/effects/blur.css';
 
-import * as Analytics from '../utils/analytics';
+import * as Analytics from '../services/analytics';
+import { getPosition } from '../services/goodness-generator';
 
 import AdminPanel from './admin/Panel';
 import LoginButton from './LoginButton';
@@ -15,32 +16,46 @@ Router.onRouteChangeComplete = () => NProgress.done();
 Router.onRouteChangeError = () => NProgress.done();
 
 class Wrapper extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {};
+
+    this.getGoodnessGeneratorClassName = this.getGoodnessGeneratorClassName.bind(this);
+  }
+
   componentDidMount() {
     const { isAuthenticated } = this.context;
 
-    if (isAuthenticated) {
-      return;
+    if (!isAuthenticated) {
+      Analytics.logPageView();
     }
 
-    if (!global.ANALYTICS_INITIALIZED) {
-      Analytics.init();
+    this.setState({
+      goodnessGeneratorPosition: getPosition(),
+    });
+  }
 
-      global.ANALYTICS_INITIALIZED = true;
-    }
+  getGoodnessGeneratorClassName() {
+    const { goodnessGeneratorPosition } = this.state;
 
-    Analytics.logPageView();
+    return goodnessGeneratorPosition
+      ? `goodness-generator-on-${goodnessGeneratorPosition}`
+      : '';
   }
 
   render() {
     const { isAuthenticated } = this.context;
     const { pathname, children, className } = this.props;
+    const goodnessGeneratorClassName = this.getGoodnessGeneratorClassName();
 
     const pathTokens = pathname
       .slice(1)
       .split('/')
       .filter((token) => token)
       .map((token) => `${token}-wrapper`);
-    const classList = ['wrapper', className, ...pathTokens];
+
+    const classList = ['wrapper', ...pathTokens, className, goodnessGeneratorClassName];
 
     return (
       <>
