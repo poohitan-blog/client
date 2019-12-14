@@ -10,6 +10,12 @@ export const init = () => {
 };
 
 export const logPageView = () => {
+  if (!global.ANALYTICS_INITIALIZED) {
+    init();
+
+    global.ANALYTICS_INITIALIZED = true;
+  }
+
   console.log(`Logging pageview for ${global.location.pathname}`);
 
   ReactGA.set({ page: global.location.pathname });

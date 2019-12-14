@@ -1,0 +1,30 @@
+@import '../variables';
+
+.goodness-generator {
+  color: $light-grey;
+  font-size: 0.75em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+
+  svg {
+    height: 1em;
+  }
+
+  .goodness-generator-text {
+    margin-left: 0.5em;
+  }
+}
+
+.goodness-generator-on-top {
+  .header-goodness-generator {
+    display: flex;
+  }
+}
+
+.goodness-generator-on-bottom {
+  .footer-goodness-generator {
+    display: flex;
+  }
+}

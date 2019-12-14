@@ -11,11 +11,20 @@
     }
   }
 
+  .footer-goodness-generator {
+    display: none;
+    margin: 2em 0 -1em 0;
+  }
+
   @media (max-width: 600px) {
     margin-top: 1em;
 
     .footer-pagination {
       margin-bottom: 1em;
+    }
+
+    .footer-goodness-generator {
+      display: flex !important;
     }
   }
 }
