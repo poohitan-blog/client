@@ -16,6 +16,7 @@ const Footer = ({ pagination, searchBox, router }) => {
   const { query } = router;
   const hasNextPage = currentPage < totalPages;
   const hasPreviousPage = currentPage > 1;
+  const hasPagination = hasNextPage || hasPreviousPage;
 
   const { next, previous } = (pagination && pagination.linkTexts) || DEFAULT_LINK_TEXTS;
 
@@ -47,13 +48,13 @@ const Footer = ({ pagination, searchBox, router }) => {
   }
 
   return (
-    <div className="footer layout-row layout-wrap layout-align-space-between-center">
+    <div className={`footer layout-row layout-wrap layout-align-space-between-center ${hasPagination ? 'footer-with-pagination' : ''}`}>
       <div className="footer-pagination">
         {previousPagelink}
         {nextPageLink}
       </div>
       {
-        searchBox ? <div className="flex-35 flex-xs-100"><SearchBox /></div> : null
+        searchBox ? <div className="footer-searchbox flex-35 flex-xs-100"><SearchBox /></div> : null
       }
       <GoodnessGenerator className="footer-goodness-generator" />
     </div>

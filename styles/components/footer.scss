@@ -3,17 +3,37 @@
 .footer {
   margin-top: 2em;
 
-  .footer-pagination > a {
-    margin-left: 1em;
+  .footer-pagination {
+    a {
+      margin-left: 1em;
 
-    &:first-child {
-      margin-left: 0;
+      &:first-child {
+        margin-left: 0;
+      }
     }
   }
 
   .footer-goodness-generator {
     display: none;
     margin: 2em 0 -1em 0;
+    order: 3;
+  }
+
+  .footer-searchbox {
+    order: 2;
+  }
+
+  &:not(.footer-with-pagination) {
+    .footer-pagination {
+      display: none;
+    }
+
+    .footer-goodness-generator {
+      order: 1;
+      justify-content: flex-start;
+      margin: 0;
+      width: 50%;
+    }
   }
 
   @media (max-width: 600px) {
@@ -25,6 +45,16 @@
 
     .footer-goodness-generator {
       display: flex !important;
+      margin: 1em 0 0 0
+    }
+
+    &:not(.footer-with-pagination) {
+      .footer-goodness-generator {
+        justify-content: center;
+        margin: 1em 0 0 0;
+        order: 2;
+        width: 100%;
+      }
     }
   }
 }

@@ -3,13 +3,6 @@ const path = require('path');
 const glob = require('glob');
 
 module.exports = {
-  onDemandEntries: {
-    // period (in ms) where the server will keep pages in the buffer
-    maxInactiveAge: 60 * 1000,
-    // number of pages that should be kept simultaneously without being disposed
-    pagesBufferLength: 5,
-  },
-
   webpack: (config, { dev }) => { // eslint-disable-line
     const rules = [
       {
