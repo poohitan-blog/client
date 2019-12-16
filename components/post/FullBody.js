@@ -18,7 +18,7 @@ const FullBody = ({
     }
 
     if (node.type === 'tag' && node.name === 'cut') {
-      return <div id="cut" />;
+      return <span id="cut" />;
     }
 
     return null;
