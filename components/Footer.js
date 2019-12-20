@@ -48,7 +48,7 @@ const Footer = ({ pagination, searchBox, router }) => {
   }
 
   return (
-    <div className={`footer layout-row layout-wrap layout-align-space-between-center ${hasPagination ? 'footer-with-pagination' : ''}`}>
+    <div className={`footer ${hasPagination ? '' : 'footer-without-pagination'}`}>
       <div className="footer-pagination">
         {previousPagelink}
         {nextPageLink}

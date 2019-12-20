@@ -54,6 +54,16 @@ const Post = (props, context) => {
         <Link as={link.as} href={link.href}>
           <a title={title}>{title}</a>
         </Link>
+        {
+          Boolean(translations.length)
+            && (
+              <TranslationButtons
+                path={path}
+                language={language}
+                translations={translations}
+              />
+            )
+        }
         <div className="post-title-icons">
           {
             hidden && <div className="post-title-icon"><HiddenIcon /></div>
@@ -69,16 +79,6 @@ const Post = (props, context) => {
             )
           }
         </div>
-        {
-          Boolean(translations.length)
-            && (
-              <TranslationButtons
-                path={path}
-                language={language}
-                translations={translations}
-              />
-            )
-        }
       </h1>
       <div className="post-body">{bodyMarkup}</div>
       <Lightbox selector={lightboxImageSelector} />
