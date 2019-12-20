@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { parse } from 'date-fns';
 import Head from 'next/head';
 
 import Error from './_error';
@@ -36,8 +35,7 @@ class TrashPage extends AuthenticatablePage {
       }
 
       if (query.permalink) { // keeps compatibility with old version of links
-        const date = parse(query.permalink, 'yyyyMMdd_HHmmss').toISOString();
-        const { docs } = await API.trashPosts.find({ createdAt: date }, getAllCookies(req));
+        const { docs } = await API.trashPosts.find({ permalink: query.permalink }, getAllCookies(req));
 
         return {
           ...parentProps,
