@@ -67,7 +67,6 @@
 
   .header-goodness-generator {
     display: none;
-    justify-content: center;
   }
 
   @media (max-width: 640px) {
@@ -75,10 +74,6 @@
 
     .menu {
       padding: 1.2em 0 2em 0;
-    }
-
-    .header-goodness-generator {
-      display: none !important;
     }
   }
 }

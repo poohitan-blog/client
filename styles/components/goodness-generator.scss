@@ -18,13 +18,15 @@
 }
 
 .goodness-generator-on-top {
-  .header-goodness-generator {
-    display: flex;
+  @media (min-width: 600px) {
+    .header-goodness-generator {
+      display: flex;
+    }
   }
 }
 
 .goodness-generator-on-bottom {
   .footer-goodness-generator {
-    visibility: visible;
+    display: flex;
   }
 }

@@ -1,7 +1,10 @@
 @import '../variables';
 
 .footer {
+  display: flex;
   margin-top: 2em;
+  flex-wrap: wrap;
+  justify-content: space-between;
 
   .footer-pagination {
     a {
@@ -14,7 +17,7 @@
   }
 
   .footer-goodness-generator {
-    visibility: hidden;
+    display: none;
     margin: 2em 0 -1em 0;
     order: 3;
   }
@@ -23,7 +26,7 @@
     order: 2;
   }
 
-  &:not(.footer-with-pagination) {
+  &.footer-without-pagination {
     .footer-pagination {
       display: none;
     }
@@ -44,14 +47,12 @@
     }
 
     .footer-goodness-generator {
-      visibility: visible !important;
-      margin: 1em 0 0 0
+      margin: 1em 0 0 0 !important;
     }
 
-    &:not(.footer-with-pagination) {
+    &.footer-without-pagination {
       .footer-goodness-generator {
         justify-content: center;
-        margin: 1em 0 0 0;
         order: 2;
         width: 100%;
       }
