@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
-import { format, parse } from 'date-fns';
+import { format, parse, isValid } from 'date-fns';
 import { Controlled as CodeMirror } from 'react-codemirror2';
 import codeMirrorStyles from 'codemirror/lib/codemirror.css';
 import codeMirrorThemeStyles from 'codemirror/theme/monokai.css';
@@ -28,7 +28,7 @@ class PostForm extends React.Component {
     this.state = {
       ...props,
       tagsString: props.tags && props.tags.length ? props.tags.join(', ') : '',
-      dateString: props.publishedAt ? format(props.publishedAt, DATE_FORMAT) : '',
+      dateString: isValid(props.publishedAt) ? format(props.publishedAt, DATE_FORMAT) : '',
       translations: props.translations || [],
       descriptionSymbolsLeft: MAX_DESCRIPTION_LENGTH - props.description.length,
     };
