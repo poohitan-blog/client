@@ -52,7 +52,7 @@ router.get('/p/:post_old_id', (req, res, next) => {
   return next();
 });
 
-const stuffList = ['shutup', 'uah', 'tortynka', 'thats-a-paddlin', 'webcolors', 'comic-saaaaaaanns!!', 'google', 'homer', 'prehistoric-2', 'rainbow-sheep'];
+const stuffList = ['shutup', 'uah/ru', 'uah/en', 'uah', 'tortynka', 'thats-a-paddlin', 'webcolors', 'comic-saaaaaaanns!!', 'google', 'homer', 'prehistoric-2', 'rainbow-sheep'];
 
 stuffList.forEach((stuffName) => {
   router.get(`/${stuffName}`, (req, res) => res.redirect(301, `/stuff/${stuffName}`));
