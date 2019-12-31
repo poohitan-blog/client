@@ -6,7 +6,7 @@ import Error from './_error';
 import { current } from '../config';
 import API from '../services/api';
 import { getAllCookies } from '../services/cookies';
-import { stripHTML, shorten } from '../services/text';
+import { generateTrashPostTitle } from '../services/text';
 
 import AuthenticatablePage from './_authenticatable';
 import Wrapper from '../components/Wrapper';
@@ -83,7 +83,7 @@ class TrashPage extends AuthenticatablePage {
     ));
     const paginationInfo = { ...meta, linkTexts: { next: 'Далі', previous: 'Назад' } };
 
-    const postTitle = single ? shorten(stripHTML(posts[0].body), 10) : null;
+    const postTitle = single ? generateTrashPostTitle(posts[0].body) : null;
     const pageTitle = [postTitle, 'Смітник', current.meta.title].filter((item) => item).join(' - ');
 
     return (

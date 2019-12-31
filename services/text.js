@@ -95,8 +95,30 @@ export function getImageLinksFromHTML(html) {
   return images;
 }
 
+export function generateTrashPostTitle(html) {
+  const text = stripHTML(html);
+
+  if (text) {
+    return shorten(text, 10);
+  }
+
+  const regexUk = /data-captionuk="(.+?)"/;
+  const regexEn = /data-captionen="(.+?)"/;
+
+  const matchResultsUk = html.match(regexUk) || [];
+
+  if (matchResultsUk.length) {
+    return matchResultsUk[1];
+  }
+
+  const matchResultsEn = html.match(regexEn) || [];
+
+  return matchResultsEn.length ? matchResultsEn[1] : null;
+}
+
 export default {
   getHighlightsOfKeywords,
   getImageLinksFromHTML,
   shorten,
+  generateTrashPostTitle,
 };
