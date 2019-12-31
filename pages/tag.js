@@ -83,6 +83,7 @@ class TagPage extends AuthenticatablePage {
       <Wrapper pathname={pathname}>
         <Head>
           <title>{`Записи з позначкою «${tag}» - ${current.meta.title}`}</title>
+          <meta name="description" content={`Записи про ${tag}`} key="description" />
         </Head>
         <Header />
         <Content>

@@ -65,11 +65,14 @@ class ArchivePage extends AuthenticatablePage {
         return [...previousPosts, <hr key={`hr${id}`} />, component];
       }, []);
 
+    const description = posts.map((post) => post.title.toLowerCase()).join(', ');
+
     return (
       <Wrapper pathname={pathname}>
         <Head>
           <title>{`Архів - ${current.meta.title}`}</title>
           <link rel="canonical" href={`${current.clientURL}/archive`} />
+          <meta name="description" content={`Архів записів — ${description}`} key="description" />
         </Head>
         <Header />
         <Content>
