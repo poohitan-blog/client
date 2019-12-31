@@ -69,6 +69,7 @@ class ArchivePage extends AuthenticatablePage {
       <Wrapper pathname={pathname}>
         <Head>
           <title>{`Архів - ${current.meta.title}`}</title>
+          <link rel="canonical" href={`${current.clientURL}/archive`} />
         </Head>
         <Header />
         <Content>

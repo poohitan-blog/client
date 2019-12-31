@@ -76,6 +76,9 @@ class IndexPage extends AuthenticatablePage {
       <>
         <Head>
           <title>{title}</title>
+
+          <link rel="canonical" href={current.clientURL} />
+
           <meta name="description" content={description} key="description" />
           <meta name="keywords" content={keywords.join(', ')} key="keywords" />
 

@@ -79,6 +79,9 @@ class PostPage extends AuthenticatablePage {
       <>
         <Head>
           <title>{title}</title>
+
+          <link rel="canonical" href={`${current.clientURL}/p/${post.path}`} />
+
           <meta name="description" content={description} key="description" />
           <meta name="keywords" content={post.tags.join(', ')} key="keywords" />
 

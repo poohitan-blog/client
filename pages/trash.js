@@ -86,10 +86,13 @@ class TrashPage extends AuthenticatablePage {
     const postTitle = single ? generateTrashPostTitle(posts[0].body) : null;
     const pageTitle = [postTitle, 'Смітник', current.meta.title].filter((item) => item).join(' - ');
 
+    const canonicalURL = single ? `${current.clientURL}/trash/${posts[0].id}` : `${current.clientURL}/trash`;
+
     return (
       <Wrapper pathname={pathname}>
         <Head>
           <title>{pageTitle}</title>
+          <link rel="canonical" href={canonicalURL} />
         </Head>
         <Header trashBinState={Trashbin.STATES.FULLY_OPEN} />
         <Content>
