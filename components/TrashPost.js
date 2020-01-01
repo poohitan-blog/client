@@ -94,7 +94,7 @@ class TrashPost extends React.Component {
       classList.push('trash-post-collapsed');
     }
 
-    const formattedDate = format(createdAt, 'dd:MM:yyyy, HH:mm');
+    const formattedDate = format(createdAt, 'dd.MM.yyyy, HH:mm');
     const lightboxImageSelector = `.trash-post-body a.${LIGHTBOX_CLASS}`;
 
     return (
