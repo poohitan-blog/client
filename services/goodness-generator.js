@@ -28,7 +28,7 @@ export function getPosition() {
     return currentPosition;
   }
 
-  const position = random({ min: 0, max: 10 }) <= 8 ? POSITIONS.BOTTOM : POSITIONS.TOP;
+  const position = random({ min: 0, max: 10 }) <= 9 ? POSITIONS.BOTTOM : POSITIONS.TOP;
 
   sessionStorage.setItem(POSITION_STORAGE_KEY_NAME, position);
 
