@@ -3,38 +3,60 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 export const LIGHTBOX_CLASS = 'lightbox-image';
 export const DEFAULT_THUMBNAIL_WIDTH = 800;
+const DEFAULT_THUMBNAIL_RELATIVE_HEIGHT = 60;
+
+function calculateRelativeThumbnailHeight(node) {
+  const {
+    'data-originalwidth': originalWidth,
+    'data-originalheight': originalHeight,
+  } = node.attribs;
+
+  return originalWidth && originalHeight
+    ? (originalHeight * 100) / originalWidth
+    : DEFAULT_THUMBNAIL_RELATIVE_HEIGHT;
+}
+function generateAltText(node, language) {
+  const {
+    alt,
+    'data-captionen': captionEn,
+    'data-captionuk': captionUk,
+  } = node.attribs;
+
+  const caption = language === 'uk' ? captionUk : captionEn;
+
+  return alt || caption;
+}
+
+function generateLinkTitle(node, language) {
+  const alt = generateAltText(node, language);
+  const clickToEnlarge = language === 'uk' ? 'Клацніть, аби збільшити' : 'Click to enlarge';
+
+  return alt ? `${alt}. ${clickToEnlarge}.` : clickToEnlarge;
+}
 
 export function generateLazyPreview(node, { altLanguage = 'uk', scrollPosition, thumbnailWidth = DEFAULT_THUMBNAIL_WIDTH } = {}) {
   const {
     src: originalSource,
-    alt,
     'data-averagecolor': averageColor,
-    'data-originalwidth': originalWidth,
-    'data-originalheight': originalHeight,
-    'data-captionen': captionEn,
-    'data-captionuk': captionUk,
   } = node.attribs;
 
   const placeholderSource = `${originalSource}?placeholder=true`;
   const thumbnailSource = `${originalSource}?width=${thumbnailWidth}`;
 
-  const relativeThumbnailHeight = originalWidth && originalHeight
-    ? (originalHeight * 100) / originalWidth
-    : 60;
+  const relativeThumbnailHeight = calculateRelativeThumbnailHeight(node);
+  const alt = generateAltText(node, altLanguage);
+  const title = generateLinkTitle(node, altLanguage);
 
   const classList = ['lazy-load-image-wrapper'];
 
-  const caption = altLanguage === 'uk' ? captionUk : captionEn;
-  const alternativeText = alt || caption || captionEn;
-
   return (
-    <a href={originalSource} className={LIGHTBOX_CLASS} key={originalSource} title="Клацніть, аби збільшити">
+    <a href={originalSource} className={LIGHTBOX_CLASS} key={originalSource} title={title}>
       <span className={classList.join(' ')}>
         <LazyLoadImage
           src={thumbnailSource}
           key={thumbnailSource}
           placeholderSrc={placeholderSource}
-          alt={alternativeText}
+          alt={alt}
           effect="blur"
           threshold={300}
           scrollPosition={scrollPosition}
