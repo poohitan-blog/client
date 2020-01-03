@@ -1,15 +1,6 @@
 @import 'aspect-ratio';
 
 @mixin readable-content-extended-features {
-  .video-16-9 {
-    @include aspect-ratio(16, 9);
-
-    iframe {
-      width: 100%;
-      height: 100%;
-    }
-  }
-
   .strava-activity {
     width: 100%;
     height: 400px;
