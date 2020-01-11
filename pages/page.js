@@ -41,8 +41,8 @@ class PagePage extends AuthenticatablePage {
           <link rel="canonical" href={`${current.clientURL}/${page.path}`} />
 
           <meta name="description" content={shorten(stripHTML(page.body), 20)} key="description" />
-          { page.customStyles && <style dangerouslySetInnerHTML={{ __html: page.customStyles }} /> }
         </Head>
+        { page.customStyles && <style dangerouslySetInnerHTML={{ __html: page.customStyles }} /> }
         <Header />
         <Content>
           <Page

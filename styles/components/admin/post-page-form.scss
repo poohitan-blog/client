@@ -1,7 +1,8 @@
 @import '../../variables';
 @import '../../mixins/multiple-dots';
 
-.post-form {
+.post-form,
+.page-form {
   .code-editor {
     font-size: 0.7em;
     line-height: 0.8em;

@@ -84,6 +84,7 @@ class EditPage extends ProtectedPage {
             body={page.body}
             path={page.path}
             private={page.private}
+            customStyles={page.customStyles}
             key={page.path}
             onChange={(value) => this.submit(value)}
           />
