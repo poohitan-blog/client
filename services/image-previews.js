@@ -22,9 +22,17 @@ function generateAltText(node, language) {
     'data-captionuk': captionUk,
   } = node.attribs;
 
-  const caption = language === 'uk' ? captionUk : captionEn;
+  const caption = language === 'uk'
+    ? captionUk
+    : captionEn;
+  const captionInfo = language === 'uk'
+    ? '(на думку штучного інтелекту)'
+    : '(description by AI)';
+  const fullCaption = caption
+    ? `${caption} ${captionInfo}`
+    : '';
 
-  return alt || caption;
+  return alt || fullCaption;
 }
 
 function generateLinkTitle(node, language) {
