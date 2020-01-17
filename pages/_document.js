@@ -34,7 +34,8 @@ class MyDocument extends Document {
           <meta name="google-site-verification" content={current.google.siteVerificationCode} key="google-site-verification" />
           <meta httpEquiv="content-type" content="text/html; charset=utf-8" key="content-type" />
 
-          <link rel="icon" href="/static/icons/favicon.ico" type="image/x-icon" />
+          <link rel="icon" href="/static/icons/favicon_96x96.png" type="image/png" sizes="96x96" />
+          <link rel="icon" href="/static/icons/favicon_256x256.png" type="image/png" sizes="256x256" />
           <link rel="alternate" type="application/rss+xml" title="poohitan.com" href={`${current.clientURL}/rss`} />
           <link rel="author" href="humans.txt" />
 
