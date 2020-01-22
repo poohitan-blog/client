@@ -23,8 +23,10 @@ class TrashPage extends AuthenticatablePage {
     try {
       const parentProps = await super.getInitialProps({ req });
 
-      if (query.id) {
-        const posts = [await API.trashPosts.findOne(query.id, getAllCookies(req))];
+      if (query.id || query.random) {
+        const posts = query.random
+          ? [await API.trashPosts.findRandom(getAllCookies(req))]
+          : [await API.trashPosts.findOne(query.id, getAllCookies(req))];
 
         return {
           ...parentProps,

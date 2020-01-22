@@ -164,6 +164,7 @@ const pages = {
 const trashPosts = {
   find: (query, cookies) => find({ model: TrashPost, query }, cookies),
   findOne: (id, cookies) => findOne({ model: TrashPost, param: id }, cookies),
+  findRandom: (cookies) => findOne({ model: TrashPost, param: 'random' }, cookies),
   update: (id, body, cookies) => update({ model: TrashPost, param: id, body }, cookies),
   create: (body, cookies) => create({ model: TrashPost, body }, cookies),
   remove: (id, cookies) => remove({ model: TrashPost, param: id }, cookies),

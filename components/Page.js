@@ -15,7 +15,7 @@ const Page = (props, context) => {
 
   return (
     <article className="page">
-      <h1 className="layout-row layout-align-start-start">
+      <h1 className="page-title layout-row layout-align-start-start">
         {title}
         {
           isAuthenticated

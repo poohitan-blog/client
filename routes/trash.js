@@ -15,6 +15,10 @@ module.exports = (app) => {
     app.render(req, res, '/admin/edit-trash-post', req.query);
   });
 
+  router.get('/trash/random', (req, res) => {
+    app.render(req, res, '/trash', { ...req.query, random: true });
+  });
+
   router.get('/trash/:trash_post_id', (req, res) => {
     app.render(req, res, '/trash', { ...req.query, id: req.params.trash_post_id });
   });
