@@ -2,8 +2,8 @@
 @import './mixins/aspect-ratio';
 
 @font-face {
-  font-family: 'Movavi Grotesque';
-  src: url('/static/fonts/movavi-grotesque.ttf');
+  font-family: 'Gilroy';
+  src: url('/static/fonts/gilroy-heavy.ttf');
   font-display: swap;
 }
 
@@ -57,8 +57,8 @@ body {
 h1 {
   font-family: $header-font-family;
   color: $dark-grey;
-  font-size: 1.7em;
-  margin: 1.12em 0 0.4em 0;
+  font-size: 1.8em;
+  margin: 1em 0 0.7em 0;
   line-height: 1.1em;
 }
 

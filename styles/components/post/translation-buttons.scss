@@ -2,8 +2,8 @@
 
 .post-translation-buttons {
   position: absolute;
-  left: calc(0.2em - #{$wrapper-padding});
-  top: -0.3em;
+  left: calc(0.6rem - #{$wrapper-padding});
+  top: -0.5rem;
 
   .post-translation-button {
     background-color: white;
@@ -14,8 +14,8 @@
     border-radius: 50%;
     display: block;
     margin: 0.2em 0;
-    width: 1em;
-    height: 1em;
+    width: 2rem;
+    height: 2rem;
     transition: all 100ms linear;
     transform-origin: center center;
 
@@ -31,11 +31,13 @@
     position: relative;
     left: auto;
     top: auto;
-    margin-left: 0.4em;
-    margin-top: -0.1em;
+    margin-left: 1rem;
+    margin-top: 0rem;
     display: flex;
 
     .post-translation-button {
+      height: 1.7rem;
+      width: 1.7rem;
       margin: 0 0.2em;
     }
   }
