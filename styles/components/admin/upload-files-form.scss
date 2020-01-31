@@ -1,14 +1,16 @@
-@import '../../variables';
+@import 'generic-form';
 
-.upload-files-form {
-  .upload-files-form-dropzone,
-  .upload-files-form-links-textarea {
-    height: 20vh;
-  }
+.dropzone,
+.links-textarea {
+  height: 20vh;
+}
 
-  .upload-files-form-links-textarea {
-    white-space: pre;
-    line-height: 2em;
-    padding: 0.7em 1em;
-  }
+.links-textarea {
+  white-space: pre;
+  line-height: 2em;
+  padding: 0.7em 1em;
+}
+
+.footer {
+  justify-content: flex-end;
 }

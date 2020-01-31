@@ -1,91 +1,74 @@
 @import '../../variables';
+@import '../../mixins/smaller';
+@import '../../mixins/text-overflow-ellipsis';
 
 $wrapper-padding: 0.6em;
 $item-horizontal-margin: 0.6em;
 
-.post-footer {
+.wrapper {
   background-color: $yellowy-grey;
+  display: flex;
   line-height: 1.55em;
   padding: 0 $wrapper-padding;
   overflow: hidden;
   position: relative;
+  @include smaller;
 
   @media (max-width: 640px) {
     flex-wrap: wrap;
     font-size: 1em;
     padding: 0.5em;
+    justify-content: center;
+    align-items: center;
   }
+}
 
-  .post-footer-item {
-    padding: 0.3em;
-    margin-left: $item-horizontal-margin;
-    margin-right: $item-horizontal-margin;
+.item {
+  padding: 0.3em;
+  margin-left: $item-horizontal-margin;
+  margin-right: $item-horizontal-margin;
 
-    @media (max-width: 640px) {
-      padding: 0.1em;
-    }
+  @media (max-width: 640px) {
+    padding: 0.1em;
   }
+}
 
-  .post-footer-icon {
-    fill: $dark-grey;
-  }
+.icon {
+  fill: $dark-grey;
+}
 
-  .post-footer-comments-icon {
+.icon-label {
+  margin-left: 0.5em;
+  white-space: nowrap;
+}
+
+.comments {
+  display: flex;
+  align-items: center;
+  @extend .item;
+
+  .comments-icon {
     width: 1.2em;
     min-width: 1.2em;
+    @extend .icon;
   }
+}
 
-  .post-footer-date-icon {
+.date {
+  display: flex;
+  align-items: center;
+  @extend .item;
+
+  .date-icon {
     width: 1.1em;
     min-width: 1.1em;
+    @extend .icon;
   }
+}
 
-  .post-footer-tags {
-    background-color: $yellowy-grey;
-    overflow: hidden;
-    text-overflow: ellipsis;
+.tags {
+  white-space: nowrap;
 
-    @media (min-width: 640px) {
-      &:hover {
-        +.post-footer-social-wrapper,
-        +.post-footer-social-wrapper * {
-          transition: opacity 300ms linear;
-          opacity: 0;
-          pointer-events: none;
-        }
-      }
-    }
-  }
-
-  .post-footer-social {
-    font-size: 0.85em;
-    opacity: 1;
-    pointer-events: all;
-    transition: opacity 100ms linear;
-
-    @media (min-width: 640px) {
-      position: absolute;
-      top: 0;
-      right: 0;
-      background: linear-gradient(to left, $yellowy-grey, $yellowy-grey 70%, transparent);
-      padding-left: 3.5em;
-      padding-right: $wrapper-padding;
-    }
-
-    .jssocials-shares {
-      margin: 0;
-
-      * {
-        margin: 0 2px;
-
-        &:first-child {
-          margin-left: 0;
-        }
-
-        &:last-child {
-          margin-right: 0;
-        }
-      }
-    }
-  }
+  @extend .item;
+  @include text-overflow-ellipsis;
 }

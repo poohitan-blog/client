@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 
 import { describeWordCount } from '../../services/grammar';
 
+import styles from '../../styles/components/admin/tag-suggestions.scss';
+
 const TagSuggestions = ({ tags, count, onClick }) => {
   const markup = Object.keys(tags)
     .sort((left, right) => {
@@ -21,11 +23,11 @@ const TagSuggestions = ({ tags, count, onClick }) => {
       const tagWeight = tags[tag];
       const title = `${describeWordCount(tagWeight, ['запис', 'записи', 'записів'])} із цією позначкою`;
 
-      return <span key={tag} title={title} className="tag-suggestion" onClick={() => onClick(tag)}>{tag}</span>;
+      return <span key={tag} title={title} className={styles.suggestion} onClick={() => onClick(tag)}>{tag}</span>;
     });
 
   return (
-    <div className="tag-suggestions">
+    <div className={styles.wrapper}>
       {markup}
     </div>
   );

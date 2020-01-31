@@ -4,6 +4,8 @@ import HTMLReactParser from 'html-react-parser';
 import AdminControlButtons from './admin/ControlButtons';
 import HiddenIcon from '../public/static/icons/hidden.svg';
 
+import styles from '../styles/components/page.scss';
+
 const Page = (props, context) => {
   const {
     title,
@@ -14,18 +16,22 @@ const Page = (props, context) => {
   const { isAuthenticated } = context;
 
   return (
-    <article className="page">
-      <h1 className="page-title layout-row layout-align-start-start">
+    <article className={styles.wrapper} id="page">
+      <h1 className={styles.title} id="page-title">
         {title}
         {
           isAuthenticated
-          && <AdminControlButtons attachedTo="page" tokens={[path]} className="page-admin-control-buttons" />
+          && <AdminControlButtons attachedTo="page" tokens={[path]} className={styles.adminControlButtons} />
         }
         {
-          hidden && <div className="page-title-icon"><HiddenIcon /></div>
+          hidden && <div className={styles.titleIcon}><HiddenIcon /></div>
         }
       </h1>
-      <div className="page-body">{HTMLReactParser(body)}</div>
+      <div className={styles.body} id="page-body">
+        {
+          HTMLReactParser(body)
+        }
+      </div>
     </article>
   );
 };

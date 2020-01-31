@@ -9,6 +9,8 @@ import { trackWindowScroll } from 'react-lazy-load-image-component';
 
 import TinyPost from './TinyPost';
 
+import styles from '../styles/components/similar-posts-group.scss';
+
 const NUMBER_OF_POSTS_TO_DISPLAY = 3;
 
 const SimilarPostsGroup = ({ posts, scrollPosition }) => {
@@ -18,16 +20,16 @@ const SimilarPostsGroup = ({ posts, scrollPosition }) => {
     : posts;
 
   return (
-    <div className="similar-posts-group">
-      <div className="similar-posts-group-header">
-        <div className="nowrap">Може шось з цього теж буде цікаво:</div>
-        <div className="nowrap">
+    <div className={styles.wrapper} id="similar-posts-group">
+      <div className={styles.header}>
+        <div className={styles.headerItem}>Може шось з цього теж буде цікаво:</div>
+        <div className={styles.headerItem}>
           <span>Більше — в</span>
           {' '}
           <Link href="/archive"><a title="Архів">Архіві</a></Link>
         </div>
       </div>
-      <div className="similar-posts-group-container">
+      <div className={styles.container}>
         {
           shuffle(postsToDisplay)
             .slice(0, NUMBER_OF_POSTS_TO_DISPLAY)

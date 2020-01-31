@@ -1,12 +1,12 @@
 @import '../variables';
 
-.similar-posts-group {
+.wrapper {
   margin: 1em 0;
   font-size: 0.8em;
   background-color: $yellowy-grey;
   padding: 0.7em;
 
-  .similar-posts-group-header {
+  .header {
     color: $dark-grey;
     font-size: 1.1em;
     margin: -0.2em 0 0.4em 0;
@@ -15,7 +15,11 @@
     justify-content: space-between;
   }
 
-  .similar-posts-group-container {
+  .header-item {
+    white-space: nowrap;
+  }
+
+  .container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(10em, 1fr));
     grid-gap: 0.5em 0.5em;

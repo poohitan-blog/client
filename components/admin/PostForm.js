@@ -12,6 +12,8 @@ import Checkbox from '../ui/Checkbox';
 import Editor from '../../utils/editor';
 import TagSuggestions from './TagSuggestions';
 
+import styles from '../../styles/components/admin/post-form.scss';
+
 try {
   require('codemirror/mode/css/css');
 } catch (error) {
@@ -145,25 +147,25 @@ class PostForm extends React.Component {
     const link = this.getPostLinkMarkup();
 
     return (
-      <div className="post-form">
+      <div className={styles.wrapper}>
         <style>{codeMirrorStyles + codeMirrorThemeStyles}</style>
         <h1>{formTitle}</h1>
-        <div className="form">
+        <div className={styles.form}>
           <input
             type="text"
             placeholder="Назва"
             value={title}
             onChange={(event) => this.setState({ title: event.target.value })}
           />
-          <div className="post-form-path smaller layout-row layout-align-start-center">
+          <div className={styles.path}>
             <input
               type="text"
               value={path}
               placeholder="Адреса"
               onChange={(event) => this.setState({ path: event.target.value })}
-              className="flex-50"
+              className={styles.pathInput}
             />
-            <div className="nowrap text-overflow-ellipsis margin-left flex-50">
+            <div className={styles.pathPreview}>
               {link}
             </div>
           </div>
@@ -177,9 +179,9 @@ class PostForm extends React.Component {
             />
             <TagSuggestions tags={tagCloud} onClick={this.addTag} />
           </div>
-          <hr className="separator" />
+          <hr className={styles.separator} />
           <div>
-            <div className="layout-row layout-align-space-between-center">
+            <div className={styles.shortDescription}>
               <p>Короткий опис:</p>
               <span className="smaller">{`Залишилось символів: ${descriptionSymbolsLeft}`}</span>
             </div>
@@ -198,13 +200,13 @@ class PostForm extends React.Component {
                 theme: 'monokai',
               }}
               onBeforeChange={(editor, data, value) => this.setState({ customStyles: value })}
-              className={`code-editor ${customStyles ? '' : 'collapsed'}`}
+              className={`${styles.codeEditor} ${customStyles ? '' : styles.collapsed}`}
             />
           </div>
           {
             customStyles
               ? (
-                <div className="layout-row layout-align-start-center">
+                <div>
                   <span className="nowrap">Ширина зображень (у нерозгорнутому вигляді):</span>
                   <input
                     type="number"
@@ -218,8 +220,8 @@ class PostForm extends React.Component {
               )
               : null
           }
-          <hr className="separator" />
-          <div className="layout-row layout-wrap layout-align-start-center">
+          <hr className={styles.separator} />
+          <div className={styles.translations}>
             <p>Переклади:</p>
             {
               translations && translations.length
@@ -230,7 +232,7 @@ class PostForm extends React.Component {
                       as={`/p/${path}/translations/${translation.lang}/edit`}
                       href={`/admin/edit-post-translation?language=${translation.lang}&post=${path}`}
                     >
-                      <a className="post-translation-link">
+                      <a className={styles.translationLink}>
                         {translation.lang}
                         {translation.private ? <sup>(прих.)</sup> : null}
                       </a>
@@ -242,25 +244,23 @@ class PostForm extends React.Component {
               <a className="post-translation-link">(Додати)</a>
             </Link>
           </div>
-          <div className="layout-row layout-align-space-between-center flex-100">
-            <div className="layout-row layout-align-start-center flex-50">
+          <div className={styles.footer}>
+            <div className={styles.options}>
               <input
                 type="text"
                 placeholder="DD.MM.YYYY HH:mm"
                 value={dateString}
                 onChange={this.handleDateChange}
                 pattern="[0-3][0-9]\.[0-1][0-9]\.[1-2][0-9][0-9][0-9] [0-2][0-9]:[0-5][0-9]"
-                className="text-center flex-50"
+                className={styles.date}
               />
-              <div className="flex-offset-5">
-                <Checkbox
-                  label="Заховати"
-                  checked={hidden}
-                  onChange={(value) => this.setState({ private: value })}
-                />
-              </div>
+              <Checkbox
+                label="Заховати"
+                checked={hidden}
+                onChange={(value) => this.setState({ private: value })}
+              />
             </div>
-            <button type="submit" onClick={this.submit} className="flex-30">Вйо</button>
+            <button type="submit" onClick={this.submit} className={styles.submitButton}>Вйо</button>
           </div>
         </div>
       </div>

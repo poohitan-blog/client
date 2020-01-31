@@ -2,105 +2,47 @@
 @import '../mixins/readable-content';
 @import '../mixins/readable-content-extended-features';
 
-.post.post-complete {
-  .post-title {
-    padding: 0;
-    position: relative;
-  }
-
-  .post-body {
-    margin: 1em 0;
-
-    @include readable-content;
-    @include readable-content-extended-features;
-  }
-
-  .post-title-icons {
-    display: flex;
-    margin-left: 0.5em;
-
-    .post-title-icon {
-      height: 1em;
-      margin-right: 0.3em;
-
-      svg {
-        fill: $grey;
-        height: 100%;
-      }
-    }
-  }
-
-  .post-admin-control-buttons {
+.wrapper {
+  .admin-control-buttons {
     opacity: 0;
     pointer-events: none;
     transition: opacity 100ms linear;
   }
 
   &:hover {
-    .post-admin-control-buttons {
+    .admin-control-buttons {
       opacity: 1;
       pointer-events: all;
     }
   }
 }
 
-.post.post-compact {
-  margin: 1em 0;
-
-  .post-title {
-    margin-top: 0;
-  }
-
-  .post-title-icons {
-    margin-left: 0.5em;
-
-    .post-title-icon {
-      line-height: 1.6em;
-      height: 1em;
-
-      svg {
-        fill: $grey;
-        height: 100%;
-      }
-    }
-  }
-
-  .post-date {
-    color: $grey;
-    margin-left: 1em;
-    line-height: 2.1em;
-  }
-
-  @include readable-content;
+.title {
+  display: flex;
+  justify-content: start;
+  align-items: start;
+  padding: 0;
+  position: relative;
 }
 
-@media (max-width: 640px) {
-  .post.post-complete {
-    .post-body {
-      .lightbox-image,
-      .video-16-9,
-      pre {
-        margin-left: calc((100% - 100vw) / 2);
-      }
+.body {
+  margin: 1em 0;
 
-      .lightbox-image,
-      .video-16-9 {
-        width: calc(100% + 2em);
-      }
+  @include readable-content;
+  @include readable-content-extended-features;
+}
 
-      pre {
-        width: 100vw;
-      }
-    }
-  }
+.title-icons {
+  display: flex;
+  margin-left: 0.5em;
 
-  .post.post-compact {
-    .post-title {
-      margin-bottom: 0;
-    }
+  .title-icon {
+    height: 1em;
+    margin-right: 0.3em;
 
-    .post-date {
-      margin-left: 0;
+    svg {
+      fill: $grey;
+      height: 100%;
     }
   }
 }

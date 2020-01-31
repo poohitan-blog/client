@@ -4,7 +4,6 @@ import Document, {
 } from 'next/document';
 import Raspberries from '../services/raspberries';
 import { current } from '../config';
-import styles from '../styles/main.scss';
 
 class MyDocument extends Document {
   static async getInitialProps({ renderPage, req, res }) {
@@ -43,10 +42,8 @@ class MyDocument extends Document {
           <link rel="dns-prefetch" href="https://www.google-analytics.com" />
 
           <script defer src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML&locale=uk" />
-
-          <style dangerouslySetInnerHTML={{ __html: styles }} />
         </Head>
-        <body className={this.props.raspberriesDay ? 'raspberries' : ''}>
+        <body className={this.props.raspberriesDay ? 'raspberries' : null}>
           <Main />
           <NextScript />
         </body>

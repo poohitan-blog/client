@@ -2,9 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 import shuffle from 'shuffle-array';
+
 import { createWordCountDescriptor } from '../services/grammar';
 import API from '../services/api';
 import random from '../helpers/random';
+
+import styles from '../styles/components/tag-cloud.scss';
 
 const MAX_FONT_SIZE = 5;
 const MIN_FONT_SIZE = 1;
@@ -16,13 +19,13 @@ function shift($element, { x, y }) {
 }
 
 function shake($element) {
-  const isShaking = $element.hasClass('tag-shaking');
+  const isShaking = $element.hasClass(styles.isShaking);
 
   if (isShaking) {
     return;
   }
 
-  $element.addClass('tag-shaking');
+  $element.addClass(styles.isShaking);
 
   const stepDuration = 150;
   let step = 1;
@@ -47,7 +50,7 @@ function shake($element) {
 
     if (amplitude <= 0.8) {
       shift($element, { x: 0, y: 0 });
-      $element.removeClass('tag-shaking');
+      $element.removeClass(styles.isShaking);
 
       clearInterval(interval);
 
@@ -81,7 +84,7 @@ class TagCloud extends React.Component {
 
   componentDidUpdate() {
     const { shake: shouldShake } = this.props;
-    const $tags = $('.tag-cloud .tag');
+    const $tags = $(`.${styles.tag}`);
 
     $tags.on('mouseover', (event) => {
       const $tag = $(event.target);
@@ -124,15 +127,15 @@ class TagCloud extends React.Component {
     const { width } = this.props;
     const markup = tags.map(({ name, weight, normalizedWeight }) => (
       <Link href={`/tag?tag=${name}`} as={`/tag/${name}`} key={name}>
-        <a href={`/tag/${name}`} style={{ fontSize: `${normalizedWeight}em` }} data-weight={normalizedWeight} title={`${describePostsCount(weight)}`} className="tag">
+        <a href={`/tag/${name}`} style={{ fontSize: `${normalizedWeight}em` }} data-weight={normalizedWeight} title={`${describePostsCount(weight)}`} className={styles.tag}>
           {name}
         </a>
       </Link>
     ));
 
     return (
-      <div className="tag-cloud-wrapper">
-        <div className="tag-cloud" style={{ width }}>
+      <div className={styles.wrapper}>
+        <div className={styles.cloud} style={{ width }}>
           {markup}
         </div>
       </div>

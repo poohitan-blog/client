@@ -10,14 +10,17 @@ import '../../public/static/libs/froala/plugins/image.min';
 import '../../public/static/libs/froala/languages/uk';
 import './editor/buttons/cut';
 import './editor/buttons/quote';
-import editorStyles from '../../public/static/libs/froala/froala_editor.pkgd.min.css';
-import styles from '../../public/static/libs/froala/froala_style.min.css';
-import theme from '../../public/static/libs/froala/themes/custom.css';
+import editorStylesPackage from '../../public/static/libs/froala/froala_editor.pkgd.min.css';
+import editorStyles from '../../public/static/libs/froala/froala_style.min.css';
+import editorTheme from '../../public/static/libs/froala/themes/custom.css';
+import styles from '../../styles/components/admin/editor.scss';
 
 const buttons = [
   'bold', 'italic', 'underline', 'strikeThrough', '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', '|', 'subscript', 'superscript', '|', 'color', 'clearFormatting',
   '|', '-', 'insertLink', 'insertImage', 'insertVideo', 'insertFile', 'custom-quote', 'code', 'insertTable', '|', 'insertHR', 'fullscreen', 'html', 'cut',
 ];
+
+const EDITOR_CLASSNAME = 'js-editor';
 
 class Editor extends React.Component {
   componentDidMount() {
@@ -31,7 +34,7 @@ class Editor extends React.Component {
   }
 
   init() {
-    const $editor = $('.editor');
+    const $editor = $(`.${EDITOR_CLASSNAME}`);
 
     $editor.froalaEditor({
       charCounterCount: false,
@@ -120,10 +123,10 @@ class Editor extends React.Component {
 
   render() {
     return (
-      <div className="editor-wrapper">
+      <div className={styles.wrapper}>
         <link media="all" type="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
-        <style>{ editorStyles + styles + theme }</style>
-        <div className="editor" />
+        <style>{ editorStylesPackage + editorStylesPackage + editorTheme }</style>
+        <div className={EDITOR_CLASSNAME} />
       </div>
     );
   }

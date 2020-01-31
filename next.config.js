@@ -1,34 +1,34 @@
 const webpack = require('webpack');
 const path = require('path');
-const glob = require('glob');
+const shorthash = require('shorthash');
+const withSass = require('@zeit/next-sass');
 
-module.exports = {
+const CSS_MODULES_EXCLUDE_PATHS = ['node_modules', 'global'];
+
+module.exports = withSass({
+  cssModules: true,
+  cssLoaderOptions: {
+    camelCase: true,
+    getLocalIdent: (loaderContext, localIdentName, localName) => {
+      const { resourcePath } = loaderContext;
+
+      if (CSS_MODULES_EXCLUDE_PATHS.some((pathToExclude) => resourcePath.includes(pathToExclude))) {
+        return localName;
+      }
+
+      const fileName = path.basename(loaderContext.resourcePath);
+      const name = fileName.replace(/\.[^/.]+$/, '');
+      const hash = shorthash.unique(loaderContext.resourcePath);
+
+      return `${name}-${localName}--${hash}`;
+    },
+  },
+
   webpack: (config, { dev }) => { // eslint-disable-line
     const rules = [
       {
-        test: /\.(css|scss)/,
-        loader: 'emit-file-loader',
-        options: {
-          name: 'dist/[path][name].[ext]',
-        },
-      },
-      {
         test: /\.css$/,
-        use: ['babel-loader', 'raw-loader', 'postcss-loader'],
-      },
-      {
-        test: /\.s(a|c)ss$/,
-        use: ['babel-loader', 'raw-loader', 'postcss-loader',
-          {
-            loader: 'sass-loader',
-            options: {
-              includePaths: ['styles', 'node_modules']
-                .map((d) => path.join(__dirname, d))
-                .map((g) => glob.sync(g))
-                .reduce((a, c) => a.concat(c), []),
-            },
-          },
-        ],
+        use: ['babel-loader', 'raw-loader'],
       },
       {
         test: /\.svg$/,
@@ -53,4 +53,4 @@ module.exports = {
 
     return config;
   },
-};
+});

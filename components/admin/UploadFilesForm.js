@@ -6,6 +6,8 @@ import { getAllCookies } from '../../services/cookies';
 
 import Dropzone from '../Dropzone';
 
+import styles from '../../styles/components/admin/upload-files-form.scss';
+
 class UploadFilesForm extends React.Component {
   constructor(props) {
     super(props);
@@ -38,21 +40,21 @@ class UploadFilesForm extends React.Component {
     const { title } = this.props;
 
     const linksMarkup = links.length
-      ? <textarea className="upload-files-form-links-textarea" rows="10" readOnly value={links.join('\n')} />
+      ? <textarea className={styles.linksTextarea} rows="10" readOnly value={links.join('\n')} />
       : null;
 
     return (
       <div>
         <h1>{title}</h1>
-        <div className="form">
+        <div className={styles.form}>
           <Dropzone
             loading={loading}
             files={queue}
             onDrop={(files) => this.setState({ queue: files })}
-            className="upload-files-form-dropzone"
+            className={styles.dropzone}
           />
-          <div className="layout-row layout-align-end-center">
-            <button type="submit" onClick={() => this.submit()} className="flex-30">Вйо</button>
+          <div className={styles.footer}>
+            <button type="submit" onClick={() => this.submit()} className={styles.submitButton}>Вйо</button>
           </div>
           {
             linksMarkup

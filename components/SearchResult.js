@@ -7,6 +7,8 @@ import { isValid } from 'date-fns';
 import { stripHTML, getHighlightsOfKeywords, shorten } from '../services/text';
 import { formatPostDate } from '../services/grammar';
 
+import styles from '../styles/components/search-result.scss';
+
 const searchResultTypes = {
   post: 'Запис',
   page: 'Сторінка',
@@ -36,7 +38,7 @@ function highlightQueryInText(text, query) {
       return [...wordsBeforeLastWord, { text: [lastWord.text, word.text].join(' '), highlighted: true }];
     }, [])
     .map((word) => (word.highlighted
-      ? `<span class="search-result-highlight">${word.text}</span>`
+      ? `<span class=${styles.highlight}>${word.text}</span>`
       : word.text))
     .join(' ');
 }
@@ -73,24 +75,26 @@ function generateDescription(params) {
   const type = searchResultTypes[searchResultType];
   const date = isValid(publishedAt) ? publishedAt : createdAt;
 
-  const dateMarkup = (
-    <div className="search-result-description-date smaller">{formatPostDate(date)}</div>
-  );
-  let tagsMarkup;
-
-  if (searchResultType === 'post') {
-    const highlightedTags = tags.map((tag) => highlightQueryInText(tag, query)).join(', ');
-
-    tagsMarkup = `<span>Позначки: ${highlightedTags}</span>`;
-  }
+  const highlightedTags = tags
+    ? tags.map((tag) => highlightQueryInText(tag, query)).join(', ')
+    : null;
 
   return (
     <>
-      <div className="layout-row layout-align-space-between-center">
+      <div className={styles.descriptionWrapper}>
         <b>{type}</b>
-        {dateMarkup}
+        <div className={styles.date}>{formatPostDate(date)}</div>
       </div>
-      { tagsMarkup ? <div className="smaller nowrap">{HTMLReactParser(tagsMarkup)}</div> : null }
+      {
+        highlightedTags
+          ? (
+            <div className={styles.tags}>
+              <span>Позначки:&nbsp;</span>
+              {HTMLReactParser(highlightedTags)}
+            </div>
+          )
+          : null
+      }
     </>
   );
 }
@@ -118,7 +122,7 @@ const SearchResult = (props) => {
   if (regexes.some((regex) => regex.test(bodyText))) {
     const highlights = getHighlightsOfKeywords({ text: bodyText, keywords: queryWords })
       .map((highlight) => highlightQueryInText(highlight, query))
-      .join('<span class="search-result-highlight-separator"></span>');
+      .join(`<span class="${styles.highlightSeparator}"></span>`);
 
     resultBody = shorten(highlights, BODY_MAX_LENGTH_WORDS);
   } else {
@@ -135,14 +139,14 @@ const SearchResult = (props) => {
   });
 
   return (
-    <div className="search-result">
+    <div className={styles.wrapper}>
       <Link href={href} as={as}>
         <a title={resultTitle}>
-          <div className="search-result-inner">
+          <div className={styles.inner}>
             <h3>{HTMLReactParser(resultTitle)}</h3>
             <p>{HTMLReactParser(resultBody)}</p>
           </div>
-          <div className="search-result-description">
+          <div className={styles.description}>
             {description}
           </div>
         </a>

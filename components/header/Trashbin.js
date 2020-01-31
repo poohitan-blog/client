@@ -4,6 +4,8 @@ import TrashbinClosedIcon from '../../public/static/icons/trashbin.svg';
 import TrashbinSemiOpenIcon from '../../public/static/icons/trashbin-semi-open.svg';
 import TrashbinFullyOpenIcon from '../../public/static/icons/trashbin-fully-open.svg';
 
+import styles from '../../styles/components/header/trashbin.scss';
+
 class Trashbin extends React.Component {
   constructor(props) {
     super(props);
@@ -20,14 +22,14 @@ class Trashbin extends React.Component {
     const { state } = this.state;
 
     if (state === 'fully-open') {
-      return <TrashbinFullyOpenIcon className="trashbin-icon" />;
+      return <TrashbinFullyOpenIcon className={styles.icon} />;
     }
 
     if (state === 'semi-open') {
-      return <TrashbinSemiOpenIcon className="trashbin-icon" />;
+      return <TrashbinSemiOpenIcon className={styles.icon} />;
     }
 
-    return <TrashbinClosedIcon className="trashbin-icon" />;
+    return <TrashbinClosedIcon className={styles.icon} />;
   }
 
   semiOpen() {
@@ -55,8 +57,11 @@ class Trashbin extends React.Component {
   }
 
   render() {
+    const { className } = this.props;
+    const classList = [className, styles.wrapper];
+
     return (
-      <div className="header-trashbin" onMouseEnter={this.semiOpen} onMouseLeave={this.close}>
+      <div className={classList.join(' ')} onMouseEnter={this.semiOpen} onMouseLeave={this.close}>
         { this.getTrashbinIcon() }
       </div>
     );
@@ -71,10 +76,12 @@ Trashbin.STATES = {
 
 Trashbin.propTypes = {
   state: PropTypes.string,
+  className: PropTypes.string,
 };
 
 Trashbin.defaultProps = {
   state: Trashbin.STATES.CLOSED,
+  className: null,
 };
 
 export default Trashbin;

@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Router from 'next/router';
+
 import SearchIcon from '../public/static/icons/search.svg';
+import styles from '../styles/components/search-box.scss';
 
 const PLACEHOLDER = 'бісовий пошук';
 const ENTER_KEY_CODE = 13;
@@ -57,9 +59,15 @@ class SearchBox extends React.Component {
     const { query, isFocused } = this.state;
     const { className } = this.props;
 
+    const classList = [styles.wrapper, className];
+
+    if (isFocused) {
+      classList.push(styles.focused);
+    }
+
     return (
-      <div className={`search-box ${isFocused ? 'search-box-focused' : ''} smaller layout-row layout-align-start-center ${className}`}>
-        <SearchIcon className="search-box-icon" />
+      <div className={classList.join(' ')}>
+        <SearchIcon className={styles.icon} />
         <input
           type="text"
           value={query}
@@ -68,7 +76,7 @@ class SearchBox extends React.Component {
           onBlur={this.blur}
           onKeyPress={this.handleKeyPress}
           onChange={this.setQuery}
-          className="search-box-input"
+          className={styles.input}
         />
       </div>
     );
@@ -82,7 +90,7 @@ SearchBox.propTypes = {
 
 SearchBox.defaultProps = {
   query: '',
-  className: '',
+  className: null,
 };
 
 export default SearchBox;

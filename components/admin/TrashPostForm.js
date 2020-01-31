@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Editor from '../../utils/editor';
 
+import styles from '../../styles/components/admin/trash-post-form.scss';
+
 class TrashPostForm extends React.Component {
   constructor(props) {
     super(props);
@@ -33,10 +35,10 @@ class TrashPostForm extends React.Component {
     return (
       <>
         <h1>{title}</h1>
-        <div className="form">
+        <div className={styles.form}>
           <Editor key={id} html={body} onChange={(value) => this.setState({ body: value })} />
-          <div className="layout-row layout-align-end-center">
-            <button type="submit" onClick={this.submit} className="flex-30">Вйо</button>
+          <div className={styles.footer}>
+            <button type="submit" onClick={this.submit} className={styles.submitButton}>Вйо</button>
           </div>
         </div>
       </>

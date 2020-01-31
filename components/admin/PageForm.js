@@ -10,6 +10,8 @@ import { current } from '../../config';
 import Checkbox from '../ui/Checkbox';
 import Editor from '../../utils/editor';
 
+import styles from '../../styles/components/admin/page-form.scss';
+
 try {
   require('codemirror/mode/css/css');
 } catch (error) {
@@ -69,25 +71,25 @@ class PageForm extends React.Component {
     const link = this.getPageLinkMarkup();
 
     return (
-      <div className="page-form">
+      <div className={styles.wrapper}>
         <h1>{pageTitle}</h1>
         <style>{codeMirrorStyles + codeMirrorThemeStyles}</style>
-        <div className="form">
+        <div className={styles.form}>
           <input
             type="text"
             placeholder="Назва"
             value={title}
             onChange={(event) => this.setState({ title: event.target.value })}
           />
-          <div className="smaller layout-row layout-align-start-center flex-100">
+          <div className={styles.path}>
             <input
               type="text"
               value={path}
               placeholder="Адреса"
               onChange={(event) => this.setState({ path: event.target.value })}
-              className="flex-50"
+              className={styles.pathInput}
             />
-            <div className="nowrap text-overflow-ellipsis margin-left flex-50">
+            <div className={styles.pathPreview}>
               {link}
             </div>
           </div>
@@ -101,16 +103,16 @@ class PageForm extends React.Component {
                 theme: 'monokai',
               }}
               onBeforeChange={(editor, data, value) => this.setState({ customStyles: value })}
-              className={`code-editor ${customStyles ? '' : 'collapsed'}`}
+              className={`${styles.codeEditor} ${customStyles ? '' : styles.collapsed}`}
             />
           </div>
-          <div className="layout-row layout-align-space-between-center">
+          <div className={styles.footer}>
             <Checkbox
               label="Заховати"
               checked={hidden}
               onChange={(value) => this.setState({ private: value })}
             />
-            <button type="submit" onClick={this.submit} className="flex-30">Вйо</button>
+            <button type="submit" onClick={this.submit} className={styles.submitButton}>Вйо</button>
           </div>
         </div>
       </div>

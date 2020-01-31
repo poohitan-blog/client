@@ -10,6 +10,8 @@ import { getPosition } from '../services/goodness-generator';
 import AdminPanel from './admin/Panel';
 import LoginButton from './LoginButton';
 
+import styles from '../styles/components/wrapper.scss';
+
 NProgress.configure({ showSpinner: false });
 Router.onRouteChangeStart = () => NProgress.start();
 Router.onRouteChangeComplete = () => NProgress.done();
@@ -55,12 +57,12 @@ class Wrapper extends React.Component {
       .filter((token) => token)
       .map((token) => `${token}-wrapper`);
 
-    const classList = ['wrapper', ...pathTokens, className, goodnessGeneratorClassName];
+    const classList = [styles.wrapper, ...pathTokens, className, goodnessGeneratorClassName];
 
     return (
       <>
         <style>{lazyLoadBlurEffect}</style>
-        <div className={classList.join(' ')}>
+        <div id="wrapper" className={classList.join(' ')}>
           {
             children
           }
@@ -70,7 +72,7 @@ class Wrapper extends React.Component {
           {
             !isAuthenticated && <LoginButton />
           }
-          <div className="wrapper-shadow" />
+          <div className={styles.shadow} />
         </div>
       </>
     );
@@ -85,7 +87,7 @@ Wrapper.propTypes = {
 
 Wrapper.defaultProps = {
   pathname: '',
-  className: '',
+  className: null,
 };
 
 Wrapper.contextTypes = {

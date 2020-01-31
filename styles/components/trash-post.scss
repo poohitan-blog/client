@@ -1,37 +1,48 @@
 @import '../variables';
 @import '../mixins/readable-content';
 @import '../mixins/readable-content-extended-features';
+@import '../mixins/smaller';
 
-.trash-post {
+.wrapper {
   padding: 0.5em 0;
   position: relative;
 
-  .trash-post-body-wrapper {
+  .body-wrapper {
     position: relative;
   }
 
-  .trash-post-body {
+  .body {
     margin: 0.5em 0;
 
     @include readable-content;
     @include readable-content-extended-features;
   }
 
-  .trash-post-footer {
+  .footer {
     color: $light-grey;
     line-height: 1em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    @include smaller;
 
     a {
       color: $light-grey;
       text-decoration: none;
     }
 
-    .trash-post-footer-line {
+    .footer-line {
       margin: 0 1em;
+      width: 100%;
+    }
+
+    .date {
+      white-space: nowrap;
     }
   }
 
-  .trash-post-admin-control-buttons {
+  .admin-control-buttons {
     background-color: transparentize(white, 0.2);
     font-size: 1.3em;
     padding: 0.2em 0.5em;
@@ -50,53 +61,14 @@
   }
 
   &:hover {
-    .trash-post-admin-control-buttons {
+    .admin-control-buttons {
       opacity: 1;
       pointer-events: all;
     }
   }
 
-  &.trash-post-collapsable {
-    .trash-post-collapser {
-      background-color: $smoke-white;
-      color: $grey;
-      fill: $grey;
-
-      font-size: 0.9em;
-      text-transform: lowercase;
-      padding: 0.5em 1em;
-      margin: 0.5em 0;
-
-      cursor: pointer;
-
-      opacity: 0.7;
-      transition: opacity 150ms linear;
-
-      .trash-post-collapser-text {
-        padding: 0 1em;
-      }
-
-      .trash-post-collapser-icon {
-        display: flex;
-        transform: rotate(180deg);
-        transition: transform 100ms linear;
-
-        &.trash-post-collapser-icon-collapsed {
-          transform: rotate(0deg);
-        }
-      }
-
-      svg {
-        width: 1.5em;
-        height: 1.5em;
-      }
-
-      &:hover {
-        opacity: 1;
-      }
-    }
-
-    .trash-post-body-overlay-gradient {
+  &.collapsable {
+    .body-overlay-gradient {
       opacity: 0;
       pointer-events: none;
       transition: opacity 100ms linear;
@@ -109,14 +81,14 @@
       background: linear-gradient(to top, $white, rgba(255,255,255, 0.3) 75%, rgba(255,255,255, 0));
     }
 
-    &.trash-post-collapsed {
-      .trash-post-body {
+    &.collapsed {
+      .body {
         height: 1000px;
         max-height: 1000px;
         overflow: hidden;
       }
 
-      .trash-post-body-overlay-gradient {
+      .body-overlay-gradient {
         opacity: 1;
       }
     }

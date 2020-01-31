@@ -22,22 +22,22 @@ function generateAltText(node, language) {
     'data-captionuk': captionUk,
   } = node.attribs;
 
-  const caption = language === 'uk'
+  const captionByAI = language === 'uk'
     ? captionUk
     : captionEn;
   const captionInfo = language === 'uk'
     ? '(на думку штучного інтелекту)'
     : '(description by AI)';
-  const fullCaption = caption
-    ? `${caption} ${captionInfo}`
+  const caption = captionByAI
+    ? `${captionByAI} ${captionInfo}`
     : '';
 
-  return alt || fullCaption;
+  return alt || caption;
 }
 
 function generateLinkTitle(node, language) {
   const alt = generateAltText(node, language);
-  const clickToEnlarge = language === 'uk' ? 'Клацніть, аби збільшити' : 'Click to enlarge';
+  const clickToEnlarge = language === 'uk' ? 'Клацніть, шоб збільшити' : 'Click to enlarge';
 
   return alt ? `${alt}. ${clickToEnlarge}.` : clickToEnlarge;
 }

@@ -1,11 +1,11 @@
 @import '../../variables';
 
-.post-translation-buttons {
+.wrapper {
   position: absolute;
   left: calc(0.6rem - #{$wrapper-padding});
   top: -0.5rem;
 
-  .post-translation-button {
+  .button {
     background-color: white;
     background-size: cover;
     background-position: center center;
@@ -27,7 +27,7 @@
 }
 
 @media (max-width: 640px) {
-  .post-translation-buttons {
+  .wrapper {
     position: relative;
     left: auto;
     top: auto;
@@ -35,7 +35,7 @@
     margin-top: 0rem;
     display: flex;
 
-    .post-translation-button {
+    .button {
       height: 1.7rem;
       width: 1.7rem;
       margin: 0 0.2em;

@@ -1,0 +1,60 @@
+@import '../../mixins/form';
+@import '../../mixins/smaller';
+@import '../../mixins/text-overflow-ellipsis';
+
+.form {
+  @include form;
+}
+
+.path {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  @include smaller;
+
+  .path-input {
+    width: 50%;
+  }
+
+  .path-preview {
+    margin-left: 1em;
+    white-space: nowrap;
+    width: 50%;
+    @include text-overflow-ellipsis;
+  }
+}
+
+.code-editor {
+  font-size: 0.7em;
+  line-height: 0.8em;
+  width: 100%;
+  overflow: auto;
+
+  &.collapsed {
+    height: 5em;
+  }
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+
+  .date {
+    text-align: center;
+    margin-right: 1em;
+    width: 50%;
+  }
+
+  .options {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    width: 50%;
+  }
+
+  .submit-button {
+    width: 30%;
+  }
+}

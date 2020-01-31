@@ -5,6 +5,8 @@ import { formatPostDate, createWordCountDescriptor } from '../../services/gramma
 import CommentIcon from '../../public/static/icons/comment.svg';
 import CalendarIcon from '../../public/static/icons/calendar.svg';
 
+import styles from '../../styles/components/post/footer.scss';
+
 const describeCommentsCount = createWordCountDescriptor(['коментар', 'коментарі', 'коментарів']);
 
 class Footer extends React.Component {
@@ -14,6 +16,7 @@ class Footer extends React.Component {
       path,
       commentsCount,
       publishedAt,
+      id,
     } = this.props;
 
     const tagsMarkup = tags
@@ -35,18 +38,18 @@ class Footer extends React.Component {
       }, []);
 
     return (
-      <div className="post-footer layout-row layout-align-xs-center-center smaller">
-        <div className="post-footer-item post-footer-comments layout-row layout-align-start-center">
-          <CommentIcon className="post-footer-icon post-footer-comments-icon" />
+      <div className={styles.wrapper} id={id}>
+        <div className={styles.comments}>
+          <CommentIcon className={styles.commentsIcon} />
           <Link as={`/p/${path}#comments`} href={{ pathname: '/post', query: { path }, href: '#comments' }}>
-            <a title="Коментарі до запису" className="flex-offset-5 nowrap">{ describeCommentsCount(commentsCount) }</a>
+            <a title="Коментарі до запису" className={styles.iconLabel}>{ describeCommentsCount(commentsCount) }</a>
           </Link>
         </div>
-        <div className="post-footer-item post-footer-date layout-row layout-align-start-center">
-          <CalendarIcon className="post-footer-icon post-footer-date-icon" />
-          <span className="flex-offset-5 nowrap">{ formatPostDate(publishedAt) }</span>
+        <div className={styles.date}>
+          <CalendarIcon className={styles.dateIcon} />
+          <span className={styles.iconLabel}>{ formatPostDate(publishedAt) }</span>
         </div>
-        <div className="post-footer-item post-footer-tags nowrap">
+        <div className={styles.tags}>
           {
             tags.length ? (
               <>
@@ -67,10 +70,12 @@ Footer.propTypes = {
   commentsCount: PropTypes.number,
   publishedAt: PropTypes.instanceOf(Date).isRequired,
   tags: PropTypes.arrayOf(PropTypes.string).isRequired,
+  id: PropTypes.string,
 };
 
 Footer.defaultProps = {
   commentsCount: 0,
+  id: null,
 };
 
 export default Footer;

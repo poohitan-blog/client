@@ -1,0 +1,19 @@
+@import '../mixins/error';
+
+.header {
+  text-align: center;
+}
+
+.container {
+  margin: 1em 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.error {
+  width: 100%;
+  text-align: center;
+  @include error;
+}

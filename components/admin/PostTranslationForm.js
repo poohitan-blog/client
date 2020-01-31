@@ -5,6 +5,8 @@ import Link from 'next/link';
 import Checkbox from '../ui/Checkbox';
 import Editor from '../../utils/editor';
 
+import styles from '../../styles/components/admin/post-translation-form.scss';
+
 const MAX_DESCRIPTION_LENGTH = 160;
 
 class PostTranslationForm extends React.Component {
@@ -67,14 +69,14 @@ class PostTranslationForm extends React.Component {
             <a>{`«${post.title}»`}</a>
           </Link>
         </h1>
-        <div className="form">
+        <div className={styles.form}>
           <input
             type="text"
             placeholder="Назва"
             value={title}
             onChange={(event) => this.setState({ title: event.target.value })}
           />
-          <div className="smaller layout-row layout-align-start-center">
+          <div className={styles.language}>
             <input
               type="text"
               value={lang}
@@ -84,7 +86,7 @@ class PostTranslationForm extends React.Component {
           </div>
           <Editor html={body} onChange={(value) => this.setState({ body: value })} />
           <div>
-            <div className="layout-row layout-align-space-between-center">
+            <div className={styles.shortDescription}>
               <p>Короткий опис:</p>
               <span className="smaller">
                 {`Залишилось символів: ${descriptionSymbolsLeft}`}
@@ -96,15 +98,13 @@ class PostTranslationForm extends React.Component {
               onChange={(event) => this.handleDescriptionChange(event)}
             />
           </div>
-          <div className="layout-row layout-align-space-between-center">
-            <div className="flex-70">
-              <Checkbox
-                label="Заховати"
-                checked={hidden}
-                onChange={(value) => this.setState({ private: value })}
-              />
-            </div>
-            <button type="submit" onClick={this.submit} className="flex-30">Вйо</button>
+          <div className={styles.footer}>
+            <Checkbox
+              label="Заховати"
+              checked={hidden}
+              onChange={(value) => this.setState({ private: value })}
+            />
+            <button type="submit" onClick={this.submit} className={styles.submitButton}>Вйо</button>
           </div>
         </div>
       </>

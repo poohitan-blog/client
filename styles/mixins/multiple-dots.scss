@@ -1,3 +1,5 @@
+@import '../variables';
+
 @mixin multiple-dots($number: 3, $color: $lighter-grey) {
   border: none;
 
