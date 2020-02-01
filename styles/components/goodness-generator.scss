@@ -1,6 +1,6 @@
 @import '../variables';
 
-.goodness-generator {
+.wrapper {
   color: $light-grey;
   font-size: 0.75em;
   display: flex;
@@ -12,21 +12,7 @@
     height: 1em;
   }
 
-  .goodness-generator-text {
+  .text {
     margin-left: 0.5em;
-  }
-}
-
-.goodness-generator-on-top {
-  @media (min-width: 600px) {
-    .header-goodness-generator {
-      display: flex;
-    }
-  }
-}
-
-.goodness-generator-on-bottom {
-  .footer-goodness-generator {
-    display: flex;
   }
 }

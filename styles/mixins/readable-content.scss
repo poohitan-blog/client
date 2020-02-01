@@ -6,9 +6,11 @@
     margin: 2em 0;
   }
 
-  .lightbox-image {
-    display: block;
-    width: 100%;
+  :global {
+    .lightbox-image {
+      display: block;
+      width: 100%;
+    }
   }
 
   @media (max-width: 640px) {

@@ -11,6 +11,7 @@ import AdminControlButtons from './admin/ControlButtons';
 import { LIGHTBOX_CLASS, DEFAULT_THUMBNAIL_WIDTH } from '../services/image-previews';
 
 import HiddenIcon from '../public/static/icons/hidden.svg';
+import styles from '../styles/components/post.scss';
 
 const Lightbox = dynamic(import('./ui/Lightbox'), { ssr: false, loading: () => null });
 const SyntaxHighlighter = dynamic(import('./ui/SyntaxHighlighter'), { ssr: false, loading: () => null });
@@ -42,17 +43,13 @@ const Post = (props, context) => {
     ? { href: `/post?path=${path}&language=${translation.lang}`, as: `/p/${path}/${translation.lang}` }
     : { href: `/post?path=${path}`, as: `/p/${path}` };
 
-  const bodyMarkup = cut
-    ? <CutBody title={title} body={body} path={path} />
-    : <FullBody language={language} body={body} imagesWidth={imagesWidth} />;
-
-  const lightboxImageSelector = `.post[data-path="${path}"] .post-body a.${LIGHTBOX_CLASS}`;
+  const lightboxImageSelector = `.${styles.wrapper}[data-path="${path}"] a.${LIGHTBOX_CLASS}`;
 
   return (
-    <article className="post post-complete" data-path={path} id={cut ? null : 'beginning'}>
-      <h1 className="post-title layout-row layout-align-start-start">
+    <article className={styles.wrapper} data-path={path} id={cut ? null : 'post'}>
+      <h1 className={styles.title} id={cut ? null : 'post-title'}>
         <Link as={link.as} href={link.href}>
-          <a title={title}>{title}</a>
+          <a title={title} href={link.as}>{title}</a>
         </Link>
         {
           Boolean(translations.length)
@@ -64,9 +61,9 @@ const Post = (props, context) => {
               />
             )
         }
-        <div className="post-title-icons">
+        <div className={styles.titleIcons}>
           {
-            hidden && <div className="post-title-icon"><HiddenIcon /></div>
+            hidden && <div className={styles.titleIcon} id={cut ? null : 'post-title-icon'}><HiddenIcon /></div>
           }
           {
             isAuthenticated
@@ -74,13 +71,20 @@ const Post = (props, context) => {
               <AdminControlButtons
                 attachedTo={isTranslation ? 'postTranslation' : 'post'}
                 tokens={[path, translation.lang]}
-                className="post-admin-control-buttons"
+                className={styles.adminControlButtons}
+                id={cut ? null : 'post-admin-control-buttons'}
               />
             )
           }
         </div>
       </h1>
-      <div className="post-body">{bodyMarkup}</div>
+      <div className={styles.body} id={cut ? null : 'post-body'}>
+        {
+          cut
+            ? <CutBody title={title} body={body} path={path} />
+            : <FullBody language={language} body={body} imagesWidth={imagesWidth} />
+        }
+      </div>
       <Lightbox selector={lightboxImageSelector} />
       <SyntaxHighlighter />
       <MathHighlighter />
@@ -89,6 +93,7 @@ const Post = (props, context) => {
         commentsCount={commentsCount}
         publishedAt={new Date(publishedAt)}
         tags={tags}
+        id={cut ? null : 'post-footer'}
       />
     </article>
   );

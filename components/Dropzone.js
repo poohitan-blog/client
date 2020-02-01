@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import ReactDropzone from 'react-dropzone';
 import LoaderIcon from '../public/static/icons/three-dots.svg';
 
+import styles from '../styles/components/dropzone.scss';
+
 class Dropzone extends React.Component {
   constructor(props) {
     super(props);
@@ -36,21 +38,21 @@ class Dropzone extends React.Component {
       <ReactDropzone
         onDrop={this.onDrop}
         accept={accept}
-        className={`dropzone ${className}`}
-        activeClassName="dropzone-active"
-        acceptClassName="dropzone-accept"
-        rejectClassName="dropzone-reject"
+        className={`${styles.wrapper} ${className}`}
+        activeClassName={styles.active}
+        acceptClassName={styles.accept}
+        rejectClassName={styles.reject}
         disablePreview
         disabled={loading}
       >
-        <div className="dropzone-content">
-          <div className={`dropzone-loader ${loaderVisible && 'visible'}`}>
-            <LoaderIcon className="dropzone-loader-icon" />
+        <div className={styles.content}>
+          <div className={`${styles.loader} ${loaderVisible && styles.visible}`}>
+            <LoaderIcon className={styles.loaderIcon} />
           </div>
-          <div className={`dropzone-placeholder ${placeholderVisible && 'visible'}`}>
+          <div className={`${styles.placeholder} ${placeholderVisible && styles.visible}`}>
             Кидай сюди шо-небудь
           </div>
-          <div className="dropzone-filelist">{files.map((file) => <div key={file.name}>{file.name}</div>)}</div>
+          <div className={styles.filelist}>{files.map((file) => <div key={file.name}>{file.name}</div>)}</div>
         </div>
       </ReactDropzone>
     );
@@ -68,7 +70,7 @@ Dropzone.propTypes = {
 Dropzone.defaultProps = {
   files: [],
   accept: null,
-  className: '',
+  className: null,
   loading: false,
 };
 

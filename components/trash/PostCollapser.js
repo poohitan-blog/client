@@ -1,16 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import AngleIcon from '../../public/static/icons/angle-down.svg';
+import styles from '../../styles/components/trash/post-collapser.scss';
 
 const PostCollapser = ({ isPostCollapsed, onClick }) => {
   const text = isPostCollapsed ? 'Розгорнути' : 'Згорнути';
-  const iconClass = isPostCollapsed ? 'trash-post-collapser-icon-collapsed' : '';
+  const iconClass = isPostCollapsed ? styles.iconCollapsed : '';
 
   return (
-    <div className="trash-post-collapser layout-row layout-align-center-center" title={text} onClick={onClick}>
-      <div className={`trash-post-collapser-icon ${iconClass}`}><AngleIcon /></div>
-      <div className="trash-post-collapser-text">{text}</div>
-      <div className={`trash-post-collapser-icon ${iconClass}`}><AngleIcon /></div>
+    <div className={styles.wrapper} title={text} onClick={onClick}>
+      <div className={`${styles.icon} ${iconClass}`}><AngleIcon /></div>
+      <div className={styles.text}>{text}</div>
+      <div className={`${styles.icon} ${iconClass}`}><AngleIcon /></div>
     </div>
   );
 };

@@ -4,6 +4,8 @@ import Link from 'next/link';
 
 import { translatePostIsAvailableInThisLanguage, getCountryCodeByLanguageCode } from '../../services/translations';
 
+import styles from '../../styles/components/post/translation-buttons.scss';
+
 const Button = ({
   language, title, href, as,
 }) => {
@@ -16,14 +18,14 @@ const Button = ({
       as={as}
     >
       <a title={linkTitle}>
-        <div className={`post-translation-button flag-icon flag-icon-background flag-icon-${getCountryCodeByLanguageCode(language)}`} />
+        <div className={`${styles.button} flag-icon flag-icon-background flag-icon-${getCountryCodeByLanguageCode(language)}`} />
       </a>
     </Link>
   );
 };
 
 const TranslationButtons = ({ translations, language, path }, context) => (
-  <div className="post-translation-buttons">
+  <div className={styles.wrapper}>
     {
       language === 'uk'
         ? null

@@ -5,6 +5,8 @@ import Session from '../../services/session';
 import Page from './panel/Page';
 import Draft from './panel/Draft';
 
+import styles from '../../styles/components/admin/panel.scss';
+
 class Panel extends React.Component {
   static logOut(event) {
     event.preventDefault();
@@ -18,7 +20,7 @@ class Panel extends React.Component {
     const allPages = publicPages.concat(...privatePages);
 
     const pagesBlock = !pages.length ? null : (
-      <div className="admin-panel-block admin-panel-block-pages">
+      <div className={styles.block}>
         <h3>Сторінки</h3>
         <ul>
           {
@@ -34,7 +36,7 @@ class Panel extends React.Component {
 
     const { drafts = [] } = this.context;
     const draftsBlock = !drafts.length ? null : (
-      <div className="admin-panel-block admin-panel-block-drafts">
+      <div className={styles.block}>
         <h3>Чернетки</h3>
         <ul>
           {
@@ -49,8 +51,8 @@ class Panel extends React.Component {
     );
 
     return (
-      <nav className="admin-panel">
-        <div className="admin-panel-block admin-panel-block-main">
+      <nav className={styles.wrapper} id="admin-panel">
+        <div className={styles.block}>
           <h3>Панель приладів</h3>
           <ul>
             <li>

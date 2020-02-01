@@ -3,15 +3,17 @@ import PropTypes from 'prop-types';
 import Link from 'next/link';
 import HiddenIcon from '../../../public/static/icons/hidden.svg';
 
+import styles from '../../../styles/components/admin/panel.scss';
+
 const Page = (props) => {
   const { title, path, private: hidden } = props;
 
   return (
     <Link href={`/page?path=${path}`} as={`/${path}`}>
-      <a className="layout-row layout-align-start-center">
-        <div className="admin-panel-list-sentence">{title || path}</div>
+      <a className={styles.listItemWrapper}>
+        <div className={styles.listSentence}>{title || path}</div>
         {
-          hidden && <div className="admin-panel-list-icon"><HiddenIcon /></div>
+          hidden && <div className={styles.listIcon}><HiddenIcon /></div>
         }
       </a>
     </Link>

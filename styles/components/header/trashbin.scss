@@ -1,9 +1,7 @@
-@import '../../variables';
+.wrapper {
+  height: 1em;
 
-.header-trashbin {
-  height: 1.05em;
-
-  .trashbin-icon {
+  .icon {
     height: 100%;
     width: auto;
     margin: 0;

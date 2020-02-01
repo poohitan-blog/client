@@ -6,6 +6,8 @@ import { withRouter } from 'next/router';
 import GoodnessGenerator from './GoodnessGenerator';
 import SearchBox from './SearchBox';
 
+import styles from '../styles/components/footer.scss';
+
 const DEFAULT_LINK_TEXTS = {
   next: 'Старіші записи',
   previous: 'Новіші записи',
@@ -47,16 +49,22 @@ const Footer = ({ pagination, searchBox, router }) => {
     );
   }
 
+  const classList = [styles.wrapper];
+
+  if (!hasPagination) {
+    classList.push(styles.withoutPagination);
+  }
+
   return (
-    <div className={`footer ${hasPagination ? '' : 'footer-without-pagination'}`}>
-      <div className="footer-pagination">
+    <div className={classList.join(' ')} id="footer">
+      <div className={styles.pagination}>
         {previousPagelink}
         {nextPageLink}
       </div>
       {
-        searchBox ? <div className="footer-searchbox flex-35 flex-xs-100"><SearchBox /></div> : null
+        searchBox ? <div className={styles.searchBox} id="footer-searchbox"><SearchBox /></div> : null
       }
-      <GoodnessGenerator className="footer-goodness-generator" />
+      <GoodnessGenerator id="footer-goodness-generator" />
     </div>
   );
 };

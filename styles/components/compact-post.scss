@@ -1,0 +1,54 @@
+@import '../variables';
+@import '../mixins/readable-content';
+@import '../mixins/readable-content-extended-features';
+@import '../mixins/smaller';
+
+.wrapper {
+  margin: 1em 0;
+
+  @include readable-content;
+}
+
+.title-wrapper {
+  display: flex;
+  justify-content: space-between;
+
+  @media (max-width: 640px) {
+    flex-direction: column;
+  }
+}
+
+.title {
+  margin-top: 0;
+  display: flex;
+
+  @media (max-width: 640px) {
+    margin-bottom: 0;
+  }
+}
+
+.title-icons {
+  margin-left: 0.5em;
+
+  .title-icon {
+    line-height: 1.6em;
+    height: 1em;
+
+    svg {
+      fill: $grey;
+      height: 100%;
+    }
+  }
+}
+
+.date {
+  color: $grey;
+  margin-left: 1em;
+  line-height: 2.1em;
+  white-space: nowrap;
+  @include smaller;
+
+  @media (max-width: 640px) {
+    margin-left: 0;
+  }
+}

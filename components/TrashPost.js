@@ -10,6 +10,8 @@ import AdminControlButtons from './admin/ControlButtons';
 import PostCollapser from './trash/PostCollapser';
 import { generateLazyPreview, LIGHTBOX_CLASS } from '../services/image-previews';
 
+import styles from '../styles/components/trash-post.scss';
+
 const Lightbox = dynamic(import('./ui/Lightbox'), { ssr: false, loading: () => null });
 
 const MAX_UNCOLLAPSED_HEIGHT = 1000;
@@ -84,40 +86,40 @@ class TrashPost extends React.Component {
     const { collapsable, collapsed, body } = this.state;
     const { isAuthenticated } = this.context;
 
-    const classList = ['trash-post'];
+    const classList = [styles.wrapper];
 
     if (collapsable) {
-      classList.push('trash-post-collapsable');
+      classList.push(styles.collapsable);
     }
 
     if (collapsed) {
-      classList.push('trash-post-collapsed');
+      classList.push(styles.collapsed);
     }
 
     const formattedDate = format(createdAt, 'dd.MM.yyyy, HH:mm');
-    const lightboxImageSelector = `.trash-post-body a.${LIGHTBOX_CLASS}`;
+    const lightboxImageSelector = `.${styles.body} a.${LIGHTBOX_CLASS}`;
 
     return (
       <div className={classList.join(' ')}>
         {
           isAuthenticated
-          && <AdminControlButtons attachedTo="trashPost" tokens={[id]} className="trash-post-admin-control-buttons" />
+          && <AdminControlButtons attachedTo="trashPost" tokens={[id]} className={styles.adminControlButtons} />
         }
-        <div className="trash-post-body-wrapper">
-          <div className="trash-post-body" ref={this.bodyElement}>{ body }</div>
-          <div className="trash-post-body-overlay-gradient" />
+        <div className={styles.bodyWrapper}>
+          <div className={styles.body} ref={this.bodyElement}>{ body }</div>
+          <div className={styles.bodyOverlayGradient} />
         </div>
         <Lightbox selector={lightboxImageSelector} />
         {
           collapsable
           && <PostCollapser isPostCollapsed={collapsed} onClick={() => (collapsed ? this.unroll() : this.collapse())} />
         }
-        <div className="trash-post-footer smaller layout-row layout-align-space-between-center">
+        <div className={styles.footer}>
           <Link as={`/trash/${id}`} href={`/trash?id=${id}`}>
             <a title="Постійне посилання" className="nowrap">постійне посилання</a>
           </Link>
-          <hr className="trash-post-footer-line flex-100" />
-          <span className="nowrap">{ formattedDate }</span>
+          <hr className={styles.footerLine} />
+          <span className={styles.date}>{ formattedDate }</span>
         </div>
       </div>
     );

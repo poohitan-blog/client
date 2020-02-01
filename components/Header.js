@@ -8,20 +8,25 @@ import HomeIcon from '../public/static/icons/home.svg';
 import ArchiveIcon from '../public/static/icons/list.svg';
 import SecretAgentIcon from '../public/static/icons/secret-agent.svg';
 
+import styles from '../styles/components/header.scss';
+
 const Header = ({ trashBinState }) => {
   const items = [
     {
       title: 'Головна',
+      description: 'Головна сторінка',
       href: '/',
       icon: <HomeIcon />,
     },
     {
       title: 'Архів',
+      description: 'Архів записів',
       href: '/archive',
       icon: <ArchiveIcon />,
     },
     {
       title: 'Про',
+      description: 'Хто в біса все це пише',
       href: '/path?path=about',
       as: '/about',
       icon: <SecretAgentIcon />,
@@ -29,24 +34,24 @@ const Header = ({ trashBinState }) => {
     {
       title: 'Смітник',
       href: '/trash',
-      markup: <Trashbin state={trashBinState} />,
+      markup: <Trashbin state={trashBinState} className={styles.trashbin} />,
     },
   ];
 
   return (
-    <nav className="header">
-      <ul className="menu layout-row layout-align-center-center">
+    <nav className={styles.wrapper} id="header">
+      <ul className={styles.menu} id="header-menu">
         {
           items.map((item) => (
-            <li key={item.title} className="menu-item">
+            <li key={item.title} className={styles.menuItem}>
               <Link href={item.href} as={item.as || item.href}>
-                <a title={item.title}>
+                <a title={item.description || item.title}>
                   {
                     item.markup
                     || (
                       <>
-                        <span className="menu-item-content-desktop">{item.title}</span>
-                        <span className="menu-item-content-mobile">{item.icon}</span>
+                        <span className={styles.menuItemContentDesktop}>{item.title}</span>
+                        <span className={styles.menuItemContentMobile}>{item.icon}</span>
                       </>
                     )
                   }
@@ -56,10 +61,10 @@ const Header = ({ trashBinState }) => {
           ))
         }
       </ul>
-      <div className="header-border layout-row layout-align-center-center">
-        <hr className="flex-100" />
-        <GoodnessGenerator className="header-goodness-generator" />
-        <hr className="flex-100" />
+      <div className={styles.border} id="header-border">
+        <hr />
+        <GoodnessGenerator id="header-goodness-generator" />
+        <hr />
       </div>
     </nav>
   );

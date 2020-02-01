@@ -2,6 +2,8 @@ import React from 'react';
 import Link from 'next/link';
 import random from '../helpers/random';
 
+import styles from '../styles/components/login-button.scss';
+
 const angryEmojis = [
   'o͡͡͡͡͡͡͡͡͡͡͡͡͡͡╮(;´༎ຶД༎ຶ`)╭o͡͡͡͡͡͡͡͡͡͡͡͡͡͡',
   '╰(°ㅂ°)╯',
@@ -44,7 +46,7 @@ export default class LoginButton extends React.Component {
     return (
       <Link href="/login" as="/wardrobe">
         <a title="Не натискати" onClick={(event) => this.handleClick(event)}>
-          <div className="login-button" />
+          <div className={styles.button} />
         </a>
       </Link>
     );

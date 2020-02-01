@@ -2,12 +2,16 @@
 @import '../mixins/readable-content';
 @import '../mixins/readable-content-extended-features';
 
-.page {
-  .page-admin-control-buttons {
+.wrapper {
+  .admin-control-buttons {
     margin-left: 0.6em;
   }
 
-  .page-title-icon {
+  .title {
+    display: flex;
+  }
+
+  .title-icon {
     height: 1em;
     margin-left: 0.2em;
 
@@ -17,7 +21,7 @@
     }
   }
 
-  .page-body {
+  .body {
     @include readable-content;
     @include readable-content-extended-features;
   }

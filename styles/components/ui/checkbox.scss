@@ -1,18 +1,30 @@
 @import '../../variables';
 
-.checkbox {
-  .checkbox-native {
-    top: 0;
-    left: 0;
-    opacity: 0;
+.wrapper {
+  .native {
     display: block;
     position: relative;
     overflow: hidden;
+    top: 0;
+    left: 0;
+    opacity: 0;
     width: 0;
     height: 0;
+    // margin: 0;
+    // padding: 0;
   }
 
-  .checkbox-square {
+  .label-wrapper {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+  }
+
+  .label {
+    margin-left: 0.5em;
+  }
+
+  .square {
     border: 1px solid $light-grey;
     fill: $grey;
     box-sizing: border-box;
@@ -24,12 +36,8 @@
     }
   }
 
-  .checkbox-label {
-    margin-left: 0.5em;
-  }
-
   &:hover {
-    .checkbox-square {
+    .square {
       border-color: $orange;
     }
   }

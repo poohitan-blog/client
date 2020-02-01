@@ -1,6 +1,8 @@
 @import '../variables';
+@import '../mixins/smaller';
+@import '../mixins/text-overflow-ellipsis';
 
-.search-result {
+.wrapper {
   transition: padding-left 200ms linear;
   border-bottom: 1px solid $lighter-grey;
   box-sizing: border-box;
@@ -15,17 +17,19 @@
     border-bottom: none;
   }
 
-  .search-result-inner {
+  .inner {
     box-sizing: border-box;
     padding: 0.5em 0;
     width: calc(100% - 1em);
-
-    .search-result-date {
-      color: $grey;
-    }
   }
 
-  .search-result-description {
+  .description-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .description {
     background-color: $smoke-white;
 
     opacity: 0;
@@ -46,19 +50,20 @@
     }
 
     * {
-      text-overflow: ellipsis;
-      overflow: hidden;
+      @include text-overflow-ellipsis;
     }
 
-    .search-result-description-date {
+    .date {
       color: $white;
       background-color: $grey;
       padding: 1px 7px;
       border-radius: 8px;
+
+      @include smaller;
     }
   }
 
-  .search-result-highlight {
+  .highlight {
     color: white;
     background-color: $light-orange;
     padding: 1px 5px;
@@ -66,7 +71,7 @@
     box-decoration-break: clone;
   }
 
-  .search-result-highlight-separator {
+  .highlight-separator {
     padding: 0 5px;
 
     &:before {
@@ -76,8 +81,13 @@
     }
   }
 
+  .tags {
+    white-space: nowrap;
+    @include smaller;
+  }
+
   &:hover {
-    .search-result-description {
+    .description {
       opacity: 1;
       pointer-events: all;
     }

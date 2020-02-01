@@ -1,0 +1,5 @@
+@import '../variables';
+
+@mixin error {
+  color: $bloody-red;
+}

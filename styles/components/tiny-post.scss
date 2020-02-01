@@ -1,7 +1,8 @@
 @import '../variables';
 @import '../mixins/aspect-ratio';
+@import '../mixins/smaller';
 
-.tiny-post {
+.wrapper {
   @include aspect-ratio(4, 3);
 
   min-width: 10em;
@@ -14,8 +15,8 @@
   background-position: center center;
   background-color: transparentize($black, 0.7);
 
-  .tiny-post-content,
-  .tiny-post-shadow {
+  .content,
+  .shadow {
     position: absolute;
     top: 0;
     left: 0;
@@ -23,14 +24,14 @@
     height: 100%;
   }
 
-  .tiny-post-shadow {
+  .shadow {
     z-index: 2;
     background-color: $black;
     opacity: 0;
     transition: opacity 200ms linear;
   }
 
-  .tiny-post-content {
+  .content {
     box-sizing: border-box;
 
     display: flex;
@@ -41,17 +42,19 @@
     z-index: 5;
   }
 
-  .tiny-post-title {
+  .title {
     font-size: 1em;
     color: $white;
   }
 
-  .tiny-post-date {
+  .date {
     color: $light-grey;
+    white-space: nowrap;
+    @include smaller;
   }
 
-  .tiny-post-title,
-  .tiny-post-date {
+  .title,
+  .date {
     background-color: transparentize($black, 0.3);
     box-decoration-break: clone;
     padding: 0.2em 0.3em;
@@ -59,12 +62,12 @@
   }
 
   &:hover {
-    .tiny-post-title,
-    .tiny-post-date {
+    .title,
+    .date {
       background-color: transparent;
     }
 
-    .tiny-post-shadow {
+    .shadow {
       opacity: 0.6;
     }
   }

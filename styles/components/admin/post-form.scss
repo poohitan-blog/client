@@ -1,0 +1,18 @@
+@import 'generic-form';
+
+.translation-link {
+  margin: 0 0.5em;
+}
+
+.translations {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: start;
+  align-items: center;
+}
+
+.short-description {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

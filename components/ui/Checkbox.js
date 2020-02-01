@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import CheckIcon from '../../public/static/icons/check.svg';
+import styles from '../../styles/components/ui/checkbox.scss';
 
 class Checkbox extends React.Component {
   constructor(props) {
@@ -20,13 +22,13 @@ class Checkbox extends React.Component {
     const checkboxId = `checkbox-${label}`;
 
     return (
-      <div className="checkbox">
-        <label htmlFor={checkboxId} className="layout-row layout-align-start-center">
-          <input id={checkboxId} type="checkbox" checked={checked} onChange={this.change} className="checkbox-native" />
-          <div className="checkbox-square">
+      <div className={styles.wrapper}>
+        <label htmlFor={checkboxId} className={styles.labelWrapper}>
+          <input id={checkboxId} type="checkbox" checked={checked} onChange={this.change} className={styles.native} />
+          <div className={styles.square}>
             {checked && <CheckIcon />}
           </div>
-          <span className="checkbox-label">{label}</span>
+          <span className={styles.label}>{label}</span>
         </label>
       </div>
     );

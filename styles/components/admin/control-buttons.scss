@@ -1,7 +1,10 @@
 @import '../../variables';
 
-.admin-control-buttons {
-  .admin-control-button {
+.wrapper {
+  display: flex;
+  align-items: center;
+
+  .button {
     cursor: pointer;
     margin-left: 0.3em;
     padding: 0;
@@ -20,6 +23,18 @@
     &:hover {
       svg {
         fill: lighten($grey, 20%);
+      }
+    }
+  }
+
+  .popup-buttons-wrapper {
+    display: flex;
+
+    > button {
+      width: 50%;
+
+      &:last-child {
+        margin-left: 1em;
       }
     }
   }

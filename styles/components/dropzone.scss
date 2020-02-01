@@ -1,6 +1,6 @@
 @import '../variables';
 
-.dropzone {
+.wrapper {
   border: 1px dashed $light-grey;
   cursor: pointer;
   transition: all 150ms linear;
@@ -11,7 +11,7 @@
     border-color: $orange;
   }
 
-  .dropzone-content {
+  .content {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -22,18 +22,18 @@
     position: relative;
   }
 
-  .dropzone-placeholder,
-  .dropzone-loader {
+  .placeholder,
+  .loader {
     opacity: 0;
     transition: opacity 150ms linear;
     position: absolute;
-
-    &.visible {
-      opacity: 1;
-    }
   }
 
-  .dropzone-placeholder {
+  .visible {
+    opacity: 1;
+  }
+
+  .placeholder {
     pointer-events: none;
     user-select: none;
     left: 50%;
@@ -41,7 +41,7 @@
     transform: translate(-50%, -50%);
   }
 
-  .dropzone-loader {
+  .loader {
     background-color: $white;
     width: 100%;
     height: 100%;
@@ -51,25 +51,25 @@
     justify-content: center;
     align-items: center;
 
-    .dropzone-loader-icon {
+    .loader-icon {
       width: 3em;
       fill: $orange;
     }
   }
 
-  .dropzone-filelist {
+  .filelist {
     width: 100%;
     height: 100%;
   }
+}
 
-  &.dropzone-active,
-  &.dropzone-accept {
-    background-color: $yellowy-grey;
-  }
+.active,
+.accept {
+  background-color: $yellowy-grey;
+}
 
-  &.dropzone-reject {
-    background-color: lighten($bloody-red, 30%);
-    border-color: $bloody-red;
-    color: $white;
-  }
+.reject {
+  background-color: lighten($bloody-red, 30%);
+  border-color: $bloody-red;
+  color: $white;
 }

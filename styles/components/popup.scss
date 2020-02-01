@@ -1,19 +1,14 @@
-@import '../variables.scss';
+@import '../variables';
 
 $padding: 2em;
 
-.popup-wrapper {
+.wrapper {
   opacity: 0;
   pointer-events: none;
   transition: opacity 100ms linear;
   font-size: $main-font-size;
   font-family: $main-font-family;
   font-weight: normal;
-
-  &.popup-wrapper-visible {
-    opacity: 1;
-    pointer-events: all;
-  }
 
   .popup {
     background-color: $white;
@@ -31,7 +26,7 @@ $padding: 2em;
 
     z-index: 100;
 
-    .popup-close-button {
+    .close-button {
       position: absolute;
       top: $padding;
       right: $padding;
@@ -51,7 +46,7 @@ $padding: 2em;
     }
   }
 
-  .popup-shadow {
+  .shadow {
     background-color: transparentize($white, 0.3);
 
     position: fixed;
@@ -62,4 +57,9 @@ $padding: 2em;
 
     z-index: 10;
   }
+}
+
+.visible {
+  opacity: 1;
+  pointer-events: all;
 }

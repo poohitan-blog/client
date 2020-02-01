@@ -1,19 +1,24 @@
 @import '../variables';
+@import '../mixins/smaller';
 
-.search-box {
+.wrapper {
   border: 1px solid $light-grey;
   box-sizing: border-box;
+  display: flex;
+  align-items: center;
   padding: 4px 6px;
   width: 100%;
 
-  .search-box-icon {
+  @include smaller;
+
+  .icon {
     fill: $light-grey;
     width: 1em;
     min-width: 1em;
     margin-right: 0.5em;
   }
 
-  .search-box-input {
+  .input {
     background: transparent;
     color: $light-grey;
     border: none;
@@ -21,14 +26,14 @@
     padding: 0;
   }
 
-  &.search-box-focused {
+  &.focused {
     border-color: $orange;
 
-    .search-box-input {
+    .input {
       color: $orange;
     }
 
-    .search-box-icon {
+    .icon {
       fill: $orange;
     }
   }

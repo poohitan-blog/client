@@ -1,0 +1,10 @@
+@import 'post-form';
+@import '../../mixins/smaller';
+
+.language {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+
+  @include smaller;
+}

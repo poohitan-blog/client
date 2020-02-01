@@ -1,75 +1,87 @@
 @import '../variables';
 
-.header {
-  .menu {
-    padding: 0;
-    margin: 0;
-    padding: 3em 0 4em 0;
+.wrapper {
+}
 
-    .menu-item {
-      font-family: $header-font-family;
-      color: $dark-grey;
-      font-size: 1.85em;
-      margin: 0 0.5em;
+.menu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: 2.9em 0 4em 0;
 
-      svg {
-        height: 100%;
+  .menu-item {
+    font-family: $header-font-family;
+    color: $dark-grey;
+    font-size: 2em;
+    margin: 0 0.5em;
+
+    svg {
+      height: 100%;
+    }
+
+    .menu-item-content-mobile {
+      display: none;
+    }
+
+    .trashbin {
+      margin-top: -0.2em;
+    }
+
+    @media (max-width: 640px) {
+      margin: 0.5em;
+
+      .trashbin {
+        margin-top: -0.15em;
       }
 
-      .menu-item-content-mobile {
+      .menu-item-content-desktop {
         display: none;
       }
 
-      .header-trashbin {
-        margin-top: -0.3em;
-      }
-
-      @media (max-width: 640px) {
-        margin: 0.5em;
-
-        .header-trashbin {
-          margin-top: -0.2em;
-        }
-
-        .menu-item-content-desktop {
-          display: none;
-        }
-
-        .menu-item-content-mobile {
-          display: block;
-          height: 1em;
-        }
+      .menu-item-content-mobile {
+        display: block;
+        height: 1em;
       }
     }
+  }
 
-    li {
-      list-style-type: none;
-      margin: 0 1em;
-    }
+  li {
+    list-style-type: none;
+    margin: 0 1em;
+  }
 
-    a {
-      color: $dark-grey;
-      fill: $dark-grey;
+  a {
+    color: $dark-grey;
+    fill: $dark-grey;
+    text-decoration: none;
+
+    &:hover {
+      color: lighten($dark-grey, 19%);
+      fill: lighten($dark-grey, 19%);
       text-decoration: none;
-
-      &:hover {
-        color: lighten($dark-grey, 19%);
-        fill: lighten($dark-grey, 19%);
-        text-decoration: none;
-      }
     }
   }
+}
 
-  .header-border {
-    height: 0;
-    line-height: 0;
+.border {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 0;
+  line-height: 0;
+
+  hr {
+    width: 100%;
   }
+}
 
-  .header-goodness-generator {
-    display: none;
-  }
+:global(#header-goodness-generator) {
+  display: none;
+}
 
-  @media (max-width: 640px) {
+@media (max-width: 640px) {
+  .wrapper {
     font-size: 1.2em;
 
     .menu {

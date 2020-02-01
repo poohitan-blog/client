@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import CloseIcon from '../public/static/icons/remove.svg';
 
+import styles from '../styles/components/popup.scss';
+
 class Popup extends React.Component {
   constructor(props) {
     super(props);
@@ -17,17 +19,16 @@ class Popup extends React.Component {
 
   render() {
     const { visible, children } = this.props;
-    const visibilityClassName = visible ? 'popup-wrapper-visible' : '';
 
     return (
-      <div className={`popup-wrapper ${visibilityClassName}`}>
-        <div className="popup">
-          <button type="button" className="popup-close-button" onClick={this.close}>
+      <div className={`${styles.wrapper} ${visible ? styles.visible : ''}`}>
+        <div className={styles.popup}>
+          <button type="button" className={styles.closeButton} onClick={this.close}>
             <CloseIcon />
           </button>
           {children}
         </div>
-        <div className="popup-shadow" onClick={this.close} />
+        <div className={styles.shadow} onClick={this.close} />
       </div>
     );
   }

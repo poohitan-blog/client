@@ -8,6 +8,8 @@ import Content from '../components/Content';
 
 import Session from '../services/session';
 
+import styles from '../styles/pages/login.scss';
+
 const LOGIN_ATTEMPTS_MESSAGES = [
   'Пішов геть.',
   'Тобі треба два рази повторювати?',
@@ -88,12 +90,12 @@ class LoginPage extends React.Component {
           <title>Вхід у Нарнію</title>
         </Head>
         <Content>
-          <h1 className="text-center">Вхід у Нарнію</h1>
-          <div className="margin-top margin-bottom layout-column layout-align-center-center">
+          <h1 className={styles.header}>Вхід у Нарнію</h1>
+          <div className={styles.container}>
             <input type="password" onChange={this.setPassword} onKeyPress={this.handleKeyPress} />
             {
               error
-                ? <p className="flex-100 text-center error">{error}</p>
+                ? <p className={styles.error}>{error}</p>
                 : null
             }
           </div>

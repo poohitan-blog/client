@@ -7,8 +7,10 @@ import pluralize from 'pluralize';
 import Popup from '../Popup';
 import API from '../../services/api';
 import { getAllCookies } from '../../services/cookies';
+
 import EditIcon from '../../public/static/icons/edit.svg';
 import RemoveIcon from '../../public/static/icons/remove.svg';
+import styles from '../../styles/components/admin/control-buttons.scss';
 
 const linkGenerators = {
   page: {
@@ -76,7 +78,7 @@ class ControlButtons extends React.Component {
       <>
         <h1>{`Видалити ${contentTypes[attachedTo]}?`}</h1>
         <p>Якшо шо, можна буде відновити з бази.</p>
-        <div className="layout-row">
+        <div className={styles.popupButtonsWrapper}>
           <button type="button" onClick={this.hideRemovePopup} className="flex-50">
             Не треба
           </button>
@@ -89,7 +91,7 @@ class ControlButtons extends React.Component {
   }
 
   render() {
-    const { attachedTo, tokens, className } = this.props;
+    const { attachedTo, tokens, className, id } = this.props;
     const { removePopupVisible } = this.state;
 
     const linkGenerator = linkGenerators[attachedTo];
@@ -99,13 +101,13 @@ class ControlButtons extends React.Component {
     const popupContent = this.renderPopupContent();
 
     return (
-      <span className={`admin-control-buttons layout-row layout-align-start-center ${className}`}>
-        <div className="admin-control-button">
+      <span className={`${styles.wrapper} ${className}`} id={id}>
+        <div className={styles.button}>
           <Link as={as} href={href}>
             <a><EditIcon /></a>
           </Link>
         </div>
-        <div className="admin-control-button" onClick={this.showRemovePopup}>
+        <div className={styles.button} onClick={this.showRemovePopup}>
           <RemoveIcon />
         </div>
         <Popup visible={removePopupVisible} onClose={this.hideRemovePopup}>
@@ -120,10 +122,12 @@ ControlButtons.propTypes = {
   tokens: PropTypes.arrayOf(PropTypes.string).isRequired,
   attachedTo: PropTypes.string.isRequired,
   className: PropTypes.string,
+  id: PropTypes.string,
 };
 
 ControlButtons.defaultProps = {
-  className: '',
+  className: null,
+  id: null,
 };
 
 export default ControlButtons;

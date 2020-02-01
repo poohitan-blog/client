@@ -1,7 +1,7 @@
 @import '../../variables';
 @import '../../mixins/multiple-dots';
 
-.editor-wrapper {
+.wrapper {
   cut {
     display: block;
     width: 100%;
@@ -23,6 +23,7 @@
   pre {
     background: $dark-grey;
     color: $white;
+    white-space: break-spaces;
   }
 
   hr {
@@ -32,7 +33,7 @@
   }
 }
 
-.editor-loader-icon {
+.loader-icon {
   fill: $orange;
   width: 3em;
 }
