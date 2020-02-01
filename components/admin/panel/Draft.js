@@ -6,7 +6,7 @@ import styles from '../../../styles/components/admin/panel.scss';
 
 const Draft = ({ title, path }) => (
   <Link href={`/post?path=${path}`} as={`/p/${path}`}>
-    <a className={styles.listItemWrapper}>
+    <a className={styles.listItem}>
       <div className={styles.listSentence}>{title}</div>
     </a>
   </Link>

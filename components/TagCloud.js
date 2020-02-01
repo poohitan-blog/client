@@ -127,7 +127,13 @@ class TagCloud extends React.Component {
     const { width } = this.props;
     const markup = tags.map(({ name, weight, normalizedWeight }) => (
       <Link href={`/tag?tag=${name}`} as={`/tag/${name}`} key={name}>
-        <a href={`/tag/${name}`} style={{ fontSize: `${normalizedWeight}em` }} data-weight={normalizedWeight} title={`${describePostsCount(weight)}`} className={styles.tag}>
+        <a
+          href={`/tag/${name}`}
+          title={`${describePostsCount(weight)}`}
+          data-weight={normalizedWeight}
+          style={{ fontSize: `${normalizedWeight}em` }}
+          className={styles.tag}
+        >
           {name}
         </a>
       </Link>

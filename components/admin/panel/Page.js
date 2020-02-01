@@ -10,7 +10,7 @@ const Page = (props) => {
 
   return (
     <Link href={`/page?path=${path}`} as={`/${path}`}>
-      <a className={styles.listItemWrapper}>
+      <a className={styles.listItem}>
         <div className={styles.listSentence}>{title || path}</div>
         {
           hidden && <div className={styles.listIcon}><HiddenIcon /></div>

@@ -58,10 +58,9 @@ class Trashbin extends React.Component {
 
   render() {
     const { className } = this.props;
-    const classList = [className, styles.wrapper];
 
     return (
-      <div className={classList.join(' ')} onMouseEnter={this.semiOpen} onMouseLeave={this.close}>
+      <div className={`${styles.wrapper} ${className}`} onMouseEnter={this.semiOpen} onMouseLeave={this.close}>
         { this.getTrashbinIcon() }
       </div>
     );

@@ -55,11 +55,9 @@ export function generateLazyPreview(node, { altLanguage = 'uk', scrollPosition, 
   const alt = generateAltText(node, altLanguage);
   const title = generateLinkTitle(node, altLanguage);
 
-  const classList = ['lazy-load-image-wrapper'];
-
   return (
     <a href={originalSource} className={LIGHTBOX_CLASS} key={originalSource} title={title}>
-      <span className={classList.join(' ')}>
+      <span className="lazy-load-image-wrapper">
         <LazyLoadImage
           src={thumbnailSource}
           key={thumbnailSource}

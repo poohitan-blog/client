@@ -21,10 +21,17 @@ const Page = (props, context) => {
         {title}
         {
           isAuthenticated
-          && <AdminControlButtons attachedTo="page" tokens={[path]} className={styles.adminControlButtons} />
+          && (
+            <AdminControlButtons
+              attachedTo="page"
+              tokens={[path]}
+              className={styles.adminControlButtons}
+              id="page-admin-control-buttons"
+            />
+          )
         }
         {
-          hidden && <div className={styles.titleIcon}><HiddenIcon /></div>
+          hidden && <div className={styles.titleIcon} id="page-title-icon"><HiddenIcon /></div>
         }
       </h1>
       <div className={styles.body} id="page-body">
