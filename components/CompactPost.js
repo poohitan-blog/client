@@ -33,7 +33,9 @@ const CompactPost = (props) => {
             )
           }
         </h3>
-        <div className={styles.date}>{formatPostDate(publishedAt)}</div>
+        <div className={styles.date} title={formatPostDate(publishedAt, { detailed: true })}>
+          {formatPostDate(publishedAt)}
+        </div>
       </div>
       <div className={styles.body}>{shortenedBody}</div>
     </article>
