@@ -10,12 +10,6 @@
     margin: 0.5em 0;
   }
 
-  .fr-wrapper {
-    a[href*="froala.com/wysiwyg-editor?k=u"] {
-      display: none !important;
-    }
-  }
-
   p, li, blockquote, .blockquote {
     hyphens: none;
   }
@@ -36,4 +30,10 @@
 .loader-icon {
   fill: $orange;
   width: 3em;
+}
+
+:global(.fr-wrapper) {
+  a[href*="froala.com/wysiwyg-editor?k=u"] {
+    display: none !important;
+  }
 }

@@ -8,16 +8,24 @@ import { current } from '../../config';
 import '../../public/static/libs/froala/froala_editor.pkgd.min';
 import '../../public/static/libs/froala/plugins/image.min';
 import '../../public/static/libs/froala/languages/uk';
+
 import './editor/buttons/cut';
 import './editor/buttons/quote';
-import editorStylesPackage from '../../public/static/libs/froala/froala_editor.pkgd.min.css';
-import editorStyles from '../../public/static/libs/froala/froala_style.min.css';
+
+import editorStyles from '../../public/static/libs/froala/froala_editor.pkgd.min.css';
 import editorTheme from '../../public/static/libs/froala/themes/custom.css';
 import styles from '../../styles/components/admin/editor.scss';
 
 const buttons = [
-  'bold', 'italic', 'underline', 'strikeThrough', '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', '|', 'subscript', 'superscript', '|', 'color', 'clearFormatting',
-  '|', '-', 'insertLink', 'insertImage', 'insertVideo', 'insertFile', 'custom-quote', 'code', 'insertTable', '|', 'insertHR', 'fullscreen', 'html', 'cut',
+  'bold', 'italic', 'underline', 'strikeThrough',
+  '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL',
+  '|', 'subscript', 'superscript',
+  '|', 'color', 'clearFormatting',
+  '-', 'insertLink',
+  '|', 'insertImage', 'insertVideo', 'insertFile',
+  '|', 'custom-quote', 'insertTable', 'insertHR',
+  '|', 'cut',
+  '-', 'fullscreen', 'html',
 ];
 
 const EDITOR_CLASSNAME = 'js-editor';
@@ -124,8 +132,9 @@ class Editor extends React.Component {
   render() {
     return (
       <div className={styles.wrapper}>
-        <link media="all" type="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
-        <style>{ editorStylesPackage + editorStylesPackage + editorTheme }</style>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/v4-shims.css" />
+        <style>{ editorStyles + editorTheme }</style>
         <div className={EDITOR_CLASSNAME} />
       </div>
     );
