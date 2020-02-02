@@ -1,6 +1,6 @@
 $.FroalaEditor.DefineIcon('custom-quote', { NAME: 'quote-right' });
 $.FroalaEditor.RegisterCommand('custom-quote', {
-  title: 'Цитата',
+  title: 'Вставити цитату',
   focus: true,
   undo: true,
   refreshAfterCallback: true,
