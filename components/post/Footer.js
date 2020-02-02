@@ -47,7 +47,12 @@ class Footer extends React.Component {
         </div>
         <div className={styles.date}>
           <CalendarIcon className={styles.dateIcon} />
-          <span className={styles.iconLabel}>{ formatPostDate(publishedAt) }</span>
+          <span
+            className={styles.iconLabel}
+            title={formatPostDate(publishedAt, { detailed: true })}
+          >
+            { formatPostDate(publishedAt) }
+          </span>
         </div>
         <div className={styles.tags}>
           {

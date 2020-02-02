@@ -9,6 +9,7 @@ import { format } from 'date-fns';
 import AdminControlButtons from './admin/ControlButtons';
 import PostCollapser from './trash/PostCollapser';
 import { generateLazyPreview, LIGHTBOX_CLASS } from '../services/image-previews';
+import { formatPostDate } from '../services/grammar';
 
 import styles from '../styles/components/trash-post.scss';
 
@@ -96,7 +97,6 @@ class TrashPost extends React.Component {
       classList.push(styles.collapsed);
     }
 
-    const formattedDate = format(createdAt, 'dd.MM.yyyy, HH:mm');
     const lightboxImageSelector = `.${styles.body} a.${LIGHTBOX_CLASS}`;
 
     return (
@@ -119,7 +119,9 @@ class TrashPost extends React.Component {
             <a title="Постійне посилання" className="nowrap">постійне посилання</a>
           </Link>
           <hr className={styles.footerLine} />
-          <span className={styles.date}>{ formattedDate }</span>
+          <span className={styles.date} title={formatPostDate(createdAt, { detailed: true })}>
+            { formatPostDate(createdAt, { short: true }) }
+          </span>
         </div>
       </div>
     );

@@ -39,12 +39,21 @@ export function createWordCountDescriptor([one, twoToFour, rest]) {
   return (count) => describeWordCount(count, [one, twoToFour, rest]);
 }
 
-export function formatPostDate(date) {
+export function formatPostDate(date, { detailed = false, short = false } = {}) {
   if (!isValid(date)) {
     return 'Неправильна дата';
   }
 
+  const locale = uk;
   const timePrefix = getHours(date) === 11 ? 'об' : 'о';
+
+  if (short) {
+    return format(date, 'dd.MM.yyyy, HH:mm');
+  }
+
+  if (detailed) {
+    return format(date, `EEEE, d MMMM yyyy-го року Божого, ${timePrefix} HH:mm`, { locale });
+  }
 
   if (isToday(date)) {
     return `Сьогодні ${timePrefix} ${format(date, 'HH:mm')}`;
@@ -54,7 +63,7 @@ export function formatPostDate(date) {
     return `Вчора ${timePrefix} ${format(date, 'HH:mm')}`;
   }
 
-  return format(date, 'd MMMM yyyy', { locale: uk });
+  return format(date, 'd MMMM yyyy р.', { locale });
 }
 
 const HTTPDescriptions = {
