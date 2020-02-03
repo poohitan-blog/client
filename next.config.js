@@ -7,6 +7,7 @@ const CSS_MODULES_EXCLUDE_PATHS = ['node_modules', 'global'];
 
 module.exports = withSass({
   cssModules: true,
+
   cssLoaderOptions: {
     camelCase: true,
     getLocalIdent: (loaderContext, localIdentName, localName) => {
@@ -28,7 +29,7 @@ module.exports = withSass({
     const rules = [
       {
         test: /\.css$/,
-        use: ['babel-loader', 'raw-loader'],
+        use: ['babel-loader', 'raw-loader', 'postcss-loader'],
       },
       {
         test: /\.svg$/,
