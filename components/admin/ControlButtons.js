@@ -91,7 +91,12 @@ class ControlButtons extends React.Component {
   }
 
   render() {
-    const { attachedTo, tokens, className, id } = this.props;
+    const {
+      attachedTo,
+      tokens,
+      className,
+      id,
+    } = this.props;
     const { removePopupVisible } = this.state;
 
     const linkGenerator = linkGenerators[attachedTo];

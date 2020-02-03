@@ -4,7 +4,6 @@ import HTMLReactParser from 'html-react-parser';
 import { trackWindowScroll } from 'react-lazy-load-image-component';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
-import { format } from 'date-fns';
 
 import AdminControlButtons from './admin/ControlButtons';
 import PostCollapser from './trash/PostCollapser';
