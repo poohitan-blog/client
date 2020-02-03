@@ -79,10 +79,10 @@ class ControlButtons extends React.Component {
         <h1>{`Видалити ${contentTypes[attachedTo]}?`}</h1>
         <p>Якшо шо, можна буде відновити з бази.</p>
         <div className={styles.popupButtonsWrapper}>
-          <button type="button" onClick={this.hideRemovePopup} className="flex-50">
+          <button type="button" onClick={this.hideRemovePopup}>
             Не треба
           </button>
-          <button type="button" onClick={this.remove} className="flex-50 flex-offset-5">
+          <button type="button" onClick={this.remove}>
             Видалити
           </button>
         </div>
