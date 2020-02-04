@@ -8,7 +8,7 @@
 
 .path {
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
   align-items: center;
   @include smaller;
 
@@ -49,7 +49,7 @@
 
   .options {
     display: flex;
-    justify-content: start;
+    justify-content: flex-start;
     align-items: center;
     width: 50%;
   }

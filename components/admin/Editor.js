@@ -12,7 +12,8 @@ import '../../public/static/libs/froala/languages/uk';
 import './editor/buttons/cut';
 import './editor/buttons/quote';
 
-import editorStyles from '../../public/static/libs/froala/froala_editor.pkgd.min.css';
+import editorStyles from '../../public/static/libs/froala/froala_style.min.css';
+import editorStylesPackage from '../../public/static/libs/froala/froala_editor.pkgd.min.css';
 import editorTheme from '../../public/static/libs/froala/themes/custom.css';
 import styles from '../../styles/components/admin/editor.scss';
 
@@ -134,7 +135,7 @@ class Editor extends React.Component {
       <div className={styles.wrapper}>
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css" />
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/v4-shims.css" />
-        <style>{ editorStyles + editorTheme }</style>
+        <style>{ editorStyles + editorStylesPackage + editorTheme }</style>
         <div className={EDITOR_CLASSNAME} />
       </div>
     );
