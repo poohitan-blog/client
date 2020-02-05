@@ -21,7 +21,11 @@ class ArchivePage extends AuthenticatablePage {
     try {
       const parentProps = await super.getInitialProps({ query, req });
       const { page = 1 } = query;
-      const { docs, meta } = await API.posts.find({ page, limit: POSTS_PER_PAGE }, getAllCookies(req));
+      const { docs, meta } = await API.posts.find({
+        page,
+        limit: POSTS_PER_PAGE,
+        cut: true,
+      }, getAllCookies(req));
 
       return {
         ...parentProps,

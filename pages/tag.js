@@ -21,7 +21,12 @@ class TagPage extends AuthenticatablePage {
     try {
       const parentProps = await super.getInitialProps({ req });
       const { tag, page = 1 } = query;
-      const { docs, meta } = await API.posts.find({ tag, page, limit: POSTS_PER_PAGE }, getAllCookies(req));
+      const { docs, meta } = await API.posts.find({
+        tag,
+        page,
+        limit: POSTS_PER_PAGE,
+        cut: true,
+      }, getAllCookies(req));
 
       return {
         ...parentProps,
