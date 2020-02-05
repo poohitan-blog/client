@@ -26,7 +26,7 @@ const SimilarPostsGroup = ({ posts, scrollPosition }) => {
         <div className={styles.headerItem}>
           <span>Більше — в</span>
           {' '}
-          <Link href="/archive"><a title="Архів">Архіві</a></Link>
+          <Link href="/archive"><a title="Архів записів">Архіві</a></Link>
         </div>
       </div>
       <div className={styles.container}>
