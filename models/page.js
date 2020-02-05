@@ -5,5 +5,6 @@ export default {
     body: String,
     path: String,
     customStyles: String,
+    customStylesProcessed: String,
   },
 };

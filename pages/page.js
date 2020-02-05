@@ -42,7 +42,7 @@ class PagePage extends AuthenticatablePage {
 
           <meta name="description" content={shorten(stripHTML(page.body), 20)} key="description" />
         </Head>
-        { page.customStyles && <style dangerouslySetInnerHTML={{ __html: page.customStyles }} /> }
+        { page.customStylesProcessed && <style dangerouslySetInnerHTML={{ __html: page.customStylesProcessed }} /> }
         <Header />
         <Content>
           <Page

@@ -110,7 +110,7 @@ class PostPage extends AuthenticatablePage {
         </Head>
         <Wrapper pathname={pathname}>
           <Header />
-          { post.customStyles && <style dangerouslySetInnerHTML={{ __html: post.customStyles }} /> }
+          { post.customStylesProcessed && <style dangerouslySetInnerHTML={{ __html: post.customStylesProcessed }} /> }
           <Content>
             <Post
               title={post.title}
