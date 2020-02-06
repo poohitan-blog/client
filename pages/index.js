@@ -8,7 +8,8 @@ import { current } from '../config';
 import API from '../services/api';
 import { getAllCookies } from '../services/cookies';
 
-import AuthenticatablePage from './_authenticatable';
+import withSession from '../hocs/withSession';
+
 import Wrapper from '../components/Wrapper';
 import Header from '../components/Header';
 import Content from '../components/Content';
@@ -19,10 +20,9 @@ import Blog from '../components/jsonld/Blog';
 
 const POSTS_PER_PAGE = 20;
 
-class IndexPage extends AuthenticatablePage {
+class IndexPage extends React.Component {
   static async getInitialProps({ query, req, pathname }) {
     try {
-      const parentProps = await super.getInitialProps({ query, req });
       const { page = 1 } = query;
       const { docs, meta } = await API.posts.find({
         page,
@@ -31,7 +31,6 @@ class IndexPage extends AuthenticatablePage {
       }, getAllCookies(req));
 
       return {
-        ...parentProps,
         posts: docs,
         meta,
         pathname,
@@ -68,6 +67,7 @@ class IndexPage extends AuthenticatablePage {
         tags={post.tags}
       />
     ));
+
     const {
       title,
       description,
@@ -116,6 +116,8 @@ class IndexPage extends AuthenticatablePage {
 IndexPage.propTypes = {
   posts: PropTypes.arrayOf(PropTypes.object).isRequired,
 
+  pathname: PropTypes.string.isRequired,
+
   meta: PropTypes.shape({
     currentPage: PropTypes.number,
     totalPages: PropTypes.number,
@@ -130,4 +132,4 @@ IndexPage.defaultProps = {
   error: null,
 };
 
-export default IndexPage;
+export default withSession(IndexPage);

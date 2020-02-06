@@ -9,24 +9,23 @@ import Error from '../_error';
 import { getAllCookies } from '../../services/cookies';
 import { current } from '../../config';
 
-import ProtectedPage from '../_protected';
+import withSession from '../../hocs/withSession';
+import withProtection from '../../hocs/withProtection';
 import Wrapper from '../../components/Wrapper';
 import Header from '../../components/Header';
 import Content from '../../components/Content';
 import PageForm from '../../components/admin/PageForm';
 
-class EditPage extends ProtectedPage {
+class EditPage extends React.Component {
   static async getInitialProps({ req, query }) {
     try {
-      const parentProps = await super.getInitialProps({ req });
-
       if (!query.path) {
-        return parentProps;
+        return {};
       }
 
       const page = await API.pages.findOne(query.path, getAllCookies(req));
 
-      return { ...parentProps, page };
+      return { page };
     } catch (error) {
       return { error };
     }
@@ -41,25 +40,31 @@ class EditPage extends ProtectedPage {
     this.submit = this.submit.bind(this);
   }
 
-  async submit(page) {
-    const savedPage = page.id
-      ? await API.pages.update(this.props.page.path, page, getAllCookies())
-      : await API.pages.create(page, getAllCookies());
-
-    Router.push(`/page?path=${savedPage.path}`, `/${savedPage.path}`);
-  }
-
   getPageLinkMarkup() {
+    const { page } = this.props;
+    const { path: currentPath } = page;
+    const { path: newPath } = this.state;
+
     const prefix = `${current.clientURL}`;
-    const path = this.props.page.path || this.state.path || '';
+    const path = currentPath || newPath || '';
     const fullLink = `${prefix}/${path}`;
-    const isNewpage = !this.props.page.path;
+    const isNewpage = !currentPath;
 
     if (isNewpage) {
       return <span>{fullLink}</span>;
     }
 
     return <Link as={`/${path}`} href={`/page?path=${path}`}><a>{fullLink}</a></Link>;
+  }
+
+  async submit(submittedPage) {
+    const { page } = this.props;
+
+    const savedPage = page.id
+      ? await API.pages.update(page.path, submittedPage, getAllCookies())
+      : await API.pages.create(submittedPage, getAllCookies());
+
+    Router.push(`/page?path=${savedPage.path}`, `/${savedPage.path}`);
   }
 
   render() {
@@ -95,11 +100,23 @@ class EditPage extends ProtectedPage {
 }
 
 EditPage.propTypes = {
-  page: PropTypes.shape({}),
+  page: PropTypes.shape({
+    id: PropTypes.string,
+    path: PropTypes.string,
+    title: PropTypes.string,
+    body: PropTypes.string,
+    private: PropTypes.bool,
+    customStyles: PropTypes.string,
+  }),
+
+  error: PropTypes.shape({
+    status: PropTypes.number,
+  }),
 };
 
 EditPage.defaultProps = {
   page: {},
+  error: null,
 };
 
-export default EditPage;
+export default withProtection(withSession(EditPage));

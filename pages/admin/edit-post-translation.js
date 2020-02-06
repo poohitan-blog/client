@@ -7,26 +7,26 @@ import API from '../../services/api';
 import Error from '../_error';
 import { getAllCookies } from '../../services/cookies';
 
-import ProtectedPage from '../_protected';
+import withSession from '../../hocs/withSession';
+import withProtection from '../../hocs/withProtection';
 import Wrapper from '../../components/Wrapper';
 import Header from '../../components/Header';
 import Content from '../../components/Content';
 import PostTranslationForm from '../../components/admin/PostTranslationForm';
 
-class EditPostTranslation extends ProtectedPage {
+class EditPostTranslation extends React.Component {
   static async getInitialProps({ req, query }) {
     try {
-      const parentProps = await super.getInitialProps({ req });
       const post = await API.posts.findOne(query.post, getAllCookies(req));
 
       if (!query.language) {
-        return { ...parentProps, post };
+        return { post };
       }
 
       const translationId = post.translations.find((translation) => translation.lang === query.language).id;
       const translation = await API.postTranslations.findOne(translationId, getAllCookies(req));
 
-      return { ...parentProps, translation, post };
+      return { translation, post };
     } catch (error) {
       return { error };
     }
@@ -38,27 +38,33 @@ class EditPostTranslation extends ProtectedPage {
     this.submit = this.submit.bind(this);
   }
 
-  async submit(translation) {
-    const { post } = this.props;
+  async submit(submittedTranslation) {
+    const { post, translation } = this.props;
 
-    if (translation.id) {
-      await API.postTranslations.update(this.props.translation.id, translation, getAllCookies());
+    if (submittedTranslation.id) {
+      await API.postTranslations.update(translation.id, submittedTranslation, getAllCookies());
     } else {
-      const newTranslation = await API.postTranslations.create(translation, getAllCookies());
+      const newTranslation = await API.postTranslations.create(submittedTranslation, getAllCookies());
       const updatedListOfTranslations = [...post.translations.map((item) => item.id || item), newTranslation.id];
 
       await API.posts.update(post.path, { ...post, translations: updatedListOfTranslations });
     }
 
-    Router.push(`/post?path=${post.path}&language=${translation.lang}`, `/p/${post.path}/${translation.lang}`);
+    Router.push(`/post?path=${post.path}&language=${submittedTranslation.lang}`, `/p/${post.path}/${submittedTranslation.lang}`);
   }
 
   render() {
-    if (this.props.error) {
-      return <Error statusCode={this.props.error.status} />;
+    const {
+      post,
+      translation,
+      error,
+    } = this.props;
+
+    if (error) {
+      return <Error statusCode={error.status} />;
     }
 
-    const title = this.props.translation.id ? 'Редагувати переклад' : 'Додати переклад';
+    const title = translation.id ? 'Редагувати переклад' : 'Додати переклад';
 
     return (
       <Wrapper>
@@ -68,10 +74,10 @@ class EditPostTranslation extends ProtectedPage {
         <Header />
         <Content>
           <PostTranslationForm
-            translation={this.props.translation}
-            post={this.props.post}
-            key={this.props.translation.id}
-            onChange={(translation) => this.submit(translation)}
+            translation={translation}
+            post={post}
+            key={translation.id}
+            onChange={(updatedTranslation) => this.submit(updatedTranslation)}
           />
         </Content>
       </Wrapper>
@@ -80,12 +86,21 @@ class EditPostTranslation extends ProtectedPage {
 }
 
 EditPostTranslation.propTypes = {
-  translation: PropTypes.shape({}),
-  post: PropTypes.shape({}).isRequired,
+  translation: PropTypes.shape({
+    id: PropTypes.string,
+  }),
+  post: PropTypes.shape({
+    path: PropTypes.string,
+    translations: PropTypes.array(),
+  }).isRequired,
+  error: PropTypes.shape({
+    status: PropTypes.number,
+  }),
 };
 
 EditPostTranslation.defaultProps = {
   translation: {},
+  error: null,
 };
 
-export default EditPostTranslation;
+export default withProtection(withSession(EditPostTranslation));

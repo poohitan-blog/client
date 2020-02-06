@@ -9,6 +9,7 @@ import Footer from './post/Footer';
 import TranslationButtons from './post/TranslationButtons';
 import AdminControlButtons from './admin/ControlButtons';
 import { LIGHTBOX_CLASS, DEFAULT_THUMBNAIL_WIDTH } from '../services/image-previews';
+import { Context as SessionContext } from '../services/session';
 
 import HiddenIcon from '../public/static/icons/hidden.svg';
 import styles from '../styles/components/post.scss';
@@ -17,7 +18,7 @@ const Lightbox = dynamic(import('./ui/Lightbox'), { ssr: false, loading: () => n
 const SyntaxHighlighter = dynamic(import('./ui/SyntaxHighlighter'), { ssr: false, loading: () => null });
 const MathHighlighter = dynamic(import('./ui/MathHighlighter'), { ssr: false, loading: () => null });
 
-const Post = (props, context) => {
+const Post = (props) => {
   const {
     title: originalPostTitle,
     body: originalPostBody,
@@ -31,8 +32,6 @@ const Post = (props, context) => {
     publishedAt,
     tags,
   } = props;
-
-  const { isAuthenticated } = context;
 
   const translation = translations.find((item) => item.lang === language) || {};
   const isTranslation = Boolean(translation.lang);
@@ -65,17 +64,16 @@ const Post = (props, context) => {
           {
             hidden && <div className={styles.titleIcon} id={cut ? null : 'post-title-icon'}><HiddenIcon /></div>
           }
-          {
-            isAuthenticated
-            && (
+          <SessionContext.Consumer>
+            {({ isAuthenticated }) => isAuthenticated && (
               <AdminControlButtons
                 attachedTo={isTranslation ? 'postTranslation' : 'post'}
                 tokens={[path, translation.lang]}
                 className={styles.adminControlButtons}
                 id={cut ? null : 'post-admin-control-buttons'}
               />
-            )
-          }
+            )}
+          </SessionContext.Consumer>
         </div>
       </h1>
       <div className={styles.body} id={cut ? null : 'post-body'}>
@@ -120,10 +118,6 @@ Post.defaultProps = {
   translations: [],
   commentsCount: 0,
   imagesWidth: DEFAULT_THUMBNAIL_WIDTH,
-};
-
-Post.contextTypes = {
-  isAuthenticated: PropTypes.bool,
 };
 
 export default Post;

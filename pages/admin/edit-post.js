@@ -7,25 +7,25 @@ import API from '../../services/api';
 import Error from '../_error';
 import { getAllCookies } from '../../services/cookies';
 
-import ProtectedPage from '../_protected';
+import withSession from '../../hocs/withSession';
+import withProtection from '../../hocs/withProtection';
 import Wrapper from '../../components/Wrapper';
 import Header from '../../components/Header';
 import Content from '../../components/Content';
 import PostForm from '../../components/admin/PostForm';
 
-class EditPost extends ProtectedPage {
+class EditPost extends React.Component {
   static async getInitialProps({ req, query }) {
     try {
-      const parentProps = await super.getInitialProps({ req });
       const tagCloud = await API.tags.getCloud();
 
       if (!query.path) {
-        return { ...parentProps, tagCloud };
+        return { tagCloud };
       }
 
       const post = await API.posts.findOne(query.path, getAllCookies(req));
 
-      return { ...parentProps, post, tagCloud };
+      return { post, tagCloud };
     } catch (error) {
       return { error };
     }
@@ -37,10 +37,12 @@ class EditPost extends ProtectedPage {
     this.submit = this.submit.bind(this);
   }
 
-  async submit(post) {
-    const savedPost = post.id
-      ? await API.posts.update(this.props.post.path, post, getAllCookies())
-      : await API.posts.create(post, getAllCookies());
+  async submit(submittedPost) {
+    const { post } = this.props;
+
+    const savedPost = submittedPost.id
+      ? await API.posts.update(post.path, submittedPost, getAllCookies())
+      : await API.posts.create(submittedPost, getAllCookies());
 
     Router.push(`/post?path=${savedPost.path}`, `/p/${savedPost.path}`);
   }
@@ -84,12 +86,28 @@ class EditPost extends ProtectedPage {
 }
 
 EditPost.propTypes = {
-  post: PropTypes.shape({}),
+  post: PropTypes.shape({
+    id: PropTypes.string,
+    path: PropTypes.string,
+    title: PropTypes.string,
+    description: PropTypes.string,
+    body: PropTypes.string,
+    tags: PropTypes.arrayOf(PropTypes.string),
+    customStyles: PropTypes.string,
+    imagesWidth: PropTypes.number,
+    private: PropTypes.bool,
+    publishedAt: PropTypes.string,
+    translations: PropTypes.arrayOf(PropTypes.shape({})),
+  }),
   tagCloud: PropTypes.shape({}).isRequired,
+  error: PropTypes.shape({
+    status: PropTypes.number,
+  }),
 };
 
 EditPost.defaultProps = {
   post: {},
+  error: null,
 };
 
-export default EditPost;
+export default withProtection(withSession(EditPost));

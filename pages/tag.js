@@ -6,7 +6,7 @@ import Error from './_error';
 import { current } from '../config';
 import { getAllCookies } from '../services/cookies';
 
-import AuthenticatablePage from './_authenticatable';
+import withSession from '../hocs/withSession';
 import Wrapper from '../components/Wrapper';
 import Header from '../components/Header';
 import Content from '../components/Content';
@@ -16,10 +16,9 @@ import TagCloud from '../components/TagCloud';
 
 const POSTS_PER_PAGE = 30;
 
-class TagPage extends AuthenticatablePage {
+class TagPage extends React.Component {
   static async getInitialProps({ query, req, pathname }) {
     try {
-      const parentProps = await super.getInitialProps({ req });
       const { tag, page = 1 } = query;
       const { docs, meta } = await API.posts.find({
         tag,
@@ -29,7 +28,6 @@ class TagPage extends AuthenticatablePage {
       }, getAllCookies(req));
 
       return {
-        ...parentProps,
         posts: docs,
         meta,
         tag,
@@ -104,6 +102,7 @@ class TagPage extends AuthenticatablePage {
 TagPage.propTypes = {
   posts: PropTypes.arrayOf(PropTypes.object).isRequired,
   tag: PropTypes.string.isRequired,
+  pathname: PropTypes.string.isRequired,
 
   meta: PropTypes.shape({
     currentPage: PropTypes.number,
@@ -119,4 +118,4 @@ TagPage.defaultProps = {
   error: null,
 };
 
-export default TagPage;
+export default withSession(TagPage);
