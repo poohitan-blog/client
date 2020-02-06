@@ -69,8 +69,8 @@ TranslationButtons.defaultProps = {
   language: 'uk',
 };
 
-TranslationButtons.contextTypes = {
-  isAuthenticated: PropTypes.bool,
-};
+// TranslationButtons.contextTypes = {
+//   isAuthenticated: PropTypes.bool,
+// };
 
 export default TranslationButtons;

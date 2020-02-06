@@ -6,6 +6,7 @@ import lazyLoadBlurEffect from 'react-lazy-load-image-component/src/effects/blur
 
 import * as Analytics from '../services/analytics';
 import { getPosition } from '../services/goodness-generator';
+import { Context as SessionContext } from '../services/session';
 
 import AdminPanel from './admin/Panel';
 import LoginButton from './LoginButton';
@@ -47,7 +48,6 @@ class Wrapper extends React.Component {
   }
 
   render() {
-    const { isAuthenticated } = this.context;
     const { pathname, children, className } = this.props;
     const goodnessGeneratorClassName = this.getGoodnessGeneratorClassName();
 
@@ -60,21 +60,25 @@ class Wrapper extends React.Component {
     const classList = [styles.wrapper, ...pathTokens, className, goodnessGeneratorClassName];
 
     return (
-      <>
-        <style>{lazyLoadBlurEffect}</style>
-        <div id="wrapper" className={classList.join(' ')}>
-          {
-            children
-          }
-          {
-            isAuthenticated && <AdminPanel />
-          }
-          {
-            !isAuthenticated && <LoginButton />
-          }
-          <div className={styles.shadow} />
-        </div>
-      </>
+      <SessionContext.Consumer>
+        {({ isAuthenticated, pages, drafts }) => (
+          <>
+            <style>{lazyLoadBlurEffect}</style>
+            <div id="wrapper" className={classList.join(' ')}>
+              {
+                children
+              }
+              {
+                isAuthenticated && <AdminPanel pages={pages} drafts={drafts} />
+              }
+              {
+                !isAuthenticated && <LoginButton />
+              }
+              <div className={styles.shadow} />
+            </div>
+          </>
+        )}
+      </SessionContext.Consumer>
     );
   }
 }
@@ -88,10 +92,6 @@ Wrapper.propTypes = {
 Wrapper.defaultProps = {
   pathname: '',
   className: null,
-};
-
-Wrapper.contextTypes = {
-  isAuthenticated: PropTypes.bool,
 };
 
 export default Wrapper;

@@ -241,7 +241,7 @@ class PostForm extends React.Component {
                 : null
             }
             <Link as={`/p/${path}/translations/new`} href={`/admin/edit-post-translation?post=${path}`}>
-              <a className="post-translation-link">(Додати)</a>
+              <a className={styles.translationLink}>(Додати)</a>
             </Link>
           </div>
           <div className={styles.footer}>

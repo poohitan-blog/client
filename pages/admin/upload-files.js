@@ -1,34 +1,46 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Head from 'next/head';
 
 import Error from '../_error';
 
-import ProtectedPage from '../_protected';
+import withSession from '../../hocs/withSession';
+import withProtection from '../../hocs/withProtection';
 import Wrapper from '../../components/Wrapper';
 import Header from '../../components/Header';
 import Content from '../../components/Content';
 import UploadFilesForm from '../../components/admin/UploadFilesForm';
 
-class UploadFiles extends ProtectedPage {
-  render() {
-    if (this.props.error) {
-      return <Error statusCode={this.props.error.status} />;
-    }
+const UploadFiles = (props) => {
+  const { error } = props;
 
-    const title = 'Завантажити файли';
-
-    return (
-      <Wrapper>
-        <Head>
-          <title>{title}</title>
-        </Head>
-        <Header />
-        <Content>
-          <UploadFilesForm title={title} />
-        </Content>
-      </Wrapper>
-    );
+  if (error) {
+    return <Error statusCode={error.status} />;
   }
-}
 
-export default UploadFiles;
+  const title = 'Завантажити файли';
+
+  return (
+    <Wrapper>
+      <Head>
+        <title>{title}</title>
+      </Head>
+      <Header />
+      <Content>
+        <UploadFilesForm title={title} />
+      </Content>
+    </Wrapper>
+  );
+};
+
+UploadFiles.propTypes = {
+  error: PropTypes.shape({
+    status: PropTypes.number,
+  }),
+};
+
+UploadFiles.defaultProps = {
+  error: null,
+};
+
+export default withProtection(withSession(UploadFiles));

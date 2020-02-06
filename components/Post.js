@@ -9,6 +9,7 @@ import Footer from './post/Footer';
 import TranslationButtons from './post/TranslationButtons';
 import AdminControlButtons from './admin/ControlButtons';
 import { LIGHTBOX_CLASS, DEFAULT_THUMBNAIL_WIDTH } from '../services/image-previews';
+import { Context as SessionContext } from '../services/session';
 
 import HiddenIcon from '../public/static/icons/hidden.svg';
 import styles from '../styles/components/post.scss';
@@ -17,7 +18,7 @@ const Lightbox = dynamic(import('./ui/Lightbox'), { ssr: false, loading: () => n
 const SyntaxHighlighter = dynamic(import('./ui/SyntaxHighlighter'), { ssr: false, loading: () => null });
 const MathHighlighter = dynamic(import('./ui/MathHighlighter'), { ssr: false, loading: () => null });
 
-const Post = (props, context) => {
+const Post = (props) => {
   const {
     title: originalPostTitle,
     body: originalPostBody,
@@ -32,8 +33,6 @@ const Post = (props, context) => {
     tags,
   } = props;
 
-  const { isAuthenticated } = context;
-
   const translation = translations.find((item) => item.lang === language) || {};
   const isTranslation = Boolean(translation.lang);
 
@@ -46,56 +45,61 @@ const Post = (props, context) => {
   const lightboxImageSelector = `.${styles.wrapper}[data-path="${path}"] a.${LIGHTBOX_CLASS}`;
 
   return (
-    <article className={styles.wrapper} data-path={path} id={cut ? null : 'post'}>
-      <h1 className={styles.title} id={cut ? null : 'post-title'}>
-        <Link as={link.as} href={link.href}>
-          <a title={title} href={link.as}>{title}</a>
-        </Link>
-        {
-          Boolean(translations.length)
-            && (
-              <TranslationButtons
-                path={path}
-                language={language}
-                translations={translations}
-              />
-            )
-        }
-        <div className={styles.titleIcons}>
-          {
-            hidden && <div className={styles.titleIcon} id={cut ? null : 'post-title-icon'}><HiddenIcon /></div>
-          }
-          {
-            isAuthenticated
-            && (
-              <AdminControlButtons
-                attachedTo={isTranslation ? 'postTranslation' : 'post'}
-                tokens={[path, translation.lang]}
-                className={styles.adminControlButtons}
-                id={cut ? null : 'post-admin-control-buttons'}
-              />
-            )
-          }
-        </div>
-      </h1>
-      <div className={styles.body} id={cut ? null : 'post-body'}>
-        {
-          cut
-            ? <CutBody title={title} body={body} path={path} />
-            : <FullBody language={language} body={body} imagesWidth={imagesWidth} />
-        }
-      </div>
-      <Lightbox selector={lightboxImageSelector} />
-      <SyntaxHighlighter />
-      <MathHighlighter />
-      <Footer
-        path={path}
-        commentsCount={commentsCount}
-        publishedAt={new Date(publishedAt)}
-        tags={tags}
-        id={cut ? null : 'post-footer'}
-      />
-    </article>
+    <SessionContext.Consumer>
+      {({ isAuthenticated }) => (
+        <article className={styles.wrapper} data-path={path} id={cut ? null : 'post'}>
+          <h1 className={styles.title} id={cut ? null : 'post-title'}>
+            <Link as={link.as} href={link.href}>
+              <a title={title} href={link.as}>{title}</a>
+            </Link>
+            {
+              Boolean(translations.length)
+                && (
+                  <TranslationButtons
+                    path={path}
+                    language={language}
+                    translations={translations}
+                  />
+                )
+            }
+            <div className={styles.titleIcons}>
+              {
+                hidden && <div className={styles.titleIcon} id={cut ? null : 'post-title-icon'}><HiddenIcon /></div>
+              }
+              {
+                isAuthenticated
+                  ? (
+                    <AdminControlButtons
+                      attachedTo={isTranslation ? 'postTranslation' : 'post'}
+                      tokens={[path, translation.lang]}
+                      className={styles.adminControlButtons}
+                      id={cut ? null : 'post-admin-control-buttons'}
+                    />
+                  )
+                  : null
+              }
+            </div>
+          </h1>
+          <div className={styles.body} id={cut ? null : 'post-body'}>
+            {
+              cut
+                ? <CutBody title={title} body={body} path={path} />
+                : <FullBody language={language} body={body} imagesWidth={imagesWidth} />
+            }
+          </div>
+          <Lightbox selector={lightboxImageSelector} />
+          <SyntaxHighlighter />
+          <MathHighlighter />
+          <Footer
+            path={path}
+            commentsCount={commentsCount}
+            publishedAt={new Date(publishedAt)}
+            tags={tags}
+            id={cut ? null : 'post-footer'}
+          />
+        </article>
+      )}
+    </SessionContext.Consumer>
   );
 };
 
@@ -120,10 +124,6 @@ Post.defaultProps = {
   translations: [],
   commentsCount: 0,
   imagesWidth: DEFAULT_THUMBNAIL_WIDTH,
-};
-
-Post.contextTypes = {
-  isAuthenticated: PropTypes.bool,
 };
 
 export default Post;

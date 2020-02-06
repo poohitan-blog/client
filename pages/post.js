@@ -9,7 +9,7 @@ import API from '../services/api';
 import { getAllCookies } from '../services/cookies';
 import { stripHTML, getImageLinksFromHTML, shorten } from '../services/text';
 
-import AuthenticatablePage from './_authenticatable';
+import withSession from '../hocs/withSession';
 import Wrapper from '../components/Wrapper';
 import Header from '../components/Header';
 import Content from '../components/Content';
@@ -23,12 +23,11 @@ const SimilarPostsGroup = dynamic(import('../components/SimilarPostsGroup'), {
   loading: () => null,
 });
 
-class PostPage extends AuthenticatablePage {
+class PostPage extends React.Component {
   static async getInitialProps({
     query, req, res, pathname,
   }) {
     try {
-      const parentProps = await super.getInitialProps({ req });
       const post = await API.posts.findOne(query.path, getAllCookies(req));
       const similarPosts = await API.posts.findSimilar(query.path);
 
@@ -40,7 +39,6 @@ class PostPage extends AuthenticatablePage {
       }
 
       return {
-        ...parentProps,
         post,
         similarPosts,
         pathname,
@@ -138,9 +136,23 @@ class PostPage extends AuthenticatablePage {
 }
 
 PostPage.propTypes = {
+  pathname: PropTypes.string.isRequired,
+  language: PropTypes.string,
+
   post: PropTypes.shape({
     title: PropTypes.string.isRequired,
+    body: PropTypes.string.isRequired,
+    description: PropTypes.string,
+    path: PropTypes.string.isRequired,
+    tags: PropTypes.arrayOf(PropTypes.string),
+    publishedAt: PropTypes.instanceOf(Date),
+    private: PropTypes.bool,
+    commentsCount: PropTypes.number,
+    translations: PropTypes.arrayOf(PropTypes.shape({})),
+    customStylesProcessed: PropTypes.string,
+    imagesWidth: PropTypes.number,
   }),
+
   similarPosts: PropTypes.arrayOf(PropTypes.object),
 
   error: PropTypes.shape({
@@ -149,8 +161,10 @@ PostPage.propTypes = {
 };
 
 PostPage.defaultProps = {
+  language: null,
   post: {},
+  similarPosts: [],
   error: null,
 };
 
-export default PostPage;
+export default withSession(PostPage);

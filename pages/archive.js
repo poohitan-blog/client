@@ -7,7 +7,7 @@ import Error from './_error';
 import { current } from '../config';
 import { getAllCookies } from '../services/cookies';
 
-import AuthenticatablePage from './_authenticatable';
+import withSession from '../hocs/withSession';
 import Wrapper from '../components/Wrapper';
 import Header from '../components/Header';
 import Content from '../components/Content';
@@ -16,10 +16,9 @@ import CompactPost from '../components/CompactPost';
 
 const POSTS_PER_PAGE = 30;
 
-class ArchivePage extends AuthenticatablePage {
+class ArchivePage extends React.Component {
   static async getInitialProps({ query, req, pathname }) {
     try {
-      const parentProps = await super.getInitialProps({ query, req });
       const { page = 1 } = query;
       const { docs, meta } = await API.posts.find({
         page,
@@ -28,7 +27,6 @@ class ArchivePage extends AuthenticatablePage {
       }, getAllCookies(req));
 
       return {
-        ...parentProps,
         posts: docs,
         meta,
         pathname,
@@ -92,6 +90,8 @@ class ArchivePage extends AuthenticatablePage {
 ArchivePage.propTypes = {
   posts: PropTypes.arrayOf(PropTypes.object).isRequired,
 
+  pathname: PropTypes.string.isRequired,
+
   meta: PropTypes.shape({
     currentPage: PropTypes.number,
     totalPages: PropTypes.number,
@@ -106,4 +106,4 @@ ArchivePage.defaultProps = {
   error: null,
 };
 
-export default ArchivePage;
+export default withSession(ArchivePage);

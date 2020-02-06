@@ -13,7 +13,7 @@ import { describeWordCount } from '../services/grammar';
 import { getAllCookies } from '../services/cookies';
 import { stripHTML } from '../services/text';
 
-import AuthenticatablePage from './_authenticatable';
+import withSession from '../hocs/withSession';
 import Wrapper from '../components/Wrapper';
 import Header from '../components/Header';
 import Content from '../components/Content';
@@ -86,14 +86,12 @@ const SORTING_PREDICATES = {
   length: sortByLength,
 };
 
-class TopPage extends AuthenticatablePage {
-  static async getInitialProps({ query, req, pathname }) {
+class TopPage extends React.Component {
+  static async getInitialProps({ req, pathname }) {
     try {
-      const parentProps = await super.getInitialProps({ query, req });
       const { docs } = await API.posts.find({ private: false }, getAllCookies(req));
 
       return {
-        ...parentProps,
         posts: docs.map((post) => ({
           ...post,
           bodyLength: stripHTML(post.body).length,
@@ -206,6 +204,8 @@ class TopPage extends AuthenticatablePage {
 }
 
 TopPage.propTypes = {
+  pathname: PropTypes.string.isRequired,
+
   posts: PropTypes.arrayOf(PropTypes.object).isRequired,
 
   error: PropTypes.shape({
@@ -217,4 +217,4 @@ TopPage.defaultProps = {
   error: null,
 };
 
-export default TopPage;
+export default withSession(TopPage);

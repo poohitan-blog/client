@@ -9,6 +9,7 @@ import AdminControlButtons from './admin/ControlButtons';
 import PostCollapser from './trash/PostCollapser';
 import { generateLazyPreview, LIGHTBOX_CLASS } from '../services/image-previews';
 import { formatPostDate } from '../services/grammar';
+import { Context as SessionContext } from '../services/session';
 
 import styles from '../styles/components/trash-post.scss';
 
@@ -84,7 +85,6 @@ class TrashPost extends React.Component {
   render() {
     const { id, createdAt } = this.props;
     const { collapsable, collapsed, body } = this.state;
-    const { isAuthenticated } = this.context;
 
     const classList = [styles.wrapper];
 
@@ -99,30 +99,39 @@ class TrashPost extends React.Component {
     const lightboxImageSelector = `.${styles.body} a.${LIGHTBOX_CLASS}`;
 
     return (
-      <div className={classList.join(' ')}>
-        {
-          isAuthenticated
-          && <AdminControlButtons attachedTo="trashPost" tokens={[id]} className={styles.adminControlButtons} />
-        }
-        <div className={styles.bodyWrapper}>
-          <div className={styles.body} ref={this.bodyElement}>{ body }</div>
-          <div className={styles.bodyOverlayGradient} />
-        </div>
-        <Lightbox selector={lightboxImageSelector} />
-        {
-          collapsable
-          && <PostCollapser isPostCollapsed={collapsed} onClick={() => (collapsed ? this.unroll() : this.collapse())} />
-        }
-        <div className={styles.footer}>
-          <Link as={`/trash/${id}`} href={`/trash?id=${id}`}>
-            <a title="Постійне посилання" className="nowrap">постійне посилання</a>
-          </Link>
-          <hr className={styles.footerLine} />
-          <span className={styles.date} title={formatPostDate(createdAt, { detailed: true })}>
-            { formatPostDate(createdAt, { short: true }) }
-          </span>
-        </div>
-      </div>
+      <SessionContext.Consumer>
+        {({ isAuthenticated }) => (
+          <div className={classList.join(' ')}>
+            {
+              isAuthenticated
+              && <AdminControlButtons attachedTo="trashPost" tokens={[id]} className={styles.adminControlButtons} />
+            }
+            <div className={styles.bodyWrapper}>
+              <div className={styles.body} ref={this.bodyElement}>{ body }</div>
+              <div className={styles.bodyOverlayGradient} />
+            </div>
+            <Lightbox selector={lightboxImageSelector} />
+            {
+              collapsable
+              && (
+                <PostCollapser
+                  isPostCollapsed={collapsed}
+                  onClick={() => (collapsed ? this.unroll() : this.collapse())}
+                />
+              )
+            }
+            <div className={styles.footer}>
+              <Link as={`/trash/${id}`} href={`/trash?id=${id}`}>
+                <a title="Постійне посилання" className="nowrap">постійне посилання</a>
+              </Link>
+              <hr className={styles.footerLine} />
+              <span className={styles.date} title={formatPostDate(createdAt, { detailed: true })}>
+                { formatPostDate(createdAt, { short: true }) }
+              </span>
+            </div>
+          </div>
+        )}
+      </SessionContext.Consumer>
     );
   }
 }
@@ -138,10 +147,6 @@ TrashPost.propTypes = {
 TrashPost.defaultProps = {
   collapsable: true,
   scrollPosition: null,
-};
-
-TrashPost.contextTypes = {
-  isAuthenticated: PropTypes.bool,
 };
 
 export default trackWindowScroll(TrashPost);
