@@ -111,16 +111,16 @@ class PostPage extends React.Component {
           { post.customStylesProcessed && <style dangerouslySetInnerHTML={{ __html: post.customStylesProcessed }} /> }
           <Content>
             <Post
+              key={post.path}
               title={post.title}
               body={post.body}
               path={post.path}
               private={post.private}
+              language={language}
               translations={post.translations}
+              tags={post.tags}
               commentsCount={post.commentsCount}
               publishedAt={new Date(post.publishedAt)}
-              tags={post.tags}
-              key={post.path}
-              language={language}
               imagesWidth={post.imagesWidth}
             />
             {
@@ -161,7 +161,7 @@ PostPage.propTypes = {
 };
 
 PostPage.defaultProps = {
-  language: null,
+  language: 'uk',
   post: {},
   similarPosts: [],
   error: null,
