@@ -6,7 +6,7 @@ import Error from './_error';
 import { current } from '../config';
 import { getAllCookies } from '../services/cookies';
 
-import AuthenticatablePage from './_authenticatable';
+import withSession from '../hocs/withSession';
 import Wrapper from '../components/Wrapper';
 import Header from '../components/Header';
 import Content from '../components/Content';
@@ -17,10 +17,9 @@ import TagCloud from '../components/TagCloud';
 
 const POSTS_PER_PAGE = 10;
 
-class SearchPage extends AuthenticatablePage {
+class SearchPage extends React.Component {
   static async getInitialProps({ query, req, pathname }) {
     try {
-      const parentProps = await super.getInitialProps({ req });
       const { page = 1 } = query;
       const searchQuery = query.query;
       const { docs, meta } = await API.search({
@@ -30,7 +29,6 @@ class SearchPage extends AuthenticatablePage {
       }, getAllCookies(req));
 
       return {
-        ...parentProps,
         searchResults: docs,
         pathname,
         meta,
@@ -106,6 +104,7 @@ class SearchPage extends AuthenticatablePage {
 SearchPage.propTypes = {
   searchResults: PropTypes.arrayOf(PropTypes.object).isRequired,
   searchQuery: PropTypes.string.isRequired,
+  pathname: PropTypes.string.isRequired,
 
   meta: PropTypes.shape({
     currentPage: PropTypes.number,
@@ -121,4 +120,4 @@ SearchPage.defaultProps = {
   error: null,
 };
 
-export default SearchPage;
+export default withSession(SearchPage);

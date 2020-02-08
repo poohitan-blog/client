@@ -5,6 +5,17 @@
 .wrapper {
   .admin-control-buttons {
     margin-left: 0.6em;
+
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 100ms linear;
+  }
+
+  &:hover {
+    .admin-control-buttons {
+      opacity: 1;
+      pointer-events: all;
+    }
   }
 
   .title {

@@ -6,7 +6,7 @@ import Router from 'next/router';
 import Wrapper from '../components/Wrapper';
 import Content from '../components/Content';
 
-import Session from '../services/session';
+import { authenticate, isAuthenticated } from '../services/session';
 
 import styles from '../styles/pages/login.scss';
 
@@ -36,7 +36,7 @@ const LOGIN_ATTEMPTS_MESSAGES = [
 
 class LoginPage extends React.Component {
   static async getInitialProps({ req, res, pathname }) {
-    if (Session.isAuthenticated(req)) {
+    if (isAuthenticated(req)) {
       res.redirect('/');
     }
 
@@ -68,7 +68,7 @@ class LoginPage extends React.Component {
   async authenticate() {
     const { password, failedLoginAttempts } = this.state;
 
-    return Session.authenticate({ login: 'poohitan', password })
+    return authenticate({ login: 'poohitan', password })
       .then(() => Router.push('/'))
       .catch((error) => {
         if (error.status === 403) {

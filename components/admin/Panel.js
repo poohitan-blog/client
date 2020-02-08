@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
-import Session from '../../services/session';
+
+import { logOut } from '../../services/session';
 import Page from './panel/Page';
 import Draft from './panel/Draft';
 
@@ -10,11 +11,12 @@ import styles from '../../styles/components/admin/panel.scss';
 class Panel extends React.Component {
   static logOut(event) {
     event.preventDefault();
-    Session.logOut();
+    logOut();
   }
 
   render() {
-    const { pages = [] } = this.context;
+    const { pages, drafts } = this.props;
+
     const publicPages = pages.filter((page) => !page.private);
     const privatePages = pages.filter((page) => page.private);
     const allPages = publicPages.concat(...privatePages);
@@ -34,7 +36,6 @@ class Panel extends React.Component {
       </div>
     );
 
-    const { drafts = [] } = this.context;
     const draftsBlock = !drafts.length ? null : (
       <div className={styles.block}>
         <h3>Чернетки</h3>
@@ -79,9 +80,14 @@ class Panel extends React.Component {
   }
 }
 
-Panel.contextTypes = {
-  pages: PropTypes.arrayOf(PropTypes.object),
-  drafts: PropTypes.arrayOf(PropTypes.object),
+Panel.propTypes = {
+  pages: PropTypes.arrayOf(PropTypes.shape({})),
+  drafts: PropTypes.arrayOf(PropTypes.shape({})),
+};
+
+Panel.defaultProps = {
+  pages: [],
+  drafts: [],
 };
 
 export default Panel;

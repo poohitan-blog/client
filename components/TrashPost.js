@@ -9,6 +9,7 @@ import AdminControlButtons from './admin/ControlButtons';
 import PostCollapser from './trash/PostCollapser';
 import { generateLazyPreview, LIGHTBOX_CLASS } from '../services/image-previews';
 import { formatPostDate } from '../services/grammar';
+import { Context as SessionContext } from '../services/session';
 
 import styles from '../styles/components/trash-post.scss';
 
@@ -84,7 +85,6 @@ class TrashPost extends React.Component {
   render() {
     const { id, createdAt } = this.props;
     const { collapsable, collapsed, body } = this.state;
-    const { isAuthenticated } = this.context;
 
     const classList = [styles.wrapper];
 
@@ -100,10 +100,15 @@ class TrashPost extends React.Component {
 
     return (
       <div className={classList.join(' ')}>
-        {
-          isAuthenticated
-          && <AdminControlButtons attachedTo="trashPost" tokens={[id]} className={styles.adminControlButtons} />
-        }
+        <SessionContext.Consumer>
+          {({ isAuthenticated }) => isAuthenticated && (
+            <AdminControlButtons
+              attachedTo="trashPost"
+              tokens={[id]}
+              className={styles.adminControlButtons}
+            />
+          )}
+        </SessionContext.Consumer>
         <div className={styles.bodyWrapper}>
           <div className={styles.body} ref={this.bodyElement}>{ body }</div>
           <div className={styles.bodyOverlayGradient} />
@@ -111,7 +116,12 @@ class TrashPost extends React.Component {
         <Lightbox selector={lightboxImageSelector} />
         {
           collapsable
-          && <PostCollapser isPostCollapsed={collapsed} onClick={() => (collapsed ? this.unroll() : this.collapse())} />
+          && (
+            <PostCollapser
+              isPostCollapsed={collapsed}
+              onClick={() => (collapsed ? this.unroll() : this.collapse())}
+            />
+          )
         }
         <div className={styles.footer}>
           <Link as={`/trash/${id}`} href={`/trash?id=${id}`}>
@@ -138,10 +148,6 @@ TrashPost.propTypes = {
 TrashPost.defaultProps = {
   collapsable: true,
   scrollPosition: null,
-};
-
-TrashPost.contextTypes = {
-  isAuthenticated: PropTypes.bool,
 };
 
 export default trackWindowScroll(TrashPost);

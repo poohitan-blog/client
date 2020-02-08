@@ -7,24 +7,23 @@ import API from '../../services/api';
 import Error from '../_error';
 import { getAllCookies } from '../../services/cookies';
 
-import ProtectedPage from '../_protected';
+import withSession from '../../hocs/withSession';
+import withProtection from '../../hocs/withProtection';
 import Wrapper from '../../components/Wrapper';
 import Header from '../../components/Header';
 import Content from '../../components/Content';
 import TrashPostForm from '../../components/admin/TrashPostForm';
 
-class EditTrashPost extends ProtectedPage {
+class EditTrashPost extends React.Component {
   static async getInitialProps({ req, query }) {
     try {
-      const parentProps = await super.getInitialProps({ req });
-
       if (!query.id) {
-        return parentProps;
+        return {};
       }
 
       const trashPost = await API.trashPosts.findOne(query.id, getAllCookies(req));
 
-      return { ...parentProps, trashPost };
+      return { trashPost };
     } catch (error) {
       return { error };
     }
@@ -37,10 +36,12 @@ class EditTrashPost extends ProtectedPage {
     this.submit = this.submit.bind(this);
   }
 
-  async submit(trashPost) {
-    const savedTrashPost = trashPost.id
-      ? await API.trashPosts.update(this.props.trashPost.id, trashPost, getAllCookies())
-      : await API.trashPosts.create(trashPost, getAllCookies());
+  async submit(submittedTrashPost) {
+    const { trashPost } = this.props;
+
+    const savedTrashPost = submittedTrashPost.id
+      ? await API.trashPosts.update(trashPost.id, submittedTrashPost, getAllCookies())
+      : await API.trashPosts.create(submittedTrashPost, getAllCookies());
 
     Router.push(`/trash?id=${savedTrashPost.id}`, `/trash/${savedTrashPost.id}`);
   }
@@ -48,7 +49,7 @@ class EditTrashPost extends ProtectedPage {
   render() {
     const { trashPost, error } = this.props;
 
-    if (this.props.error) {
+    if (error) {
       return <Error statusCode={error.status} />;
     }
 
@@ -74,11 +75,18 @@ class EditTrashPost extends ProtectedPage {
 }
 
 EditTrashPost.propTypes = {
-  trashPost: PropTypes.shape({}),
+  trashPost: PropTypes.shape({
+    id: PropTypes.string,
+    body: PropTypes.string,
+  }),
+  error: PropTypes.shape({
+    status: PropTypes.number,
+  }),
 };
 
 EditTrashPost.defaultProps = {
   trashPost: {},
+  error: null,
 };
 
-export default EditTrashPost;
+export default withProtection(withSession(EditTrashPost));

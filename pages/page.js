@@ -8,31 +8,30 @@ import API from '../services/api';
 import { getAllCookies } from '../services/cookies';
 import { stripHTML, shorten } from '../services/text';
 
-import AuthenticatablePage from './_authenticatable';
+import withSession from '../hocs/withSession';
 import Wrapper from '../components/Wrapper';
 import Header from '../components/Header';
 import Content from '../components/Content';
 import Footer from '../components/Footer';
 import Page from '../components/Page';
 
-class PagePage extends AuthenticatablePage {
+class PagePage extends React.Component {
   static async getInitialProps({ query, req, pathname }) {
     try {
-      const parentProps = await super.getInitialProps({ req });
       const page = await API.pages.findOne(query.path, getAllCookies(req));
 
-      return { ...parentProps, page, pathname };
+      return { page, pathname };
     } catch (error) {
       return { error };
     }
   }
 
   render() {
-    if (this.props.error) {
-      return <Error statusCode={this.props.error.status} />;
-    }
+    const { page, pathname, error } = this.props;
 
-    const { page, pathname } = this.props;
+    if (error) {
+      return <Error statusCode={error.status} />;
+    }
 
     return (
       <Wrapper pathname={pathname}>
@@ -60,9 +59,14 @@ class PagePage extends AuthenticatablePage {
 }
 
 PagePage.propTypes = {
+  pathname: PropTypes.string.isRequired,
+
   page: PropTypes.shape({
     title: PropTypes.string.isRequired,
     body: PropTypes.string.isRequired,
+    path: PropTypes.string.isRequired,
+    private: PropTypes.bool,
+    customStylesProcessed: PropTypes.string,
   }),
 
   error: PropTypes.shape({
@@ -75,4 +79,4 @@ PagePage.defaultProps = {
   error: null,
 };
 
-export default PagePage;
+export default withSession(PagePage);

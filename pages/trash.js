@@ -8,7 +8,7 @@ import API from '../services/api';
 import { getAllCookies } from '../services/cookies';
 import { generateTrashPostTitle } from '../services/text';
 
-import AuthenticatablePage from './_authenticatable';
+import withSession from '../hocs/withSession';
 import Wrapper from '../components/Wrapper';
 import Header from '../components/Header';
 import Content from '../components/Content';
@@ -18,18 +18,15 @@ import Trashbin from '../components/header/Trashbin';
 
 const POSTS_PER_PAGE = 30;
 
-class TrashPage extends AuthenticatablePage {
+class TrashPage extends React.Component {
   static async getInitialProps({ query, req, pathname }) {
     try {
-      const parentProps = await super.getInitialProps({ req });
-
       if (query.id || query.random) {
         const posts = query.random
           ? [await API.trashPosts.findRandom(getAllCookies(req))]
           : [await API.trashPosts.findOne(query.id, getAllCookies(req))];
 
         return {
-          ...parentProps,
           posts,
           pathname,
           single: true,
@@ -40,7 +37,6 @@ class TrashPage extends AuthenticatablePage {
         const { docs } = await API.trashPosts.find({ permalink: query.permalink }, getAllCookies(req));
 
         return {
-          ...parentProps,
           posts: docs,
           pathname,
           single: true,
@@ -51,7 +47,6 @@ class TrashPage extends AuthenticatablePage {
       const { docs, meta } = await API.trashPosts.find({ page, limit: POSTS_PER_PAGE }, getAllCookies(req));
 
       return {
-        ...parentProps,
         posts: docs,
         meta,
         pathname,
@@ -108,6 +103,8 @@ class TrashPage extends AuthenticatablePage {
 }
 
 TrashPage.propTypes = {
+  pathname: PropTypes.string.isRequired,
+
   posts: PropTypes.arrayOf(PropTypes.object),
 
   error: PropTypes.shape({
@@ -129,4 +126,4 @@ TrashPage.defaultProps = {
   single: false,
 };
 
-export default TrashPage;
+export default withSession(TrashPage);
