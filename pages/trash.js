@@ -56,6 +56,29 @@ class TrashPage extends React.Component {
     }
   }
 
+  constructor(props) {
+    super(props);
+
+    this.generateCanonicalUrl = this.generateCanonicalUrl.bind(this);
+  }
+
+  generateCanonicalUrl() {
+    const { posts, single, meta } = this.props;
+    const { currentPage } = meta;
+
+    if (single) {
+      const [post] = posts;
+
+      return `${current.clientURL}/trash/${post.id}`;
+    }
+
+    if (currentPage !== 1) {
+      return `${current.clientURL}/trash?page=${currentPage}`;
+    }
+
+    return `${current.clientURL}/trash`;
+  }
+
   render() {
     const {
       posts,
@@ -83,7 +106,7 @@ class TrashPage extends React.Component {
     const postTitle = single ? generateTrashPostTitle(posts[0].body) : null;
     const pageTitle = [postTitle, 'Смітник', current.meta.title].filter((item) => item).join(' - ');
 
-    const canonicalURL = single ? `${current.clientURL}/trash/${posts[0].id}` : `${current.clientURL}/trash`;
+    const canonicalURL = this.generateCanonicalUrl();
 
     return (
       <Wrapper pathname={pathname}>

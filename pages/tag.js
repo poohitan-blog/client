@@ -82,11 +82,17 @@ class TagPage extends React.Component {
         }, []);
     }
 
+    const { currentPage } = meta;
+    const canonicalUrl = currentPage === 1
+      ? `${current.clientURL}/tag/${tag}`
+      : `${current.clientURL}/tag/${tag}?page=${currentPage}`;
+
     return (
       <Wrapper pathname={pathname}>
         <Head>
           <title>{`Записи з позначкою «${tag}» - ${current.meta.title}`}</title>
           <meta name="description" content={`Записи про ${tag}`} key="description" />
+          <link rel="canonical" href={canonicalUrl} />
         </Head>
         <Header />
         <Content>

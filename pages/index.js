@@ -76,12 +76,17 @@ class IndexPage extends React.Component {
       social,
     } = current.meta;
 
+    const { currentPage } = meta;
+    const canonicalUrl = currentPage === 1
+      ? current.clientURL
+      : `${current.clientURL}?page=${currentPage}`;
+
     return (
       <>
         <Head>
           <title>{title}</title>
 
-          <link rel="canonical" href={current.clientURL} />
+          <link rel="canonical" href={canonicalUrl} />
 
           <meta name="description" content={description} key="description" />
           <meta name="keywords" content={keywords.join(', ')} key="keywords" />
