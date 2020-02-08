@@ -37,9 +37,10 @@ function generateAltText(node, language) {
 
 function generateLinkTitle(node, language) {
   const alt = generateAltText(node, language);
+  const separator = alt.slice(-1) === '.' ? '' : '.';
   const clickToEnlarge = language === 'uk' ? 'Клацніть, шоб збільшити' : 'Click to enlarge';
 
-  return alt ? `${alt}. ${clickToEnlarge}.` : clickToEnlarge;
+  return alt ? `${alt}. ${clickToEnlarge}${separator}` : clickToEnlarge;
 }
 
 export function generateLazyPreview(node, { altLanguage = 'uk', scrollPosition, thumbnailWidth = DEFAULT_THUMBNAIL_WIDTH } = {}) {
