@@ -4,7 +4,7 @@ import Router from 'next/router';
 import NProgress from 'nprogress';
 import lazyLoadBlurEffect from 'react-lazy-load-image-component/src/effects/blur.css';
 
-import * as Analytics from '../services/analytics';
+import { logPageView } from '../services/analytics';
 import { getPosition } from '../services/goodness-generator';
 import { Context as SessionContext } from '../services/session';
 
@@ -31,7 +31,7 @@ class Wrapper extends React.Component {
     const { isAuthenticated } = this.context;
 
     if (!isAuthenticated) {
-      Analytics.logPageView();
+      logPageView();
     }
 
     this.setState({
@@ -49,6 +49,7 @@ class Wrapper extends React.Component {
 
   render() {
     const { pathname, children, className } = this.props;
+    const { isAuthenticated, pages, drafts } = this.context;
     const goodnessGeneratorClassName = this.getGoodnessGeneratorClassName();
 
     const pathTokens = pathname
@@ -62,26 +63,24 @@ class Wrapper extends React.Component {
     return (
       <>
         <style>{lazyLoadBlurEffect}</style>
-        <SessionContext.Consumer>
-          {({ isAuthenticated, pages, drafts }) => (
-            <div id="wrapper" className={classList.join(' ')}>
-              {
-                children
-              }
-              {
-                isAuthenticated && <AdminPanel pages={pages} drafts={drafts} />
-              }
-              {
-                !isAuthenticated && <LoginButton />
-              }
-              <div className={styles.shadow} />
-            </div>
-          )}
-        </SessionContext.Consumer>
+        <div id="wrapper" className={classList.join(' ')}>
+          {
+            children
+          }
+          {
+            isAuthenticated && <AdminPanel pages={pages} drafts={drafts} />
+          }
+          {
+            !isAuthenticated && <LoginButton />
+          }
+          <div className={styles.shadow} />
+        </div>
       </>
     );
   }
 }
+
+Wrapper.contextType = SessionContext;
 
 Wrapper.propTypes = {
   children: PropTypes.node.isRequired,

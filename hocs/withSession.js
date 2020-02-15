@@ -10,21 +10,27 @@ export default function withSession(WrappedComponent) {
   class WithSession extends React.Component {
     static async getInitialProps(context) {
       const { req } = context;
-
       const isAuthenticated = isUserAuthenticated(req);
-
-      const pages = isAuthenticated ? await API.pages.find(getAllCookies(req)) : null;
-      const drafts = isAuthenticated ? await API.posts.find({ private: true }, getAllCookies(req)) : null;
 
       const wrappedComponentProps = WrappedComponent.getInitialProps
         ? await WrappedComponent.getInitialProps(context)
         : {};
 
+      if (!isAuthenticated) {
+        return {
+          ...wrappedComponentProps,
+          isAuthenticated,
+        };
+      }
+
+      const { docs: pages = [] } = await API.pages.find(getAllCookies(req));
+      const { docs: drafts = [] } = await API.posts.find({ private: true }, getAllCookies(req));
+
       return {
         ...wrappedComponentProps,
         isAuthenticated,
-        pages: pages ? pages.docs : [],
-        drafts: drafts ? drafts.docs : [],
+        pages,
+        drafts,
       };
     }
 
@@ -33,11 +39,12 @@ export default function withSession(WrappedComponent) {
         isAuthenticated,
         pages,
         drafts,
+        ...rest
       } = this.props;
 
       return (
         <SessionContext.Provider value={{ isAuthenticated, pages, drafts }}>
-          <WrappedComponent {...this.props} /> {/* eslint-disable-line */}
+          <WrappedComponent {...rest} /> {/* eslint-disable-line */}
         </SessionContext.Provider>
       );
     }

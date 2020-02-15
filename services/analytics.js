@@ -16,7 +16,7 @@ export const logPageView = () => {
     global.ANALYTICS_INITIALIZED = true;
   }
 
-  console.log(`Logging pageview for ${global.location.pathname}`);
+  console.info(`Logging pageview for ${global.location.pathname}`);
 
   ReactGA.set({ page: global.location.pathname });
   ReactGA.pageview(global.location.pathname);
