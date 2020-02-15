@@ -37,7 +37,7 @@ class Editor extends React.Component {
   }
 
   componentWillUnmount() {
-    const $editor = $('.editor');
+    const $editor = $(`.${EDITOR_CLASSNAME}`);
 
     $editor.froalaEditor('destroy');
   }
