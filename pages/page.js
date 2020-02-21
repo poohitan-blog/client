@@ -41,7 +41,9 @@ class PagePage extends React.Component {
 
           <meta name="description" content={shorten(stripHTML(page.body), 20)} key="description" />
         </Head>
-        { page.customStylesProcessed && <style dangerouslySetInnerHTML={{ __html: page.customStylesProcessed }} /> }
+        {
+          page.customStylesProcessed && <style dangerouslySetInnerHTML={{ __html: page.customStylesProcessed }} />
+        }
         <Header />
         <Content>
           <Page

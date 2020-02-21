@@ -108,7 +108,9 @@ class PostPage extends React.Component {
         </Head>
         <Wrapper pathname={pathname}>
           <Header />
-          { post.customStylesProcessed && <style dangerouslySetInnerHTML={{ __html: post.customStylesProcessed }} /> }
+          {
+            post.customStylesProcessed && <style dangerouslySetInnerHTML={{ __html: post.customStylesProcessed }} />
+          }
           <Content>
             <Post
               key={post.path}
