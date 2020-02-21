@@ -34,7 +34,7 @@ app.prepare()
       res
         .header({
           'Content-Type': 'application/rss+xml',
-          'Content-Disposition': 'inline',
+          'Content-Disposition': 'attachment; filename="poohitan.com.xml',
         })
         .send(xml);
     });
