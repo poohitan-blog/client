@@ -16,7 +16,7 @@ const POSITIONS = {
 };
 
 export function getPosition() {
-  if (!process.browser) {
+  if (typeof window === 'undefined') {
     throw new Error('Goodness Generator must be used client-side only');
   }
 
