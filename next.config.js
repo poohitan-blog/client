@@ -3,6 +3,8 @@ const path = require('path');
 const shorthash = require('shorthash');
 const withSass = require('@zeit/next-sass');
 
+require('dotenv').config();
+
 const CSS_MODULES_EXCLUDE_PATHS = ['node_modules', 'global'];
 
 module.exports = withSass({

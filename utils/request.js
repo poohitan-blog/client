@@ -9,6 +9,7 @@ export default async function request(params) {
     headers = {},
     body,
     formData,
+    credentials = 'include',
   } = params;
   let requestUrl = url;
 
@@ -22,7 +23,7 @@ export default async function request(params) {
     method,
     body: formData ? body : JSON.stringify(body),
     headers: { ...defaultHeaders, ...headers },
-    credentials: 'include',
+    credentials,
   });
 
   const json = await response.json();

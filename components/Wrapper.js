@@ -4,7 +4,7 @@ import Router from 'next/router';
 import NProgress from 'nprogress';
 import lazyLoadBlurEffect from 'react-lazy-load-image-component/src/effects/blur.css';
 
-import { logPageView } from '../services/analytics';
+import { logPageView, submitFlow } from '../services/analytics';
 import { getPosition } from '../services/goodness-generator';
 import { Context as SessionContext } from '../services/session';
 
@@ -14,9 +14,9 @@ import LoginButton from './LoginButton';
 import styles from '../styles/components/wrapper.scss';
 
 NProgress.configure({ showSpinner: false });
-Router.onRouteChangeStart = () => NProgress.start();
-Router.onRouteChangeComplete = () => NProgress.done();
-Router.onRouteChangeError = () => NProgress.done();
+Router.events.on('routeChangeStart', NProgress.start);
+Router.events.on('routeChangeError', NProgress.done);
+Router.events.on('routeChangeComplete', NProgress.done);
 
 class Wrapper extends React.Component {
   constructor(props) {
@@ -25,18 +25,24 @@ class Wrapper extends React.Component {
     this.state = {};
 
     this.getGoodnessGeneratorClassName = this.getGoodnessGeneratorClassName.bind(this);
+    this.logPageView = this.logPageView.bind(this);
   }
 
   componentDidMount() {
-    const { isAuthenticated } = this.context;
-
-    if (!isAuthenticated) {
-      logPageView();
-    }
-
     this.setState({
       goodnessGeneratorPosition: getPosition(),
     });
+
+    this.logPageView(Router.asPath);
+
+    Router.events.on('routeChangeComplete', this.logPageView);
+
+    global.addEventListener('beforeunload', submitFlow);
+  }
+
+  componentWillUnmount() {
+    Router.events.off('routeChangeComplete', this.logPageView);
+    global.removeEventListener('beforeunload', submitFlow);
   }
 
   getGoodnessGeneratorClassName() {
@@ -45,6 +51,16 @@ class Wrapper extends React.Component {
     return goodnessGeneratorPosition
       ? `goodness-generator-on-${goodnessGeneratorPosition}`
       : '';
+  }
+
+  logPageView(path) {
+    const { isAuthenticated } = this.context;
+
+    if (!isAuthenticated && path && path !== this.lastTrackedPath) {
+      logPageView(path);
+
+      this.lastTrackedPath = path;
+    }
   }
 
   render() {

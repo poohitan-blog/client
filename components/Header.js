@@ -27,7 +27,7 @@ const Header = ({ trashBinState }) => {
     {
       title: 'Про',
       description: 'Хто в біса все це пише',
-      href: '/path?path=about',
+      href: '/page?path=about',
       as: '/about',
       icon: <SecretAgentIcon />,
     },
