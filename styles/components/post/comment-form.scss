@@ -2,17 +2,17 @@
 
 .wrapper {
   margin-top: 1em;
+}
 
-  .loader {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 4em 0 3em 0;
-    width: 100%;
+.loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4em 0 3em 0;
+  width: 100%;
 
-    svg {
-      fill: $orange;
-      width: 3em;
-    }
+  svg {
+    fill: $orange;
+    width: 3em;
   }
 }
