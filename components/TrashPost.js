@@ -7,7 +7,9 @@ import dynamic from 'next/dynamic';
 
 import AdminControlButtons from './admin/ControlButtons';
 import PostCollapser from './trash/PostCollapser';
-import { generateLazyPreview, LIGHTBOX_CLASS } from '../services/image-previews';
+
+import HTMLProcessor from '../utils/html-processor';
+import { LIGHTBOX_CLASS } from '../services/image-previews';
 import { formatPostDate } from '../services/grammar';
 import { Context as SessionContext } from '../services/session';
 
@@ -24,11 +26,9 @@ class TrashPost extends React.Component {
     this.state = {
       body: HTMLReactParser(props.body, {
         replace(node) {
-          if (node.type === 'tag' && node.name === 'img') {
-            return generateLazyPreview(node, { scrollPosition: props.scrollPosition });
-          }
-
-          return null;
+          return new HTMLProcessor(node)
+            .asImage({ scrollPosition: props.scrollPosition })
+            .getNode();
         },
       }),
       collapsed: false,

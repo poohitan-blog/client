@@ -25,6 +25,14 @@
 
     margin: 2em 0;
   }
+
+  :global(.math) {
+    background-color: $blackboard;
+    color: $white;
+    font-family: $code-font-family;
+    font-size: 0.8em;
+    padding: 0.2em 0.4em;
+  }
 }
 
 .loader-icon {

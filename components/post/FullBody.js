@@ -1,27 +1,17 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import HTMLReactParser from 'html-react-parser';
 import { trackWindowScroll } from 'react-lazy-load-image-component';
 
-import { generateLazyPreview } from '../../services/image-previews';
+import HTMLProcessor from '../../utils/html-processor';
 
 const FullBody = ({
   language, body, scrollPosition, imagesWidth,
 }) => HTMLReactParser(body, {
   replace(node) {
-    if (node.type === 'tag' && node.name === 'img') {
-      return generateLazyPreview(node, {
-        altLanguage: language,
-        thumbnailWidth: imagesWidth,
-        scrollPosition,
-      });
-    }
-
-    if (node.type === 'tag' && node.name === 'cut') {
-      return <span id="cut" />;
-    }
-
-    return null;
+    return new HTMLProcessor(node)
+      .asImage({ language, imagesWidth, scrollPosition })
+      .asCut()
+      .getNode();
   },
 });
 
