@@ -4,6 +4,7 @@ import HTMLReactParser from 'html-react-parser';
 
 import AdminControlButtons from './admin/ControlButtons';
 import { Context as SessionContext } from '../services/session';
+import HTMLProcessor from '../utils/html-processor';
 
 import HiddenIcon from '../public/static/icons/hidden.svg';
 import styles from '../styles/components/page.scss';
@@ -36,7 +37,13 @@ const Page = (props) => {
       </h1>
       <div className={styles.body} id="page-body">
         {
-          HTMLReactParser(body)
+          HTMLReactParser(body, {
+            replace(node) {
+              return new HTMLProcessor(node)
+                .asImage()
+                .getNode();
+            },
+          })
         }
       </div>
     </article>

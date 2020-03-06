@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import HTMLReactParser from 'html-react-parser';
 import Link from 'next/link';
+import HTMLReactParser from 'html-react-parser';
 
-import { generateLazyPreview } from '../../services/image-previews';
+import HTMLProcessor from '../../utils/html-processor';
 
 const CUT_TAG = '<cut>';
 const READ_MORE = 'Читати повністю';
@@ -22,11 +22,9 @@ const CutBody = ({ title, path, body }) => {
       {
         HTMLReactParser(cutHtml, {
           replace(node) {
-            if (node.type === 'tag' && node.name === 'img') {
-              return generateLazyPreview(node);
-            }
-
-            return null;
+            return new HTMLProcessor(node)
+              .asImage()
+              .getNode();
           },
         })
       }
