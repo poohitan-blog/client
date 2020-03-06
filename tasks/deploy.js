@@ -1,8 +1,11 @@
 const { argv } = require('yargs');
 const execSSH = require('exec-ssh');
+const dotenv = require('dotenv');
 const fs = require('fs');
 
 const env = argv.e || argv.env || argv.environment;
+
+const { parsed: environmentVariables } = dotenv.config();
 
 if (!env) {
   console.error('Error: You must pass the environment as an argument');
@@ -19,6 +22,8 @@ const { appName } = config.pm2;
 
 const privateKey = fs.readFileSync('/Users/poohitan/.ssh/id_rsa');
 
+const envVariablesString = Object.keys(environmentVariables).map((envVariableName) => `export ${envVariableName}=${environmentVariables[envVariableName]}`).join(' && ');
+
 const exec = (command) => execSSH({ host, username, privateKey })(`source ~/.profile && ${command}`);
 
 const deploymentId = Date.now();
@@ -27,7 +32,14 @@ exec(`git clone -b ${branch} ${repo} ${folder}/${deploymentId}`)
   .then(() => exec(`npm install --prefix ${folder}/${deploymentId}`))
   .then(() => exec(`npm run build --prefix ${folder}/${deploymentId}`))
   .then(() => exec(`pm2 delete ${appName}`))
-  .then(() => exec(`export NODE_ENV=${env} && cd ${folder}/${deploymentId} && pm2 start server.js --name ${appName} --update-env`))
+  .then(() => exec([
+    `export NODE_ENV=${env}`,
+    envVariablesString,
+    `cd ${folder}/${deploymentId}`,
+    `pm2 start server.js --name ${appName} --update-env`,
+  ]
+    .filter((command) => command)
+    .join(' && ')))
   .then(() => exec(`cd ${folder} && ls | grep -v ${deploymentId} | xargs rm -rf`))
   .then(() => console.log('Deployed successfully.'))
   .catch((error) => console.error(error))

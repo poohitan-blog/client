@@ -186,6 +186,23 @@ const tags = {
   },
 };
 
+export const analytics = {
+  trackPageView(path) {
+    const url = `${API_URL}/analytics/page-view`;
+
+    return request({
+      url,
+      method: 'POST',
+      body: {
+        path,
+      },
+    });
+  },
+  submitFlow(flow) {
+    global.navigator.sendBeacon(`${API_URL}/analytics/flow`, JSON.stringify(flow));
+  },
+};
+
 const API = {
   posts,
   postTranslations,
@@ -195,6 +212,7 @@ const API = {
   search,
   tags,
   upload,
+  analytics,
 };
 
 export default API;

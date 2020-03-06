@@ -1,5 +1,8 @@
 import ReactGA from 'react-ga';
 import { current } from '../config';
+import { analytics } from './api';
+
+const flow = [];
 
 export const initGoogleAnalytics = () => {
   ReactGA.initialize(current.google.analyticsTrackingId);
@@ -9,21 +12,30 @@ export const init = () => {
   initGoogleAnalytics();
 };
 
-export const logPageView = () => {
+export const logPageView = (path) => {
   if (!global.ANALYTICS_INITIALIZED) {
     init();
 
     global.ANALYTICS_INITIALIZED = true;
   }
 
-  console.info(`Logging pageview for ${global.location.pathname}`);
+  console.info(`Logging pageview for ${path}`);
 
-  ReactGA.set({ page: global.location.pathname });
-  ReactGA.pageview(global.location.pathname);
+  flow.push({ timestamp: Date.now(), path });
+
+  if (current.environment === 'production') {
+    ReactGA.pageview(path);
+  }
+};
+
+export const submitFlow = () => {
+  flow.push({ timestamp: Date.now() });
+  analytics.submitFlow(flow);
 };
 
 export default {
   initGoogleAnalytics,
   init,
   logPageView,
+  submitFlow,
 };
