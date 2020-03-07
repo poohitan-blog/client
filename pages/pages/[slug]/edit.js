@@ -4,26 +4,28 @@ import Head from 'next/head';
 import Link from 'next/link';
 import Router from 'next/router';
 
-import API from '../../services/api';
-import Error from '../_error';
-import { getAllCookies } from '../../services/cookies';
-import { current } from '../../config';
+import API from '../../../services/api';
+import Error from '../../_error';
+import { getAllCookies } from '../../../services/cookies';
+import { current } from '../../../config';
 
-import withSession from '../../hocs/withSession';
-import withProtection from '../../hocs/withProtection';
-import Wrapper from '../../components/Wrapper';
-import Header from '../../components/Header';
-import Content from '../../components/Content';
-import PageForm from '../../components/admin/PageForm';
+import withSession from '../../../hocs/withSession';
+import withProtection from '../../../hocs/withProtection';
+import Wrapper from '../../../components/Wrapper';
+import Header from '../../../components/Header';
+import Content from '../../../components/Content';
+import PageForm from '../../../components/admin/PageForm';
 
 class EditPage extends React.Component {
   static async getInitialProps({ req, query }) {
     try {
-      if (!query.path) {
+      const { slug } = query;
+
+      if (!slug) {
         return {};
       }
 
-      const page = await API.pages.findOne(query.path, getAllCookies(req));
+      const page = await API.pages.findOne(slug, getAllCookies(req));
 
       return { page };
     } catch (error) {
@@ -54,7 +56,7 @@ class EditPage extends React.Component {
       return <span>{fullLink}</span>;
     }
 
-    return <Link as={`/${path}`} href={`/page?path=${path}`}><a>{fullLink}</a></Link>;
+    return <Link as={`/${path}`} href="/[slug]"><a>{fullLink}</a></Link>;
   }
 
   async submit(submittedPage) {

@@ -1,27 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
-import API from '../services/api';
-import Error from './_error';
-import { current } from '../config';
-import { getAllCookies } from '../services/cookies';
+import API from '../../services/api';
+import Error from '../_error';
+import { current } from '../../config';
+import { getAllCookies } from '../../services/cookies';
 
-import withSession from '../hocs/withSession';
-import Wrapper from '../components/Wrapper';
-import Header from '../components/Header';
-import Content from '../components/Content';
-import Footer from '../components/Footer';
-import CompactPost from '../components/CompactPost';
-import TagCloud from '../components/TagCloud';
+import withSession from '../../hocs/withSession';
+import Wrapper from '../../components/Wrapper';
+import Header from '../../components/Header';
+import Content from '../../components/Content';
+import Footer from '../../components/Footer';
+import CompactPost from '../../components/CompactPost';
+import TagCloud from '../../components/TagCloud';
 
 const POSTS_PER_PAGE = 30;
 
 class TagPage extends React.Component {
   static async getInitialProps({ query, req, pathname }) {
     try {
-      const { tag, page = 1 } = query;
+      const { name, page = 1 } = query;
       const { docs, meta } = await API.posts.find({
-        tag,
+        tag: name,
         page,
         limit: POSTS_PER_PAGE,
         cut: true,
@@ -30,7 +30,7 @@ class TagPage extends React.Component {
       return {
         posts: docs,
         meta,
-        tag,
+        tag: name,
         pathname,
       };
     } catch (error) {

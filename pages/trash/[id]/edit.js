@@ -3,16 +3,16 @@ import PropTypes from 'prop-types';
 import Head from 'next/head';
 import Router from 'next/router';
 
-import API from '../../services/api';
-import Error from '../_error';
-import { getAllCookies } from '../../services/cookies';
+import API from '../../../services/api';
+import Error from '../../_error';
+import { getAllCookies } from '../../../services/cookies';
 
-import withSession from '../../hocs/withSession';
-import withProtection from '../../hocs/withProtection';
-import Wrapper from '../../components/Wrapper';
-import Header from '../../components/Header';
-import Content from '../../components/Content';
-import TrashPostForm from '../../components/admin/TrashPostForm';
+import withSession from '../../../hocs/withSession';
+import withProtection from '../../../hocs/withProtection';
+import Wrapper from '../../../components/Wrapper';
+import Header from '../../../components/Header';
+import Content from '../../../components/Content';
+import TrashPostForm from '../../../components/admin/TrashPostForm';
 
 class EditTrashPost extends React.Component {
   static async getInitialProps({ req, query }) {

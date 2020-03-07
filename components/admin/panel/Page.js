@@ -9,7 +9,7 @@ const Page = (props) => {
   const { title, path, private: hidden } = props;
 
   return (
-    <Link href={`/page?path=${path}`} as={`/${path}`}>
+    <Link href="/[slug]" as={`/${path}`}>
       <a className={styles.listItem}>
         <div className={styles.listSentence}>{title || path}</div>
         {

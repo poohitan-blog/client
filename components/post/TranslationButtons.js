@@ -40,7 +40,7 @@ const TranslationButtons = ({ translations, language, path }, context) => (
             key={item.lang}
             title={item.title}
             language={item.lang}
-            href={`/post?path=${path}&language=${item.lang}`}
+            href="/p/[slug]/[language]"
             as={`/p/${path}/${item.lang}`}
           />
         ))

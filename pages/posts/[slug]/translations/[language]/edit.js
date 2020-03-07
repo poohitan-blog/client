@@ -3,21 +3,21 @@ import PropTypes from 'prop-types';
 import Head from 'next/head';
 import Router from 'next/router';
 
-import API from '../../services/api';
-import Error from '../_error';
-import { getAllCookies } from '../../services/cookies';
+import API from '../../../../../services/api';
+import Error from '../../../../_error';
+import { getAllCookies } from '../../../../../services/cookies';
 
-import withSession from '../../hocs/withSession';
-import withProtection from '../../hocs/withProtection';
-import Wrapper from '../../components/Wrapper';
-import Header from '../../components/Header';
-import Content from '../../components/Content';
-import PostTranslationForm from '../../components/admin/PostTranslationForm';
+import withSession from '../../../../../hocs/withSession';
+import withProtection from '../../../../../hocs/withProtection';
+import Wrapper from '../../../../../components/Wrapper';
+import Header from '../../../../../components/Header';
+import Content from '../../../../../components/Content';
+import PostTranslationForm from '../../../../../components/admin/PostTranslationForm';
 
 class EditPostTranslation extends React.Component {
   static async getInitialProps({ req, query }) {
     try {
-      const post = await API.posts.findOne(query.post, getAllCookies(req));
+      const post = await API.posts.findOne(query.slug, getAllCookies(req));
 
       if (!query.language) {
         return { post };
@@ -91,7 +91,7 @@ EditPostTranslation.propTypes = {
   }),
   post: PropTypes.shape({
     path: PropTypes.string,
-    translations: PropTypes.array(),
+    translations: PropTypes.array,
   }).isRequired,
   error: PropTypes.shape({
     status: PropTypes.number,

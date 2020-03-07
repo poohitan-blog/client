@@ -3,27 +3,27 @@ import PropTypes from 'prop-types';
 import Head from 'next/head';
 import Router from 'next/router';
 
-import API from '../../services/api';
-import Error from '../_error';
-import { getAllCookies } from '../../services/cookies';
+import API from '../../../services/api';
+import Error from '../../_error';
+import { getAllCookies } from '../../../services/cookies';
 
-import withSession from '../../hocs/withSession';
-import withProtection from '../../hocs/withProtection';
-import Wrapper from '../../components/Wrapper';
-import Header from '../../components/Header';
-import Content from '../../components/Content';
-import PostForm from '../../components/admin/PostForm';
+import withSession from '../../../hocs/withSession';
+import withProtection from '../../../hocs/withProtection';
+import Wrapper from '../../../components/Wrapper';
+import Header from '../../../components/Header';
+import Content from '../../../components/Content';
+import PostForm from '../../../components/admin/PostForm';
 
 class EditPost extends React.Component {
   static async getInitialProps({ req, query }) {
     try {
       const tagCloud = await API.tags.getCloud();
 
-      if (!query.path) {
+      if (!query.slug) {
         return { tagCloud };
       }
 
-      const post = await API.posts.findOne(query.path, getAllCookies(req));
+      const post = await API.posts.findOne(query.slug, getAllCookies(req));
 
       return { post, tagCloud };
     } catch (error) {

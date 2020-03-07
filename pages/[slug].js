@@ -18,7 +18,7 @@ import Page from '../components/Page';
 class PagePage extends React.Component {
   static async getInitialProps({ query, req, pathname }) {
     try {
-      const page = await API.pages.findOne(query.path, getAllCookies(req));
+      const page = await API.pages.findOne(query.slug, getAllCookies(req));
 
       return { page, pathname };
     } catch (error) {

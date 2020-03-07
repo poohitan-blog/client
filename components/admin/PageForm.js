@@ -41,7 +41,7 @@ class PageForm extends React.Component {
       return <span>{fullLink}</span>;
     }
 
-    return <Link as={`/${path}`} href={`/page?path=${path}`}><a>{fullLink}</a></Link>;
+    return <Link as={`/${path}`} href="/[slug]"><a>{fullLink}</a></Link>;
   }
 
   async submit() {

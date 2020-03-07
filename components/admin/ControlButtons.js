@@ -14,19 +14,19 @@ import styles from '../../styles/components/admin/control-buttons.scss';
 
 const linkGenerators = {
   page: {
-    href: (path) => `/admin/edit-page?path=${path}`,
-    as: (path) => `/${path}/edit`,
+    href: () => '/pages/[slug]/edit',
+    as: (path) => `/pages/${path}/edit`,
   },
   post: {
-    href: (path) => `/admin/edit-post?path=${path}`,
-    as: (path) => `/p/${path}/edit`,
+    href: () => '/posts/[slug]/edit',
+    as: (path) => `/posts/${path}/edit`,
   },
   postTranslation: {
-    href: (post, language) => `/admin/edit-post-translation?post=${post}&language=${language}`,
-    as: (post, language) => `/p/${post}/translations/${language}/edit`,
+    href: () => '/posts/[slug]/translations/[language]/edit',
+    as: (post, language) => `/posts/${post}/translations/${language}/edit`,
   },
   trashPost: {
-    href: (id) => `/admin/edit-trash-post?id=${id}`,
+    href: () => '/trash/[id]/edit',
     as: (id) => `/trash/${id}/edit`,
   },
 };

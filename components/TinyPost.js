@@ -23,7 +23,7 @@ const TinyPost = ({
 
   return (
     <LazyLoadComponent threshold={300} scrollPosition={scrollPosition}>
-      <Link as={`/p/${path}`} href={`/post?path=${path}`}>
+      <Link as={`/p/${path}`} href="/p/[slug]">
         <a className={styles.wrapper} title={title} style={{ backgroundImage: `url("${image}?width=${IMAGE_WIDTH}")` }}>
           <div className={styles.content}>
             <div><span className={styles.title}>{cutTitle}</span></div>

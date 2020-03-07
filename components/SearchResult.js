@@ -46,20 +46,20 @@ function highlightQueryInText(text, query) {
 function generateLinkParams({ id, path, searchResultType }) {
   if (searchResultType === 'post') {
     return {
-      href: `/post?path=${path}`,
+      href: '/p/[slug]',
       as: `/p/${path}`,
     };
   }
 
   if (searchResultType === 'trashPost') {
     return {
-      href: `/trash?id=${id}`,
+      href: '/trash/[id]',
       as: `/trash/${id}`,
     };
   }
 
   return {
-    href: `/page?path=${path}`,
+    href: '/[slug]',
     as: `/${path}`,
   };
 }

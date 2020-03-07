@@ -65,7 +65,7 @@ class PostTranslationForm extends React.Component {
         <h1>
           {formTitle}
           {' '}
-          <Link href={`/admin/edit-post?path=${post.path}`} as={`/p/${post.path}/edit`}>
+          <Link href="/posts/[slug]/edit" as={`/posts/${post.path}/edit`}>
             <a>{`«${post.title}»`}</a>
           </Link>
         </h1>

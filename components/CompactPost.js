@@ -21,7 +21,7 @@ const CompactPost = (props) => {
     <article className={styles.wrapper}>
       <div className={styles.titleWrapper}>
         <h3 className={styles.title}>
-          <Link as={`/p/${path}`} href={`/post?path=${path}`}>
+          <Link as={`/p/${path}`} href="/p/[slug]">
             <a title={title}>{title}</a>
           </Link>
           {

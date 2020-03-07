@@ -11,9 +11,9 @@ const handle = app.getRequestHandler();
 
 const migrationMap = require('./routes/migration-map.js');
 
-const pagesRouter = require('./routes/pages.js');
-const postsRouter = require('./routes/posts.js');
-const trashRouter = require('./routes/trash.js');
+// const pagesRouter = require('./routes/pages.js');
+// const postsRouter = require('./routes/posts.js');
+// const trashRouter = require('./routes/trash.js');
 
 const staticDirPath = config.environment === 'development' ? '../stuff' : '../../stuff';
 
@@ -49,13 +49,29 @@ app.prepare()
     server.get('/search', (req, res) => app.render(req, res, '/search', req.query));
     server.get('/upload', (req, res) => app.render(req, res, '/admin/upload-files', req.query));
 
-    server.get('/tag/:tag_name', (req, res) => {
-      app.render(req, res, '/tag', { ...req.query, tag: req.params.tag_name });
+    // server.get('/tag/:tag_name', (req, res) => {
+    //   app.render(req, res, '/tag', { ...req.query, tag: req.params.tag_name });
+    // });
+
+    // server.use(trashRouter(app));
+    // server.use(postsRouter(app));
+    // server.use(pagesRouter(app));
+
+    // server.get('/posts/new', (req, res) => {
+    //   app.render(req, res, '/p/new', req.query);
+    // });
+
+    // server.get('/pages/new', (req, res) => {
+    //   app.render(req, res, '/new', req.query);
+    // });
+
+    server.get('/trash/index.php', (req, res) => {
+      app.render(req, res, '/trash', req.query);
     });
 
-    server.use(trashRouter(app));
-    server.use(postsRouter(app));
-    server.use(pagesRouter(app));
+    server.get('/trash/random', (req, res) => {
+      app.render(req, res, '/trash', { ...req.query, random: true });
+    });
 
     server.get('*', (req, res) => handle(req, res));
 

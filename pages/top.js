@@ -176,7 +176,7 @@ class TopPage extends React.Component {
 
                   return (
                     <li key={post.id}>
-                      <Link href={`/post?path=${post.path}`} as={`/p/${post.path}`}><a title={post.title}>{post.title}</a></Link>
+                      <Link href="/p/[slug]" as={`/p/${post.path}`}><a title={post.title}>{post.title}</a></Link>
                       <span className="smaller">
                         {' '}
                         <span className="nowrap">{`— переглядів: ${post.views || 0},`}</span>

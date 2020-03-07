@@ -39,8 +39,8 @@ const Post = (props) => {
   const title = isTranslation ? translation.title : originalPostTitle;
   const body = isTranslation ? translation.body : originalPostBody;
   const link = isTranslation
-    ? { href: `/post?path=${path}&language=${translation.lang}`, as: `/p/${path}/${translation.lang}` }
-    : { href: `/post?path=${path}`, as: `/p/${path}` };
+    ? { href: '/p/[slug]/[language]', as: `/p/${path}/${translation.lang}` }
+    : { href: '/p/[slug]', as: `/p/${path}` };
 
   const lightboxImageSelector = `.${styles.wrapper}[data-path="${path}"] a.${LIGHTBOX_CLASS}`;
 

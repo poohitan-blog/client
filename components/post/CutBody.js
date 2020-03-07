@@ -28,7 +28,7 @@ const CutBody = ({ title, path, body }) => {
           },
         })
       }
-      <Link as={`/p/${path}`} href={`/post?path=${path}#cut`}>
+      <Link as={`/p/${path}`} href="/p/[slug]">
         <a title={`${READ_MORE} «${title}»`}>{READ_MORE}</a>
       </Link>
     </>

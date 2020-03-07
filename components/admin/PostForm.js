@@ -55,7 +55,7 @@ class PostForm extends React.Component {
       return <span>{fullLink}</span>;
     }
 
-    return <Link as={`/p/${path}`} href={`/post?path=${path}`}><a>{fullLink}</a></Link>;
+    return <Link as={`/p/${path}`} href="/p/[slug]"><a>{fullLink}</a></Link>;
   }
 
   async submit() {
@@ -229,8 +229,8 @@ class PostForm extends React.Component {
                   .map((translation) => (
                     <Link
                       key={translation.lang}
-                      as={`/p/${path}/translations/${translation.lang}/edit`}
-                      href={`/admin/edit-post-translation?language=${translation.lang}&post=${path}`}
+                      as={`/posts/${path}/translations/${translation.lang}/edit`}
+                      href="/posts/[slug]/translations/[language]/edit"
                     >
                       <a className={styles.translationLink}>
                         {translation.lang}
@@ -240,7 +240,7 @@ class PostForm extends React.Component {
                   ))
                 : null
             }
-            <Link as={`/p/${path}/translations/new`} href={`/admin/edit-post-translation?post=${path}`}>
+            <Link as={`/posts/${path}/translations/new`} href="/posts/[slug]/translations/new">
               <a className={styles.translationLink}>(Додати)</a>
             </Link>
           </div>

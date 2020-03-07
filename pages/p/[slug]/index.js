@@ -3,22 +3,22 @@ import PropTypes from 'prop-types';
 import Head from 'next/head';
 import dynamic from 'next/dynamic';
 
-import Error from './_error';
-import { current } from '../config';
-import API from '../services/api';
-import { getAllCookies } from '../services/cookies';
-import { stripHTML, getImageLinksFromHTML, shorten } from '../services/text';
+import Error from '../../_error';
+import { current } from '../../../config';
+import API from '../../../services/api';
+import { getAllCookies } from '../../../services/cookies';
+import { stripHTML, getImageLinksFromHTML, shorten } from '../../../services/text';
 
-import withSession from '../hocs/withSession';
-import Wrapper from '../components/Wrapper';
-import Header from '../components/Header';
-import Content from '../components/Content';
-import Footer from '../components/Footer';
-import Post from '../components/Post';
-import CommentForm from '../components/post/CommentForm';
-import BlogPosting from '../components/jsonld/BlogPosting';
+import withSession from '../../../hocs/withSession';
+import Wrapper from '../../../components/Wrapper';
+import Header from '../../../components/Header';
+import Content from '../../../components/Content';
+import Footer from '../../../components/Footer';
+import Post from '../../../components/Post';
+import CommentForm from '../../../components/post/CommentForm';
+import BlogPosting from '../../../components/jsonld/BlogPosting';
 
-const SimilarPostsGroup = dynamic(import('../components/SimilarPostsGroup'), {
+const SimilarPostsGroup = dynamic(import('../../../components/SimilarPostsGroup'), {
   ssr: false,
   loading: () => null,
 });
@@ -28,8 +28,8 @@ class PostPage extends React.Component {
     query, req, res, pathname,
   }) {
     try {
-      const post = await API.posts.findOne(query.path, getAllCookies(req));
-      const similarPosts = await API.posts.findSimilar(query.path);
+      const post = await API.posts.findOne(query.slug, getAllCookies(req));
+      const similarPosts = await API.posts.findSimilar(query.slug);
 
       const availableLanguages = post.translations.map((item) => item.lang);
       const requestedLanguage = query.language;
@@ -78,7 +78,7 @@ class PostPage extends React.Component {
         <Head>
           <title>{title}</title>
 
-          <link rel="canonical" href={`${current.clientURL}/p/${post.path}`} />
+          <link rel="canonical" href={`${url}`} />
 
           <meta name="description" content={description} key="description" />
           <meta name="keywords" content={post.tags.join(', ')} key="keywords" />
