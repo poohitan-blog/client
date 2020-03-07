@@ -11,7 +11,7 @@ const CompactPost = (props) => {
   const {
     title,
     body,
-    path,
+    slug,
     publishedAt,
     private: hidden,
   } = props;
@@ -21,7 +21,7 @@ const CompactPost = (props) => {
     <article className={styles.wrapper}>
       <div className={styles.titleWrapper}>
         <h3 className={styles.title}>
-          <Link as={`/p/${path}`} href={`/post?path=${path}`}>
+          <Link as={`/p/${slug}`} href="/p/[slug]">
             <a title={title}>{title}</a>
           </Link>
           {
@@ -45,7 +45,7 @@ const CompactPost = (props) => {
 CompactPost.propTypes = {
   title: PropTypes.string.isRequired,
   body: PropTypes.string.isRequired,
-  path: PropTypes.string.isRequired,
+  slug: PropTypes.string.isRequired,
   publishedAt: PropTypes.instanceOf(Date).isRequired,
   private: PropTypes.bool,
 };

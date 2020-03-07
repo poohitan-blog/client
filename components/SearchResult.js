@@ -43,24 +43,24 @@ function highlightQueryInText(text, query) {
     .join(' ');
 }
 
-function generateLinkParams({ id, path, searchResultType }) {
+function generateLinkParams({ id, slug, searchResultType }) {
   if (searchResultType === 'post') {
     return {
-      href: `/post?path=${path}`,
-      as: `/p/${path}`,
+      href: '/p/[slug]',
+      as: `/p/${slug}`,
     };
   }
 
   if (searchResultType === 'trashPost') {
     return {
-      href: `/trash?id=${id}`,
+      href: '/trash/[id]',
       as: `/trash/${id}`,
     };
   }
 
   return {
-    href: `/page?path=${path}`,
-    as: `/${path}`,
+    href: '/[slug]',
+    as: `/${slug}`,
   };
 }
 
@@ -103,7 +103,7 @@ const SearchResult = (props) => {
   const {
     id,
     title,
-    path,
+    slug,
     body,
     tags,
     createdAt,
@@ -129,7 +129,7 @@ const SearchResult = (props) => {
     resultBody = shorten(bodyText, BODY_MAX_LENGTH_WORDS);
   }
 
-  const { href, as } = generateLinkParams({ id, path, searchResultType });
+  const { href, as } = generateLinkParams({ id, slug, searchResultType });
   const description = generateDescription({
     tags,
     createdAt,
@@ -159,7 +159,7 @@ SearchResult.propTypes = {
   id: PropTypes.string.isRequired,
   title: PropTypes.string,
   body: PropTypes.string.isRequired,
-  path: PropTypes.string,
+  slug: PropTypes.string,
   query: PropTypes.string.isRequired,
   searchResultType: PropTypes.string.isRequired,
   tags: PropTypes.arrayOf(PropTypes.string),
@@ -169,7 +169,7 @@ SearchResult.propTypes = {
 
 SearchResult.defaultProps = {
   title: '',
-  path: '',
+  slug: '',
   tags: null,
   createdAt: null,
   publishedAt: null,

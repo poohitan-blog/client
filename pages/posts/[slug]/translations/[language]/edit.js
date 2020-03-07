@@ -4,20 +4,20 @@ import Head from 'next/head';
 import Router from 'next/router';
 import { parseCookies } from 'nookies';
 
-import API from '../../services/api';
-import Error from '../_error';
+import API from '../../../../../services/api';
+import Error from '../../../../_error';
 
-import withSession from '../../hocs/withSession';
-import withProtection from '../../hocs/withProtection';
-import Wrapper from '../../components/Wrapper';
-import Header from '../../components/Header';
-import Content from '../../components/Content';
-import PostTranslationForm from '../../components/admin/PostTranslationForm';
+import withSession from '../../../../../hocs/withSession';
+import withProtection from '../../../../../hocs/withProtection';
+import Wrapper from '../../../../../components/Wrapper';
+import Header from '../../../../../components/Header';
+import Content from '../../../../../components/Content';
+import PostTranslationForm from '../../../../../components/admin/PostTranslationForm';
 
 class EditPostTranslation extends React.Component {
   static async getInitialProps({ req, query }) {
     try {
-      const post = await API.posts.findOne(query.post, parseCookies({ req }));
+      const post = await API.posts.findOne(query.slug, parseCookies({ req }));
 
       if (!query.language) {
         return { post };
@@ -47,10 +47,10 @@ class EditPostTranslation extends React.Component {
       const newTranslation = await API.postTranslations.create(submittedTranslation, parseCookies({}));
       const updatedListOfTranslations = [...post.translations.map((item) => item.id || item), newTranslation.id];
 
-      await API.posts.update(post.path, { ...post, translations: updatedListOfTranslations });
+      await API.posts.update(post.slug, { ...post, translations: updatedListOfTranslations });
     }
 
-    Router.push(`/post?path=${post.path}&language=${submittedTranslation.lang}`, `/p/${post.path}/${submittedTranslation.lang}`);
+    Router.push('/p/[slug]/[language]', `/p/${post.slug}/${submittedTranslation.lang}`);
   }
 
   render() {
@@ -90,8 +90,8 @@ EditPostTranslation.propTypes = {
     id: PropTypes.string,
   }),
   post: PropTypes.shape({
-    path: PropTypes.string,
-    translations: PropTypes.array(),
+    slug: PropTypes.string,
+    translations: PropTypes.array,
   }).isRequired,
   error: PropTypes.shape({
     status: PropTypes.number,

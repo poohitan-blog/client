@@ -6,17 +6,17 @@
   @include form;
 }
 
-.path {
+.slug {
   display: flex;
   justify-content: flex-start;
   align-items: center;
   @include smaller;
 
-  .path-input {
+  .slug-input {
     width: 50%;
   }
 
-  .path-preview {
+  .slug-preview {
     margin-left: 1em;
     white-space: nowrap;
     width: 50%;

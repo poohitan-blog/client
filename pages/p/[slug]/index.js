@@ -4,21 +4,21 @@ import Head from 'next/head';
 import dynamic from 'next/dynamic';
 import { parseCookies } from 'nookies';
 
-import Error from './_error';
-import { current } from '../config';
-import API from '../services/api';
-import { stripHTML, getImageLinksFromHTML, shorten } from '../services/text';
+import Error from '../../_error';
+import { current } from '../../../config';
+import API from '../../../services/api';
+import { stripHTML, getImageLinksFromHTML, shorten } from '../../../services/text';
 
-import withSession from '../hocs/withSession';
-import Wrapper from '../components/Wrapper';
-import Header from '../components/Header';
-import Content from '../components/Content';
-import Footer from '../components/Footer';
-import Post from '../components/Post';
-import CommentForm from '../components/post/CommentForm';
-import BlogPosting from '../components/jsonld/BlogPosting';
+import withSession from '../../../hocs/withSession';
+import Wrapper from '../../../components/Wrapper';
+import Header from '../../../components/Header';
+import Content from '../../../components/Content';
+import Footer from '../../../components/Footer';
+import Post from '../../../components/Post';
+import CommentForm from '../../../components/post/CommentForm';
+import BlogPosting from '../../../components/jsonld/BlogPosting';
 
-const SimilarPostsGroup = dynamic(import('../components/SimilarPostsGroup'), {
+const SimilarPostsGroup = dynamic(import('../../../components/SimilarPostsGroup'), {
   ssr: false,
   loading: () => null,
 });
@@ -28,14 +28,14 @@ class PostPage extends React.Component {
     query, req, res, pathname,
   }) {
     try {
-      const post = await API.posts.findOne(query.path, parseCookies({ req }));
-      const similarPosts = await API.posts.findSimilar(query.path);
+      const post = await API.posts.findOne(query.slug, parseCookies({ req }));
+      const similarPosts = await API.posts.findSimilar(query.slug);
 
       const availableLanguages = post.translations.map((item) => item.lang);
       const requestedLanguage = query.language;
 
       if (requestedLanguage && !availableLanguages.includes(requestedLanguage)) {
-        return res.redirect(`/p/${post.path}`);
+        return res.redirect(`/p/${post.slug}`);
       }
 
       return {
@@ -70,15 +70,15 @@ class PostPage extends React.Component {
       || post.description
       || shorten(stripHTML(body), 20);
     const url = language
-      ? `${current.clientURL}/p/${post.path}/${language}`
-      : `${current.clientURL}/p/${post.path}`;
+      ? `${current.clientURL}/p/${post.slug}/${language}`
+      : `${current.clientURL}/p/${post.slug}`;
 
     return (
       <>
         <Head>
           <title>{title}</title>
 
-          <link rel="canonical" href={`${current.clientURL}/p/${post.path}`} />
+          <link rel="canonical" href={url} />
 
           <meta name="description" content={description} key="description" />
           <meta name="keywords" content={post.tags.join(', ')} key="keywords" />
@@ -100,7 +100,7 @@ class PostPage extends React.Component {
 
           <BlogPosting
             title={post.title}
-            path={post.path}
+            slug={post.slug}
             body={post.body}
             tags={post.tags}
             publishedAt={new Date(post.publishedAt)}
@@ -113,10 +113,10 @@ class PostPage extends React.Component {
           }
           <Content>
             <Post
-              key={post.path}
+              key={post.slug}
               title={post.title}
               body={post.body}
-              path={post.path}
+              slug={post.slug}
               private={post.private}
               language={language}
               translations={post.translations}
@@ -128,7 +128,7 @@ class PostPage extends React.Component {
             {
               similarPosts.length ? <SimilarPostsGroup posts={similarPosts} /> : null
             }
-            <CommentForm title={post.title} path={post.path} />
+            <CommentForm title={post.title} slug={post.slug} />
           </Content>
           <Footer />
         </Wrapper>
@@ -145,7 +145,7 @@ PostPage.propTypes = {
     title: PropTypes.string.isRequired,
     body: PropTypes.string.isRequired,
     description: PropTypes.string,
-    path: PropTypes.string.isRequired,
+    slug: PropTypes.string.isRequired,
     tags: PropTypes.arrayOf(PropTypes.string),
     publishedAt: PropTypes.instanceOf(Date),
     private: PropTypes.bool,

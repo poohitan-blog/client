@@ -53,7 +53,7 @@ class ArchivePage extends React.Component {
             key={post.id}
             title={post.title}
             body={post.body}
-            path={post.path}
+            slug={post.slug}
             publishedAt={new Date(post.publishedAt)}
             private={post.private}
           />

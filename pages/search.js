@@ -70,7 +70,7 @@ class SearchPage extends React.Component {
             query={searchQuery}
             title={searchResult.title}
             body={searchResult.body}
-            path={searchResult.path}
+            slug={searchResult.slug}
             searchResultType={searchResult.searchResultType}
             tags={searchResult.tags}
             publishedAt={new Date(searchResult.publishedAt)}

@@ -4,8 +4,8 @@ import Link from 'next/link';
 
 import styles from '../../../styles/components/admin/panel.scss';
 
-const Draft = ({ title, path }) => (
-  <Link href={`/post?path=${path}`} as={`/p/${path}`}>
+const Draft = ({ title, slug }) => (
+  <Link href="/p/[slug]" as={`/p/${slug}`}>
     <a className={styles.listItem}>
       <div className={styles.listSentence}>{title}</div>
     </a>
@@ -13,7 +13,7 @@ const Draft = ({ title, path }) => (
 );
 
 Draft.propTypes = {
-  path: PropTypes.string.isRequired,
+  slug: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
 };
 

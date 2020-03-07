@@ -22,7 +22,7 @@ const Post = (props) => {
   const {
     title: originalPostTitle,
     body: originalPostBody,
-    path,
+    slug,
     cut,
     imagesWidth,
     language,
@@ -39,13 +39,13 @@ const Post = (props) => {
   const title = isTranslation ? translation.title : originalPostTitle;
   const body = isTranslation ? translation.body : originalPostBody;
   const link = isTranslation
-    ? { href: `/post?path=${path}&language=${translation.lang}`, as: `/p/${path}/${translation.lang}` }
-    : { href: `/post?path=${path}`, as: `/p/${path}` };
+    ? { href: '/p/[slug]/[language]', as: `/p/${slug}/${translation.lang}` }
+    : { href: '/p/[slug]', as: `/p/${slug}` };
 
-  const lightboxImageSelector = `.${styles.wrapper}[data-path="${path}"] a.${LIGHTBOX_CLASS}`;
+  const lightboxImageSelector = `.${styles.wrapper}[data-slug="${slug}"] a.${LIGHTBOX_CLASS}`;
 
   return (
-    <article className={styles.wrapper} data-path={path} id={cut ? null : 'post'}>
+    <article className={styles.wrapper} data-slug={slug} id={cut ? null : 'post'}>
       <h1 className={styles.title} id={cut ? null : 'post-title'}>
         <Link as={link.as} href={link.href}>
           <a title={title} href={link.as}>{title}</a>
@@ -54,7 +54,7 @@ const Post = (props) => {
           Boolean(translations.length)
             && (
               <TranslationButtons
-                path={path}
+                slug={slug}
                 language={language}
                 translations={translations}
               />
@@ -68,7 +68,7 @@ const Post = (props) => {
             {({ isAuthenticated }) => isAuthenticated && (
               <AdminControlButtons
                 attachedTo={isTranslation ? 'postTranslation' : 'post'}
-                tokens={[path, translation.lang]}
+                tokens={[slug, translation.lang]}
                 className={styles.adminControlButtons}
                 id={cut ? null : 'post-admin-control-buttons'}
               />
@@ -79,7 +79,7 @@ const Post = (props) => {
       <div className={styles.body} id={cut ? null : 'post-body'}>
         {
           cut
-            ? <CutBody title={title} body={body} path={path} />
+            ? <CutBody title={title} body={body} slug={slug} />
             : <FullBody language={language} body={body} imagesWidth={imagesWidth} />
         }
       </div>
@@ -87,7 +87,7 @@ const Post = (props) => {
       <SyntaxHighlighter />
       <MathHighlighter />
       <Footer
-        path={path}
+        slug={slug}
         commentsCount={commentsCount}
         publishedAt={new Date(publishedAt)}
         tags={tags}
@@ -100,7 +100,7 @@ const Post = (props) => {
 Post.propTypes = {
   title: PropTypes.string.isRequired,
   body: PropTypes.string.isRequired,
-  path: PropTypes.string.isRequired,
+  slug: PropTypes.string.isRequired,
   cut: PropTypes.bool,
   private: PropTypes.bool,
   language: PropTypes.string,

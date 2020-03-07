@@ -6,12 +6,12 @@ import HiddenIcon from '../../../public/static/icons/hidden.svg';
 import styles from '../../../styles/components/admin/panel.scss';
 
 const Page = (props) => {
-  const { title, path, private: hidden } = props;
+  const { title, slug, private: hidden } = props;
 
   return (
-    <Link href={`/page?path=${path}`} as={`/${path}`}>
+    <Link href="/[slug]" as={`/${slug}`}>
       <a className={styles.listItem}>
-        <div className={styles.listSentence}>{title || path}</div>
+        <div className={styles.listSentence}>{title || slug}</div>
         {
           hidden && <div className={styles.listIcon}><HiddenIcon /></div>
         }
@@ -21,7 +21,7 @@ const Page = (props) => {
 };
 
 Page.propTypes = {
-  path: PropTypes.string.isRequired,
+  slug: PropTypes.string.isRequired,
   title: PropTypes.string,
   private: PropTypes.bool,
 };

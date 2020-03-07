@@ -15,6 +15,7 @@ function calculateRelativeThumbnailHeight(node) {
     ? (originalHeight * 100) / originalWidth
     : DEFAULT_THUMBNAIL_RELATIVE_HEIGHT;
 }
+
 function generateAltText(node, language) {
   const {
     alt,
@@ -45,8 +46,10 @@ function generateLinkTitle(node, language) {
 
 export function generateLazyPreview(node, { altLanguage = 'uk', scrollPosition, thumbnailWidth = DEFAULT_THUMBNAIL_WIDTH } = {}) {
   const {
+    class: className,
     src: originalSource,
     'data-averagecolor': averageColor,
+    'data-clickable': clickable,
   } = node.attribs;
 
   const placeholderSource = `${originalSource}?placeholder=true`;
@@ -56,26 +59,35 @@ export function generateLazyPreview(node, { altLanguage = 'uk', scrollPosition, 
   const alt = generateAltText(node, altLanguage);
   const title = generateLinkTitle(node, altLanguage);
 
-  return (
-    <a href={originalSource} className={LIGHTBOX_CLASS} key={originalSource} title={title}>
-      <span className="lazy-load-image-wrapper">
-        <LazyLoadImage
-          src={thumbnailSource}
-          key={thumbnailSource}
-          placeholderSrc={placeholderSource}
-          alt={alt}
-          effect="blur"
-          threshold={300}
-          scrollPosition={scrollPosition}
-          wrapperClassName="lazy-load-image"
-        />
-        <span
-          className="lazy-load-image-placeholder"
-          style={{ paddingTop: `${relativeThumbnailHeight}%`, backgroundColor: `#${averageColor}` }}
-        />
-      </span>
-    </a>
+  const isClickable = clickable !== 'false';
+
+  const image = (
+    <span className="lazy-load-image-wrapper">
+      <LazyLoadImage
+        src={thumbnailSource}
+        key={thumbnailSource}
+        placeholderSrc={placeholderSource}
+        alt={alt}
+        effect="blur"
+        threshold={300}
+        scrollPosition={scrollPosition}
+        wrapperClassName="lazy-load-image"
+        className={className}
+      />
+      <span
+        className="lazy-load-image-placeholder"
+        style={{ paddingTop: `${relativeThumbnailHeight}%`, backgroundColor: `#${averageColor}` }}
+      />
+    </span>
   );
+
+  return isClickable
+    ? (
+      <a href={originalSource} className={LIGHTBOX_CLASS} key={originalSource} title={title}>
+        {image}
+      </a>
+    )
+    : image;
 }
 
 export default {

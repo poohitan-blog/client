@@ -28,7 +28,7 @@ class Panel extends React.Component {
           {
             allPages.map((page) => (
               <li key={page.id}>
-                <Page path={page.path} title={page.title} private={page.private} />
+                <Page slug={page.slug} title={page.title} private={page.private} />
               </li>
             ))
           }
@@ -43,7 +43,7 @@ class Panel extends React.Component {
           {
             drafts.map((draft) => (
               <li key={draft.id}>
-                <Draft path={draft.path} title={draft.title} />
+                <Draft slug={draft.slug} title={draft.title} />
               </li>
             ))
           }
@@ -57,16 +57,16 @@ class Panel extends React.Component {
           <h3>Панель приладів</h3>
           <ul>
             <li>
-              <Link href="/admin/edit-post" as="/posts/new"><a>Додати запис</a></Link>
+              <Link href="/posts/new"><a>Додати запис</a></Link>
             </li>
             <li>
-              <Link href="/admin/edit-trash-post" as="/trash/new"><a>Додати запис у смітник</a></Link>
+              <Link href="/trash/new"><a>Додати запис у смітник</a></Link>
             </li>
             <li>
-              <Link href="/admin/edit-page" as="/pages/new"><a>Додати сторінку</a></Link>
+              <Link href="/pages/new"><a>Додати сторінку</a></Link>
             </li>
             <li>
-              <Link href="/admin/upload-files" as="/upload"><a>Завантажити файли</a></Link>
+              <Link href="/upload"><a>Завантажити файли</a></Link>
             </li>
             <li>
               <a href="#" role="button" onClick={Panel.logOut}>Вийти</a>

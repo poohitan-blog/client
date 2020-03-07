@@ -124,7 +124,7 @@ class TrashPost extends React.Component {
           )
         }
         <div className={styles.footer}>
-          <Link as={`/trash/${id}`} href={`/trash?id=${id}`}>
+          <Link as={`/trash/${id}`} href="/trash/[id]">
             <a title="Постійне посилання" className="nowrap">постійне посилання</a>
           </Link>
           <hr className={styles.footerLine} />

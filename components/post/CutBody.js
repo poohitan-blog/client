@@ -14,7 +14,7 @@ function cut(body) {
   return cutPosition > 0 ? body.slice(0, cutPosition) : body;
 }
 
-const CutBody = ({ title, path, body }) => {
+const CutBody = ({ title, slug, body }) => {
   const cutHtml = cut(body);
 
   return (
@@ -28,7 +28,7 @@ const CutBody = ({ title, path, body }) => {
           },
         })
       }
-      <Link as={`/p/${path}`} href={`/post?path=${path}#cut`}>
+      <Link as={`/p/${slug}`} href="/p/[slug]">
         <a title={`${READ_MORE} «${title}»`}>{READ_MORE}</a>
       </Link>
     </>
@@ -38,7 +38,7 @@ const CutBody = ({ title, path, body }) => {
 CutBody.propTypes = {
   title: PropTypes.string.isRequired,
   body: PropTypes.node.isRequired,
-  path: PropTypes.string.isRequired,
+  slug: PropTypes.string.isRequired,
 };
 
 export default CutBody;

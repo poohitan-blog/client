@@ -12,7 +12,7 @@ import styles from '../styles/components/page.scss';
 const Page = (props) => {
   const {
     title,
-    path,
+    slug,
     body,
     private: hidden,
   } = props;
@@ -25,7 +25,7 @@ const Page = (props) => {
           {({ isAuthenticated }) => isAuthenticated && (
             <AdminControlButtons
               attachedTo="page"
-              tokens={[path]}
+              tokens={[slug]}
               className={styles.adminControlButtons}
               id="page-admin-control-buttons"
             />
@@ -53,7 +53,7 @@ const Page = (props) => {
 Page.propTypes = {
   title: PropTypes.string,
   body: PropTypes.string.isRequired,
-  path: PropTypes.string.isRequired,
+  slug: PropTypes.string.isRequired,
   private: PropTypes.bool,
 };
 

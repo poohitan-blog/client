@@ -4,15 +4,15 @@ import Head from 'next/head';
 import Router from 'next/router';
 import { parseCookies } from 'nookies';
 
-import API from '../../services/api';
-import Error from '../_error';
+import API from '../../../services/api';
+import Error from '../../_error';
 
-import withSession from '../../hocs/withSession';
-import withProtection from '../../hocs/withProtection';
-import Wrapper from '../../components/Wrapper';
-import Header from '../../components/Header';
-import Content from '../../components/Content';
-import TrashPostForm from '../../components/admin/TrashPostForm';
+import withSession from '../../../hocs/withSession';
+import withProtection from '../../../hocs/withProtection';
+import Wrapper from '../../../components/Wrapper';
+import Header from '../../../components/Header';
+import Content from '../../../components/Content';
+import TrashPostForm from '../../../components/admin/TrashPostForm';
 
 class EditTrashPost extends React.Component {
   static async getInitialProps({ req, query }) {
@@ -43,7 +43,7 @@ class EditTrashPost extends React.Component {
       ? await API.trashPosts.update(trashPost.id, submittedTrashPost, parseCookies({}))
       : await API.trashPosts.create(submittedTrashPost, parseCookies({}));
 
-    Router.push(`/trash?id=${savedTrashPost.id}`, `/trash/${savedTrashPost.id}`);
+    Router.push('/trash/[id]', `/trash/${savedTrashPost.id}`);
   }
 
   render() {
