@@ -92,6 +92,10 @@ class TrashPage extends React.Component {
       return <Error statusCode={error.status} />;
     }
 
+    if (posts.length === 0) {
+      return <Error statusCode={404} />;
+    }
+
     const postsMarkup = posts.map((post) => (
       <TrashPost
         id={post.id}

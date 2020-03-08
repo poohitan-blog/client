@@ -20,7 +20,7 @@ const Page = (props) => {
   return (
     <article className={styles.wrapper} id="page">
       <h1 className={styles.title} id="page-title">
-        {title}
+        <span>{title}</span>
         <div className={styles.titleIcons}>
           {
             hidden && <div className={styles.titleIcon} id="page-title-icon"><HiddenIcon /></div>
