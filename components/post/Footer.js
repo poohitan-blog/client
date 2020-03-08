@@ -13,7 +13,7 @@ class Footer extends React.Component {
   render() {
     const {
       tags,
-      path,
+      slug,
       commentsCount,
       publishedAt,
       id,
@@ -24,7 +24,7 @@ class Footer extends React.Component {
         const encodedTag = encodeURIComponent(tag);
 
         return (
-          <Link key={tag} as={`/tag/${encodedTag}`} href={`/tag?tag=${encodedTag}`}>
+          <Link key={tag} as={`/tag/${encodedTag}`} href="/tag/[name]">
             <a title={`Записи із позначкою «${tag}»`}>{tag}</a>
           </Link>
         );
@@ -41,7 +41,7 @@ class Footer extends React.Component {
       <div className={styles.wrapper} id={id}>
         <div className={styles.comments}>
           <CommentIcon className={styles.commentsIcon} />
-          <Link as={`/p/${path}#comments`} href={{ pathname: '/post', query: { path }, href: '#comments' }}>
+          <Link as={`/p/${slug}#comments`} href="/p/[slug]#comments">
             <a title="Коментарі до запису" className={styles.iconLabel}>{ describeCommentsCount(commentsCount) }</a>
           </Link>
         </div>
@@ -71,7 +71,7 @@ class Footer extends React.Component {
 }
 
 Footer.propTypes = {
-  path: PropTypes.string.isRequired,
+  slug: PropTypes.string.isRequired,
   commentsCount: PropTypes.number,
   publishedAt: PropTypes.instanceOf(Date).isRequired,
   tags: PropTypes.arrayOf(PropTypes.string).isRequired,

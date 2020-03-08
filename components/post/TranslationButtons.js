@@ -24,12 +24,12 @@ const Button = ({
   );
 };
 
-const TranslationButtons = ({ translations, language, path }, context) => (
+const TranslationButtons = ({ translations, language, slug }, context) => (
   <div className={styles.wrapper}>
     {
       language === 'uk'
         ? null
-        : <Button key="uk" language="uk" href={`/post?path=${path}`} as={`/p/${path}`} />
+        : <Button key="uk" language="uk" href="/p/[slug]" as={`/p/${slug}`} />
     }
     {
       translations
@@ -40,8 +40,8 @@ const TranslationButtons = ({ translations, language, path }, context) => (
             key={item.lang}
             title={item.title}
             language={item.lang}
-            href={`/post?path=${path}&language=${item.lang}`}
-            as={`/p/${path}/${item.lang}`}
+            href="/p/[slug]/[language]"
+            as={`/p/${slug}/${item.lang}`}
           />
         ))
     }
@@ -60,7 +60,7 @@ Button.defaultProps = {
 };
 
 TranslationButtons.propTypes = {
-  path: PropTypes.string.isRequired,
+  slug: PropTypes.string.isRequired,
   language: PropTypes.string,
   translations: PropTypes.arrayOf(PropTypes.object).isRequired,
 };

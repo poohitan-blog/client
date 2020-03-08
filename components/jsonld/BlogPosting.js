@@ -6,12 +6,12 @@ import { stripHTML, getImageLinksFromHTML } from '../../services/text';
 
 const BlogPosting = ({
   title,
-  path,
+  slug,
   body,
   tags,
   publishedAt,
 }) => {
-  const postURL = `${current.clientURL}/p/${path}`;
+  const postURL = `${current.clientURL}/p/${slug}`;
   const data = {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
@@ -47,7 +47,7 @@ const BlogPosting = ({
 
 BlogPosting.propTypes = {
   title: PropTypes.string.isRequired,
-  path: PropTypes.string.isRequired,
+  slug: PropTypes.string.isRequired,
   body: PropTypes.string.isRequired,
   tags: PropTypes.arrayOf(PropTypes.string),
   publishedAt: PropTypes.instanceOf(Date).isRequired,

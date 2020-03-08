@@ -4,6 +4,7 @@ import HTMLReactParser from 'html-react-parser';
 
 import AdminControlButtons from './admin/ControlButtons';
 import { Context as SessionContext } from '../services/session';
+import HTMLProcessor from '../utils/html-processor';
 
 import HiddenIcon from '../public/static/icons/hidden.svg';
 import styles from '../styles/components/page.scss';
@@ -11,7 +12,7 @@ import styles from '../styles/components/page.scss';
 const Page = (props) => {
   const {
     title,
-    path,
+    slug,
     body,
     private: hidden,
   } = props;
@@ -24,7 +25,7 @@ const Page = (props) => {
           {({ isAuthenticated }) => isAuthenticated && (
             <AdminControlButtons
               attachedTo="page"
-              tokens={[path]}
+              tokens={[slug]}
               className={styles.adminControlButtons}
               id="page-admin-control-buttons"
             />
@@ -36,7 +37,13 @@ const Page = (props) => {
       </h1>
       <div className={styles.body} id="page-body">
         {
-          HTMLReactParser(body)
+          HTMLReactParser(body, {
+            replace(node) {
+              return new HTMLProcessor(node)
+                .asImage()
+                .getNode();
+            },
+          })
         }
       </div>
     </article>
@@ -46,7 +53,7 @@ const Page = (props) => {
 Page.propTypes = {
   title: PropTypes.string,
   body: PropTypes.string.isRequired,
-  path: PropTypes.string.isRequired,
+  slug: PropTypes.string.isRequired,
   private: PropTypes.bool,
 };
 

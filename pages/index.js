@@ -58,7 +58,7 @@ class IndexPage extends React.Component {
         key={post.id}
         title={post.title}
         body={post.body}
-        path={post.path}
+        slug={post.slug}
         private={post.private}
         language={post.language}
         translations={post.translations}

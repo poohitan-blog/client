@@ -4,7 +4,7 @@ export default {
     title: String,
     description: String,
     body: String,
-    path: String,
+    slug: String,
     tags: [String],
     views: Number,
     draft: Boolean,

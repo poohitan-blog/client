@@ -4,26 +4,26 @@ import Head from 'next/head';
 import Router from 'next/router';
 import { parseCookies } from 'nookies';
 
-import API from '../../services/api';
-import Error from '../_error';
+import API from '../../../services/api';
+import Error from '../../_error';
 
-import withSession from '../../hocs/withSession';
-import withProtection from '../../hocs/withProtection';
-import Wrapper from '../../components/Wrapper';
-import Header from '../../components/Header';
-import Content from '../../components/Content';
-import PostForm from '../../components/admin/PostForm';
+import withSession from '../../../hocs/withSession';
+import withProtection from '../../../hocs/withProtection';
+import Wrapper from '../../../components/Wrapper';
+import Header from '../../../components/Header';
+import Content from '../../../components/Content';
+import PostForm from '../../../components/admin/PostForm';
 
 class EditPost extends React.Component {
   static async getInitialProps({ req, query }) {
     try {
       const tagCloud = await API.tags.getCloud();
 
-      if (!query.path) {
+      if (!query.slug) {
         return { tagCloud };
       }
 
-      const post = await API.posts.findOne(query.path, parseCookies({ req }));
+      const post = await API.posts.findOne(query.slug, parseCookies({ req }));
 
       return { post, tagCloud };
     } catch (error) {
@@ -41,10 +41,10 @@ class EditPost extends React.Component {
     const { post } = this.props;
 
     const savedPost = submittedPost.id
-      ? await API.posts.update(post.path, submittedPost, parseCookies({}))
+      ? await API.posts.update(post.slug, submittedPost, parseCookies({}))
       : await API.posts.create(submittedPost, parseCookies({}));
 
-    Router.push(`/post?path=${savedPost.path}`, `/p/${savedPost.path}`);
+    Router.push('/p/[slug]', `/p/${savedPost.slug}`);
   }
 
   render() {
@@ -64,10 +64,10 @@ class EditPost extends React.Component {
         <Header />
         <Content>
           <PostForm
-            key={post.path}
+            key={post.slug}
             id={post.id}
             title={post.title}
-            path={post.path}
+            slug={post.slug}
             description={post.description}
             body={post.body}
             tags={post.tags}
@@ -88,7 +88,7 @@ class EditPost extends React.Component {
 EditPost.propTypes = {
   post: PropTypes.shape({
     id: PropTypes.string,
-    path: PropTypes.string,
+    slug: PropTypes.string,
     title: PropTypes.string,
     description: PropTypes.string,
     body: PropTypes.string,

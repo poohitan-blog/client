@@ -5,25 +5,27 @@ import Link from 'next/link';
 import Router from 'next/router';
 import { parseCookies } from 'nookies';
 
-import API from '../../services/api';
-import Error from '../_error';
-import { current } from '../../config';
+import API from '../../../services/api';
+import Error from '../../_error';
+import { current } from '../../../config';
 
-import withSession from '../../hocs/withSession';
-import withProtection from '../../hocs/withProtection';
-import Wrapper from '../../components/Wrapper';
-import Header from '../../components/Header';
-import Content from '../../components/Content';
-import PageForm from '../../components/admin/PageForm';
+import withSession from '../../../hocs/withSession';
+import withProtection from '../../../hocs/withProtection';
+import Wrapper from '../../../components/Wrapper';
+import Header from '../../../components/Header';
+import Content from '../../../components/Content';
+import PageForm from '../../../components/admin/PageForm';
 
 class EditPage extends React.Component {
   static async getInitialProps({ req, query }) {
     try {
-      if (!query.path) {
+      const { slug } = query;
+
+      if (!slug) {
         return {};
       }
 
-      const page = await API.pages.findOne(query.path, parseCookies({ req }));
+      const page = await API.pages.findOne(slug, parseCookies({ req }));
 
       return { page };
     } catch (error) {
@@ -42,29 +44,29 @@ class EditPage extends React.Component {
 
   getPageLinkMarkup() {
     const { page } = this.props;
-    const { path: currentPath } = page;
-    const { path: newPath } = this.state;
+    const { slug: currentSlug } = page;
+    const { slug: newSlug } = this.state;
 
     const prefix = `${current.clientURL}`;
-    const path = currentPath || newPath || '';
-    const fullLink = `${prefix}/${path}`;
-    const isNewpage = !currentPath;
+    const slug = currentSlug || newSlug || '';
+    const fullLink = `${prefix}/${slug}`;
+    const isNewpage = !currentSlug;
 
     if (isNewpage) {
       return <span>{fullLink}</span>;
     }
 
-    return <Link as={`/${path}`} href={`/page?path=${path}`}><a>{fullLink}</a></Link>;
+    return <Link as={`/${slug}`} href="/[slug]"><a>{fullLink}</a></Link>;
   }
 
   async submit(submittedPage) {
     const { page } = this.props;
 
     const savedPage = page.id
-      ? await API.pages.update(page.path, submittedPage, parseCookies({}))
+      ? await API.pages.update(page.slug, submittedPage, parseCookies({}))
       : await API.pages.create(submittedPage, parseCookies({}));
 
-    Router.push(`/page?path=${savedPage.path}`, `/${savedPage.path}`);
+    Router.push('/[slug]', `/${savedPage.slug}`);
   }
 
   render() {
@@ -87,10 +89,10 @@ class EditPage extends React.Component {
             id={page.id}
             title={page.title}
             body={page.body}
-            path={page.path}
+            slug={page.slug}
             private={page.private}
             customStyles={page.customStyles}
-            key={page.path}
+            key={page.slug}
             onChange={(value) => this.submit(value)}
           />
         </Content>
@@ -102,7 +104,7 @@ class EditPage extends React.Component {
 EditPage.propTypes = {
   page: PropTypes.shape({
     id: PropTypes.string,
-    path: PropTypes.string,
+    slug: PropTypes.string,
     title: PropTypes.string,
     body: PropTypes.string,
     private: PropTypes.bool,

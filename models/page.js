@@ -3,7 +3,7 @@ export default {
   schema: {
     title: String,
     body: String,
-    path: String,
+    slug: String,
     customStyles: String,
     customStylesProcessed: String,
   },

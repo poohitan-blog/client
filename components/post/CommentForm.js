@@ -14,14 +14,14 @@ const placeholder = (
   </div>
 );
 
-const CommentForm = ({ title, path }) => (
+const CommentForm = ({ title, slug }) => (
   <div id="comments">
     <LazyLoadComponent threshold={1000} placeholder={placeholder}>
       <ReactDisqusComments
         shortname={current.disqus.shortname}
-        identifier={path}
+        identifier={slug}
         title={title}
-        url={`${current.clientURL}/p/${path}`}
+        url={`${current.clientURL}/p/${slug}`}
         className={styles.wrapper}
       />
     </LazyLoadComponent>
@@ -30,7 +30,7 @@ const CommentForm = ({ title, path }) => (
 
 CommentForm.propTypes = {
   title: PropTypes.string.isRequired,
-  path: PropTypes.string.isRequired,
+  slug: PropTypes.string.isRequired,
 };
 
 export default CommentForm;

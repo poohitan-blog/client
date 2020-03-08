@@ -3,18 +3,18 @@ import PropTypes from 'prop-types';
 import Head from 'next/head';
 import { parseCookies } from 'nookies';
 
-import Error from './_error';
-import { current } from '../config';
-import API from '../services/api';
-import { generateTrashPostTitle } from '../services/text';
+import Error from '../_error';
+import { current } from '../../config';
+import API from '../../services/api';
+import { generateTrashPostTitle } from '../../services/text';
 
-import withSession from '../hocs/withSession';
-import Wrapper from '../components/Wrapper';
-import Header from '../components/Header';
-import Content from '../components/Content';
-import Footer from '../components/Footer';
-import TrashPost from '../components/TrashPost';
-import Trashbin from '../components/header/Trashbin';
+import withSession from '../../hocs/withSession';
+import Wrapper from '../../components/Wrapper';
+import Header from '../../components/Header';
+import Content from '../../components/Content';
+import Footer from '../../components/Footer';
+import TrashPost from '../../components/TrashPost';
+import Trashbin from '../../components/header/Trashbin';
 
 const POSTS_PER_PAGE = 30;
 

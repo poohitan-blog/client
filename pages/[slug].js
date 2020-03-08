@@ -18,7 +18,7 @@ import Page from '../components/Page';
 class PagePage extends React.Component {
   static async getInitialProps({ query, req, pathname }) {
     try {
-      const page = await API.pages.findOne(query.path, parseCookies({ req }));
+      const page = await API.pages.findOne(query.slug, parseCookies({ req }));
 
       return { page, pathname };
     } catch (error) {
@@ -37,7 +37,7 @@ class PagePage extends React.Component {
       <Wrapper pathname={pathname}>
         <Head>
           <title>{`${page.title} - ${current.meta.title}`}</title>
-          <link rel="canonical" href={`${current.clientURL}/${page.path}`} />
+          <link rel="canonical" href={`${current.clientURL}/${page.slug}`} />
 
           <meta name="description" content={shorten(stripHTML(page.body), 20)} key="description" />
         </Head>
@@ -47,8 +47,8 @@ class PagePage extends React.Component {
         <Header />
         <Content>
           <Page
-            key={page.path}
-            path={page.path}
+            key={page.slug}
+            slug={page.slug}
             title={page.title}
             body={page.body}
             private={page.private}
@@ -66,7 +66,7 @@ PagePage.propTypes = {
   page: PropTypes.shape({
     title: PropTypes.string.isRequired,
     body: PropTypes.string.isRequired,
-    path: PropTypes.string.isRequired,
+    slug: PropTypes.string.isRequired,
     private: PropTypes.bool,
     customStylesProcessed: PropTypes.string,
   }),

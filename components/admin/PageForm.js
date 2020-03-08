@@ -29,26 +29,26 @@ class PageForm extends React.Component {
   }
 
   getPageLinkMarkup() {
-    const { id, path: propsPath } = this.props;
-    const { path: statePath } = this.state;
+    const { id, slug: propsSlug } = this.props;
+    const { slug: stateSlug } = this.state;
 
     const prefix = `${current.clientURL}`;
-    const path = propsPath || statePath || '';
-    const fullLink = `${prefix}/${path}`;
+    const slug = propsSlug || stateSlug || '';
+    const fullLink = `${prefix}/${slug}`;
     const isNewPage = !id;
 
     if (isNewPage) {
       return <span>{fullLink}</span>;
     }
 
-    return <Link as={`/${path}`} href={`/page?path=${path}`}><a>{fullLink}</a></Link>;
+    return <Link as={`/${slug}`} href="/[slug]"><a>{fullLink}</a></Link>;
   }
 
   async submit() {
-    const { title, body, path } = this.state;
+    const { title, body, slug } = this.state;
     const { onChange } = this.props;
 
-    if (!body || (!title && !path)) {
+    if (!body || (!title && !slug)) {
       // TODO: show error popup
 
       return;
@@ -61,7 +61,7 @@ class PageForm extends React.Component {
     const { id } = this.props;
     const {
       title,
-      path,
+      slug,
       body,
       private: hidden,
       customStyles,
@@ -81,15 +81,15 @@ class PageForm extends React.Component {
             value={title}
             onChange={(event) => this.setState({ title: event.target.value })}
           />
-          <div className={styles.path}>
+          <div className={styles.slug}>
             <input
               type="text"
-              value={path}
+              value={slug}
               placeholder="Адреса"
-              onChange={(event) => this.setState({ path: event.target.value })}
-              className={styles.pathInput}
+              onChange={(event) => this.setState({ slug: event.target.value })}
+              className={styles.slugInput}
             />
-            <div className={styles.pathPreview}>
+            <div className={styles.slugPreview}>
               {link}
             </div>
           </div>
@@ -122,13 +122,13 @@ class PageForm extends React.Component {
 
 PageForm.propTypes = {
   id: PropTypes.string,
-  path: PropTypes.string,
+  slug: PropTypes.string,
   onChange: PropTypes.func.isRequired,
 };
 
 PageForm.defaultProps = {
   id: '',
-  path: '',
+  slug: '',
 };
 
 export default PageForm;

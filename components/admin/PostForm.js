@@ -44,18 +44,18 @@ class PostForm extends React.Component {
   }
 
   getPostLinkMarkup() {
-    const { id, path: propsPath } = this.props;
-    const { path: statePath } = this.state;
+    const { id, slug: propsSlug } = this.props;
+    const { slug: stateSlug } = this.state;
     const prefix = `${current.clientURL}/p`;
-    const path = propsPath || statePath || '';
-    const fullLink = `${prefix}/${path}`;
+    const slug = propsSlug || stateSlug || '';
+    const fullLink = `${prefix}/${slug}`;
     const isNewPost = !id;
 
     if (isNewPost) {
       return <span>{fullLink}</span>;
     }
 
-    return <Link as={`/p/${path}`} href={`/post?path=${path}`}><a>{fullLink}</a></Link>;
+    return <Link as={`/p/${slug}`} href="/p/[slug]"><a>{fullLink}</a></Link>;
   }
 
   async submit() {
@@ -132,7 +132,7 @@ class PostForm extends React.Component {
     const {
       title,
       description,
-      path,
+      slug,
       body,
       tagsString,
       dateString,
@@ -157,15 +157,15 @@ class PostForm extends React.Component {
             value={title}
             onChange={(event) => this.setState({ title: event.target.value })}
           />
-          <div className={styles.path}>
+          <div className={styles.slug}>
             <input
               type="text"
-              value={path}
+              value={slug}
               placeholder="Адреса"
-              onChange={(event) => this.setState({ path: event.target.value })}
-              className={styles.pathInput}
+              onChange={(event) => this.setState({ slug: event.target.value })}
+              className={styles.slugInput}
             />
-            <div className={styles.pathPreview}>
+            <div className={styles.slugPreview}>
               {link}
             </div>
           </div>
@@ -229,8 +229,8 @@ class PostForm extends React.Component {
                   .map((translation) => (
                     <Link
                       key={translation.lang}
-                      as={`/p/${path}/translations/${translation.lang}/edit`}
-                      href={`/admin/edit-post-translation?language=${translation.lang}&post=${path}`}
+                      as={`/posts/${slug}/translations/${translation.lang}/edit`}
+                      href="/posts/[slug]/translations/[language]/edit"
                     >
                       <a className={styles.translationLink}>
                         {translation.lang}
@@ -240,7 +240,7 @@ class PostForm extends React.Component {
                   ))
                 : null
             }
-            <Link as={`/p/${path}/translations/new`} href={`/admin/edit-post-translation?post=${path}`}>
+            <Link as={`/posts/${slug}/translations/new`} href="/posts/[slug]/translations/new">
               <a className={styles.translationLink}>(Додати)</a>
             </Link>
           </div>
@@ -270,7 +270,7 @@ class PostForm extends React.Component {
 
 PostForm.propTypes = {
   id: PropTypes.string,
-  path: PropTypes.string,
+  slug: PropTypes.string,
   description: PropTypes.string,
   tags: PropTypes.arrayOf(PropTypes.string),
   tagCloud: PropTypes.shape({}).isRequired,
@@ -281,7 +281,7 @@ PostForm.propTypes = {
 
 PostForm.defaultProps = {
   id: '',
-  path: '',
+  slug: '',
   description: '',
   tags: [],
   publishedAt: null,

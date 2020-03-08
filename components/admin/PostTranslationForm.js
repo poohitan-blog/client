@@ -65,7 +65,7 @@ class PostTranslationForm extends React.Component {
         <h1>
           {formTitle}
           {' '}
-          <Link href={`/admin/edit-post?path=${post.path}`} as={`/p/${post.path}/edit`}>
+          <Link href="/posts/[slug]/edit" as={`/posts/${post.slug}/edit`}>
             <a>{`«${post.title}»`}</a>
           </Link>
         </h1>
@@ -118,7 +118,7 @@ PostTranslationForm.propTypes = {
   }),
   post: PropTypes.shape({
     title: PropTypes.string,
-    path: PropTypes.string,
+    slug: PropTypes.string,
   }).isRequired,
   onChange: PropTypes.func.isRequired,
 };
