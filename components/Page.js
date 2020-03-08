@@ -21,19 +21,21 @@ const Page = (props) => {
     <article className={styles.wrapper} id="page">
       <h1 className={styles.title} id="page-title">
         {title}
-        <SessionContext.Consumer>
-          {({ isAuthenticated }) => isAuthenticated && (
-            <AdminControlButtons
-              attachedTo="page"
-              tokens={[slug]}
-              className={styles.adminControlButtons}
-              id="page-admin-control-buttons"
-            />
-          )}
-        </SessionContext.Consumer>
-        {
-          hidden && <div className={styles.titleIcon} id="page-title-icon"><HiddenIcon /></div>
-        }
+        <div className={styles.titleIcons}>
+          {
+            hidden && <div className={styles.titleIcon} id="page-title-icon"><HiddenIcon /></div>
+          }
+          <SessionContext.Consumer>
+            {({ isAuthenticated }) => isAuthenticated && (
+              <AdminControlButtons
+                attachedTo="page"
+                tokens={[slug]}
+                className={styles.adminControlButtons}
+                id="page-admin-control-buttons"
+              />
+            )}
+          </SessionContext.Consumer>
+        </div>
       </h1>
       <div className={styles.body} id="page-body">
         {

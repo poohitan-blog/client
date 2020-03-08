@@ -25,13 +25,6 @@
   position: relative;
 }
 
-.body {
-  margin: 1em 0;
-
-  @include readable-content;
-  @include readable-content-extended-features;
-}
-
 .title-icons {
   display: flex;
   margin-left: 0.5em;
@@ -45,4 +38,11 @@
       height: 100%;
     }
   }
+}
+
+.body {
+  margin: 1em 0;
+
+  @include readable-content;
+  @include readable-content-extended-features;
 }
