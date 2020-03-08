@@ -4,13 +4,13 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { differenceInCalendarDays, formatDistanceStrict } from 'date-fns';
 import { uk } from 'date-fns/locale';
+import { parseCookies } from 'nookies';
 
 import Error from './_error';
 import { current } from '../config';
 
 import API from '../services/api';
 import { describeWordCount } from '../services/grammar';
-import { getAllCookies } from '../services/cookies';
 import { stripHTML } from '../services/text';
 
 import withSession from '../hocs/withSession';
@@ -89,7 +89,7 @@ const SORTING_PREDICATES = {
 class TopPage extends React.Component {
   static async getInitialProps({ req, pathname }) {
     try {
-      const { docs } = await API.posts.find({ private: false }, getAllCookies(req));
+      const { docs } = await API.posts.find({ private: false }, parseCookies({ req }));
 
       return {
         posts: docs.map((post) => ({

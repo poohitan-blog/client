@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
 import Router from 'next/router';
+import { parseCookies } from 'nookies';
 
 import API from '../../services/api';
 import Error from '../_error';
-import { getAllCookies } from '../../services/cookies';
 
 import withSession from '../../hocs/withSession';
 import withProtection from '../../hocs/withProtection';
@@ -17,14 +17,14 @@ import PostTranslationForm from '../../components/admin/PostTranslationForm';
 class EditPostTranslation extends React.Component {
   static async getInitialProps({ req, query }) {
     try {
-      const post = await API.posts.findOne(query.post, getAllCookies(req));
+      const post = await API.posts.findOne(query.post, parseCookies({ req }));
 
       if (!query.language) {
         return { post };
       }
 
       const translationId = post.translations.find((translation) => translation.lang === query.language).id;
-      const translation = await API.postTranslations.findOne(translationId, getAllCookies(req));
+      const translation = await API.postTranslations.findOne(translationId, parseCookies({ req }));
 
       return { translation, post };
     } catch (error) {
@@ -42,9 +42,9 @@ class EditPostTranslation extends React.Component {
     const { post, translation } = this.props;
 
     if (submittedTranslation.id) {
-      await API.postTranslations.update(translation.id, submittedTranslation, getAllCookies());
+      await API.postTranslations.update(translation.id, submittedTranslation, parseCookies({}));
     } else {
-      const newTranslation = await API.postTranslations.create(submittedTranslation, getAllCookies());
+      const newTranslation = await API.postTranslations.create(submittedTranslation, parseCookies({}));
       const updatedListOfTranslations = [...post.translations.map((item) => item.id || item), newTranslation.id];
 
       await API.posts.update(post.path, { ...post, translations: updatedListOfTranslations });

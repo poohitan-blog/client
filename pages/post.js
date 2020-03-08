@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
 import dynamic from 'next/dynamic';
+import { parseCookies } from 'nookies';
 
 import Error from './_error';
 import { current } from '../config';
 import API from '../services/api';
-import { getAllCookies } from '../services/cookies';
 import { stripHTML, getImageLinksFromHTML, shorten } from '../services/text';
 
 import withSession from '../hocs/withSession';
@@ -28,7 +28,7 @@ class PostPage extends React.Component {
     query, req, res, pathname,
   }) {
     try {
-      const post = await API.posts.findOne(query.path, getAllCookies(req));
+      const post = await API.posts.findOne(query.path, parseCookies({ req }));
       const similarPosts = await API.posts.findSimilar(query.path);
 
       const availableLanguages = post.translations.map((item) => item.lang);

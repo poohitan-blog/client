@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
+import { parseCookies } from 'nookies';
 
 import API from '../services/api';
 import Error from './_error';
 import { current } from '../config';
-import { getAllCookies } from '../services/cookies';
 
 import withSession from '../hocs/withSession';
 import Wrapper from '../components/Wrapper';
@@ -24,7 +24,7 @@ class ArchivePage extends React.Component {
         page,
         limit: POSTS_PER_PAGE,
         cut: true,
-      }, getAllCookies(req));
+      }, parseCookies({ req }));
 
       return {
         posts: docs,

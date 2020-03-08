@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import Link from 'next/link';
 import Router from 'next/router';
 import pluralize from 'pluralize';
+import { parseCookies } from 'nookies';
 
 import Popup from '../Popup';
 import API from '../../services/api';
-import { getAllCookies } from '../../services/cookies';
 
 import EditIcon from '../../public/static/icons/edit.svg';
 import RemoveIcon from '../../public/static/icons/remove.svg';
@@ -55,7 +55,7 @@ class ControlButtons extends React.Component {
   async remove() {
     const { attachedTo, tokens } = this.props;
 
-    await API[pluralize(attachedTo)].remove(...tokens, getAllCookies());
+    await API[pluralize(attachedTo)].remove(...tokens, parseCookies({}));
     this.hideRemovePopup();
 
     if (attachedTo === 'trashPost') {

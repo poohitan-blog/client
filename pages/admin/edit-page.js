@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import Head from 'next/head';
 import Link from 'next/link';
 import Router from 'next/router';
+import { parseCookies } from 'nookies';
 
 import API from '../../services/api';
 import Error from '../_error';
-import { getAllCookies } from '../../services/cookies';
 import { current } from '../../config';
 
 import withSession from '../../hocs/withSession';
@@ -23,7 +23,7 @@ class EditPage extends React.Component {
         return {};
       }
 
-      const page = await API.pages.findOne(query.path, getAllCookies(req));
+      const page = await API.pages.findOne(query.path, parseCookies({ req }));
 
       return { page };
     } catch (error) {
@@ -61,8 +61,8 @@ class EditPage extends React.Component {
     const { page } = this.props;
 
     const savedPage = page.id
-      ? await API.pages.update(page.path, submittedPage, getAllCookies())
-      : await API.pages.create(submittedPage, getAllCookies());
+      ? await API.pages.update(page.path, submittedPage, parseCookies({}))
+      : await API.pages.create(submittedPage, parseCookies({}));
 
     Router.push(`/page?path=${savedPage.path}`, `/${savedPage.path}`);
   }

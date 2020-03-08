@@ -37,6 +37,7 @@
     "jwt-decode": "^2.2.0",
     "next": "^9.2.1",
     "node-sass": "^4.13.1",
+    "nookies": "^2.0.8",
     "normalize.css": "^7.0.0",
     "nprogress": "^0.2.0",
     "pluralize": "^7.0.0",

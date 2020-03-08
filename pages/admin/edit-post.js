@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
 import Router from 'next/router';
+import { parseCookies } from 'nookies';
 
 import API from '../../services/api';
 import Error from '../_error';
-import { getAllCookies } from '../../services/cookies';
 
 import withSession from '../../hocs/withSession';
 import withProtection from '../../hocs/withProtection';
@@ -23,7 +23,7 @@ class EditPost extends React.Component {
         return { tagCloud };
       }
 
-      const post = await API.posts.findOne(query.path, getAllCookies(req));
+      const post = await API.posts.findOne(query.path, parseCookies({ req }));
 
       return { post, tagCloud };
     } catch (error) {
@@ -41,8 +41,8 @@ class EditPost extends React.Component {
     const { post } = this.props;
 
     const savedPost = submittedPost.id
-      ? await API.posts.update(post.path, submittedPost, getAllCookies())
-      : await API.posts.create(submittedPost, getAllCookies());
+      ? await API.posts.update(post.path, submittedPost, parseCookies({}))
+      : await API.posts.create(submittedPost, parseCookies({}));
 
     Router.push(`/post?path=${savedPost.path}`, `/p/${savedPost.path}`);
   }

@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
+import { parseCookies } from 'nookies';
+
 import API from '../services/api';
 import Error from './_error';
 import { current } from '../config';
-import { getAllCookies } from '../services/cookies';
 
 import withSession from '../hocs/withSession';
 import Wrapper from '../components/Wrapper';
@@ -26,7 +27,7 @@ class SearchPage extends React.Component {
         query: searchQuery,
         page,
         limit: POSTS_PER_PAGE,
-      }, getAllCookies(req));
+      }, parseCookies({ req }));
 
       return {
         searchResults: docs,

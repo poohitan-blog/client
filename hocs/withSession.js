@@ -1,37 +1,42 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { parseCookies } from 'nookies';
 
 import { Context as SessionContext, isAuthenticated as isUserAuthenticated } from '../services/session';
 import API from '../services/api';
-import { getAllCookies } from '../services/cookies';
-
 
 export default function withSession(WrappedComponent) {
   class WithSession extends React.Component {
     static async getInitialProps(context) {
-      const { req } = context;
-      const isAuthenticated = isUserAuthenticated(req);
+      try {
+        const { req } = context;
+        const isAuthenticated = isUserAuthenticated(req);
 
-      const wrappedComponentProps = WrappedComponent.getInitialProps
-        ? await WrappedComponent.getInitialProps(context)
-        : {};
+        const wrappedComponentProps = WrappedComponent.getInitialProps
+          ? await WrappedComponent.getInitialProps(context)
+          : {};
 
-      if (!isAuthenticated) {
+        if (!isAuthenticated) {
+          return {
+            ...wrappedComponentProps,
+            isAuthenticated,
+          };
+        }
+
+        const { docs: pages = [] } = await API.pages.find(parseCookies({ req }));
+        const { docs: drafts = [] } = await API.posts.find({ private: true }, parseCookies({ req }));
+
         return {
           ...wrappedComponentProps,
           isAuthenticated,
+          pages,
+          drafts,
         };
+      } catch (error) {
+        console.error(error);
+
+        return {};
       }
-
-      const { docs: pages = [] } = await API.pages.find(getAllCookies(req));
-      const { docs: drafts = [] } = await API.posts.find({ private: true }, getAllCookies(req));
-
-      return {
-        ...wrappedComponentProps,
-        isAuthenticated,
-        pages,
-        drafts,
-      };
     }
 
     render() {
