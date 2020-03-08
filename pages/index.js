@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
+import { parseCookies } from 'nookies';
 
 import Error from './_error';
 import { current } from '../config';
 
 import API from '../services/api';
-import { getAllCookies } from '../services/cookies';
 
 import withSession from '../hocs/withSession';
 
@@ -28,7 +28,7 @@ class IndexPage extends React.Component {
         page,
         limit: POSTS_PER_PAGE,
         cut: true,
-      }, getAllCookies(req));
+      }, parseCookies({ req }));
 
       return {
         posts: docs,

@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
 import Router from 'next/router';
+import { parseCookies } from 'nookies';
 
 import API from '../../services/api';
 import Error from '../_error';
-import { getAllCookies } from '../../services/cookies';
 
 import withSession from '../../hocs/withSession';
 import withProtection from '../../hocs/withProtection';
@@ -21,7 +21,7 @@ class EditTrashPost extends React.Component {
         return {};
       }
 
-      const trashPost = await API.trashPosts.findOne(query.id, getAllCookies(req));
+      const trashPost = await API.trashPosts.findOne(query.id, parseCookies({ req }));
 
       return { trashPost };
     } catch (error) {
@@ -40,8 +40,8 @@ class EditTrashPost extends React.Component {
     const { trashPost } = this.props;
 
     const savedTrashPost = submittedTrashPost.id
-      ? await API.trashPosts.update(trashPost.id, submittedTrashPost, getAllCookies())
-      : await API.trashPosts.create(submittedTrashPost, getAllCookies());
+      ? await API.trashPosts.update(trashPost.id, submittedTrashPost, parseCookies({}))
+      : await API.trashPosts.create(submittedTrashPost, parseCookies({}));
 
     Router.push(`/trash?id=${savedTrashPost.id}`, `/trash/${savedTrashPost.id}`);
   }

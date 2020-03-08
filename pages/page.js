@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
+import { parseCookies } from 'nookies';
 
 import Error from './_error';
 import { current } from '../config';
 import API from '../services/api';
-import { getAllCookies } from '../services/cookies';
 import { stripHTML, shorten } from '../services/text';
 
 import withSession from '../hocs/withSession';
@@ -18,7 +18,7 @@ import Page from '../components/Page';
 class PagePage extends React.Component {
   static async getInitialProps({ query, req, pathname }) {
     try {
-      const page = await API.pages.findOne(query.path, getAllCookies(req));
+      const page = await API.pages.findOne(query.path, parseCookies({ req }));
 
       return { page, pathname };
     } catch (error) {

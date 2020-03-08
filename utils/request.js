@@ -9,6 +9,7 @@ export default async function request(params) {
     headers = {},
     body,
     formData,
+    cookies,
     credentials = 'include',
   } = params;
   let requestUrl = url;
@@ -18,6 +19,14 @@ export default async function request(params) {
   }
 
   const defaultHeaders = formData ? {} : { 'Content-Type': 'application/json' };
+
+  if (cookies) {
+    defaultHeaders.Cookie = Object.keys(cookies).reduce((string, cookieName) => {
+      const cookieValue = cookies[cookieName];
+
+      return `${string}; ${cookieName}=${cookieValue}`;
+    }, '');
+  }
 
   const response = await fetch(requestUrl, {
     method,

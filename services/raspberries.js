@@ -1,34 +1,26 @@
 import { endOfToday } from 'date-fns';
-import Cookies from './cookies';
+import { parseCookies, setCookie } from 'nookies';
+
 import random from '../helpers/random';
 
 const COOKIE_NAME = 'raspberriesDay';
 const LUCKY_NUMBER = { min: 1, max: 10 };
 
-function getCookie(req) {
-  const cookie = Cookies.get(COOKIE_NAME, req);
-
-  return cookie;
-}
-
-function setCookie(wonLottery, res) {
-  const expires = endOfToday().toUTCString();
-
-  Cookies.set(COOKIE_NAME, wonLottery, { expires }, res);
-}
-
 function runLottery(req, res) {
-  const cookie = getCookie(req);
+  const cookies = parseCookies({ req });
+  const cookie = cookies[COOKIE_NAME];
 
   if (cookie) {
     return cookie === 'true';
   }
 
   const luckyNumber = random(LUCKY_NUMBER);
-  const usersNumber = random(LUCKY_NUMBER);
-  const wonLottery = usersNumber === luckyNumber;
+  const userNumber = random(LUCKY_NUMBER);
+  const wonLottery = userNumber === luckyNumber;
 
-  setCookie(wonLottery, res);
+  const expires = endOfToday();
+
+  setCookie({ res }, COOKIE_NAME, wonLottery, { expires });
 
   return wonLottery;
 }

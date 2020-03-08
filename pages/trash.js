@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
+import { parseCookies } from 'nookies';
 
 import Error from './_error';
 import { current } from '../config';
 import API from '../services/api';
-import { getAllCookies } from '../services/cookies';
 import { generateTrashPostTitle } from '../services/text';
 
 import withSession from '../hocs/withSession';
@@ -23,8 +23,8 @@ class TrashPage extends React.Component {
     try {
       if (query.id || query.random) {
         const posts = query.random
-          ? [await API.trashPosts.findRandom(getAllCookies(req))]
-          : [await API.trashPosts.findOne(query.id, getAllCookies(req))];
+          ? [await API.trashPosts.findRandom(parseCookies({ req }))]
+          : [await API.trashPosts.findOne(query.id, parseCookies({ req }))];
 
         return {
           posts,
@@ -34,7 +34,7 @@ class TrashPage extends React.Component {
       }
 
       if (query.permalink) { // keeps compatibility with old version of links
-        const { docs } = await API.trashPosts.find({ permalink: query.permalink }, getAllCookies(req));
+        const { docs } = await API.trashPosts.find({ permalink: query.permalink }, parseCookies({ req }));
 
         return {
           posts: docs,
@@ -44,7 +44,7 @@ class TrashPage extends React.Component {
       }
 
       const { page = 1 } = query;
-      const { docs, meta } = await API.trashPosts.find({ page, limit: POSTS_PER_PAGE }, getAllCookies(req));
+      const { docs, meta } = await API.trashPosts.find({ page, limit: POSTS_PER_PAGE }, parseCookies({ req }));
 
       return {
         posts: docs,

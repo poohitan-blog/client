@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { parseCookies } from 'nookies';
 
 import API from '../../services/api';
-import { getAllCookies } from '../../services/cookies';
 
 import Dropzone from '../Dropzone';
 
@@ -25,7 +25,7 @@ class UploadFilesForm extends React.Component {
 
     const { queue, links } = this.state;
 
-    const newLinks = await API.upload(queue, getAllCookies());
+    const newLinks = await API.upload(queue, parseCookies({}));
     const updatedLinksList = [...links, ...newLinks];
 
     this.setState({

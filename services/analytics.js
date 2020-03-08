@@ -13,6 +13,10 @@ export const init = () => {
 };
 
 export const logPageView = (path) => {
+  if (!path) {
+    return;
+  }
+
   if (!global.ANALYTICS_INITIALIZED) {
     init();
 

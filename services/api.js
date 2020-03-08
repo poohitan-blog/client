@@ -15,26 +15,23 @@ const INLINE_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/svg']
 
 async function find({ model, query }, cookies) {
   const url = `${API_URL}/${pluralize(model.name)}`;
-  const headers = cookies ? { Cookie: cookies } : {};
-  const { docs, meta } = await request({ url, query, headers });
+  const { docs, meta } = await request({ url, query, cookies });
 
   return { docs: deserialize(docs, model.schema), meta };
 }
 
 async function findOne({ model, param }, cookies) {
   const url = `${API_URL}/${pluralize(model.name)}/${param}`;
-  const headers = cookies ? { Cookie: cookies } : {};
-  const doc = await request({ url, headers });
+  const doc = await request({ url, cookies });
 
   return deserialize(doc, model.schema);
 }
 
 async function update({ model, param, body }, cookies) {
   const url = `${API_URL}/${pluralize(model.name)}/${param}`;
-  const headers = cookies ? { Cookie: cookies } : {};
   const doc = await request({
     url,
-    headers,
+    cookies,
     body,
     method: 'PATCH',
   });
@@ -44,10 +41,9 @@ async function update({ model, param, body }, cookies) {
 
 async function create({ model, body }, cookies) {
   const url = `${API_URL}/${pluralize(model.name)}`;
-  const headers = cookies ? { Cookie: cookies } : {};
   const doc = await request({
     url,
-    headers,
+    cookies,
     body,
     method: 'POST',
   });
@@ -57,11 +53,10 @@ async function create({ model, body }, cookies) {
 
 async function remove({ model, param }, cookies) {
   const url = `${API_URL}/${pluralize(model.name)}/${param}`;
-  const headers = cookies ? { Cookie: cookies } : {};
 
   await request({
     url,
-    headers,
+    cookies,
     method: 'DELETE',
   });
 
@@ -70,8 +65,7 @@ async function remove({ model, param }, cookies) {
 
 async function search(query, cookies) {
   const url = `${API_URL}/search`;
-  const headers = cookies ? { Cookie: cookies } : {};
-  const { docs, meta } = await request({ url, query, headers });
+  const { docs, meta } = await request({ url, query, cookies });
 
   const modelsBySearchResultType = {
     post: Post,
@@ -98,13 +92,11 @@ async function upload(files, cookies) {
   const restFilesFormData = new FormData();
   restFiles.forEach((file) => restFilesFormData.append('file', file));
 
-  const headers = { Cookie: cookies };
-
   const uploadImages = !images.length
     ? Promise.resolve([])
     : request({
       url: `${API_URL}/images`,
-      headers,
+      cookies,
       body: imagesFormData,
       method: 'POST',
       formData: true,
@@ -114,7 +106,7 @@ async function upload(files, cookies) {
     ? Promise.resolve([])
     : request({
       url: `${API_URL}/files`,
-      headers,
+      cookies,
       body: restFilesFormData,
       method: 'POST',
       formData: true,
@@ -199,7 +191,9 @@ export const analytics = {
     });
   },
   submitFlow(flow) {
-    global.navigator.sendBeacon(`${API_URL}/analytics/flow`, JSON.stringify(flow));
+    const url = `${API_URL}/analytics/flow`;
+
+    global.navigator.sendBeacon(url, JSON.stringify(flow));
   },
 };
 

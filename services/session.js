@@ -1,9 +1,9 @@
 import React from 'react';
 import Router from 'next/router';
 import decodeJWT from 'jwt-decode';
+import { parseCookies, destroyCookie } from 'nookies';
 
 import { current } from '../config';
-import Cookies from './cookies';
 import request from '../utils/request';
 
 export const Context = React.createContext({
@@ -27,7 +27,7 @@ export async function authenticate({ login, password }) {
 
 export function isAuthenticated(req) {
   try {
-    const token = Cookies.get('token', req);
+    const { token } = parseCookies({ req });
     const decoded = decodeJWT(token);
 
     return Boolean(decoded.id);
@@ -37,11 +37,13 @@ export function isAuthenticated(req) {
 }
 
 export function getToken(req) {
-  return Cookies.get('token', req);
+  const { token } = parseCookies({ req });
+
+  return token;
 }
 
 export function logOut() {
-  Cookies.delete('token');
+  destroyCookie({}, 'token');
   Router.push('/');
 }
 
