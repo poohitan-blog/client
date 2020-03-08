@@ -63,13 +63,16 @@ class PostPage extends React.Component {
     }
 
     const translation = (language && post.translations.find((item) => item.lang === language)) || {};
+    const isTranslation = Boolean(translation.lang);
+
     const title = `${translation.title || post.title} - ${current.meta.title}`;
     const body = translation.body || post.body;
     const [image] = getImageLinksFromHTML(body);
     const description = translation.description
       || post.description
       || shorten(stripHTML(body), 20);
-    const url = language
+
+    const url = isTranslation
       ? `${current.clientURL}/p/${post.slug}/${language}`
       : `${current.clientURL}/p/${post.slug}`;
 
