@@ -3,8 +3,8 @@ import Router from 'next/router';
 import decodeJWT from 'jwt-decode';
 import { parseCookies, destroyCookie } from 'nookies';
 
+import { authenticate } from './api';
 import { current } from '../config';
-import request from '../utils/request';
 
 export const Context = React.createContext({
   isAuthenticated: false,
@@ -14,15 +14,8 @@ export const Context = React.createContext({
 
 Context.displayName = 'SessionContext';
 
-export async function authenticate({ login, password }) {
-  return request({
-    url: `${current.apiURL}/authenticate`,
-    method: 'POST',
-    body: {
-      login,
-      password,
-    },
-  });
+export async function logIn(login, password) {
+  return authenticate(login, password);
 }
 
 export function isAuthenticated(req) {
@@ -43,12 +36,14 @@ export function getToken(req) {
 }
 
 export function logOut() {
-  destroyCookie({}, 'token');
+  destroyCookie({}, 'token', {
+    domain: current.cookiesDomain,
+  });
   Router.push('/');
 }
 
 export default {
-  authenticate,
+  logIn,
   isAuthenticated,
   getToken,
   logOut,

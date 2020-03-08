@@ -13,6 +13,17 @@ import User from '../models/user';
 const API_URL = current.apiURL;
 const INLINE_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/svg'];
 
+export async function authenticate(login, password) {
+  return request({
+    url: `${current.apiURL}/authenticate`,
+    method: 'POST',
+    body: {
+      login,
+      password,
+    },
+  });
+}
+
 async function find({ model, query }, cookies) {
   const url = `${API_URL}/${pluralize(model.name)}`;
   const { docs, meta } = await request({ url, query, cookies });
@@ -198,6 +209,7 @@ export const analytics = {
 };
 
 const API = {
+  authenticate,
   posts,
   postTranslations,
   pages,

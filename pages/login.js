@@ -6,7 +6,7 @@ import Router from 'next/router';
 import Wrapper from '../components/Wrapper';
 import Content from '../components/Content';
 
-import { authenticate, isAuthenticated } from '../services/session';
+import { logIn, isAuthenticated } from '../services/session';
 
 import styles from '../styles/pages/login.scss';
 
@@ -27,7 +27,6 @@ const LOGIN_ATTEMPTS_MESSAGES = [
   'А поки ти це робиш, твоє життя минає.',
   'Секунда за секундою, хвилина за хвилиною.',
   'Цей день може бути останнім у твоєму житті, а ти проводиш його отак.',
-  'YOLO, загугли.',
   'Насправді в мене теж є чим зайнятись, все-таки я Node.js сервер.',
   'Я ціную свій час.',
   'А ти продовжуй марнувати своє життя.',
@@ -68,16 +67,18 @@ class LoginPage extends React.Component {
   async authenticate() {
     const { password, failedLoginAttempts } = this.state;
 
-    return authenticate({ login: 'poohitan', password })
-      .then(() => Router.push('/'))
-      .catch((error) => {
-        if (error.status === 403) {
-          this.setState({
-            error: LOGIN_ATTEMPTS_MESSAGES[failedLoginAttempts],
-            failedLoginAttempts: failedLoginAttempts + 1,
-          });
-        }
-      });
+    try {
+      await logIn('poohitan', password);
+
+      Router.push('/');
+    } catch (error) {
+      if (error.status === 403 || error.status === 401) {
+        this.setState({
+          error: LOGIN_ATTEMPTS_MESSAGES[failedLoginAttempts],
+          failedLoginAttempts: failedLoginAttempts + 1,
+        });
+      }
+    }
   }
 
   render() {
