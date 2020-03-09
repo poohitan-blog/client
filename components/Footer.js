@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import Link from 'next/link';
 import { withRouter } from 'next/router';
 
-import GoodnessGenerator from './GoodnessGenerator';
+import { Context as AnnouncementContext, POSITIONS } from '../services/announcements';
+import Announcement from './Announcement';
 import SearchBox from './SearchBox';
 
 import styles from '../styles/components/footer.scss';
@@ -64,7 +65,15 @@ const Footer = ({ pagination, searchBox, router }) => {
       {
         searchBox ? <div className={styles.searchBox} id="footer-searchbox"><SearchBox /></div> : null
       }
-      <GoodnessGenerator id="footer-goodness-generator" />
+      <AnnouncementContext.Consumer>
+        {({ position, text, Icon }) => {
+          if (position === POSITIONS.BOTTOM) {
+            return <Announcement text={text} Icon={Icon} id="footer-announcement" />;
+          }
+
+          return null;
+        }}
+      </AnnouncementContext.Consumer>
     </div>
   );
 };

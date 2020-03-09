@@ -5,8 +5,8 @@ import NProgress from 'nprogress';
 import lazyLoadBlurEffect from 'react-lazy-load-image-component/src/effects/blur.css';
 
 import { logPageView, submitFlow } from '../services/analytics';
-import { getPosition } from '../services/goodness-generator';
 import { Context as SessionContext } from '../services/session';
+import { Context as AnnouncementContext, getAnnouncement } from '../services/announcements';
 
 import AdminPanel from './admin/Panel';
 import LoginButton from './LoginButton';
@@ -22,35 +22,24 @@ class Wrapper extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
+    this.state = {
+      announcement: {},
+    };
 
-    this.getGoodnessGeneratorClassName = this.getGoodnessGeneratorClassName.bind(this);
     this.logPageView = this.logPageView.bind(this);
   }
 
   componentDidMount() {
-    this.setState({
-      goodnessGeneratorPosition: getPosition(),
-    });
+    this.setState({ announcement: getAnnouncement() });
 
     this.logPageView(Router.asPath);
-
     Router.events.on('routeChangeComplete', this.logPageView);
-
     global.addEventListener('beforeunload', submitFlow);
   }
 
   componentWillUnmount() {
     Router.events.off('routeChangeComplete', this.logPageView);
     global.removeEventListener('beforeunload', submitFlow);
-  }
-
-  getGoodnessGeneratorClassName() {
-    const { goodnessGeneratorPosition } = this.state;
-
-    return goodnessGeneratorPosition
-      ? `goodness-generator-on-${goodnessGeneratorPosition}`
-      : '';
   }
 
   logPageView(path) {
@@ -66,7 +55,7 @@ class Wrapper extends React.Component {
   render() {
     const { pathname, children, className } = this.props;
     const { isAuthenticated, pages, drafts } = this.context;
-    const goodnessGeneratorClassName = this.getGoodnessGeneratorClassName();
+    const { announcement } = this.state;
 
     const pathTokens = pathname
       .slice(1)
@@ -74,23 +63,25 @@ class Wrapper extends React.Component {
       .filter((token) => token)
       .map((token) => `${token}-wrapper`);
 
-    const classList = [styles.wrapper, ...pathTokens, className, goodnessGeneratorClassName];
+    const classList = [styles.wrapper, ...pathTokens, className];
 
     return (
       <>
         <style>{lazyLoadBlurEffect}</style>
-        <div id="wrapper" className={classList.join(' ')}>
-          {
-            children
-          }
-          {
-            isAuthenticated && <AdminPanel pages={pages} drafts={drafts} />
-          }
-          {
-            !isAuthenticated && <LoginButton />
-          }
-          <div className={styles.shadow} />
-        </div>
+        <AnnouncementContext.Provider value={announcement}>
+          <div id="wrapper" className={classList.join(' ')}>
+            {
+              children
+            }
+            {
+              isAuthenticated && <AdminPanel pages={pages} drafts={drafts} />
+            }
+            {
+              !isAuthenticated && <LoginButton />
+            }
+            <div className={styles.shadow} />
+          </div>
+        </AnnouncementContext.Provider>
       </>
     );
   }

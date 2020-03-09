@@ -232,20 +232,6 @@ textarea {
   margin-bottom: 1em;
 }
 
-.goodness-generator-on-top {
-  @media (min-width: 600px) {
-    #header-goodness-generator {
-      display: flex;
-    }
-  }
-}
-
-.goodness-generator-on-bottom {
-  #footer-goodness-generator {
-    display: flex !important;
-  }
-}
-
 @media (max-width: 640px) {
   body {
     font-size: 16px;
