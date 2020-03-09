@@ -22,13 +22,11 @@
     }
   }
 
-  :global(#footer-goodness-generator) {
-    display: none;
+  :global(#footer-announcement) {
     margin: 2em 0 -1em 0;
     order: 3;
 
     @media (max-width: 600px) {
-      display: flex !important;
       margin: 1em 0 0 0 !important;
     }
   }
@@ -48,7 +46,7 @@
     display: none;
   }
 
-  :global(#footer-goodness-generator) {
+  :global(#footer-announcement) {
     order: 1;
     justify-content: flex-start;
     margin: 0;

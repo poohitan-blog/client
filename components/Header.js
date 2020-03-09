@@ -2,8 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 
-import GoodnessGenerator from './GoodnessGenerator';
+import { Context as AnnouncementContext, POSITIONS } from '../services/announcements';
+import Announcement from './Announcement';
 import Trashbin from './header/Trashbin';
+
 import HomeIcon from '../public/static/icons/home.svg';
 import ArchiveIcon from '../public/static/icons/list.svg';
 import SecretAgentIcon from '../public/static/icons/secret-agent.svg';
@@ -62,9 +64,21 @@ const Header = ({ trashBinState }) => {
         }
       </ul>
       <div className={styles.border} id="header-border">
-        <hr />
-        <GoodnessGenerator id="header-goodness-generator" />
-        <hr />
+        <AnnouncementContext.Consumer>
+          {({ position, text, Icon }) => {
+            if (position === POSITIONS.TOP) {
+              return (
+                <>
+                  <hr />
+                  <Announcement text={text} Icon={Icon} id="header-announcement" />
+                  <hr />
+                </>
+              );
+            }
+
+            return <hr />;
+          }}
+        </AnnouncementContext.Consumer>
       </div>
     </nav>
   );

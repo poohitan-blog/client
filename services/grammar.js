@@ -7,7 +7,7 @@ import {
 } from 'date-fns';
 import { uk } from 'date-fns/locale';
 
-// e.g.: pluralizeWord(5, ['ровер', 'ровери', 'роверів'])
+// e.g.: describeWordCount(5, ['ровер', 'ровери', 'роверів'])
 export function describeWordCount(count, [one, twoToFour, rest]) {
   if (!count) {
     return `Немає ${rest}`;

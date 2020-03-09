@@ -1,19 +1,21 @@
 @import '../variables';
+@import '../mixins/smaller';
 
 .wrapper {
   color: $light-grey;
-  font-size: 0.75em;
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
 
-  svg {
+  @include smaller;
+
+  .icon {
+    margin-right: 0.5em;
     height: 1em;
   }
 
   .text {
-    margin-left: 0.5em;
     white-space: nowrap;
   }
 }
