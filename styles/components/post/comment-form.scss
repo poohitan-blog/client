@@ -4,15 +4,43 @@
   margin-top: 1em;
 }
 
+.form-wrapper {
+  position: relative;
+
+  &.loading {
+    height: 8em;
+    margin-bottom: -1em;
+    overflow: hidden;
+
+    .loader {
+      opacity: 1;
+    }
+  }
+}
+
 .loader {
+  background-color: white;
+  opacity: 0;
+
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 4em 0 3em 0;
-  width: 100%;
+
+  pointer-events: none;
+  transition: all 300ms linear;
 
   svg {
     fill: $orange;
     width: 3em;
   }
+}
+
+.encouragement {
+  color: $dark-grey;
 }

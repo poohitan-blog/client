@@ -15,7 +15,7 @@ import Header from '../../../components/Header';
 import Content from '../../../components/Content';
 import Footer from '../../../components/Footer';
 import Post from '../../../components/Post';
-import CommentForm from '../../../components/post/CommentForm';
+import CommentForm from '../../../components/post/comments/Form';
 import BlogPosting from '../../../components/jsonld/BlogPosting';
 
 const SimilarPostsGroup = dynamic(import('../../../components/SimilarPostsGroup'), {
