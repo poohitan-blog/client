@@ -71,4 +71,14 @@
       opacity: 0.6;
     }
   }
+
+  .loader-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .loader {
+    width: 3em;
+  }
 }
