@@ -45,7 +45,7 @@ app.prepare()
     server.get('/search', (req, res) => app.render(req, res, '/search', req.query));
     server.get('/upload', (req, res) => app.render(req, res, '/admin/upload-files', req.query));
 
-    server.get('/trash/index.php', (req, res) => {
+    server.get(['/trash/index.php', '/trash/'], (req, res) => {
       app.render(req, res, '/trash', req.query);
     });
 
