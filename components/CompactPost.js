@@ -13,7 +13,7 @@ const CompactPost = (props) => {
     body,
     slug,
     publishedAt,
-    private: hidden,
+    hidden,
   } = props;
   const shortenedBody = shorten(stripHTML(body), 70);
 
@@ -47,11 +47,11 @@ CompactPost.propTypes = {
   body: PropTypes.string.isRequired,
   slug: PropTypes.string.isRequired,
   publishedAt: PropTypes.instanceOf(Date).isRequired,
-  private: PropTypes.bool,
+  hidden: PropTypes.bool,
 };
 
 CompactPost.defaultProps = {
-  private: false,
+  hidden: false,
 };
 
 export default CompactPost;

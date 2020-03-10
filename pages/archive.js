@@ -55,7 +55,7 @@ class ArchivePage extends React.Component {
             body={post.body}
             slug={post.slug}
             publishedAt={new Date(post.publishedAt)}
-            private={post.private}
+            hidden={post.hidden}
           />
         ),
       }))

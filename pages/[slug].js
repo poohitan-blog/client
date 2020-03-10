@@ -51,7 +51,7 @@ class PagePage extends React.Component {
             slug={page.slug}
             title={page.title}
             body={page.body}
-            private={page.private}
+            hidden={page.hidden}
           />
         </Content>
         <Footer />
@@ -65,7 +65,7 @@ PagePage.propTypes = {
     title: PropTypes.string.isRequired,
     body: PropTypes.string.isRequired,
     slug: PropTypes.string.isRequired,
-    private: PropTypes.bool,
+    hidden: PropTypes.bool,
     customStylesProcessed: PropTypes.string,
   }),
 

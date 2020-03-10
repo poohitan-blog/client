@@ -36,7 +36,7 @@ const TranslationButtons = ({ translations, language, slug }) => (
         }
         {
           translations
-            .filter((item) => (isAuthenticated ? true : !item.private))
+            .filter((item) => (isAuthenticated ? true : !item.hidden))
             .filter((item) => item.lang !== language)
             .map((item) => (
               <Button

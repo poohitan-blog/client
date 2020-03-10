@@ -89,7 +89,7 @@ const SORTING_PREDICATES = {
 class TopPage extends React.Component {
   static async getInitialProps({ req, pathname }) {
     try {
-      const { docs } = await API.posts.find({ private: false }, parseCookies({ req }));
+      const { docs } = await API.posts.find({ hidden: false }, parseCookies({ req }));
 
       return {
         posts: docs.map((post) => ({

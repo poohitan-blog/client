@@ -74,7 +74,7 @@ class EditPost extends React.Component {
             tagCloud={tagCloud}
             customStyles={post.customStyles}
             imagesWidth={post.imagesWidth}
-            private={post.private}
+            hidden={post.hidden}
             publishedAt={new Date(post.publishedAt)}
             translations={post.translations}
             onChange={(value) => this.submit(value)}
@@ -95,7 +95,7 @@ EditPost.propTypes = {
     tags: PropTypes.arrayOf(PropTypes.string),
     customStyles: PropTypes.string,
     imagesWidth: PropTypes.number,
-    private: PropTypes.bool,
+    hidden: PropTypes.bool,
     publishedAt: PropTypes.string,
     translations: PropTypes.arrayOf(PropTypes.shape({})),
   }),

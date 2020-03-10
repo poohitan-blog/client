@@ -14,7 +14,7 @@ const Page = (props) => {
     title,
     slug,
     body,
-    private: hidden,
+    hidden,
   } = props;
 
   return (
@@ -56,12 +56,12 @@ Page.propTypes = {
   title: PropTypes.string,
   body: PropTypes.string.isRequired,
   slug: PropTypes.string.isRequired,
-  private: PropTypes.bool,
+  hidden: PropTypes.bool,
 };
 
 Page.defaultProps = {
   title: '',
-  private: false,
+  hidden: false,
 };
 
 export default Page;

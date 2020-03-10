@@ -27,7 +27,7 @@ const Post = (props) => {
     imagesWidth,
     language,
     translations,
-    private: hidden,
+    hidden,
     commentsCount,
     publishedAt,
     tags,
@@ -102,7 +102,7 @@ Post.propTypes = {
   body: PropTypes.string.isRequired,
   slug: PropTypes.string.isRequired,
   cut: PropTypes.bool,
-  private: PropTypes.bool,
+  hidden: PropTypes.bool,
   language: PropTypes.string,
   translations: PropTypes.arrayOf(PropTypes.object),
   commentsCount: PropTypes.number,
@@ -113,7 +113,7 @@ Post.propTypes = {
 
 Post.defaultProps = {
   cut: false,
-  private: false,
+  hidden: false,
   language: 'uk',
   translations: [],
   commentsCount: 0,

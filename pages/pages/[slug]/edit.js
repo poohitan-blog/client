@@ -90,7 +90,7 @@ class EditPage extends React.Component {
             title={page.title}
             body={page.body}
             slug={page.slug}
-            private={page.private}
+            hidden={page.hidden}
             customStyles={page.customStyles}
             key={page.slug}
             onChange={(value) => this.submit(value)}
@@ -107,7 +107,7 @@ EditPage.propTypes = {
     slug: PropTypes.string,
     title: PropTypes.string,
     body: PropTypes.string,
-    private: PropTypes.bool,
+    hidden: PropTypes.bool,
     customStyles: PropTypes.string,
   }),
 
