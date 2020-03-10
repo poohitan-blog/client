@@ -8,7 +8,7 @@ import styles from '../styles/components/search-box.scss';
 const PLACEHOLDER = 'бісовий пошук';
 const ENTER_KEY_CODE = 13;
 
-class SearchBox extends React.Component {
+class SearchBox extends React.PureComponent {
   constructor(props) {
     super(props);
 

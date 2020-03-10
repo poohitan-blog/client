@@ -45,7 +45,6 @@ class SearchPage extends React.Component {
       searchQuery,
       searchResults,
       meta,
-      pathname,
       error,
     } = this.props;
 
@@ -82,7 +81,7 @@ class SearchPage extends React.Component {
     const title = searchQuery ? `Пошук за запитом «${searchQuery}»` : 'Пошук';
 
     return (
-      <Wrapper pathname={pathname}>
+      <Wrapper>
         <Head>
           <title>{`Пошук за запитом «${searchQuery}» - ${current.meta.title}`}</title>
         </Head>
@@ -105,7 +104,6 @@ class SearchPage extends React.Component {
 SearchPage.propTypes = {
   searchResults: PropTypes.arrayOf(PropTypes.object).isRequired,
   searchQuery: PropTypes.string.isRequired,
-  pathname: PropTypes.string.isRequired,
 
   meta: PropTypes.shape({
     currentPage: PropTypes.number,

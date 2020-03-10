@@ -17,6 +17,8 @@ import styles from '../styles/components/trash-post.scss';
 
 const Lightbox = dynamic(import('./ui/Lightbox'), { ssr: false, loading: () => null });
 
+const LIGHTBOX_IMAGE_SELECTOR = `.${styles.body} a.${LIGHTBOX_CLASS}`;
+
 const MAX_UNCOLLAPSED_HEIGHT = 1000;
 
 class TrashPost extends React.Component {
@@ -37,6 +39,7 @@ class TrashPost extends React.Component {
 
     this.collapse = this.collapse.bind(this);
     this.unroll = this.unroll.bind(this);
+    this.switchCollapsionState = this.switchCollapsionState.bind(this);
     this.checkIfLongEnoughToCollapse = this.checkIfLongEnoughToCollapse.bind(this);
 
     this.bodyElement = React.createRef();
@@ -58,6 +61,16 @@ class TrashPost extends React.Component {
         collapsable: true,
         collapsed: true,
       });
+    }
+  }
+
+  switchCollapsionState() {
+    const { collapsed } = this.state;
+
+    if (collapsed) {
+      this.unroll();
+    } else {
+      this.collapse();
     }
   }
 
@@ -96,8 +109,6 @@ class TrashPost extends React.Component {
       classList.push(styles.collapsed);
     }
 
-    const lightboxImageSelector = `.${styles.body} a.${LIGHTBOX_CLASS}`;
-
     return (
       <div className={classList.join(' ')}>
         <SessionContext.Consumer>
@@ -113,13 +124,13 @@ class TrashPost extends React.Component {
           <div className={styles.body} ref={this.bodyElement}>{ body }</div>
           <div className={styles.bodyOverlayGradient} />
         </div>
-        <Lightbox selector={lightboxImageSelector} />
+        <Lightbox selector={LIGHTBOX_IMAGE_SELECTOR} />
         {
           collapsable
           && (
             <PostCollapser
               isPostCollapsed={collapsed}
-              onClick={() => (collapsed ? this.unroll() : this.collapse())}
+              onClick={this.switchCollapsionState}
             />
           )
         }

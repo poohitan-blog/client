@@ -22,4 +22,4 @@ PostCollapser.propTypes = {
   onClick: PropTypes.func.isRequired,
 };
 
-export default PostCollapser;
+export default React.memo(PostCollapser);

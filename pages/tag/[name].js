@@ -41,7 +41,7 @@ class TagPage extends React.Component {
 
   render() {
     const {
-      posts, meta, tag, pathname, error,
+      posts, meta, tag, error,
     } = this.props;
 
     if (error) {
@@ -89,7 +89,7 @@ class TagPage extends React.Component {
       : `${current.clientURL}/tag/${tag}?page=${currentPage}`;
 
     return (
-      <Wrapper pathname={pathname}>
+      <Wrapper>
         <Head>
           <title>{`Записи з позначкою «${tag}» - ${current.meta.title}`}</title>
           <meta name="description" content={`Записи про ${tag}`} key="description" />
@@ -109,7 +109,6 @@ class TagPage extends React.Component {
 TagPage.propTypes = {
   posts: PropTypes.arrayOf(PropTypes.object).isRequired,
   tag: PropTypes.string.isRequired,
-  pathname: PropTypes.string.isRequired,
 
   meta: PropTypes.shape({
     currentPage: PropTypes.number,

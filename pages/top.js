@@ -114,7 +114,6 @@ class TopPage extends React.Component {
   render() {
     const {
       posts,
-      pathname,
       error,
     } = this.props;
 
@@ -144,7 +143,7 @@ class TopPage extends React.Component {
     const sortButtonsSeparator = <span>&nbsp;/&nbsp;</span>;
 
     return (
-      <Wrapper pathname={pathname}>
+      <Wrapper>
         <Head>
           <title>{`Рейтинг записів - ${current.meta.title}`}</title>
         </Head>
@@ -204,8 +203,6 @@ class TopPage extends React.Component {
 }
 
 TopPage.propTypes = {
-  pathname: PropTypes.string.isRequired,
-
   posts: PropTypes.arrayOf(PropTypes.object).isRequired,
 
   error: PropTypes.shape({

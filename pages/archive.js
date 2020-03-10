@@ -38,7 +38,7 @@ class ArchivePage extends React.Component {
 
   render() {
     const {
-      posts, error, meta, pathname,
+      posts, error, meta,
     } = this.props;
 
     if (error) {
@@ -75,7 +75,7 @@ class ArchivePage extends React.Component {
     const description = posts.map((post) => post.title.toLowerCase()).join(', ');
 
     return (
-      <Wrapper pathname={pathname}>
+      <Wrapper>
         <Head>
           <title>{`Архів - ${current.meta.title}`}</title>
           <link rel="canonical" href={canonicalUrl} />
@@ -94,8 +94,6 @@ class ArchivePage extends React.Component {
 
 ArchivePage.propTypes = {
   posts: PropTypes.arrayOf(PropTypes.object).isRequired,
-
-  pathname: PropTypes.string.isRequired,
 
   meta: PropTypes.shape({
     currentPage: PropTypes.number,

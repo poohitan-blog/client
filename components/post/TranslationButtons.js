@@ -3,10 +3,11 @@ import PropTypes from 'prop-types';
 import Link from 'next/link';
 
 import { translatePostIsAvailableInThisLanguage, getCountryCodeByLanguageCode } from '../../services/translations';
+import { Context as SessionContext } from '../../services/session';
 
 import styles from '../../styles/components/post/translation-buttons.scss';
 
-const Button = ({
+const Button = React.memo(({
   language, title, href, as,
 }) => {
   const postIsAvailableInThisLanguage = translatePostIsAvailableInThisLanguage(language);
@@ -22,30 +23,34 @@ const Button = ({
       </a>
     </Link>
   );
-};
+});
 
-const TranslationButtons = ({ translations, language, slug }, context) => (
-  <div className={styles.wrapper}>
-    {
-      language === 'uk'
-        ? null
-        : <Button key="uk" language="uk" href="/p/[slug]" as={`/p/${slug}`} />
-    }
-    {
-      translations
-        .filter((item) => (context.isAuthenticated ? true : !item.private))
-        .filter((item) => item.lang !== language)
-        .map((item) => (
-          <Button
-            key={item.lang}
-            title={item.title}
-            language={item.lang}
-            href="/p/[slug]/[language]"
-            as={`/p/${slug}/${item.lang}`}
-          />
-        ))
-    }
-  </div>
+const TranslationButtons = ({ translations, language, slug }) => (
+  <SessionContext.Consumer>
+    {({ isAuthenticated }) => (
+      <div className={styles.wrapper}>
+        {
+          language === 'uk'
+            ? null
+            : <Button key="uk" language="uk" href="/p/[slug]" as={`/p/${slug}`} />
+        }
+        {
+          translations
+            .filter((item) => (isAuthenticated ? true : !item.private))
+            .filter((item) => item.lang !== language)
+            .map((item) => (
+              <Button
+                key={item.lang}
+                title={item.title}
+                language={item.lang}
+                href="/p/[slug]/[language]"
+                as={`/p/${slug}/${item.lang}`}
+              />
+            ))
+        }
+      </div>
+    )}
+  </SessionContext.Consumer>
 );
 
 Button.propTypes = {

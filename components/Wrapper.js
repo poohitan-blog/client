@@ -53,23 +53,15 @@ class Wrapper extends React.Component {
   }
 
   render() {
-    const { pathname, children, className } = this.props;
+    const { children } = this.props;
     const { isAuthenticated, pages, drafts } = this.context;
     const { announcement } = this.state;
-
-    const pathTokens = pathname
-      .slice(1)
-      .split('/')
-      .filter((token) => token)
-      .map((token) => `${token}-wrapper`);
-
-    const classList = [styles.wrapper, ...pathTokens, className];
 
     return (
       <>
         <style>{lazyLoadBlurEffect}</style>
         <AnnouncementContext.Provider value={announcement}>
-          <div id="wrapper" className={classList.join(' ')}>
+          <div id="wrapper" className={styles.wrapper}>
             {
               children
             }
@@ -91,13 +83,6 @@ Wrapper.contextType = SessionContext;
 
 Wrapper.propTypes = {
   children: PropTypes.node.isRequired,
-  pathname: PropTypes.string,
-  className: PropTypes.string,
-};
-
-Wrapper.defaultProps = {
-  pathname: '',
-  className: null,
 };
 
 export default Wrapper;

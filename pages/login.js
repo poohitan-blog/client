@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Head from 'next/head';
 import Router from 'next/router';
 
@@ -82,11 +81,10 @@ class LoginPage extends React.Component {
   }
 
   render() {
-    const { pathname } = this.props;
     const { error } = this.state;
 
     return (
-      <Wrapper pathname={pathname}>
+      <Wrapper>
         <Head>
           <title>Вхід у Нарнію</title>
         </Head>
@@ -105,13 +103,5 @@ class LoginPage extends React.Component {
     );
   }
 }
-
-LoginPage.propTypes = {
-  pathname: PropTypes.string,
-};
-
-LoginPage.defaultProps = {
-  pathname: '',
-};
 
 export default LoginPage;

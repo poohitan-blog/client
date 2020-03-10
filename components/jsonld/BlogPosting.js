@@ -57,4 +57,4 @@ BlogPosting.defaultProps = {
   tags: [],
 };
 
-export default BlogPosting;
+export default React.memo(BlogPosting);

@@ -92,4 +92,4 @@ Header.defaultProps = {
   trashBinState: Trashbin.STATES.CLOSED,
 };
 
-export default Header;
+export default React.memo(Header);
