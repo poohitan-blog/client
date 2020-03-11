@@ -62,10 +62,10 @@ class TagPage extends React.Component {
     } else {
       content = posts
         .map((post) => ({
-          id: post.id,
+          slug: post.slug,
           component: (
             <CompactPost
-              key={post.id}
+              key={post.slug}
               title={post.title}
               body={post.body}
               slug={post.slug}
@@ -74,12 +74,12 @@ class TagPage extends React.Component {
             />
           ),
         }))
-        .reduce((previousPosts, { id, component }) => {
+        .reduce((previousPosts, { slug, component }) => {
           if (!previousPosts.length) {
             return [component];
           }
 
-          return [...previousPosts, <hr key={`hr${id}`} />, component];
+          return [...previousPosts, <hr key={`hr-${slug}`} />, component];
         }, []);
     }
 

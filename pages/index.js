@@ -54,7 +54,7 @@ class IndexPage extends React.Component {
     const content = posts.map((post) => (
       <Post
         cut
-        key={post.id}
+        key={post.slug}
         title={post.title}
         body={post.body}
         slug={post.slug}

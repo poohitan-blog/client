@@ -174,7 +174,7 @@ class TopPage extends React.Component {
                   const interestingness = calculatePostInterestingness(post).toFixed(2);
 
                   return (
-                    <li key={post.id}>
+                    <li key={post.slug}>
                       <Link href="/p/[slug]" as={`/p/${post.slug}`}><a title={post.title}>{post.title}</a></Link>
                       <span className="smaller">
                         {' '}
