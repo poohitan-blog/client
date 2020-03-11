@@ -30,10 +30,10 @@ class CommentForm extends React.Component {
 
     return (
       <div id="comments" className={styles.wrapper}>
-        {/* <h3 className={styles.encouragement}>Напиши коментар, трясця:</h3> */}
         <div className={`${styles.formWrapper} ${loading ? styles.loading : ''}`}>
           <div className={styles.loader}>
-            <LoaderIcon />
+            <b className={styles.encouragement}>Напиши коментар, трясця</b>
+            <LoaderIcon className={styles.loaderAnimation} />
           </div>
           <LazyLoadComponent threshold={300}>
             <Disqus

@@ -31,16 +31,18 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 
   pointer-events: none;
   transition: all 300ms linear;
 
-  svg {
-    fill: $orange;
+  .loader-animation {
+    fill: $grey;
     width: 3em;
   }
-}
 
-.encouragement {
-  color: $dark-grey;
+  .encouragement {
+    color: $dark-grey;
+    margin-bottom: 1em;
+  }
 }
