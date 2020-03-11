@@ -27,7 +27,7 @@ class Panel extends React.Component {
         <ul>
           {
             allPages.map((page) => (
-              <li key={page.id}>
+              <li key={page.slug}>
                 <Page slug={page.slug} title={page.title} hidden={page.hidden} />
               </li>
             ))
@@ -42,7 +42,7 @@ class Panel extends React.Component {
         <ul>
           {
             drafts.map((draft) => (
-              <li key={draft.id}>
+              <li key={draft.slug}>
                 <Draft slug={draft.slug} title={draft.title} />
               </li>
             ))

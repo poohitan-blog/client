@@ -11,11 +11,9 @@ import TinyPost from './TinyPost';
 
 import styles from '../styles/components/similar-posts-group.scss';
 
-const NUMBER_OF_POSTS_TO_DISPLAY = 3;
-
-const SimilarPostsGroup = ({ posts, scrollPosition }) => {
+const SimilarPostsGroup = ({ posts, displayCount, scrollPosition }) => {
   const postsWithImages = posts.filter((post) => post.image);
-  const postsToDisplay = postsWithImages.length >= NUMBER_OF_POSTS_TO_DISPLAY
+  const postsToDisplay = postsWithImages.length >= displayCount
     ? postsWithImages
     : posts;
 
@@ -32,10 +30,10 @@ const SimilarPostsGroup = ({ posts, scrollPosition }) => {
       <div className={styles.container}>
         {
           shuffle(postsToDisplay)
-            .slice(0, NUMBER_OF_POSTS_TO_DISPLAY)
+            .slice(0, displayCount)
             .map((post) => (
               <TinyPost
-                key={post.id}
+                key={post.slug}
                 title={post.title}
                 slug={post.slug}
                 publishedAt={new Date(post.publishedAt)}
@@ -51,11 +49,13 @@ const SimilarPostsGroup = ({ posts, scrollPosition }) => {
 
 SimilarPostsGroup.propTypes = {
   posts: PropTypes.arrayOf(PropTypes.object),
+  displayCount: PropTypes.number,
   scrollPosition: PropTypes.shape({}),
 };
 
 SimilarPostsGroup.defaultProps = {
   posts: [],
+  displayCount: 3,
   scrollPosition: null,
 };
 

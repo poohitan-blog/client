@@ -128,7 +128,7 @@ class PostPage extends React.Component {
               imagesWidth={post.imagesWidth}
             />
             {
-              similarPosts.length ? <SimilarPostsGroup posts={similarPosts} /> : null
+              similarPosts.length ? <SimilarPostsGroup posts={similarPosts} displayCount={3} /> : null
             }
             <CommentForm title={post.title} slug={post.slug} />
           </Content>
