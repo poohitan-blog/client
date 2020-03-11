@@ -63,7 +63,7 @@ class PageForm extends React.Component {
       title,
       slug,
       body,
-      private: hidden,
+      hidden,
       customStyles,
     } = this.state;
 
@@ -110,7 +110,7 @@ class PageForm extends React.Component {
             <Checkbox
               label="Заховати"
               checked={hidden}
-              onChange={(value) => this.setState({ private: value })}
+              onChange={(value) => this.setState({ hidden: value })}
             />
             <button type="submit" onClick={this.submit} className={styles.submitButton}>Вйо</button>
           </div>

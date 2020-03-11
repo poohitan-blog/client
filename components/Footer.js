@@ -101,4 +101,4 @@ Footer.defaultProps = {
   searchBox: true,
 };
 
-export default withRouter(Footer);
+export default withRouter(React.memo(Footer));

@@ -53,7 +53,6 @@ class PostPage extends React.Component {
     const {
       post,
       similarPosts,
-      pathname,
       language,
       error,
     } = this.props;
@@ -109,7 +108,7 @@ class PostPage extends React.Component {
             publishedAt={new Date(post.publishedAt)}
           />
         </Head>
-        <Wrapper pathname={pathname}>
+        <Wrapper>
           <Header />
           {
             post.customStylesProcessed && <style dangerouslySetInnerHTML={{ __html: post.customStylesProcessed }} />
@@ -120,7 +119,7 @@ class PostPage extends React.Component {
               title={post.title}
               body={post.body}
               slug={post.slug}
-              private={post.private}
+              hidden={post.hidden}
               language={language}
               translations={post.translations}
               tags={post.tags}
@@ -141,7 +140,6 @@ class PostPage extends React.Component {
 }
 
 PostPage.propTypes = {
-  pathname: PropTypes.string.isRequired,
   language: PropTypes.string,
 
   post: PropTypes.shape({
@@ -151,7 +149,7 @@ PostPage.propTypes = {
     slug: PropTypes.string.isRequired,
     tags: PropTypes.arrayOf(PropTypes.string),
     publishedAt: PropTypes.instanceOf(Date),
-    private: PropTypes.bool,
+    hidden: PropTypes.bool,
     commentsCount: PropTypes.number,
     translations: PropTypes.arrayOf(PropTypes.shape({})),
     customStylesProcessed: PropTypes.string,

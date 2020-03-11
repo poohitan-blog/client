@@ -140,7 +140,7 @@ class PostForm extends React.Component {
       customStyles,
       imagesWidth,
       descriptionSymbolsLeft,
-      private: hidden,
+      hidden,
     } = this.state;
     const { id, tagCloud } = this.props;
     const formTitle = id ? 'Редагувати запис' : 'Додати запис';
@@ -234,7 +234,7 @@ class PostForm extends React.Component {
                     >
                       <a className={styles.translationLink}>
                         {translation.lang}
-                        {translation.private ? <sup>(прих.)</sup> : null}
+                        {translation.hidden ? <sup>(прих.)</sup> : null}
                       </a>
                     </Link>
                   ))
@@ -257,7 +257,7 @@ class PostForm extends React.Component {
               <Checkbox
                 label="Заховати"
                 checked={hidden}
-                onChange={(value) => this.setState({ private: value })}
+                onChange={(value) => this.setState({ hidden: value })}
               />
             </div>
             <button type="submit" onClick={this.submit} className={styles.submitButton}>Вйо</button>

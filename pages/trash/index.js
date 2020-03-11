@@ -83,7 +83,6 @@ class TrashPage extends React.Component {
     const {
       posts,
       meta,
-      pathname,
       error,
       single,
     } = this.props;
@@ -113,7 +112,7 @@ class TrashPage extends React.Component {
     const canonicalURL = this.generateCanonicalUrl();
 
     return (
-      <Wrapper pathname={pathname}>
+      <Wrapper>
         <Head>
           <title>{pageTitle}</title>
           <link rel="canonical" href={canonicalURL} />
@@ -130,8 +129,6 @@ class TrashPage extends React.Component {
 }
 
 TrashPage.propTypes = {
-  pathname: PropTypes.string.isRequired,
-
   posts: PropTypes.arrayOf(PropTypes.object),
 
   error: PropTypes.shape({

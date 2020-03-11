@@ -21,4 +21,4 @@ Announcement.defaultProps = {
   Icon: null,
 };
 
-export default Announcement;
+export default React.memo(Announcement);

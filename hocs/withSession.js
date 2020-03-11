@@ -24,7 +24,7 @@ export default function withSession(WrappedComponent) {
         }
 
         const { docs: pages = [] } = await API.pages.find(parseCookies({ req }));
-        const { docs: drafts = [] } = await API.posts.find({ private: true }, parseCookies({ req }));
+        const { docs: drafts = [] } = await API.posts.find({ hidden: true }, parseCookies({ req }));
 
         return {
           ...wrappedComponentProps,

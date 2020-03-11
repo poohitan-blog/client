@@ -6,7 +6,7 @@ import TrashbinFullyOpenIcon from '../../public/static/icons/trashbin-fully-open
 
 import styles from '../../styles/components/header/trashbin.scss';
 
-class Trashbin extends React.Component {
+class Trashbin extends React.PureComponent {
   constructor(props) {
     super(props);
 

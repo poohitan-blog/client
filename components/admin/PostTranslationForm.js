@@ -54,7 +54,7 @@ class PostTranslationForm extends React.Component {
       description,
       body,
       lang,
-      private: hidden,
+      hidden,
       descriptionSymbolsLeft,
     } = this.state;
     const { post } = this.props;
@@ -102,7 +102,7 @@ class PostTranslationForm extends React.Component {
             <Checkbox
               label="Заховати"
               checked={hidden}
-              onChange={(value) => this.setState({ private: value })}
+              onChange={(value) => this.setState({ hidden: value })}
             />
             <button type="submit" onClick={this.submit} className={styles.submitButton}>Вйо</button>
           </div>

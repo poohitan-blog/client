@@ -6,7 +6,7 @@ import HiddenIcon from '../../../public/static/icons/hidden.svg';
 import styles from '../../../styles/components/admin/panel.scss';
 
 const Page = (props) => {
-  const { title, slug, private: hidden } = props;
+  const { title, slug, hidden } = props;
 
   return (
     <Link href="/[slug]" as={`/${slug}`}>
@@ -23,12 +23,12 @@ const Page = (props) => {
 Page.propTypes = {
   slug: PropTypes.string.isRequired,
   title: PropTypes.string,
-  private: PropTypes.bool,
+  hidden: PropTypes.bool,
 };
 
 Page.defaultProps = {
   title: '',
-  private: false,
+  hidden: false,
 };
 
 export default Page;

@@ -27,14 +27,14 @@ class PagePage extends React.Component {
   }
 
   render() {
-    const { page, pathname, error } = this.props;
+    const { page, error } = this.props;
 
     if (error) {
       return <Error statusCode={error.status} />;
     }
 
     return (
-      <Wrapper pathname={pathname}>
+      <Wrapper>
         <Head>
           <title>{`${page.title} - ${current.meta.title}`}</title>
           <link rel="canonical" href={`${current.clientURL}/${page.slug}`} />
@@ -51,7 +51,7 @@ class PagePage extends React.Component {
             slug={page.slug}
             title={page.title}
             body={page.body}
-            private={page.private}
+            hidden={page.hidden}
           />
         </Content>
         <Footer />
@@ -61,13 +61,11 @@ class PagePage extends React.Component {
 }
 
 PagePage.propTypes = {
-  pathname: PropTypes.string.isRequired,
-
   page: PropTypes.shape({
     title: PropTypes.string.isRequired,
     body: PropTypes.string.isRequired,
     slug: PropTypes.string.isRequired,
-    private: PropTypes.bool,
+    hidden: PropTypes.bool,
     customStylesProcessed: PropTypes.string,
   }),
 

@@ -17,9 +17,9 @@ class Panel extends React.Component {
   render() {
     const { pages, drafts } = this.props;
 
-    const publicPages = pages.filter((page) => !page.private);
-    const privatePages = pages.filter((page) => page.private);
-    const allPages = publicPages.concat(...privatePages);
+    const publicPages = pages.filter((page) => !page.hidden);
+    const hiddenPages = pages.filter((page) => page.hidden);
+    const allPages = publicPages.concat(...hiddenPages);
 
     const pagesBlock = !pages.length ? null : (
       <div className={styles.block}>
@@ -28,7 +28,7 @@ class Panel extends React.Component {
           {
             allPages.map((page) => (
               <li key={page.id}>
-                <Page slug={page.slug} title={page.title} private={page.private} />
+                <Page slug={page.slug} title={page.title} hidden={page.hidden} />
               </li>
             ))
           }

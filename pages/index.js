@@ -44,7 +44,6 @@ class IndexPage extends React.Component {
     const {
       posts,
       meta,
-      pathname,
       error,
     } = this.props;
 
@@ -59,7 +58,7 @@ class IndexPage extends React.Component {
         title={post.title}
         body={post.body}
         slug={post.slug}
-        private={post.private}
+        hidden={post.hidden}
         language={post.language}
         translations={post.translations}
         commentsCount={post.commentsCount}
@@ -106,7 +105,7 @@ class IndexPage extends React.Component {
           <meta name="og:locale" content={languageTerritory} />
           <meta name="og:type" content="website" />
         </Head>
-        <Wrapper pathname={pathname}>
+        <Wrapper>
           <Header />
           <Content>
             {content}
@@ -120,8 +119,6 @@ class IndexPage extends React.Component {
 
 IndexPage.propTypes = {
   posts: PropTypes.arrayOf(PropTypes.object).isRequired,
-
-  pathname: PropTypes.string.isRequired,
 
   meta: PropTypes.shape({
     currentPage: PropTypes.number,
