@@ -9,7 +9,7 @@ import { trackWindowScroll } from 'react-lazy-load-image-component';
 
 import TinyPost from './TinyPost';
 
-import styles from '../styles/components/similar-posts-group.scss';
+import styles from '../styles/components/similar-posts-group.module.scss';
 
 const SimilarPostsGroup = ({ posts, displayCount, scrollPosition }) => {
   const postsWithImages = posts.filter((post) => post.image);

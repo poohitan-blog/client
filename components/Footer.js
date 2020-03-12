@@ -7,7 +7,7 @@ import { Context as AnnouncementContext, POSITIONS } from '../services/announcem
 import Announcement from './Announcement';
 import SearchBox from './SearchBox';
 
-import styles from '../styles/components/footer.scss';
+import styles from '../styles/components/footer.module.scss';
 
 const DEFAULT_LINK_TEXTS = {
   next: 'Старіші записи',

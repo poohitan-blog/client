@@ -7,7 +7,7 @@ import { Context as AnnouncementContext, POSITIONS } from '../services/announcem
 import Announcement from './Announcement';
 import Trashbin from './header/Trashbin';
 
-import styles from '../styles/components/header.scss';
+import styles from '../styles/components/header.module.scss';
 
 const Header = ({ trashBinState }) => {
   const items = [
@@ -21,7 +21,7 @@ const Header = ({ trashBinState }) => {
       title: 'Архів',
       description: 'Архів записів',
       href: '/archive',
-      icon: <FontAwesomeIcon icon="book" />,
+      icon: <FontAwesomeIcon icon="book" className={styles.archive} />,
     },
     {
       title: 'Про',

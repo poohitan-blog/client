@@ -4,7 +4,6 @@
 import React from 'react';
 
 import Highlighter from 'highlight.js';
-import styles from 'highlight.js/styles/monokai-sublime.css';
 
 class SyntaxHighlighter extends React.Component {
   componentDidMount() {
@@ -14,7 +13,7 @@ class SyntaxHighlighter extends React.Component {
   }
 
   render() {
-    return <style>{styles}</style>;
+    return null;
   }
 }
 

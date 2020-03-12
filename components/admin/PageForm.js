@@ -1,22 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
-import { Controlled as CodeMirror } from 'react-codemirror2';
-import codeMirrorStyles from 'codemirror/lib/codemirror.css';
-import codeMirrorThemeStyles from 'codemirror/theme/monokai.css';
 
 import { current } from '../../config';
 
 import Checkbox from '../ui/Checkbox';
 import Editor from '../../utils/editor';
+import CodeEditor from '../../utils/code-editor';
 
-import styles from '../../styles/components/admin/page-form.scss';
-
-try {
-  require('codemirror/mode/css/css');
-} catch (error) {
-  console.error(error);
-}
+import styles from '../../styles/components/admin/page-form.module.scss';
 
 class PageForm extends React.Component {
   constructor(props) {
@@ -73,7 +65,6 @@ class PageForm extends React.Component {
     return (
       <div className={styles.wrapper}>
         <h1>{pageTitle}</h1>
-        <style>{codeMirrorStyles + codeMirrorThemeStyles}</style>
         <div className={styles.form}>
           <input
             type="text"
@@ -96,14 +87,10 @@ class PageForm extends React.Component {
           <Editor key={id} html={body} onChange={(value) => this.setState({ body: value })} />
           <div>
             <p>Стилі сторінки:</p>
-            <CodeMirror
+            <CodeEditor
               value={customStyles}
-              options={{
-                mode: 'css',
-                theme: 'monokai',
-              }}
-              onBeforeChange={(editor, data, value) => this.setState({ customStyles: value })}
-              className={`${styles.codeEditor} ${customStyles ? '' : styles.collapsed}`}
+              onInput={(value) => this.setState({ customStyles: value })}
+              language="scss"
             />
           </div>
           <div className={styles.footer}>

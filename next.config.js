@@ -1,36 +1,8 @@
 const webpack = require('webpack');
-const path = require('path');
-const shorthash = require('shorthash');
-const withSass = require('@zeit/next-sass');
 
-const CSS_MODULES_EXCLUDE_PATHS = ['node_modules', 'global'];
-
-module.exports = withSass({
-  cssModules: true,
-
-  cssLoaderOptions: {
-    camelCase: true,
-    getLocalIdent: (loaderContext, localIdentName, localName) => {
-      const { resourcePath } = loaderContext;
-
-      if (CSS_MODULES_EXCLUDE_PATHS.some((pathToExclude) => resourcePath.includes(pathToExclude))) {
-        return localName;
-      }
-
-      const fileName = path.basename(loaderContext.resourcePath);
-      const name = fileName.replace(/\.[^/.]+$/, '');
-      const hash = shorthash.unique(loaderContext.resourcePath);
-
-      return `${name}-${localName}--${hash}`;
-    },
-  },
-
+module.exports = {
   webpack: (config, { dev }) => { // eslint-disable-line
     const rules = [
-      {
-        test: /\.css$/,
-        use: ['babel-loader', 'raw-loader', 'postcss-loader'],
-      },
       {
         test: /\.svg$/,
         loader: 'raw-loader',
@@ -52,6 +24,26 @@ module.exports = withSass({
 
     config.plugins.push(jQueryPlugin, dateFnsLocalesPlugin);
 
+    // TODO: remove this workaround when this issue is resolved: https://github.com/zeit/next.js/issues/10584
+    /* eslint-disable */
+    let rule, moduleRules, cssLoader, scssRules, sassLoader;
+    if (rule = config.module.rules.find(rule => Object.keys(rule).includes('oneOf'))) {
+      if (moduleRules = rule.oneOf.filter(r => ('test.module.scss'.match(r.test) || 'test.module.css'.match(r.test)) && Array.isArray(r.use))) {
+        for (const moduleRule of moduleRules) {
+          if (cssLoader = moduleRule.use.find(u => u.loader.match('css-loader'))) {
+            cssLoader.options = {
+              ...cssLoader.options,
+              localsConvention: 'camelCaseOnly',
+              modules: {
+                ...cssLoader.options.modules,
+              },
+            };
+          }
+        }
+      }
+    }
+    /* eslint-enable */
+
     return config;
   },
-});
+};

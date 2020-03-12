@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Popup from '../Popup';
 import API from '../../services/api';
 
-import styles from '../../styles/components/admin/control-buttons.scss';
+import styles from '../../styles/components/admin/control-buttons.module.scss';
 
 const linkGenerators = {
   page: {

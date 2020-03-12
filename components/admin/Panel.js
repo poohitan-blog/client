@@ -6,7 +6,7 @@ import { logOut } from '../../services/session';
 import Page from './panel/Page';
 import Draft from './panel/Draft';
 
-import styles from '../../styles/components/admin/panel.scss';
+import styles from '../../styles/components/admin/panel.module.scss';
 
 class Panel extends React.Component {
   static logOut(event) {

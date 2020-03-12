@@ -7,7 +7,7 @@ import { isValid } from 'date-fns';
 import { stripHTML, getHighlightsOfKeywords, shorten } from '../services/text';
 import { formatPostDate } from '../services/grammar';
 
-import styles from '../styles/components/search-result.scss';
+import styles from '../styles/components/search-result.module.scss';
 
 const searchResultTypes = {
   post: 'Запис',

@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { formatPostDate, createWordCountDescriptor } from '../../services/grammar';
 
-import styles from '../../styles/components/post/footer.scss';
+import styles from '../../styles/components/post/footer.module.scss';
 
 const describeCommentsCount = createWordCountDescriptor(['коментар', 'коментарі', 'коментарів']);
 

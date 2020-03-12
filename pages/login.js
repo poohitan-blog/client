@@ -7,7 +7,7 @@ import Content from '../components/Content';
 
 import { logIn, isAuthenticated } from '../services/session';
 
-import styles from '../styles/pages/login.scss';
+import styles from '../styles/pages/login.module.scss';
 
 const LOGIN_ATTEMPTS_MESSAGES = [
   'Пішов геть.',

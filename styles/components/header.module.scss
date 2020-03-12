@@ -32,6 +32,10 @@
         line-height: 1.4em;
       }
 
+      .archive {
+        width: 0.8em;
+      }
+
       .menu-item-content-desktop {
         display: none;
       }
@@ -71,11 +75,6 @@
   hr {
     width: 100%;
   }
-}
-
-:global(#header-announcement) {
-  margin: 0 2em;
-  width: auto;
 }
 
 @media (max-width: 640px) {

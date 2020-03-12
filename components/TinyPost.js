@@ -6,7 +6,7 @@ import { LazyLoadComponent } from 'react-lazy-load-image-component';
 import { formatPostDate } from '../services/grammar';
 
 import LoaderIcon from '../public/static/icons/three-dots.svg';
-import styles from '../styles/components/tiny-post.scss';
+import styles from '../styles/components/tiny-post.module.scss';
 
 const MAX_TITLE_LENGTH = 50;
 const IMAGE_WIDTH = 300;

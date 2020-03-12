@@ -5,8 +5,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import '../../public/static/libs/lightbox/featherlight.min';
 import '../../public/static/libs/lightbox/featherlight.gallery.uk.min';
-import styles from '../../public/static/libs/lightbox/featherlight.min.css';
-import galleryStyles from '../../public/static/libs/lightbox/featherlight.gallery.min.css';
 
 class Lightbox extends React.Component {
   componentDidMount() {
@@ -20,7 +18,7 @@ class Lightbox extends React.Component {
   }
 
   render() {
-    return <style>{styles + galleryStyles}</style>;
+    return null;
   }
 }
 

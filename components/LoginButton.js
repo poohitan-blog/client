@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import random from '../helpers/random';
 
-import styles from '../styles/components/login-button.scss';
+import styles from '../styles/components/login-button.module.scss';
 
 const angryEmojis = [
   'o͡͡͡͡͡͡͡͡͡͡͡͡͡͡╮(;´༎ຶД༎ຶ`)╭o͡͡͡͡͡͡͡͡͡͡͡͡͡͡',
