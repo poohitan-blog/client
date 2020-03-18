@@ -39,7 +39,7 @@ function generateAltText(node, language) {
 function generateLinkTitle(node, language) {
   const alt = generateAltText(node, language);
   const separator = alt.slice(-1) === '.' ? '' : '.';
-  const clickToEnlarge = language === 'uk' ? 'Клацніть, шоб збільшити' : 'Click to enlarge';
+  const clickToEnlarge = language === 'uk' ? 'Клацни, шоб збільшити' : 'Click to enlarge';
 
   return alt ? `${alt}${separator} ${clickToEnlarge}.` : clickToEnlarge;
 }

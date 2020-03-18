@@ -1,7 +1,9 @@
 @import '../../variables';
+@import '../../mixins/smaller';
 
 .wrapper {
   margin-top: 1em;
+  cursor: default;
 }
 
 .form-wrapper {
@@ -45,4 +47,11 @@
     color: $dark-grey;
     margin-bottom: 1em;
   }
+}
+
+.troubleshooting-message {
+  color: $grey;
+  text-align: center;
+
+  @include smaller;
 }
