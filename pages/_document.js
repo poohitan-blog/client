@@ -40,6 +40,8 @@ class MyDocument extends Document {
 
           <link rel="preconnect" href="https://www.google-analytics.com" />
           <link rel="dns-prefetch" href="https://www.google-analytics.com" />
+
+          <script defer src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML&locale=uk" />
         </Head>
         <body className={this.props.raspberriesDay ? 'raspberries' : null}>
           <Main />
