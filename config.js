@@ -46,21 +46,6 @@ const config = {
       shortname: 'poohitan',
     },
 
-    server: {
-      host: '46.101.99.203',
-      username: 'poohitan',
-      folder: '~/poohitan.com/client',
-    },
-
-    git: {
-      repo: 'git@github.com:poohitan-blog/client.git',
-      branch: 'stable',
-    },
-
-    pm2: {
-      appName: 'poohitan-com-client',
-    },
-
     google: {
       analyticsTrackingId: 'UA-10797087-16',
       siteVerificationCode: 'bfS0NjYLa1mTldGwMWMUuG5RuIS1oIksGoVxJoFDZwY',
