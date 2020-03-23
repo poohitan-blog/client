@@ -11,6 +11,7 @@ const FullBody = ({
     return new HTMLProcessor(node)
       .asImage({ language, imagesWidth, scrollPosition })
       .asCut()
+      .asLink()
       .getNode();
   },
 });

@@ -30,6 +30,7 @@ class TrashPost extends React.Component {
         replace(node) {
           return new HTMLProcessor(node)
             .asImage({ scrollPosition: props.scrollPosition })
+            .asLink()
             .getNode();
         },
       }),
