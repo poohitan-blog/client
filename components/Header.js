@@ -28,7 +28,7 @@ const Header = ({ trashBinState }) => {
       description: 'Хто в біса все це пише',
       href: '/[slug]',
       as: '/about',
-      icon: <FontAwesomeIcon icon="skull" />,
+      icon: <FontAwesomeIcon icon="ghost" />,
     },
     {
       title: 'Смітник',

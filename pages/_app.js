@@ -2,7 +2,7 @@ import { config, library } from '@fortawesome/fontawesome-svg-core';
 import {
   faHome,
   faBook,
-  faSkull,
+  faGhost,
   faEyeSlash,
   faTimes,
   faCheck,
@@ -18,7 +18,7 @@ import '../styles/global.scss';
 config.autoAddCss = false;
 
 library.add(
-  faHome, faBook, faSkull,
+  faHome, faBook, faGhost,
   faEyeSlash, faEdit, faCheck, faTimes,
   faCommentAlt, faCalendarAlt,
   faAngleDoubleDown,
