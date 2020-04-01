@@ -13,7 +13,7 @@ const Announcement = ({ id, text, Icon }) => (
 Announcement.propTypes = {
   id: PropTypes.string,
   text: PropTypes.string.isRequired,
-  Icon: PropTypes.node,
+  Icon: PropTypes.func,
 };
 
 Announcement.defaultProps = {

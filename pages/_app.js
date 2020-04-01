@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 import { config, library } from '@fortawesome/fontawesome-svg-core';
 import {
   faHome,
@@ -25,6 +27,13 @@ library.add(
   faSearch,
 );
 
-export default function MyApp({ Component, pageProps }) { // eslint-disable-line
+function App({ Component, pageProps }) {
   return <Component {...pageProps} />; // eslint-disable-line
 }
+
+App.propTypes = {
+  Component: PropTypes.func.isRequired,
+  pageProps: PropTypes.shape({}).isRequired,
+};
+
+export default App;
