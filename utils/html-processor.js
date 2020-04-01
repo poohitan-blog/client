@@ -4,6 +4,7 @@ import { domToReact } from 'html-react-parser';
 import { current } from '../config';
 
 import { generateLazyPreview } from '../services/image-previews';
+import getRouteByURL from '../helpers/get-route-by-url';
 
 export default class HTMLProcessor {
   constructor(node) {
@@ -39,17 +40,23 @@ export default class HTMLProcessor {
       attribs = {},
       children,
     } = node;
-    const isLink = type === 'tag' && name === 'a';
+    const { href: url } = attribs;
+    const isLink = type === 'tag' && name === 'a' && url;
 
     if (isLink) {
-      const isRelativeLink = attribs.href && attribs.href[0] === '/';
-      const isSelfLink = attribs.href.indexOf(current.clientURL) === 0;
-
-      const href = isSelfLink ? attribs.href.replace(current.clientURL, '') : attribs.href;
+      const isRelativeLink = url[0] === '/';
+      const isSelfLink = url.indexOf(current.clientURL) === 0;
 
       if (isRelativeLink || isSelfLink) {
+        const relativeURL = isSelfLink ? url.replace(current.clientURL, '') : url;
+        const route = getRouteByURL(relativeURL);
+
+        console.log(relativeURL, route);
+
         this.processedNode = (
-          <Link href={href}><a>{domToReact(children)}</a></Link>
+          <Link as={relativeURL} href={route}>
+            <a>{domToReact(children)}</a>
+          </Link>
         );
       }
     }

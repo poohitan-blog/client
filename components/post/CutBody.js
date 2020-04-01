@@ -24,6 +24,7 @@ const CutBody = ({ title, slug, body }) => {
           replace(node) {
             return new HTMLProcessor(node)
               .asImage()
+              .asLink()
               .getNode();
           },
         })
