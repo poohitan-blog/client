@@ -16,10 +16,6 @@
     font-size: 2em;
     margin: 0 0.5em;
 
-    svg {
-      height: 100%;
-    }
-
     .menu-item-content-mobile {
       display: none;
     }
@@ -32,7 +28,8 @@
       margin: 0.5em;
 
       .trashbin {
-        margin-top: -0.15em;
+        font-size: 1em;
+        line-height: 1.4em;
       }
 
       .menu-item-content-desktop {
@@ -41,7 +38,7 @@
 
       .menu-item-content-mobile {
         display: block;
-        height: 1em;
+        font-size: 0.9em;
       }
     }
   }

@@ -35,10 +35,11 @@ $item-horizontal-margin: 0.6em;
 
 .icon {
   fill: $dark-grey;
+  color: $dark-grey;
 }
 
 .icon-label {
-  margin-left: 0.5em;
+  margin-left: 0.6em;
   white-space: nowrap;
 }
 
@@ -48,8 +49,7 @@ $item-horizontal-margin: 0.6em;
   @extend .item;
 
   .comments-icon {
-    width: 1.2em;
-    min-width: 1.2em;
+    transform: translateY(0.1em);
     @extend .icon;
   }
 }
@@ -58,12 +58,6 @@ $item-horizontal-margin: 0.6em;
   display: flex;
   align-items: center;
   @extend .item;
-
-  .date-icon {
-    width: 1.1em;
-    min-width: 1.1em;
-    @extend .icon;
-  }
 }
 
 .tags {

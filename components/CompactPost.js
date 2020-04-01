@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import { stripHTML, shorten } from '../services/text';
 import { formatPostDate } from '../services/grammar';
 
-import HiddenIcon from '../public/static/icons/hidden.svg';
 import styles from '../styles/components/compact-post.scss';
 
 const CompactPost = (props) => {
@@ -28,7 +29,7 @@ const CompactPost = (props) => {
             hidden
             && (
               <div className={styles.titleIcons}>
-                <div className={styles.titleIcon}><HiddenIcon /></div>
+                <FontAwesomeIcon icon="eye-slash" className={styles.titleIcon} />
               </div>
             )
           }

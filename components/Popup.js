@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import CloseIcon from '../public/static/icons/remove.svg';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import styles from '../styles/components/popup.scss';
 
@@ -24,7 +24,7 @@ class Popup extends React.Component {
       <div className={`${styles.wrapper} ${visible ? styles.visible : ''}`}>
         <div className={styles.popup}>
           <button type="button" className={styles.closeButton} onClick={this.close}>
-            <CloseIcon />
+            <FontAwesomeIcon icon="times" />
           </button>
           {children}
         </div>

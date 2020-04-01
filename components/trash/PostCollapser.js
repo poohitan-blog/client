@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import AngleIcon from '../../public/static/icons/angle-down.svg';
 import styles from '../../styles/components/trash/post-collapser.scss';
 
 const PostCollapser = ({ isPostCollapsed, onClick }) => {
@@ -10,9 +10,9 @@ const PostCollapser = ({ isPostCollapsed, onClick }) => {
 
   return (
     <div className={styles.wrapper} title={text} onClick={onClick}>
-      <div className={`${styles.icon} ${iconClass}`}><AngleIcon /></div>
+      <FontAwesomeIcon icon="angle-double-down" className={`${styles.icon} ${iconClass}`} />
       <div className={styles.text}>{text}</div>
-      <div className={`${styles.icon} ${iconClass}`}><AngleIcon /></div>
+      <FontAwesomeIcon icon="angle-double-down" className={`${styles.icon} ${iconClass}`} />
     </div>
   );
 };
