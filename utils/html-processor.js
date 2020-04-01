@@ -51,8 +51,6 @@ export default class HTMLProcessor {
         const relativeURL = isSelfLink ? url.replace(current.clientURL, '') : url;
         const route = getRouteByURL(relativeURL);
 
-        console.log(relativeURL, route);
-
         this.processedNode = (
           <Link as={relativeURL} href={route}>
             <a>{domToReact(children)}</a>
