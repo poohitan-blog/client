@@ -4,12 +4,11 @@ import Link from 'next/link';
 import Router from 'next/router';
 import pluralize from 'pluralize';
 import { parseCookies } from 'nookies';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import Popup from '../Popup';
 import API from '../../services/api';
 
-import EditIcon from '../../public/static/icons/edit.svg';
-import RemoveIcon from '../../public/static/icons/remove.svg';
 import styles from '../../styles/components/admin/control-buttons.scss';
 
 const linkGenerators = {
@@ -107,13 +106,13 @@ class ControlButtons extends React.Component {
 
     return (
       <span className={`${styles.wrapper} ${className}`} id={id}>
-        <div className={styles.button}>
+        <div className={`${styles.button} ${styles.buttonEdit}`}>
           <Link as={as} href={href}>
-            <a><EditIcon /></a>
+            <a><FontAwesomeIcon icon="edit" /></a>
           </Link>
         </div>
         <div className={styles.button} onClick={this.showRemovePopup}>
-          <RemoveIcon />
+          <a><FontAwesomeIcon icon="times" /></a>
         </div>
         <Popup visible={removePopupVisible} onClose={this.hideRemovePopup}>
           {popupContent}

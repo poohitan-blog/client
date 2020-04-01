@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Router from 'next/router';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import SearchIcon from '../public/static/icons/search.svg';
 import styles from '../styles/components/search-box.scss';
 
 const PLACEHOLDER = 'бісовий пошук';
@@ -67,7 +67,7 @@ class SearchBox extends React.PureComponent {
 
     return (
       <div className={classList.join(' ')}>
-        <SearchIcon className={styles.icon} />
+        <FontAwesomeIcon icon="search" className={styles.icon} />
         <input
           type="text"
           value={query}

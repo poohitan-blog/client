@@ -24,13 +24,13 @@
 
   .square {
     border: 1px solid $light-grey;
-    fill: $grey;
+    color: $grey;
     box-sizing: border-box;
     width: 1em;
     height: 1em;
 
-    svg {
-      margin-bottom: 1px;
+    .check {
+      transform: translateY(-0.2em);
     }
   }
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import CheckIcon from '../../public/static/icons/check.svg';
 import styles from '../../styles/components/ui/checkbox.scss';
 
 class Checkbox extends React.Component {
@@ -26,7 +26,9 @@ class Checkbox extends React.Component {
         <label htmlFor={checkboxId} className={styles.labelWrapper}>
           <input id={checkboxId} type="checkbox" checked={checked} onChange={this.change} className={styles.native} />
           <div className={styles.square}>
-            {checked && <CheckIcon />}
+            {
+              checked && <FontAwesomeIcon icon="check" className={styles.check} />
+            }
           </div>
           <span className={styles.label}>{label}</span>
         </label>

@@ -1,14 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { Context as AnnouncementContext, POSITIONS } from '../services/announcements';
 import Announcement from './Announcement';
 import Trashbin from './header/Trashbin';
-
-import HomeIcon from '../public/static/icons/home.svg';
-import ArchiveIcon from '../public/static/icons/list.svg';
-import SecretAgentIcon from '../public/static/icons/secret-agent.svg';
 
 import styles from '../styles/components/header.scss';
 
@@ -18,20 +15,20 @@ const Header = ({ trashBinState }) => {
       title: 'Головна',
       description: 'Головна сторінка',
       href: '/',
-      icon: <HomeIcon />,
+      icon: <FontAwesomeIcon icon="home" />,
     },
     {
       title: 'Архів',
       description: 'Архів записів',
       href: '/archive',
-      icon: <ArchiveIcon />,
+      icon: <FontAwesomeIcon icon="book" />,
     },
     {
       title: 'Про',
       description: 'Хто в біса все це пише',
       href: '/[slug]',
       as: '/about',
-      icon: <SecretAgentIcon />,
+      icon: <FontAwesomeIcon icon="skull" />,
     },
     {
       title: 'Смітник',

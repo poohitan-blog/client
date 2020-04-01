@@ -21,7 +21,7 @@
   transition: opacity 150ms linear;
 
   .text {
-    padding: 0 1em;
+    padding: 0 1.2em;
   }
 
   .icon {
@@ -32,11 +32,6 @@
     &.icon-collapsed {
       transform: rotate(0deg);
     }
-  }
-
-  svg {
-    width: 1.5em;
-    height: 1.5em;
   }
 
   &:hover {

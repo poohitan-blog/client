@@ -30,6 +30,7 @@ $padding: 2em;
       position: absolute;
       top: $padding;
       right: $padding;
+      font-size: 1.2em;
 
       padding: 0;
       border: none;
@@ -37,11 +38,7 @@ $padding: 2em;
 
       &:hover {
         background-color: transparent;
-        fill: lighten($grey, 20%);
-      }
-
-      svg {
-        height: 1em;
+        color: lighten($grey, 20%);
       }
     }
   }

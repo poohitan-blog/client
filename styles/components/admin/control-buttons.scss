@@ -9,22 +9,25 @@
     margin-left: 0.3em;
     padding: 0;
     border: none;
+    font-size: 0.9em;
 
-    &:first-child {
-      margin-left: 0;
+    a {
+      color: $grey;
     }
 
-    svg {
-      fill: $grey;
-      height: 0.7em;
-      transition: fill 200ms linear;
+    &:first-child {
+      margin-left: 0em;
     }
 
     &:hover {
-      svg {
-        fill: lighten($grey, 20%);
+      a {
+        color: lighten($grey, 20%);
       }
     }
+  }
+
+  .button-edit {
+    font-size: 0.7em;
   }
 
   .popup-buttons-wrapper {

@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import HTMLReactParser from 'html-react-parser';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import AdminControlButtons from './admin/ControlButtons';
 import { Context as SessionContext } from '../services/session';
 import HTMLProcessor from '../utils/html-processor';
 
-import HiddenIcon from '../public/static/icons/hidden.svg';
 import styles from '../styles/components/page.scss';
 
 const Page = (props) => {
@@ -23,7 +23,9 @@ const Page = (props) => {
         <span>{title}</span>
         <div className={styles.titleIcons}>
           {
-            hidden && <div className={styles.titleIcon} id="page-title-icon"><HiddenIcon /></div>
+            hidden && (
+              <FontAwesomeIcon icon="eye-slash" className={styles.titleIcon} id="page-title-icon" />
+            )
           }
           <SessionContext.Consumer>
             {({ isAuthenticated }) => isAuthenticated && (

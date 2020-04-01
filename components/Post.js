@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import FullBody from './post/FullBody';
 import CutBody from './post/CutBody';
@@ -11,7 +12,6 @@ import AdminControlButtons from './admin/ControlButtons';
 import { LIGHTBOX_CLASS, DEFAULT_THUMBNAIL_WIDTH } from '../services/image-previews';
 import { Context as SessionContext } from '../services/session';
 
-import HiddenIcon from '../public/static/icons/hidden.svg';
 import styles from '../styles/components/post.scss';
 
 const Lightbox = dynamic(import('./ui/Lightbox'), { ssr: false, loading: () => null });
@@ -62,7 +62,9 @@ const Post = (props) => {
         }
         <div className={styles.titleIcons}>
           {
-            hidden && <div className={styles.titleIcon} id={cut ? null : 'post-title-icon'}><HiddenIcon /></div>
+            hidden && (
+              <FontAwesomeIcon icon="eye-slash" className={styles.titleIcon} id={cut ? null : 'post-title-icon'} />
+            )
           }
           <SessionContext.Consumer>
             {({ isAuthenticated }) => isAuthenticated && (

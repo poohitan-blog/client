@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import { formatPostDate, createWordCountDescriptor } from '../../services/grammar';
-import CommentIcon from '../../public/static/icons/comment.svg';
-import CalendarIcon from '../../public/static/icons/calendar.svg';
 
 import styles from '../../styles/components/post/footer.scss';
 
@@ -40,13 +40,13 @@ class Footer extends React.Component {
     return (
       <div className={styles.wrapper} id={id}>
         <div className={styles.comments}>
-          <CommentIcon className={styles.commentsIcon} />
+          <FontAwesomeIcon icon="comment-alt" className={styles.commentsIcon} />
           <Link as={`/p/${slug}#comments`} href="/p/[slug]#comments">
             <a title="Коментарі до запису" className={styles.iconLabel}>{ describeCommentsCount(commentsCount) }</a>
           </Link>
         </div>
         <div className={styles.date}>
-          <CalendarIcon className={styles.dateIcon} />
+          <FontAwesomeIcon icon="calendar-alt" className={styles.icon} />
           <span
             className={styles.iconLabel}
             title={formatPostDate(publishedAt, { detailed: true })}
