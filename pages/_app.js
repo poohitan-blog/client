@@ -1,5 +1,4 @@
-
-import { library } from '@fortawesome/fontawesome-svg-core';
+import { config, library } from '@fortawesome/fontawesome-svg-core';
 import {
   faHome,
   faBook,
@@ -15,6 +14,8 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 import '../styles/global.scss';
+
+config.autoAddCss = false;
 
 library.add(
   faHome, faBook, faSkull,

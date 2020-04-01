@@ -25,6 +25,10 @@
     border: none;
     width: 100%;
     padding: 0;
+
+    &::placeholder {
+      color: $light-grey;
+    }
   }
 
   &.focused {
@@ -32,6 +36,10 @@
 
     .input {
       color: $orange;
+
+      &::placeholder {
+        color: $orange;
+      }
     }
 
     .icon {
