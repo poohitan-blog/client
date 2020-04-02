@@ -88,7 +88,7 @@ export function generateLazyPreview(node, {
 
   return isClickable
     ? (
-      <a href={originalSource} className={LIGHTBOX_CLASS} key={originalSource} title={title}>
+      <a href={originalSource} className={`expendable-widget ${LIGHTBOX_CLASS}`} key={originalSource} title={title}>
         {image}
       </a>
     )

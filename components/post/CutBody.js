@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
-import HTMLReactParser from 'html-react-parser';
+import parse from 'html-react-parser';
 
 import HTMLProcessor from '../../utils/html-processor';
 
@@ -20,7 +20,7 @@ const CutBody = ({ title, slug, body }) => {
   return (
     <>
       {
-        HTMLReactParser(cutHtml, {
+        parse(cutHtml, {
           replace(node) {
             return new HTMLProcessor(node)
               .asImage()

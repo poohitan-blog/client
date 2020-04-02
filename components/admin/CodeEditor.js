@@ -63,7 +63,7 @@ const CodeEditor = ({
   onInput,
   className,
 }) => {
-  const classList = [styles.wrapper, className, 'code-editor'];
+  const classList = [styles.wrapper, className, 'expendable-widget'];
 
   if (!value) {
     classList.push(styles.collapsed);

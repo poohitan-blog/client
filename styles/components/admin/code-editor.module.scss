@@ -1,18 +1,11 @@
 @import '../../variables';
 @import '../../mixins/code';
 
-.loader {
-  fill: $light-grey;
-  width: 3em;
-}
-
 .wrapper {
-  @include code;
-
   :global {
     .CodeMirror {
       height: 100%;
-      font-family: $code-font-family !important;
+      @include code;
     }
 
     .CodeMirror-linenumber {

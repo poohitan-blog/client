@@ -1,18 +1,19 @@
 import PropTypes from 'prop-types';
-import HTMLReactParser from 'html-react-parser';
+import parse from 'html-react-parser';
 import { trackWindowScroll } from 'react-lazy-load-image-component';
 
 import HTMLProcessor from '../../utils/html-processor';
 
 const FullBody = ({
   language, body, scrollPosition, imagesWidth,
-}) => HTMLReactParser(body, {
+}) => parse(body, {
   replace(node) {
     return new HTMLProcessor(node)
       .asImage({ language, imagesWidth, scrollPosition })
       .asCut()
       .asLink()
       .asCode()
+      .asIframe()
       .getNode();
   },
 });

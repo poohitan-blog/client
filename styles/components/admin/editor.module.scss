@@ -1,11 +1,6 @@
 @import '../../variables';
 @import '../../mixins/multiple-dots';
 
-.loader {
-  fill: $light-grey;
-  width: 3em;
-}
-
 .wrapper {
   cut {
     display: block;
@@ -17,6 +12,10 @@
 
   p, li, blockquote, .blockquote {
     hyphens: none;
+  }
+
+  iframe {
+    width: 100%;
   }
 
   hr {

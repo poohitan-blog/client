@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import HTMLReactParser from 'html-react-parser';
+import parse from 'html-react-parser';
 import { trackWindowScroll } from 'react-lazy-load-image-component';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
@@ -26,11 +26,12 @@ class TrashPost extends React.Component {
     super(props);
 
     this.state = {
-      body: HTMLReactParser(props.body, {
+      body: parse(props.body, {
         replace(node) {
           return new HTMLProcessor(node)
             .asImage({ scrollPosition: props.scrollPosition })
             .asLink()
+            .asIframe()
             .getNode();
         },
       }),

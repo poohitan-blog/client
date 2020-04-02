@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import HTMLReactParser from 'html-react-parser';
+import parse from 'html-react-parser';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import AdminControlButtons from './admin/ControlButtons';
@@ -41,12 +41,13 @@ const Page = (props) => {
       </h1>
       <div className={styles.body} id="page-body">
         {
-          HTMLReactParser(body, {
+          parse(body, {
             replace(node) {
               return new HTMLProcessor(node)
                 .asImage()
                 .asLink()
                 .asCode()
+                .asIframe()
                 .getNode();
             },
           })

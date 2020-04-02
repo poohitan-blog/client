@@ -4,20 +4,12 @@ import Link from 'next/link';
 import { LazyLoadComponent } from 'react-lazy-load-image-component';
 
 import { formatPostDate } from '../services/grammar';
+import { Rectangle } from './ui/Loader';
 
-import LoaderIcon from '../public/static/icons/three-dots.svg';
 import styles from '../styles/components/tiny-post.module.scss';
 
 const MAX_TITLE_LENGTH = 50;
 const IMAGE_WIDTH = 300;
-
-const Placeholder = (
-  <div className={styles.wrapper}>
-    <div className={styles.loaderWrapper}>
-      <LoaderIcon className={styles.loader} />
-    </div>
-  </div>
-);
 
 const TinyPost = ({
   title,
@@ -31,7 +23,7 @@ const TinyPost = ({
     : title;
 
   return (
-    <LazyLoadComponent threshold={300} scrollPosition={scrollPosition} placeholder={Placeholder}>
+    <LazyLoadComponent threshold={300} scrollPosition={scrollPosition} placeholder={<Rectangle />}>
       <Link as={`/p/${slug}`} href="/p/[slug]">
         <a className={styles.wrapper} title={title} style={{ backgroundImage: `url("${image}?width=${IMAGE_WIDTH}")` }}>
           <div className={styles.content}>
