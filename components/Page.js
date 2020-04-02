@@ -46,6 +46,7 @@ const Page = (props) => {
               return new HTMLProcessor(node)
                 .asImage()
                 .asLink()
+                .asCode()
                 .getNode();
             },
           })

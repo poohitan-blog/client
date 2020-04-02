@@ -9,7 +9,7 @@ import AdminControlButtons from './admin/ControlButtons';
 import PostCollapser from './trash/PostCollapser';
 
 import HTMLProcessor from '../utils/html-processor';
-import { LIGHTBOX_CLASS } from '../services/image-previews';
+import { LIGHTBOX_CLASS } from '../utils/html-processor/image';
 import { formatPostDate } from '../services/grammar';
 import { Context as SessionContext } from '../services/session';
 

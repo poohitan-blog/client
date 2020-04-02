@@ -12,6 +12,7 @@ const FullBody = ({
       .asImage({ language, imagesWidth, scrollPosition })
       .asCut()
       .asLink()
+      .asCode()
       .getNode();
   },
 });

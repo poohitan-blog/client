@@ -63,7 +63,7 @@
     @media (max-width: 640px) {
       .lightbox-image,
       .video-16-9,
-      pre {
+      .code-editor {
         margin-left: calc((100% - 100vw) / 2);
       }
 
@@ -72,7 +72,7 @@
         width: calc(100% + 2em);
       }
 
-      pre {
+      .code-editor {
         width: 100vw;
       }
     }

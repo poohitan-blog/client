@@ -1,10 +1,7 @@
-import React from 'react';
-import Link from 'next/link';
-import { domToReact } from 'html-react-parser';
-import { current } from '../config';
-
-import { generateLazyPreview } from '../services/image-previews';
-import getRouteByURL from '../helpers/get-route-by-url';
+import processAsImage from './html-processor/image';
+import processAsLink from './html-processor/link';
+import processAsCut from './html-processor/cut';
+import processAsCode from './html-processor/code';
 
 export default class HTMLProcessor {
   constructor(node) {
@@ -16,59 +13,19 @@ export default class HTMLProcessor {
     return this.processedNode;
   }
 
-  asImage({ language, imagesWidth, scrollPosition } = {}) {
-    const { node } = this;
-    const { name, type } = node;
-    const isImage = type === 'tag' && name === 'img';
-
-    if (isImage) {
-      this.processedNode = generateLazyPreview(node, {
-        altLanguage: language,
-        thumbnailWidth: imagesWidth,
-        scrollPosition,
-      });
-    }
-
-    return this;
+  asImage(...params) {
+    return processAsImage.call(this, ...params);
   }
 
-  asLink() {
-    const { node } = this;
-    const {
-      name,
-      type,
-      attribs = {},
-      children,
-    } = node;
-    const { href: url } = attribs;
-    const isLink = type === 'tag' && name === 'a' && url;
-
-    if (isLink) {
-      const isRelativeLink = url[0] === '/';
-      const isSelfLink = url.indexOf(current.clientURL) === 0;
-
-      if (isRelativeLink || isSelfLink) {
-        const relativeURL = isSelfLink ? url.replace(current.clientURL, '') : url;
-        const route = getRouteByURL(relativeURL);
-
-        this.processedNode = (
-          <Link as={relativeURL} href={route}>
-            <a>{domToReact(children)}</a>
-          </Link>
-        );
-      }
-    }
-
-    return this;
+  asLink(...params) {
+    return processAsLink.call(this, ...params);
   }
 
-  asCut() {
-    const isCut = this.node.type === 'tag' && this.node.name === 'cut';
+  asCode(...params) {
+    return processAsCode.call(this, ...params);
+  }
 
-    if (isCut) {
-      this.processedNode = <span id="cut" />;
-    }
-
-    return this;
+  asCut(...params) {
+    return processAsCut.call(this, ...params);
   }
 }

@@ -4,6 +4,7 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 export const LIGHTBOX_CLASS = 'lightbox-image';
 export const DEFAULT_THUMBNAIL_WIDTH = 800;
 const DEFAULT_THUMBNAIL_RELATIVE_HEIGHT = 60;
+const DEFAULT_ALT_LANGUAGE = 'uk';
 
 function calculateRelativeThumbnailHeight(node) {
   const {
@@ -44,7 +45,11 @@ function generateLinkTitle(node, language) {
   return alt ? `${alt}${separator} ${clickToEnlarge}.` : clickToEnlarge;
 }
 
-export function generateLazyPreview(node, { altLanguage = 'uk', scrollPosition, thumbnailWidth = DEFAULT_THUMBNAIL_WIDTH } = {}) {
+export function generateLazyPreview(node, {
+  altLanguage = DEFAULT_ALT_LANGUAGE,
+  thumbnailWidth = DEFAULT_THUMBNAIL_WIDTH,
+  scrollPosition,
+}) {
   const {
     class: className,
     src: originalSource,
@@ -90,7 +95,18 @@ export function generateLazyPreview(node, { altLanguage = 'uk', scrollPosition, 
     : image;
 }
 
-export default {
-  generateLazyPreview,
-  LIGHTBOX_CLASS,
-};
+export default function processImage({ language, imagesWidth, scrollPosition } = {}) {
+  const { node } = this;
+  const { name, type } = node;
+  const isImage = type === 'tag' && name === 'img';
+
+  if (isImage) {
+    this.processedNode = generateLazyPreview(node, {
+      altLanguage: language,
+      thumbnailWidth: imagesWidth,
+      scrollPosition,
+    });
+  }
+
+  return this;
+}
