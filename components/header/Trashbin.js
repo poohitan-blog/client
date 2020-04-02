@@ -4,7 +4,7 @@ import TrashbinClosedIcon from '../../public/static/icons/trashbin.svg';
 import TrashbinSemiOpenIcon from '../../public/static/icons/trashbin-semi-open.svg';
 import TrashbinFullyOpenIcon from '../../public/static/icons/trashbin-fully-open.svg';
 
-import styles from '../../styles/components/header/trashbin.scss';
+import styles from '../../styles/components/header/trashbin.module.scss';
 
 class Trashbin extends React.PureComponent {
   constructor(props) {

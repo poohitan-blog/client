@@ -1,5 +1,10 @@
 @import '~normalize.css';
-@import '@fortawesome/fontawesome-svg-core/styles.css';
+@import '~@fortawesome/fontawesome-svg-core/styles.css';
+@import '~react-lazy-load-image-component/src/effects/blur.css';
+@import '~highlight.js/styles/monokai-sublime.css';
+@import '~codemirror/lib/codemirror.css';
+@import '~codemirror/theme/eclipse.css';
+@import '~codemirror/theme/monokai.css';
 
 @import 'fonts';
 @import 'variables';
@@ -19,8 +24,6 @@ body {
   font-size: $main-font-size;
   line-height: 1.35em;
   color: $black;
-  margin: 0;
-  padding: 0;
   word-wrap: break-word;
 
   &.raspberries {
@@ -251,4 +254,9 @@ textarea {
       padding: 0 0 0 1.5em;
     }
   }
+}
+
+#header-announcement {
+  margin: 0 2em;
+  width: auto;
 }

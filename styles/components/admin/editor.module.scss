@@ -25,15 +25,15 @@
 
     margin: 2em 0;
   }
-}
 
-.loader-icon {
-  fill: $orange;
-  width: 3em;
-}
+  .loader {
+    fill: $orange;
+    width: 3em;
+  }
 
-:global(.fr-wrapper) {
-  a[href*="froala.com/wysiwyg-editor?k=u"] {
-    display: none !important;
+  :global(.fr-wrapper) {
+    a[href*="froala.com/wysiwyg-editor?k=u"] {
+      display: none !important;
+    }
   }
 }

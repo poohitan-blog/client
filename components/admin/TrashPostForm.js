@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Editor from '../../utils/editor';
 
-import styles from '../../styles/components/admin/trash-post-form.scss';
+import styles from '../../styles/components/admin/trash-post-form.module.scss';
 
 class TrashPostForm extends React.Component {
   constructor(props) {

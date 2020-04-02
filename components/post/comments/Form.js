@@ -5,7 +5,7 @@ import { LazyLoadComponent } from 'react-lazy-load-image-component';
 import Disqus from './Disqus';
 
 import LoaderIcon from '../../../public/static/icons/three-dots.svg';
-import styles from '../../../styles/components/post/comment-form.scss';
+import styles from '../../../styles/components/post/comment-form.module.scss';
 
 const ACCEPTABLE_WAITING_TIME = 5000;
 

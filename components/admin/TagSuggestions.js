@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { describeWordCount } from '../../services/grammar';
 
-import styles from '../../styles/components/admin/tag-suggestions.scss';
+import styles from '../../styles/components/admin/tag-suggestions.module.scss';
 
 const TagSuggestions = ({ tags, count, onClick }) => {
   const markup = Object.keys(tags)

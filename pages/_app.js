@@ -15,6 +15,8 @@ import {
   faSearch,
 } from '@fortawesome/free-solid-svg-icons';
 
+import '../public/static/libs/lightbox/featherlight.min.css';
+import '../public/static/libs/lightbox/featherlight.gallery.min.css';
 import '../styles/global.scss';
 
 config.autoAddCss = false;

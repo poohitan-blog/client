@@ -2,23 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 import { format, parse, isValid } from 'date-fns';
-import { Controlled as CodeMirror } from 'react-codemirror2';
-import codeMirrorStyles from 'codemirror/lib/codemirror.css';
-import codeMirrorThemeStyles from 'codemirror/theme/monokai.css';
 
 import { current } from '../../config';
 
 import Checkbox from '../ui/Checkbox';
 import Editor from '../../utils/editor';
+import CodeEditor from '../../utils/code-editor';
 import TagSuggestions from './TagSuggestions';
 
-import styles from '../../styles/components/admin/post-form.scss';
-
-try {
-  require('codemirror/mode/css/css');
-} catch (error) {
-  console.error(error);
-}
+import styles from '../../styles/components/admin/post-form.module.scss';
 
 const DATE_FORMAT = 'dd.MM.yyyy HH:mm';
 const MAX_DESCRIPTION_LENGTH = 160;
@@ -148,7 +140,6 @@ class PostForm extends React.Component {
 
     return (
       <div className={styles.wrapper}>
-        <style>{codeMirrorStyles + codeMirrorThemeStyles}</style>
         <h1>{formTitle}</h1>
         <div className={styles.form}>
           <input
@@ -193,14 +184,10 @@ class PostForm extends React.Component {
           </div>
           <div>
             <p>Стилі сторінки:</p>
-            <CodeMirror
+            <CodeEditor
               value={customStyles}
-              options={{
-                mode: 'css',
-                theme: 'monokai',
-              }}
-              onBeforeChange={(editor, data, value) => this.setState({ customStyles: value })}
-              className={`${styles.codeEditor} ${customStyles ? '' : styles.collapsed}`}
+              onInput={(value) => this.setState({ customStyles: value })}
+              language="scss"
             />
           </div>
           {

@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { stripHTML, shorten } from '../services/text';
 import { formatPostDate } from '../services/grammar';
 
-import styles from '../styles/components/compact-post.scss';
+import styles from '../styles/components/compact-post.module.scss';
 
 const CompactPost = (props) => {
   const {

@@ -6,7 +6,7 @@ import API from '../../services/api';
 
 import Dropzone from '../Dropzone';
 
-import styles from '../../styles/components/admin/upload-files-form.scss';
+import styles from '../../styles/components/admin/upload-files-form.module.scss';
 
 class UploadFilesForm extends React.Component {
   constructor(props) {

@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { translatePostIsAvailableInThisLanguage, getCountryCodeByLanguageCode } from '../../services/translations';
 import { Context as SessionContext } from '../../services/session';
 
-import styles from '../../styles/components/post/translation-buttons.scss';
+import styles from '../../styles/components/post/translation-buttons.module.scss';
 
 const Button = React.memo(({
   language, title, href, as,

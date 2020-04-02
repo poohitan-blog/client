@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import styles from '../../styles/components/trash/post-collapser.scss';
+import styles from '../../styles/components/trash/post-collapser.module.scss';
 
 const PostCollapser = ({ isPostCollapsed, onClick }) => {
   const text = isPostCollapsed ? 'Розгорнути' : 'Згорнути';

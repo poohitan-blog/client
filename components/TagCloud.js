@@ -7,7 +7,7 @@ import { createWordCountDescriptor } from '../services/grammar';
 import API from '../services/api';
 import random from '../helpers/random';
 
-import styles from '../styles/components/tag-cloud.scss';
+import styles from '../styles/components/tag-cloud.module.scss';
 
 const MAX_FONT_SIZE = 5;
 const MIN_FONT_SIZE = 1;

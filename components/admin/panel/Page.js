@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import styles from '../../../styles/components/admin/panel.scss';
+import styles from '../../../styles/components/admin/panel.module.scss';
 
 const Page = (props) => {
   const { title, slug, hidden } = props;

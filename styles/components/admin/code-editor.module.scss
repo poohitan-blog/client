@@ -1,0 +1,35 @@
+@import '../../variables';
+
+.wrapper {
+  border: 1px solid $light-grey;
+  font-size: 0.75em;
+  line-height: 0.5em;
+  width: 100%;
+  overflow: auto;
+  resize: vertical;
+  height: 15em;
+
+  &.collapsed {
+    height: 5em;
+  }
+
+  &.readonly {
+    height: auto;
+  }
+
+  .loader {
+    fill: $orange;
+    width: 3em;
+  }
+
+  :global{
+    .CodeMirror {
+      height: 100%;
+      font-family: $code-font-family !important;
+    }
+
+    .CodeMirror-linenumber {
+      transform: translate(-0.2em, 0.5em);
+    }
+  }
+}

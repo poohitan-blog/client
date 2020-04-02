@@ -13,9 +13,9 @@ import { LIGHTBOX_CLASS } from '../services/image-previews';
 import { formatPostDate } from '../services/grammar';
 import { Context as SessionContext } from '../services/session';
 
-import styles from '../styles/components/trash-post.scss';
+import styles from '../styles/components/trash-post.module.scss';
 
-const Lightbox = dynamic(import('./ui/Lightbox'), { ssr: false, loading: () => null });
+const Lightbox = dynamic(() => import('./ui/Lightbox'), { ssr: false, loading: () => null });
 
 const LIGHTBOX_IMAGE_SELECTOR = `.${styles.body} a.${LIGHTBOX_CLASS}`;
 

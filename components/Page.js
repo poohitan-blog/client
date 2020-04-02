@@ -7,7 +7,7 @@ import AdminControlButtons from './admin/ControlButtons';
 import { Context as SessionContext } from '../services/session';
 import HTMLProcessor from '../utils/html-processor';
 
-import styles from '../styles/components/page.scss';
+import styles from '../styles/components/page.module.scss';
 
 const Page = (props) => {
   const {

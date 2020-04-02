@@ -18,7 +18,7 @@ import Post from '../../../components/Post';
 import CommentForm from '../../../components/post/comments/Form';
 import BlogPosting from '../../../components/jsonld/BlogPosting';
 
-const SimilarPostsGroup = dynamic(import('../../../components/SimilarPostsGroup'), {
+const SimilarPostsGroup = dynamic(() => import('../../../components/SimilarPostsGroup'), {
   ssr: false,
   loading: () => null,
 });

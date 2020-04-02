@@ -12,11 +12,11 @@ import AdminControlButtons from './admin/ControlButtons';
 import { LIGHTBOX_CLASS, DEFAULT_THUMBNAIL_WIDTH } from '../services/image-previews';
 import { Context as SessionContext } from '../services/session';
 
-import styles from '../styles/components/post.scss';
+import styles from '../styles/components/post.module.scss';
 
-const Lightbox = dynamic(import('./ui/Lightbox'), { ssr: false, loading: () => null });
-const SyntaxHighlighter = dynamic(import('./ui/SyntaxHighlighter'), { ssr: false, loading: () => null });
-const MathHighlighter = dynamic(import('./ui/MathHighlighter'), { ssr: false, loading: () => null });
+const Lightbox = dynamic(() => import('./ui/Lightbox'), { ssr: false, loading: () => null });
+const SyntaxHighlighter = dynamic(() => import('./ui/SyntaxHighlighter'), { ssr: false, loading: () => null });
+const MathHighlighter = dynamic(() => import('./ui/MathHighlighter'), { ssr: false, loading: () => null });
 
 const Post = (props) => {
   const {

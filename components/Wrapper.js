@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Router from 'next/router';
 import NProgress from 'nprogress';
-import lazyLoadBlurEffect from 'react-lazy-load-image-component/src/effects/blur.css';
 
 import { logPageView, submitFlow } from '../services/analytics';
 import { Context as SessionContext } from '../services/session';
@@ -11,7 +10,7 @@ import { Context as AnnouncementContext, getAnnouncement } from '../services/ann
 import AdminPanel from './admin/Panel';
 import LoginButton from './LoginButton';
 
-import styles from '../styles/components/wrapper.scss';
+import styles from '../styles/components/wrapper.module.scss';
 
 NProgress.configure({ showSpinner: false });
 Router.events.on('routeChangeStart', NProgress.start);
@@ -59,7 +58,6 @@ class Wrapper extends React.Component {
 
     return (
       <>
-        <style>{lazyLoadBlurEffect}</style>
         <AnnouncementContext.Provider value={announcement}>
           <div id="wrapper" className={styles.wrapper}>
             {

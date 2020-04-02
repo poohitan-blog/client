@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Checkbox from '../ui/Checkbox';
 import Editor from '../../utils/editor';
 
-import styles from '../../styles/components/admin/post-translation-form.scss';
+import styles from '../../styles/components/admin/post-translation-form.module.scss';
 
 const MAX_DESCRIPTION_LENGTH = 160;
 
