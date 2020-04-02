@@ -9,13 +9,12 @@ import CutBody from './post/CutBody';
 import Footer from './post/Footer';
 import TranslationButtons from './post/TranslationButtons';
 import AdminControlButtons from './admin/ControlButtons';
-import { LIGHTBOX_CLASS, DEFAULT_THUMBNAIL_WIDTH } from '../services/image-previews';
+import { LIGHTBOX_CLASS, DEFAULT_THUMBNAIL_WIDTH } from '../utils/html-processor/image';
 import { Context as SessionContext } from '../services/session';
 
 import styles from '../styles/components/post.module.scss';
 
 const Lightbox = dynamic(() => import('./ui/Lightbox'), { ssr: false, loading: () => null });
-const SyntaxHighlighter = dynamic(() => import('./ui/SyntaxHighlighter'), { ssr: false, loading: () => null });
 const MathHighlighter = dynamic(() => import('./ui/MathHighlighter'), { ssr: false, loading: () => null });
 
 const Post = (props) => {
@@ -86,7 +85,6 @@ const Post = (props) => {
         }
       </div>
       <Lightbox selector={lightboxImageSelector} />
-      <SyntaxHighlighter />
       <MathHighlighter />
       <Footer
         slug={slug}

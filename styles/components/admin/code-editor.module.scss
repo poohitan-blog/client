@@ -1,35 +1,50 @@
 @import '../../variables';
+@import '../../mixins/code';
+
+.loader {
+  fill: $light-grey;
+  width: 3em;
+}
 
 .wrapper {
-  border: 1px solid $light-grey;
-  font-size: 0.75em;
-  line-height: 0.5em;
-  width: 100%;
-  overflow: auto;
-  resize: vertical;
-  height: 15em;
+  @include code;
 
-  &.collapsed {
-    height: 5em;
-  }
-
-  &.readonly {
-    height: auto;
-  }
-
-  .loader {
-    fill: $orange;
-    width: 3em;
-  }
-
-  :global{
+  :global {
     .CodeMirror {
       height: 100%;
       font-family: $code-font-family !important;
     }
 
     .CodeMirror-linenumber {
-      transform: translate(-0.2em, 0.5em);
+      transform: translateX(-0.2em);
+    }
+
+    .CodeMirror-cursors {
+      transform: translateY(0.2em);
+    }
+  }
+
+  &.readonly {
+    margin: 0.5em 0;
+
+    :global {
+      .CodeMirror {
+        padding: 0.2em 0;
+      }
+
+      .CodeMirror-cursors {
+        visibility: hidden !important;
+      }
+    }
+  }
+
+  &:not(.readonly) {
+    border: 1px solid $light-grey;
+    height: 15em;
+    resize: vertical;
+
+    &.collapsed {
+      height: 5em;
     }
   }
 }

@@ -1,6 +1,11 @@
 @import '../../variables';
 @import '../../mixins/multiple-dots';
 
+.loader {
+  fill: $light-grey;
+  width: 3em;
+}
+
 .wrapper {
   cut {
     display: block;
@@ -14,21 +19,10 @@
     hyphens: none;
   }
 
-  pre {
-    background: $dark-grey;
-    color: $white;
-    white-space: break-spaces;
-  }
-
   hr {
     @include multiple-dots;
 
     margin: 2em 0;
-  }
-
-  .loader {
-    fill: $orange;
-    width: 3em;
   }
 
   :global(.fr-wrapper) {

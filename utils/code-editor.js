@@ -6,7 +6,11 @@ import styles from '../styles/components/admin/code-editor.module.scss';
 
 const CodeEditor = dynamic(() => import('../components/admin/CodeEditor'), {
   ssr: false,
-  loading: () => <p className="text-center fatty"><LoaderIcon className={styles.loader} /></p>,
+  loading: () => (
+    <p className="text-center fatty">
+      <LoaderIcon className={styles.loader} />
+    </p>
+  ),
 });
 
 export default CodeEditor;

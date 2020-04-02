@@ -1,33 +1,59 @@
-// Warning: this component can be used client-side only
-// Import it using dynamic import with "ssr: false"
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Controlled as CodeMirror } from 'react-codemirror2';
 
-import styles from '../../styles/components/admin/code-editor.module.scss';
-
-import 'codemirror/mode/sass/sass';
 import 'codemirror/mode/javascript/javascript';
 import 'codemirror/mode/jsx/jsx';
+import 'codemirror/mode/css/css';
+import 'codemirror/mode/xml/xml';
 import 'codemirror/mode/clike/clike';
+import 'codemirror/mode/shell/shell';
 
-const MODE_BY_LANGUAGE = {
-  css: 'sass',
-  sass: 'sass',
-  scss: 'sass',
-  js: 'javascript',
-  javascript: 'javascript',
-  jsx: 'jsx',
-  c: 'clike',
-  cpp: 'clike',
-  csh: 'clike',
-  csharp: 'clike',
-  'c#': 'clike',
-  'c++': 'clike',
-};
+import 'codemirror/addon/selection/active-line';
 
-const DEFAULT_MODE = 'javascript';
+import styles from '../../styles/components/admin/code-editor.module.scss';
+
+const MIME_BY_LANGUAGE = new Proxy({
+  css: 'text/css',
+  scss: 'text/x-scss',
+
+  js: 'text/javascript',
+  javascript: 'text/javascript',
+  jsx: 'text/jsx',
+
+  ts: 'text/typescript',
+  typescript: 'text/typescript',
+  tsx: 'text/typescript-jsx',
+
+  html: 'text/html',
+  xml: 'application/xml',
+
+  json: 'application/json',
+
+  c: 'text/x-csrc',
+  cpp: 'text/x-c++src',
+
+  'c++': 'text/x-c++src',
+  csh: 'text/x-csharp',
+  csharp: 'text/x-csharp',
+  'c#': 'text/x-csharp',
+
+  objc: 'text/x-objectivec',
+  objectivec: 'text/x-objectivec',
+
+  scala: 'text/x-scala',
+
+  java: 'text/x-java',
+
+  bash: 'text/x-sh',
+  zsh: 'text/x-sh',
+}, {
+  get(target, name = '') {
+    const nameLowerCase = name.toLowerCase();
+
+    return target[nameLowerCase] || null;
+  },
+});
 
 const CodeEditor = ({
   value,
@@ -37,7 +63,7 @@ const CodeEditor = ({
   onInput,
   className,
 }) => {
-  const classList = [className, styles.wrapper];
+  const classList = [styles.wrapper, className, 'code-editor'];
 
   if (!value) {
     classList.push(styles.collapsed);
@@ -47,7 +73,7 @@ const CodeEditor = ({
     classList.push(styles.readonly);
   }
 
-  const mode = MODE_BY_LANGUAGE[language.toLowerCase()] || DEFAULT_MODE;
+  const mode = MIME_BY_LANGUAGE[language];
 
   return (
     <CodeMirror
@@ -56,7 +82,9 @@ const CodeEditor = ({
         mode,
         theme,
         readOnly: readonly,
+        styleActiveLine: !readonly,
         lineNumbers: true,
+        cursorHeight: 0.7,
       }}
       onBeforeChange={(editor, data, newValue) => onInput(newValue)}
       className={classList.join(' ')}

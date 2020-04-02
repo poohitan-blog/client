@@ -1,0 +1,10 @@
+@import '../variables';
+
+@mixin code {
+  box-sizing: border-box;
+  font-family: $code-font-family !important;
+  font-size: 0.8em;
+  line-height: 1.5em;
+  width: 100%;
+  overflow: auto;
+}

@@ -5,7 +5,11 @@ import styles from '../styles/components/admin/editor.module.scss';
 
 const Editor = dynamic(() => import('../components/admin/Editor'), {
   ssr: false,
-  loading: () => <p className="text-center fatty"><LoaderIcon className={styles.loader} /></p>,
+  loading: () => (
+    <p className="text-center fatty">
+      <LoaderIcon className={styles.loader} />
+    </p>
+  ),
 });
 
 export default Editor;

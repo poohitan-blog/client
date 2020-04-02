@@ -1,7 +1,6 @@
 @import '~normalize.css';
 @import '~@fortawesome/fontawesome-svg-core/styles.css';
 @import '~react-lazy-load-image-component/src/effects/blur.css';
-@import '~highlight.js/styles/monokai-sublime.css';
 @import '~codemirror/lib/codemirror.css';
 @import '~codemirror/theme/eclipse.css';
 @import '~codemirror/theme/monokai.css';
@@ -16,6 +15,7 @@
 @import 'mixins/smaller';
 @import 'mixins/fatty';
 @import 'mixins/error';
+@import 'mixins/code';
 
 body {
   background: $smoke-white;
@@ -117,10 +117,12 @@ blockquote,
 }
 
 pre {
-  box-sizing: border-box;
-  font-family: $code-font-family;
-  font-size: 0.8em;
-  padding: 0.5em 1em !important;
+  background: $dark-grey;
+  color: $white;
+  padding: 0.5em 1em;
+  white-space: break-spaces;
+
+  @include code;
 }
 
 svg {
