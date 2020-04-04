@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
-import HTMLReactParser from 'html-react-parser';
+import parse from 'html-react-parser';
 import { isValid } from 'date-fns';
 
 import { stripHTML, getHighlightsOfKeywords, shorten } from '../services/text';
@@ -90,7 +90,7 @@ function generateDescription(params) {
           ? (
             <div className={styles.tags}>
               <span>Позначки:&nbsp;</span>
-              {HTMLReactParser(highlightedTags)}
+              {parse(highlightedTags)}
             </div>
           )
           : null
@@ -143,8 +143,8 @@ const SearchResult = (props) => {
       <Link href={href} as={as}>
         <a title={resultTitle}>
           <div className={styles.inner}>
-            <h3>{HTMLReactParser(resultTitle)}</h3>
-            <p>{HTMLReactParser(resultBody)}</p>
+            <h3>{parse(resultTitle)}</h3>
+            <p>{parse(resultBody)}</p>
           </div>
           <div className={styles.description}>
             {description}

@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactDropzone from 'react-dropzone';
-import LoaderIcon from '../public/static/icons/three-dots.svg';
+
+import { Circle } from './ui/Loader';
 
 import styles from '../styles/components/dropzone.module.scss';
 
@@ -47,7 +48,7 @@ class Dropzone extends React.Component {
       >
         <div className={styles.content}>
           <div className={`${styles.loader} ${loaderVisible && styles.visible}`}>
-            <LoaderIcon className={styles.loaderIcon} />
+            <Circle className={styles.loaderIcon} />
           </div>
           <div className={`${styles.placeholder} ${placeholderVisible && styles.visible}`}>
             Кидай сюди шо-небудь

@@ -57,7 +57,7 @@
   .date {
     background-color: transparentize($black, 0.3);
     box-decoration-break: clone;
-    padding: 0.2em 0.3em;
+    padding: 0.25em 0.3em;
     transition: background-color 200ms linear;
   }
 
@@ -70,15 +70,5 @@
     .shadow {
       opacity: 0.6;
     }
-  }
-
-  .loader-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .loader {
-    width: 3em;
   }
 }

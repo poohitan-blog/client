@@ -54,7 +54,7 @@ class Editor extends React.Component {
 
       htmlAllowedEmptyTags: ['iframe', 'object', 'video', 'cut', 'pre', 'code'],
       htmlAllowedTags: ['a', 'abbr', 'address', 'audio', 'b', 'blockquote', 'br', 'cite', 'code', 'cut', 'div', 'em', 'embed', 'figcaption', 'figure', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'hr', 'i', 'iframe', 'img', 'li', 'link', 'object', 'ol', 'p', 'pre', 's', 'span', 'small', 'source', 'strike', 'strong', 'sub', 'sup', 'table', 'tbody', 'td', 'textarea', 'tfoot', 'th', 'thead', 'time', 'title', 'tr', 'u', 'ul', 'video'],
-      htmlDoNotWrapTags: ['br', 'blockquote', 'code', 'pre', 'hr'],
+      htmlDoNotWrapTags: ['br', 'blockquote', 'code', 'pre', 'hr', 'iframe'],
       htmlExecuteScripts: false,
       htmlUntouched: true,
 
@@ -109,7 +109,7 @@ class Editor extends React.Component {
     $editor.on('froalaEditor.video.inserted', (e, editor, $video) => {
       const videoSource = $video.contents().get(0).src;
 
-      $video.html(`<p class="video-16-9"><iframe src="${videoSource}" frameborder="0" allowfullscreen></iframe></p>`);
+      $video.html(`<iframe src="${videoSource}" frameborder="0" allowfullscreen class="aspect-ratio-16-9"></iframe>`);
     });
   }
 

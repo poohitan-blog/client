@@ -6,24 +6,27 @@
       width: 100%;
       height: 400px;
       margin: 0.5em 0;
-
-      iframe {
-        width: 100%;
-        height: 100%;
-      }
-
-      @media (max-width: 440px) {
-        height: 445px;
-      }
     }
 
+    .aspect-ratio-16-9,
     .video-16-9 {
       @include aspect-ratio(16, 9);
+    }
 
-      iframe {
-        width: 100%;
-        height: 100%;
-      }
+    .aspect-ratio-16-10 {
+      @include aspect-ratio(16, 10);
+    }
+
+    .aspect-ratio-4-3 {
+      @include aspect-ratio(4, 3);
+    }
+
+    .aspect-ratio-2-1 {
+      @include aspect-ratio(2, 1);
+    }
+
+    .aspect-ratio-1-1 {
+      @include aspect-ratio(1, 1);
     }
 
     .lazy-load-image-wrapper {
@@ -61,19 +64,9 @@
     }
 
     @media (max-width: 640px) {
-      .lightbox-image,
-      .video-16-9,
-      .code-editor {
-        margin-left: calc((100% - 100vw) / 2);
-      }
-
-      .lightbox-image,
-      .video-16-9 {
+      .expendable-widget {
+        margin-left: calc((100% - 100vw) / 2) !important;
         width: calc(100% + 2em);
-      }
-
-      .code-editor {
-        width: 100vw;
       }
     }
   }

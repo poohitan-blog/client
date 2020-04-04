@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { LazyLoadComponent } from 'react-lazy-load-image-component';
 
 import Disqus from './Disqus';
+import { Circle } from '../../ui/Loader';
 
-import LoaderIcon from '../../../public/static/icons/three-dots.svg';
 import styles from '../../../styles/components/post/comment-form.module.scss';
 
 const ACCEPTABLE_WAITING_TIME = 5000;
@@ -53,18 +53,18 @@ class CommentForm extends React.Component {
             {
               loadingFailed
                 ? (
-                  <p className={styles.troubleshootingMessage}>
-                    Коментарі шось дуже довго вантажаться.
+                  <>
+                    <span>Коментарі шось дуже довго вантажаться.</span>
                     <br />
-                    Почекай ше трохи, або спробуй оновити сторінку.
+                    <span>Почекай ше трохи, або спробуй оновити сторінку.</span>
                     <br />
-                    Якшо не допоможе, то це дуже сумно.
-                  </p>
+                    <span>Якшо не допоможе, то це дуже сумно.</span>
+                  </>
                 )
                 : (
                   <>
-                    <b className={styles.encouragement}>Напиши коментар, трясця</b>
-                    <LoaderIcon className={styles.loaderAnimation} />
+                    <span>Напиши коментар, трясця</span>
+                    <Circle className={styles.loaderAnimation} />
                   </>
                 )
             }

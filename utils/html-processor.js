@@ -2,6 +2,7 @@ import processAsImage from './html-processor/image';
 import processAsLink from './html-processor/link';
 import processAsCut from './html-processor/cut';
 import processAsCode from './html-processor/code';
+import processAsIframe from './html-processor/iframe';
 
 export default class HTMLProcessor {
   constructor(node) {
@@ -27,5 +28,9 @@ export default class HTMLProcessor {
 
   asCut(...params) {
     return processAsCut.call(this, ...params);
+  }
+
+  asIframe(...params) {
+    return processAsIframe.call(this, ...params);
   }
 }
