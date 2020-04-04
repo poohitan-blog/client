@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
+import dynamic from 'next/dynamic';
 import { parseCookies } from 'nookies';
 
 import Error from '../_error';
@@ -15,6 +16,8 @@ import Content from '../../components/Content';
 import Footer from '../../components/Footer';
 import TrashPost from '../../components/TrashPost';
 import Trashbin from '../../components/header/Trashbin';
+
+const Lightbox = dynamic(() => import('../../components/ui/Lightbox'), { ssr: false, loading: () => null });
 
 const POSTS_PER_PAGE = 30;
 
@@ -123,6 +126,7 @@ class TrashPage extends React.Component {
           {postsMarkup}
         </Content>
         <Footer pagination={paginationInfo} />
+        <Lightbox id={posts.map((post) => post.id).join('-')} />
       </Wrapper>
     );
   }

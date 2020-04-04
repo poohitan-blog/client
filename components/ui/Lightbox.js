@@ -3,36 +3,67 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import $ from 'jquery';
-import '../../public/static/libs/lightbox/featherlight.min';
-import '../../public/static/libs/lightbox/featherlight.gallery.uk.min';
+import 'lightgallery.js';
+
+import { LIGHTBOX_CLASS } from '../../utils/html-processor/image';
+
+const CONTAINER_SELECTOR = 'body';
 
 class Lightbox extends React.Component {
   constructor(props) {
     super(props);
 
-    this.initialize = this.initialize.bind(this);
+    this.state = {
+      container: null,
+    };
+
+    this.reload = this.reload.bind(this);
+    this.destroy = this.destroy.bind(this);
   }
 
   componentDidMount() {
-    console.log('componentDidMount', $);
-    this.initialize();
+    this.reload();
   }
 
-  componentDidUpdate() {
-    this.initialize();
+  componentDidUpdate(prevProps) {
+    const { id: currentId } = this.props;
+    const { id: previousId } = prevProps;
+
+    if (currentId !== previousId) {
+      this.reload();
+    }
   }
 
-  initialize() {
-    const { selector } = this.props;
+  componentWillUnmount() {
+    this.destroy();
+  }
 
-    console.log('!', $);
+  reload() {
+    this.destroy();
 
-    $(selector).featherlightGallery({
-      galleryFadeIn: 100,
-      galleryFadeOut: 200,
-      type: 'image',
+    const container = document.querySelector(CONTAINER_SELECTOR);
+
+    this.setState({ container });
+
+    global.lightGallery(container, {
+      mode: 'lg-fade',
+      startClass: 'lg-fade',
+      download: false,
+      hideBarsDelay: 3000,
+      getCaptionFromTitleOrAlt: false,
+      selector: `.${LIGHTBOX_CLASS}`,
     });
+  }
+
+  destroy() {
+    const { container } = this.state;
+
+    const lightboxId = container && container.getAttribute('lg-uid');
+    const lightboxInstance = global.lgData && global.lgData[lightboxId];
+
+    if (lightboxInstance) {
+      lightboxInstance.destroy(true);
+    }
   }
 
   render() {
@@ -41,7 +72,7 @@ class Lightbox extends React.Component {
 }
 
 Lightbox.propTypes = {
-  selector: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
 };
 
 export default Lightbox;

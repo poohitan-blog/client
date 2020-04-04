@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
+import dynamic from 'next/dynamic';
 import { parseCookies } from 'nookies';
 
 import Error from './_error';
@@ -17,6 +18,8 @@ import Footer from '../components/Footer';
 import Post from '../components/Post';
 
 import Blog from '../components/jsonld/Blog';
+
+const Lightbox = dynamic(() => import('../components/ui/Lightbox'), { ssr: false, loading: () => null });
 
 const POSTS_PER_PAGE = 20;
 
@@ -111,6 +114,7 @@ class IndexPage extends React.Component {
             {content}
           </Content>
           <Footer pagination={meta} />
+          <Lightbox id={posts.map((post) => post.slug).join('-')} />
         </Wrapper>
       </>
     );

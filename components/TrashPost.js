@@ -3,21 +3,15 @@ import PropTypes from 'prop-types';
 import parse from 'html-react-parser';
 import { trackWindowScroll } from 'react-lazy-load-image-component';
 import Link from 'next/link';
-import dynamic from 'next/dynamic';
 
 import AdminControlButtons from './admin/ControlButtons';
 import PostCollapser from './trash/PostCollapser';
 
 import HTMLProcessor from '../utils/html-processor';
-import { LIGHTBOX_CLASS } from '../utils/html-processor/image';
 import { formatPostDate } from '../services/grammar';
 import { Context as SessionContext } from '../services/session';
 
 import styles from '../styles/components/trash-post.module.scss';
-
-const Lightbox = dynamic(() => import('./ui/Lightbox'), { ssr: false, loading: () => null });
-
-const LIGHTBOX_IMAGE_SELECTOR = `.${styles.body} a.${LIGHTBOX_CLASS}`;
 
 const MAX_UNCOLLAPSED_HEIGHT = 1000;
 
@@ -126,7 +120,6 @@ class TrashPost extends React.Component {
           <div className={styles.body} ref={this.bodyElement}>{ body }</div>
           <div className={styles.bodyOverlayGradient} />
         </div>
-        <Lightbox selector={LIGHTBOX_IMAGE_SELECTOR} />
         {
           collapsable
           && (

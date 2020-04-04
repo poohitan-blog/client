@@ -1,80 +1,81 @@
 @import '../../variables';
+@import '../../mixins/smaller';
 
-.featherlight {
-  background: transparentize($white, 0.3) !important;
+.lg-backdrop {
+  background-color: transparentize($white, 0.15);
 }
 
-$lightbox-height: calc(100% - 2em);
-$lightbox-padding: 1em;
-
-.featherlight-content {
-  border: none !important;
-  padding: $lightbox-padding !important;
-  max-height: $lightbox-height !important;
-
-  img {
-    max-height: calc(#{$lightbox-height} - #{$lightbox-padding});
-  }
-}
-
-.featherlight-previous,
-.featherlight-next {
-  background-color: $white !important;
-  border-radius: 50%;
-  border: 1px solid $light-grey;
-  opacity: 0.7;
-  transition: opacity 150ms linear;
-
-  display: flex !important;;
+.lg-sub-html {
+  background-color: transparent;
+  color: $black;
+  display: flex;
   justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
-  width: 4em;
-  height: 4em;
-  position: fixed !important;
-  top: 50% !important;
-  margin-top: -2em;
-  overflow: hidden;
+  padding: 0;
 
-  &:hover {
-    border: 1px solid $orange;
-    opacity: 1;
-  }
+  @include smaller;
 
-  span {
-    color: $dark-grey !important;
-    font-size: 1.5em !important;
-    display: block !important;
-    position: initial !important;
-    top: auto !important;
-    left: auto !important;
-    right: auto !important;
-    width: auto !important;
-    text-align: initial !important;
-    line-height: initial !important;
-    margin-top: 0 !important;
-    text-shadow: none !important;
+  .lightbox-image-caption {
+    background-color: transparentize($white, 0.15);
+    padding: 1em 1.5em;
+    transition: background-color 100ms linear;
+
+    &:hover {
+      background-color: $white;
+    }
   }
 }
 
-.featherlight-close-icon {
-  display: none;
+.lg-object {
+  background-color: white;
 }
 
-.featherlight-previous {
-  left: 2em !important;
-  right: auto !important;
+.lg-toolbar {
+  background: none;
 
-  span {
-    margin-left: -0.1em;
+  #lg-counter {
+    @include smaller;
+  }
+
+  .lg-icon {
+    background: none;
+    color: $light-grey;
+    font-size: 1.5em;
+
+    &:hover {
+      color: $dark-grey;
+    }
   }
 }
 
-.featherlight-next {
-  right: 2em !important;
-  left: auto !important;
+.lg-outer {
+  .lg-item:not(.lg-complete) {
+    background-image: url('/static/icons/circle.svg');
+    background-repeat: none;
+    background-position: center center;
+    background-size: 3em;
+    filter: invert(50%);
+  }
 
-  span {
-    margin-left: 0.2em;
+  .lg-img-wrap {
+    padding: 0;
+  }
+}
+
+.lg-actions {
+  .lg-next,
+  .lg-prev {
+    background: none;
+    color: $light-grey;
+    font-size: 1.5em;
+
+    &:hover {
+      color: $dark-grey;
+    }
+  }
+}
+
+@media (orientation: portrait), (max-width: 640px) {
+  .lg-actions {
+    display: none;
   }
 }

@@ -11,18 +11,18 @@ module.exports = {
 
     config.module.rules.push(...rules);
 
-    // const jQueryPlugin = new webpack.ProvidePlugin({
-    //   $: 'jquery',
-    //   jQuery: 'jquery',
-    //   'window.jQuery': 'jquery',
-    // });
+    const jQueryPlugin = new webpack.ProvidePlugin({
+      $: 'jquery',
+      jQuery: 'jquery',
+      'window.jQuery': 'jquery',
+    });
 
     const dateFnsLocalesPlugin = new webpack.ContextReplacementPlugin(
       /date-fns[/\\]/,
       new RegExp(`[/\\\\](${['uk'].join('|')})[/\\\\]`),
     );
 
-    config.plugins.push(dateFnsLocalesPlugin);
+    config.plugins.push(jQueryPlugin, dateFnsLocalesPlugin);
 
     // TODO: remove this workaround when this issue is resolved: https://github.com/zeit/next.js/issues/10584
     /* eslint-disable */
