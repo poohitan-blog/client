@@ -7,7 +7,21 @@ import '../../public/static/libs/lightbox/featherlight.min';
 import '../../public/static/libs/lightbox/featherlight.gallery.uk.min';
 
 class Lightbox extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.initialize = this.initialize.bind(this);
+  }
+
   componentDidMount() {
+    this.initialize();
+  }
+
+  componentDidUpdate() {
+    this.initialize();
+  }
+
+  initialize() {
     const { selector } = this.props;
 
     $(selector).featherlightGallery({
