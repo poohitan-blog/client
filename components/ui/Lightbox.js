@@ -3,6 +3,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import $ from 'jquery';
 import '../../public/static/libs/lightbox/featherlight.min';
 import '../../public/static/libs/lightbox/featherlight.gallery.uk.min';
 
@@ -14,6 +15,7 @@ class Lightbox extends React.Component {
   }
 
   componentDidMount() {
+    console.log('componentDidMount', $);
     this.initialize();
   }
 
@@ -23,6 +25,8 @@ class Lightbox extends React.Component {
 
   initialize() {
     const { selector } = this.props;
+
+    console.log('!', $);
 
     $(selector).featherlightGallery({
       galleryFadeIn: 100,
