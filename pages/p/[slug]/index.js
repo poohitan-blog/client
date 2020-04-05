@@ -22,6 +22,7 @@ const SimilarPostsGroup = dynamic(() => import('../../../components/SimilarPosts
   ssr: false,
   loading: () => null,
 });
+const Lightbox = dynamic(() => import('../../../components/ui/Lightbox'), { ssr: false, loading: () => null });
 
 class PostPage extends React.Component {
   static async getInitialProps({
@@ -133,6 +134,7 @@ class PostPage extends React.Component {
             <CommentForm title={post.title} slug={post.slug} />
           </Content>
           <Footer />
+          <Lightbox id={[post.slug, language].join('-')} />
         </Wrapper>
       </>
     );

@@ -1,70 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Link from 'next/link';
 import shuffle from 'shuffle-array';
 
-import { createWordCountDescriptor } from '../services/grammar';
 import API from '../services/api';
-import random from '../helpers/random';
+import Tag from './tagcloud/Tag';
+import { Circle } from './ui/Loader';
 
 import styles from '../styles/components/tag-cloud.module.scss';
 
 const MAX_FONT_SIZE = 5;
 const MIN_FONT_SIZE = 1;
-
-const describePostsCount = createWordCountDescriptor(['запис', 'записи', 'записів']);
-
-function shift($element, { x, y }) {
-  $element.css('transform', `translate(${x}px, ${y}px)`);
-}
-
-function shake($element) {
-  const isShaking = $element.hasClass(styles.isShaking);
-
-  if (isShaking) {
-    return;
-  }
-
-  $element.addClass(styles.isShaking);
-
-  const stepDuration = 150;
-  let step = 1;
-
-  const weight = Math.max(Number($element.data('weight')), 1);
-
-  let angle = random({ min: 0, max: 2 * Math.PI });
-
-  const initialAmplitude = Math.cbrt(weight) / Math.log10(step + 1); // +1 to avoid Infinity
-  const initialCoords = {
-    x: initialAmplitude * Math.cos(angle),
-    y: initialAmplitude * Math.sin(angle),
-  };
-
-  shift($element, initialCoords);
-
-  const interval = setInterval(() => {
-    step += 1;
-    angle += Math.PI;
-
-    const amplitude = Math.cbrt(weight) / Math.log10(step);
-
-    if (amplitude <= 0.8) {
-      shift($element, { x: 0, y: 0 });
-      $element.removeClass(styles.isShaking);
-
-      clearInterval(interval);
-
-      return;
-    }
-
-    const coords = {
-      x: amplitude * Math.cos(angle),
-      y: amplitude * Math.sin(angle),
-    };
-
-    shift($element, coords);
-  }, stepDuration);
-}
 
 class TagCloud extends React.Component {
   constructor(props) {
@@ -80,19 +25,6 @@ class TagCloud extends React.Component {
 
   componentDidMount() {
     this.setTags();
-  }
-
-  componentDidUpdate() {
-    const { shake: shouldShake } = this.props;
-    const $tags = $(`.${styles.tag}`);
-
-    $tags.on('mouseover', (event) => {
-      const $tag = $(event.target);
-
-      if (shouldShake) {
-        shake($tag);
-      }
-    });
   }
 
   async setTags() {
@@ -125,18 +57,13 @@ class TagCloud extends React.Component {
   render() {
     const { tags } = this.state;
     const { width } = this.props;
+
+    if (!tags.length) {
+      return <Circle className={styles.loader} />;
+    }
+
     const markup = tags.map(({ name, weight, normalizedWeight }) => (
-      <Link href="/tag/[name]" as={`/tag/${name}`} key={name}>
-        <a
-          href={`/tag/${name}`}
-          title={`${describePostsCount(weight)}`}
-          data-weight={normalizedWeight}
-          style={{ fontSize: `${normalizedWeight}em` }}
-          className={styles.tag}
-        >
-          {name}
-        </a>
-      </Link>
+      <Tag key={name} name={name} weight={weight} normalizedWeight={normalizedWeight} />
     ));
 
     return (
@@ -152,14 +79,12 @@ class TagCloud extends React.Component {
 TagCloud.propTypes = {
   maxFontSize: PropTypes.number,
   minFontSize: PropTypes.number,
-  shake: PropTypes.bool,
   width: PropTypes.string,
 };
 
 TagCloud.defaultProps = {
   maxFontSize: MAX_FONT_SIZE,
   minFontSize: MIN_FONT_SIZE,
-  shake: false,
   width: '100%',
 };
 

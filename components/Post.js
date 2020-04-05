@@ -9,12 +9,11 @@ import CutBody from './post/CutBody';
 import Footer from './post/Footer';
 import TranslationButtons from './post/TranslationButtons';
 import AdminControlButtons from './admin/ControlButtons';
-import { LIGHTBOX_CLASS, DEFAULT_THUMBNAIL_WIDTH } from '../utils/html-processor/image';
+import { DEFAULT_THUMBNAIL_WIDTH } from '../utils/html-processor/image';
 import { Context as SessionContext } from '../services/session';
 
 import styles from '../styles/components/post.module.scss';
 
-const Lightbox = dynamic(() => import('./ui/Lightbox'), { ssr: false, loading: () => null });
 const MathHighlighter = dynamic(() => import('./ui/MathHighlighter'), { ssr: false, loading: () => null });
 
 const Post = (props) => {
@@ -40,8 +39,6 @@ const Post = (props) => {
   const link = isTranslation
     ? { href: '/p/[slug]/[language]', as: `/p/${slug}/${translation.lang}` }
     : { href: '/p/[slug]', as: `/p/${slug}` };
-
-  const lightboxImageSelector = `.${styles.wrapper}[data-slug="${slug}"] a.${LIGHTBOX_CLASS}`;
 
   return (
     <article className={styles.wrapper} data-slug={slug} id={cut ? null : 'post'}>
@@ -84,7 +81,6 @@ const Post = (props) => {
             : <FullBody language={language} body={body} imagesWidth={imagesWidth} />
         }
       </div>
-      <Lightbox selector={lightboxImageSelector} />
       <MathHighlighter />
       <Footer
         slug={slug}

@@ -2,6 +2,8 @@ import React from 'react';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 export const LIGHTBOX_CLASS = 'lightbox-image';
+const LIGHTBOX_IMAGE_CAPTION_CLASS = 'lightbox-image-caption';
+
 export const DEFAULT_THUMBNAIL_WIDTH = 800;
 const DEFAULT_THUMBNAIL_RELATIVE_HEIGHT = 60;
 const DEFAULT_ALT_LANGUAGE = 'uk';
@@ -86,9 +88,18 @@ export function generateLazyPreview(node, {
     </span>
   );
 
+  const captionHtml = alt ? `<span class="${LIGHTBOX_IMAGE_CAPTION_CLASS}">${alt}</span>` : null;
+
   return isClickable
     ? (
-      <a href={originalSource} className={`expendable-widget ${LIGHTBOX_CLASS}`} key={originalSource} title={title}>
+      <a
+        title={title}
+        href={originalSource}
+        data-src={originalSource}
+        data-sub-html={captionHtml}
+        className={`expendable-widget ${LIGHTBOX_CLASS}`}
+        key={originalSource}
+      >
         {image}
       </a>
     )
