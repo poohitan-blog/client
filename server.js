@@ -9,7 +9,7 @@ const dev = config.environment !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
 
-const migrationMap = require('./routes/migration-map.js');
+const migrationMap = require('./src/routes/migration-map.js');
 
 const staticDirPath = config.environment === 'development' ? '../stuff' : '../../stuff';
 
@@ -17,8 +17,8 @@ app.prepare()
   .then(() => {
     const server = express();
 
-    server.get('/robots.txt', (req, res) => res.sendFile(path.join(__dirname, '/robots.txt')));
-    server.get('/humans.txt', (req, res) => res.sendFile(path.join(__dirname, '/humans.txt')));
+    server.get('/robots.txt', (req, res) => res.sendFile(path.join(__dirname, '/src/public/static/robots.txt')));
+    server.get('/humans.txt', (req, res) => res.sendFile(path.join(__dirname, '/src/public/static/humans.txt')));
 
     server.use(migrationMap);
     server.use('/stuff', express.static(path.join(__dirname, staticDirPath)));

@@ -1,34 +1,9 @@
 const webpack = require('webpack');
 
+const alias = require('./alias.config');
+
 module.exports = {
-  webpack: (config, { dev }) => { // eslint-disable-line
-    const rules = [
-      {
-        test: /\.svg$/,
-        use: {
-          loader: '@svgr/webpack',
-          options: {
-            icon: true,
-          },
-        },
-      },
-    ];
-
-    config.module.rules.push(...rules);
-
-    const jQueryPlugin = new webpack.ProvidePlugin({
-      $: 'jquery',
-      jQuery: 'jquery',
-      'window.jQuery': 'jquery',
-    });
-
-    const dateFnsLocalesPlugin = new webpack.ContextReplacementPlugin(
-      /date-fns[/\\]/,
-      new RegExp(`[/\\\\](${['uk'].join('|')})[/\\\\]`),
-    );
-
-    config.plugins.push(jQueryPlugin, dateFnsLocalesPlugin);
-
+  webpack: (config) => {
     // TODO: remove this workaround when this issue is resolved: https://github.com/zeit/next.js/issues/10584
     /* eslint-disable */
     let rule, moduleRules, cssLoader, scssRules, sassLoader;
@@ -49,6 +24,53 @@ module.exports = {
     }
     /* eslint-enable */
 
-    return config;
+    const rules = [
+      {
+        test: /\.svg$/,
+        use: {
+          loader: '@svgr/webpack',
+          options: {
+            icon: true,
+          },
+        },
+      },
+    ];
+
+    const jQueryPlugin = new webpack.ProvidePlugin({
+      $: 'jquery',
+      jQuery: 'jquery',
+      'window.jQuery': 'jquery',
+    });
+
+    const dateFnsLocalesPlugin = new webpack.ContextReplacementPlugin(
+      /date-fns[/\\]/,
+      new RegExp(`[/\\\\](${['uk'].join('|')})[/\\\\]`),
+    );
+
+    return {
+      ...config,
+
+      module: {
+        ...config.module,
+        rules: [
+          ...config.module.rules,
+          ...rules,
+        ],
+      },
+
+      plugins: [
+        ...config.plugins,
+        jQueryPlugin,
+        dateFnsLocalesPlugin,
+      ],
+
+      resolve: {
+        ...config.resolve,
+        alias: {
+          ...config.resolve.alias,
+          ...alias,
+        },
+      },
+    };
   },
 };
