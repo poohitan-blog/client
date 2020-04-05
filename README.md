@@ -3,4 +3,8 @@
 Implemented with Next.js (server-side rendered React).
 
 * `npm install`
-* `npm run dev`
+* `npm start`
+
+Deploy
+
+* `npm run deploy`

@@ -1,0 +1,64 @@
+@import '../../variables';
+@import '../../mixins/smaller';
+@import '../../mixins/text-overflow-ellipsis';
+
+.wrapper {
+  background-color: $yellowy-grey;
+  display: flex;
+  line-height: 1.55em;
+  padding: 0 0.6em;
+  overflow: hidden;
+  position: relative;
+  @include smaller;
+
+  @media (max-width: 640px) {
+    flex-wrap: wrap;
+    font-size: 0.9em;
+    padding: 0.5em;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.item {
+  padding: 0.3em;
+  margin: 0 0.6em;
+
+  @media (max-width: 640px) {
+    padding: 0.1em;
+  }
+}
+
+.icon {
+  fill: $dark-grey;
+  color: $dark-grey;
+}
+
+.icon-label {
+  margin-left: 0.6em;
+  white-space: nowrap;
+}
+
+.comments {
+  display: flex;
+  align-items: center;
+  @extend .item;
+
+  .comments-icon {
+    transform: translateY(0.1em);
+    @extend .icon;
+  }
+}
+
+.date {
+  display: flex;
+  align-items: center;
+  @extend .item;
+}
+
+.tags {
+  white-space: nowrap;
+
+  @extend .item;
+  @include text-overflow-ellipsis;
+}
