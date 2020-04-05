@@ -3,7 +3,6 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import $ from 'jquery';
 import { current } from '../../config';
 
 import '../../public/static/libs/froala/froala_editor.pkgd.min';
