@@ -63,7 +63,7 @@ class CommentForm extends React.Component {
                 )
                 : (
                   <>
-                    <span>Напиши коментар, трясця</span>
+                    <span className={styles.encouragement}>Напиши коментар, трясця</span>
                     <Circle className={styles.loaderAnimation} />
                   </>
                 )

@@ -22,14 +22,14 @@ class Trashbin extends React.PureComponent {
     const { state } = this.state;
 
     if (state === 'fully-open') {
-      return <TrashbinFullyOpenIcon className={styles.icon} />;
+      return <TrashbinFullyOpenIcon />;
     }
 
     if (state === 'semi-open') {
-      return <TrashbinSemiOpenIcon className={styles.icon} />;
+      return <TrashbinSemiOpenIcon />;
     }
 
-    return <TrashbinClosedIcon className={styles.icon} />;
+    return <TrashbinClosedIcon />;
   }
 
   semiOpen() {

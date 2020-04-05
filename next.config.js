@@ -5,7 +5,12 @@ module.exports = {
     const rules = [
       {
         test: /\.svg$/,
-        loader: 'raw-loader',
+        use: {
+          loader: '@svgr/webpack',
+          options: {
+            icon: true,
+          },
+        },
       },
     ];
 

@@ -5,7 +5,11 @@
 .circle {
   fill: $light-grey;
   stroke: $light-grey;
-  width: 3em;
+}
+
+.circle {
+  width: 2em;
+  height: 2em;
 }
 
 .rectangle {
