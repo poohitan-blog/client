@@ -1,0 +1,20 @@
+@import '../variables';
+@import '../mixins/smaller';
+
+.wrapper {
+  color: $light-grey;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+
+  @include smaller;
+
+  .icon {
+    margin-right: 0.5em;
+  }
+
+  .text {
+    white-space: nowrap;
+  }
+}

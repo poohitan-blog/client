@@ -1,0 +1,60 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+
+import { current } from 'Config';
+import { stripHTML, getImageLinksFromHTML } from 'Services/text';
+
+const BlogPosting = ({
+  title,
+  slug,
+  body,
+  tags,
+  publishedAt,
+}) => {
+  const postURL = `${current.clientURL}/p/${slug}`;
+  const data = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: title,
+    image: getImageLinksFromHTML(body)[0],
+    keywords: tags.join(' '),
+    articleBody: stripHTML(body),
+    url: postURL,
+    mainEntityOfPage: postURL,
+    datePublished: publishedAt.toISOString(),
+    dateCreated: publishedAt.toISOString(),
+    dateModified: publishedAt.toISOString(),
+    author: {
+      '@type': 'Person',
+      name: 'Bohdan Prokopovych',
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'poohitan',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://api.poohitan.com/images/jack_100.jpg',
+        width: '100',
+        height: '98',
+      },
+    },
+  };
+
+  return (
+    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }} />
+  );
+};
+
+BlogPosting.propTypes = {
+  title: PropTypes.string.isRequired,
+  slug: PropTypes.string.isRequired,
+  body: PropTypes.string.isRequired,
+  tags: PropTypes.arrayOf(PropTypes.string),
+  publishedAt: PropTypes.instanceOf(Date).isRequired,
+};
+
+BlogPosting.defaultProps = {
+  tags: [],
+};
+
+export default React.memo(BlogPosting);
