@@ -14,6 +14,7 @@ const FullBody = ({
       .asLink()
       .asCode()
       .asIframe()
+      .asMath()
       .getNode();
   },
 });
