@@ -3,6 +3,7 @@ import processAsLink from 'Utils/html-processor/link';
 import processAsCut from 'Utils/html-processor/cut';
 import processAsCode from 'Utils/html-processor/code';
 import processAsIframe from 'Utils/html-processor/iframe';
+import processAsMath from 'Utils/html-processor/math';
 
 export default class HTMLProcessor {
   constructor(node) {
@@ -32,5 +33,9 @@ export default class HTMLProcessor {
 
   asIframe(...params) {
     return processAsIframe.call(this, ...params);
+  }
+
+  asMath(...params) {
+    return processAsMath.call(this, ...params);
   }
 }

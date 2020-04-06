@@ -48,6 +48,7 @@ const Page = (props) => {
                 .asLink()
                 .asCode()
                 .asIframe()
+                .asMath()
                 .getNode();
             },
           })

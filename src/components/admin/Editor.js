@@ -11,6 +11,7 @@ import 'Static/libs/froala/languages/uk';
 
 import 'Components/admin/editor/buttons/cut';
 import 'Components/admin/editor/buttons/quote';
+import 'Components/admin/editor/buttons/math';
 
 import styles from 'Styles/components/admin/editor.module.scss';
 
@@ -21,7 +22,7 @@ const buttons = [
   '|', 'color', 'clearFormatting',
   '-', 'insertLink',
   '|', 'insertImage', 'insertVideo', 'insertFile',
-  '|', 'custom-quote', 'insertTable', 'insertHR',
+  '|', 'custom-quote', 'math', 'insertTable', 'insertHR',
   '|', 'cut',
   '-', 'fullscreen', 'html',
 ];
@@ -53,7 +54,7 @@ class Editor extends React.Component {
       fileUploadURL: `${current.apiURL}/files/froala`,
 
       htmlAllowedEmptyTags: ['iframe', 'object', 'video', 'cut', 'pre', 'code'],
-      htmlAllowedTags: ['a', 'abbr', 'address', 'audio', 'b', 'blockquote', 'br', 'cite', 'code', 'cut', 'div', 'em', 'embed', 'figcaption', 'figure', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'hr', 'i', 'iframe', 'img', 'li', 'link', 'object', 'ol', 'p', 'pre', 's', 'span', 'small', 'source', 'strike', 'strong', 'sub', 'sup', 'table', 'tbody', 'td', 'textarea', 'tfoot', 'th', 'thead', 'time', 'title', 'tr', 'u', 'ul', 'video'],
+      htmlAllowedTags: ['a', 'abbr', 'address', 'audio', 'b', 'blockquote', 'br', 'cite', 'code', 'cut', 'div', 'em', 'embed', 'figcaption', 'figure', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'hr', 'i', 'iframe', 'img', 'li', 'link', 'object', 'ol', 'p', 'pre', 's', 'span', 'small', 'source', 'strike', 'strong', 'sub', 'sup', 'table', 'tbody', 'td', 'textarea', 'tfoot', 'th', 'thead', 'time', 'title', 'tr', 'u', 'ul', 'video', 'math'],
       htmlDoNotWrapTags: ['br', 'blockquote', 'code', 'pre', 'hr', 'iframe'],
       htmlExecuteScripts: false,
       htmlUntouched: true,
