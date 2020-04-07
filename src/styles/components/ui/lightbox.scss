@@ -38,7 +38,7 @@
 
   .lg-icon {
     background: none;
-    color: $light-grey;
+    color: transparentize($grey, 0.3);
     font-size: 1.5em;
 
     &:hover {
@@ -65,7 +65,7 @@
   .lg-next,
   .lg-prev {
     background: none;
-    color: $light-grey;
+    color: transparentize($grey, 0.3);
     font-size: 1.5em;
 
     &:hover {

@@ -10,60 +10,58 @@ import { LIGHTBOX_CLASS } from 'Utils/html-processor/image';
 const CONTAINER_SELECTOR = 'body';
 
 class Lightbox extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      container: null,
-    };
-
-    this.reload = this.reload.bind(this);
-    this.destroy = this.destroy.bind(this);
-  }
-
-  componentDidMount() {
-    this.reload();
-  }
-
-  componentDidUpdate(prevProps) {
-    const { id: currentId } = this.props;
-    const { id: previousId } = prevProps;
-
-    if (currentId !== previousId) {
-      this.reload();
-    }
-  }
-
-  componentWillUnmount() {
-    this.destroy();
-  }
-
-  reload() {
-    this.destroy();
-
-    const container = document.querySelector(CONTAINER_SELECTOR);
-
-    this.setState({ container });
+  static reload(container) {
+    Lightbox.destroy(container);
 
     global.lightGallery(container, {
       mode: 'lg-fade',
       startClass: 'lg-fade',
       download: false,
+      enableDrag: false,
       hideBarsDelay: 3000,
       getCaptionFromTitleOrAlt: false,
       selector: `.${LIGHTBOX_CLASS}`,
     });
   }
 
-  destroy() {
-    const { container } = this.state;
-
+  static destroy(container) {
     const lightboxId = container && container.getAttribute('lg-uid');
     const lightboxInstance = global.lgData && global.lgData[lightboxId];
 
     if (lightboxInstance) {
       lightboxInstance.destroy(true);
     }
+  }
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      container: null,
+    };
+  }
+
+  componentDidMount() {
+    const container = document.querySelector(CONTAINER_SELECTOR);
+
+    Lightbox.reload(container);
+    this.setState({ container });
+  }
+
+  componentDidUpdate(prevProps) {
+    const { id: currentId } = this.props;
+    const { id: previousId } = prevProps;
+    const { container } = this.state;
+
+    if (currentId !== previousId) {
+      Lightbox.reload(container);
+    }
+  }
+
+  componentWillUnmount() {
+    const { container } = this.state;
+
+    Lightbox.destroy(container);
   }
 
   render() {
