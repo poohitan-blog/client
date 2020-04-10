@@ -17,7 +17,7 @@
 
 @font-face {
   font-family: 'PT Sans';
-  src: local('PT Sans'),
+  src: local('PT Sans Bold'),
     url('/static/fonts/pt-sans-bold.woff') format('woff'),
     url('/static/fonts/pt-sans-bold.ttf') format('truetype');
   font-weight: bold;
@@ -27,7 +27,7 @@
 
 @font-face {
   font-family: 'PT Sans';
-  src: local('PT Sans'),
+  src: local('PT Sans Italic'),
     url('/static/fonts/pt-sans-italic.woff') format('woff'),
     url('/static/fonts/pt-sans-italic.ttf') format('truetype');
   font-weight: normal;
