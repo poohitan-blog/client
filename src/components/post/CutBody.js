@@ -26,6 +26,7 @@ const CutBody = ({ title, slug, body }) => {
               .asImage()
               .asLink()
               .asMath()
+              .asIframe()
               .getNode();
           },
         })
