@@ -169,6 +169,13 @@ button {
   }
 }
 
+textarea,
+input,
+select {
+  margin: 0;
+  vertical-align: bottom;
+}
+
 button {
   background-color: $white;
   padding: 10px 15px;

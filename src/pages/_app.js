@@ -13,6 +13,7 @@ import {
   faCommentAlt,
   faAngleDoubleDown,
   faSearch,
+  faPaperPlane,
 } from '@fortawesome/free-solid-svg-icons';
 
 import 'Styles/global.scss';
@@ -25,6 +26,7 @@ library.add(
   faCommentAlt, faCalendarAlt,
   faAngleDoubleDown,
   faSearch,
+  faPaperPlane,
 );
 
 function App({ Component, pageProps }) {
