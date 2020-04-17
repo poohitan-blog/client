@@ -35,13 +35,19 @@ export default async function request(params) {
     credentials,
   });
 
-  const json = await response.json();
+  const text = await response.text();
 
-  // TODO: maybe it's better not to throw an error when request resulted in non-success status code.
-  // Maybe return an object with response and status instead (and a boolean "error")?
-  if (!response.ok) {
-    throw json;
+  try {
+    const json = JSON.parse(text);
+
+    // TODO: maybe it's better not to throw an error when request resulted in non-success status code.
+    // Maybe it's better to return an object with response and status instead (and a boolean flag "error")?
+    if (!response.ok) {
+      throw json;
+    }
+
+    return json;
+  } catch (error) {
+    return text;
   }
-
-  return json;
 }

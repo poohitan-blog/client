@@ -1,0 +1,78 @@
+@import '../variables';
+
+.wrapper {
+  font-size: 0.8em;
+  position: relative;
+
+  .textarea {
+    width: 100vw;
+    height: 100vh;
+    padding-bottom: 2.5em;
+    transition: all 200ms linear;
+  }
+
+  &.loading {
+    pointer-events: none;
+    transition: all 200ms linear;
+
+    .textarea {
+      background-color: lighten($smoke-white, 2%);
+    }
+  }
+
+  .footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    box-sizing: border-box;;
+
+    color: $light-grey;
+    line-height: 0.8em;
+
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+  }
+
+  .status {
+    padding: 1em;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .send {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+
+  .button {
+    cursor: pointer;
+    padding: 1em;
+    transition: color 150ms linear;
+
+    &:hover {
+      color: $grey;
+    }
+  }
+
+  .button-caption {
+    margin-right: -0.4em;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  @media (max-width: 600px) {
+    .button-caption {
+      display: none;
+    }
+
+    .button {
+      color: $grey;
+      font-size: 1.2em;
+      padding: 0.8em;
+    }
+  }
+}

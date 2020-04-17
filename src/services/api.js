@@ -208,6 +208,18 @@ export const analytics = {
   },
 };
 
+export function sendFeedback(text) {
+  const url = `${API_URL}/feedback`;
+
+  return request({
+    url,
+    method: 'POST',
+    body: {
+      text,
+    },
+  });
+}
+
 const API = {
   authenticate,
   posts,
@@ -219,6 +231,7 @@ const API = {
   tags,
   upload,
   analytics,
+  sendFeedback,
 };
 
 export default API;
