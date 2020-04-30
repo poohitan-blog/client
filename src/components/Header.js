@@ -4,34 +4,35 @@ import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { Context as AnnouncementContext, POSITIONS } from 'Services/announcements';
+import { withTranslation } from 'Utils/i18n';
 import Announcement from 'Components/Announcement';
 import Trashbin from 'Components/header/Trashbin';
 
 import styles from 'Styles/components/header.module.scss';
 
-const Header = ({ trashBinState }) => {
+const Header = ({ trashBinState, t }) => {
   const items = [
     {
-      title: 'Головна',
-      description: 'Головна сторінка',
+      title: t('home.title'),
+      description: t('home.description'),
       href: '/',
       icon: <FontAwesomeIcon icon="home" />,
     },
     {
-      title: 'Архів',
-      description: 'Архів записів',
+      title: t('archive.title'),
+      description: t('archive.description'),
       href: '/archive',
       icon: <FontAwesomeIcon icon="book" className={styles.archive} />,
     },
     {
-      title: 'Про',
-      description: 'Хто в біса все це пише',
+      title: t('about.title'),
+      description: t('about.description'),
       href: '/[slug]',
       as: '/about',
       icon: <FontAwesomeIcon icon="ghost" />,
     },
     {
-      title: 'Смітник',
+      title: t('trash.title'),
       href: '/trash',
       markup: <Trashbin state={trashBinState} className={styles.trashbin} />,
     },
@@ -83,10 +84,11 @@ const Header = ({ trashBinState }) => {
 
 Header.propTypes = {
   trashBinState: PropTypes.string,
+  t: PropTypes.func.isRequired,
 };
 
 Header.defaultProps = {
   trashBinState: Trashbin.STATES.CLOSED,
 };
 
-export default React.memo(Header);
+export default React.memo(withTranslation('header')(Header));

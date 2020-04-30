@@ -3,19 +3,27 @@ const next = require('next');
 const cookieParser = require('cookie-parser');
 const fetch = require('isomorphic-unfetch');
 const path = require('path');
+const nextI18NextMiddleware = require('next-i18next/middleware').default;
+
 const config = require('./config').current;
+
+const nextI18next = require('./src/utils/i18n');
+const migrationMap = require('./src/routes/migration-map.js');
 
 const dev = config.environment !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
 
-const migrationMap = require('./src/routes/migration-map.js');
-
 const staticDirPath = config.environment === 'development' ? '../stuff' : '../../stuff';
 
-app.prepare()
-  .then(() => {
+(async () => {
+  try {
+    await app.prepare();
+
     const server = express();
+
+    await nextI18next.initPromise;
+    server.use(nextI18NextMiddleware(nextI18next));
 
     server.get('/robots.txt', (req, res) => res.sendFile(path.join(__dirname, '/public/static/robots.txt')));
     server.get('/humans.txt', (req, res) => res.sendFile(path.join(__dirname, '/public/static/humans.txt')));
@@ -58,8 +66,8 @@ app.prepare()
 
       console.log(`Listening on ${config.port}`);
     });
-  })
-  .catch((error) => {
-    console.error(error.stack);
+  } catch (error) {
+    console.error(error);
     process.exit(1);
-  });
+  }
+})();

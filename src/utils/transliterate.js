@@ -90,7 +90,7 @@ const substitutions = {
   ...alphabet,
 };
 
-export default function transliterate(text) {
+function transliterate(text) {
   return Object.keys(substitutions)
     .reduce((accumulator, item) => {
       const substitution = substitutions[item];
@@ -98,3 +98,7 @@ export default function transliterate(text) {
       return accumulator.replace(new RegExp(item, 'g'), substitution);
     }, text);
 }
+
+export default transliterate;
+
+module.exports = transliterate;

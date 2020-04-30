@@ -1,0 +1,17 @@
+{
+  "home": {
+    "title": "Головна",
+    "description": "Головна сторінка"
+  },
+  "archive": {
+    "title": "Архів",
+    "description": "Архів записів"
+  },
+  "about": {
+    "title": "Про",
+    "description": "Хто в біса все це пише"
+  },
+  "trash": {
+    "title": "Смітник"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "home": {
+    "title": "Home",
+    "description": "Home page"
+  },
+  "archive": {
+    "title": "Archive",
+    "description": "Posts archive"
+  },
+  "about": {
+    "title": "About",
+    "description": "Who the hell is behind all this"
+  },
+  "trash": {
+    "title": "Trash"
+  }
+}

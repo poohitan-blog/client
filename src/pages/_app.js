@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import App from 'next/app';
 
 import { config, library } from '@fortawesome/fontawesome-svg-core';
 import {
@@ -16,6 +17,8 @@ import {
   faPaperPlane,
 } from '@fortawesome/free-solid-svg-icons';
 
+import { appWithTranslation } from 'Utils/i18n';
+
 import 'Styles/global.scss';
 
 config.autoAddCss = false;
@@ -29,13 +32,18 @@ library.add(
   faPaperPlane,
 );
 
-function App({ Component, pageProps }) {
+function MyApp({ Component, pageProps }) {
   return <Component {...pageProps} />; // eslint-disable-line
 }
 
-App.propTypes = {
+MyApp.getInitialProps = async (appContext) => {
+  const appProps = await App.getInitialProps(appContext);
+  return { ...appProps };
+};
+
+MyApp.propTypes = {
   Component: PropTypes.func.isRequired,
   pageProps: PropTypes.shape({}).isRequired,
 };
 
-export default App;
+export default appWithTranslation(MyApp);

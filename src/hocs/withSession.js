@@ -20,6 +20,7 @@ export default function withSession(WrappedComponent) {
           return {
             ...wrappedComponentProps,
             isAuthenticated,
+            requiredNamespaces: [],
           };
         }
 
@@ -31,6 +32,7 @@ export default function withSession(WrappedComponent) {
           isAuthenticated,
           pages,
           drafts,
+          requiredNamespaces: [],
         };
       } catch (error) {
         console.error(error);

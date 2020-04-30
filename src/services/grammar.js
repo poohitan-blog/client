@@ -7,6 +7,12 @@ import {
 } from 'date-fns';
 import { uk } from 'date-fns/locale';
 
+import i18n from 'Utils/i18n';
+
+console.log('i18n', i18n);
+
+console.log(i18n.Trans);
+
 // e.g.: describeWordCount(5, ['ровер', 'ровери', 'роверів'])
 export function describeWordCount(count, [one, twoToFour, rest]) {
   if (!count) {
@@ -39,7 +45,7 @@ export function createWordCountDescriptor([one, twoToFour, rest]) {
   return (count) => describeWordCount(count, [one, twoToFour, rest]);
 }
 
-export function formatPostDate(date, { detailed = false, short = false } = {}) {
+export function formatPostDate(date, { detailed = false, short = false, language = 'uk' } = {}) {
   if (!isValid(date)) {
     return 'Неправильна дата';
   }
