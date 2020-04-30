@@ -33,17 +33,8 @@
   background: none;
 
   #lg-counter {
+    color: $dark-grey;
     @include smaller;
-  }
-
-  .lg-icon {
-    background: none;
-    color: transparentize($grey, 0.3);
-    font-size: 1.5em;
-
-    &:hover {
-      color: $dark-grey;
-    }
   }
 }
 
@@ -61,16 +52,21 @@
   }
 }
 
+.lg-toolbar,
 .lg-actions {
-  .lg-next,
-  .lg-prev {
-    background: none;
-    color: transparentize($grey, 0.3);
-    font-size: 1.5em;
+  -webkit-text-stroke: 3px $white;
+  paint-order: stroke fill;
+}
 
-    &:hover {
-      color: $dark-grey;
-    }
+.lg-toolbar .lg-icon,
+.lg-actions .lg-next,
+.lg-actions .lg-prev {
+  background: none;
+  color: transparentize($grey, 0.3);
+  font-size: 1.5em;
+
+  &:hover {
+    color: $dark-grey;
   }
 }
 
