@@ -54,8 +54,10 @@
 
 .lg-toolbar,
 .lg-actions {
-  -webkit-text-stroke: 3px $white;
-  paint-order: stroke fill;
+  @supports (-moz-appearance: none) {
+    -webkit-text-stroke: 3px $white;
+    paint-order: stroke fill markers;
+  }
 }
 
 .lg-toolbar .lg-icon,
