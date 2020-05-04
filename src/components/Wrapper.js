@@ -10,6 +10,8 @@ import { Context as AnnouncementContext, getAnnouncement } from 'Services/announ
 import AdminPanel from 'Components/admin/Panel';
 import LoginButton from 'Components/LoginButton';
 
+import PrintAngryDog from 'Helpers/angry-dog';
+
 import styles from 'Styles/components/wrapper.module.scss';
 
 NProgress.configure({ showSpinner: false });
@@ -34,6 +36,8 @@ class Wrapper extends React.Component {
     this.logPageView(Router.asPath);
     Router.events.on('routeChangeComplete', this.logPageView);
     global.addEventListener('beforeunload', submitFlow);
+
+    PrintAngryDog();
   }
 
   componentWillUnmount() {
