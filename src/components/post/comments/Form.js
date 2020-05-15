@@ -23,7 +23,9 @@ class CommentForm extends React.Component {
   }
 
   setFailTimeout() {
+    console.log('setting fail timeout');
     const timeout = setTimeout(() => {
+      console.log('loading failed');
       this.setState({ loadingFailed: true });
     }, ACCEPTABLE_WAITING_TIME);
 
@@ -33,6 +35,7 @@ class CommentForm extends React.Component {
   }
 
   hideLoader() {
+    console.log('disqus ready, hiding loader');
     const { timeout } = this.state;
 
     clearTimeout(timeout);
@@ -45,6 +48,8 @@ class CommentForm extends React.Component {
   render() {
     const { title, slug } = this.props;
     const { loading, loadingFailed } = this.state;
+
+    console.log('render. loading:', loading, ', loadingFailed:', loadingFailed);
 
     return (
       <div id="comments" className={styles.wrapper}>
