@@ -1,4 +1,5 @@
 @import 'aspect-ratio';
+@import '../variables';
 
 @mixin readable-content-extended-features {
   :global {
@@ -8,25 +9,17 @@
       margin: 0.5em 0;
     }
 
-    .aspect-ratio-16-9,
     .video-16-9 {
       @include aspect-ratio(16, 9);
     }
 
-    .aspect-ratio-16-10 {
-      @include aspect-ratio(16, 10);
-    }
+    @each $aspectRatio in $commonAspectRatios {
+      $width: nth($aspectRatio, 1);
+      $height: nth($aspectRatio, 2);
 
-    .aspect-ratio-4-3 {
-      @include aspect-ratio(4, 3);
-    }
-
-    .aspect-ratio-2-1 {
-      @include aspect-ratio(2, 1);
-    }
-
-    .aspect-ratio-1-1 {
-      @include aspect-ratio(1, 1);
+      .aspect-ratio-#{$width}-#{$height} {
+        @include aspect-ratio($width, $height);
+      }
     }
 
     .lazy-load-image-wrapper {
