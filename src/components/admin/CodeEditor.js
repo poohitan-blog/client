@@ -11,7 +11,7 @@ import 'codemirror/mode/shell/shell';
 
 import 'codemirror/addon/selection/active-line';
 
-import styles from 'Styles/components/admin/code-editor.module.scss';
+import styles from 'styles/components/admin/code-editor.module.scss';
 
 const MIME_BY_LANGUAGE = new Proxy({
   css: 'text/css',

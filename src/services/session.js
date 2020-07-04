@@ -3,8 +3,8 @@ import Router from 'next/router';
 import decodeJWT from 'jwt-decode';
 import { parseCookies, destroyCookie } from 'nookies';
 
-import { current } from 'Config';
-import { authenticate } from 'Services/api';
+import { current } from 'config';
+import { authenticate } from 'services/api';
 
 export const Context = React.createContext({
   isAuthenticated: false,

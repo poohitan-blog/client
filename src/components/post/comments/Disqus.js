@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { DiscussionEmbed } from 'disqus-react';
 
-import { current } from 'Config';
+import { current } from 'config';
 
 class Disqus extends React.Component {
   shouldComponentUpdate(nextProps) {

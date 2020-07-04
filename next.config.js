@@ -1,7 +1,5 @@
 const webpack = require('webpack');
 
-const alias = require('./alias.config');
-
 module.exports = {
   webpack: (config) => {
     // TODO: remove this workaround when this issue is resolved: https://github.com/zeit/next.js/issues/10584
@@ -63,14 +61,6 @@ module.exports = {
         jQueryPlugin,
         dateFnsLocalesPlugin,
       ],
-
-      resolve: {
-        ...config.resolve,
-        alias: {
-          ...config.resolve.alias,
-          ...alias,
-        },
-      },
     };
   },
 };

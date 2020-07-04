@@ -1,4 +1,4 @@
-const alias = require('./alias.config');
+const path = require('path');
 
 module.exports = {
   parser: 'babel-eslint',
@@ -29,7 +29,19 @@ module.exports = {
       webpack: {
         config: {
           resolve: {
-            alias,
+            alias: {
+              components: path.resolve(__dirname, 'src/components'),
+              helpers: path.resolve(__dirname, 'src/helpers'),
+              hocs: path.resolve(__dirname, 'src/hocs'),
+              models: path.resolve(__dirname, 'src/models'),
+              pages: path.resolve(__dirname, 'src/pages'),
+              routes: path.resolve(__dirname, 'src/routes'),
+              services: path.resolve(__dirname, 'src/services'),
+              styles: path.resolve(__dirname, 'src/styles'),
+              utils: path.resolve(__dirname, 'src/utils'),
+              config: path.resolve(__dirname, 'config'),
+              static: path.resolve(__dirname, 'public/static'),
+            },
           }
         }
       }

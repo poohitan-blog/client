@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 
-import { translatePostIsAvailableInThisLanguage, getCountryCodeByLanguageCode } from 'Services/translations';
-import { Context as SessionContext } from 'Services/session';
+import { translatePostIsAvailableInThisLanguage, getCountryCodeByLanguageCode } from 'services/translations';
+import { Context as SessionContext } from 'services/session';
 
-import styles from 'Styles/components/post/translation-buttons.module.scss';
+import styles from 'styles/components/post/translation-buttons.module.scss';
 
 const Button = React.memo(({
   language, title, href, as,

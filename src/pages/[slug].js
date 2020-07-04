@@ -3,17 +3,17 @@ import PropTypes from 'prop-types';
 import Head from 'next/head';
 import { parseCookies } from 'nookies';
 
-import { current } from 'Config';
-import Error from 'Pages/_error';
-import API from 'Services/api';
-import { stripHTML, shorten } from 'Services/text';
+import { current } from 'config';
+import Error from 'pages/_error';
+import API from 'services/api';
+import { stripHTML, shorten } from 'services/text';
 
-import withSession from 'Hocs/withSession';
-import Wrapper from 'Components/Wrapper';
-import Header from 'Components/Header';
-import Content from 'Components/Content';
-import Footer from 'Components/Footer';
-import Page from 'Components/Page';
+import withSession from 'hocs/withSession';
+import Wrapper from 'components/Wrapper';
+import Header from 'components/Header';
+import Content from 'components/Content';
+import Footer from 'components/Footer';
+import Page from 'components/Page';
 
 class PagePage extends React.Component {
   static async getInitialProps({ query, req, pathname }) {

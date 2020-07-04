@@ -1,3 +1,3 @@
-import EditPost from 'Pages/posts/[slug]/edit';
+import EditPost from 'pages/posts/[slug]/edit';
 
 export default EditPost;

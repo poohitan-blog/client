@@ -1,7 +1,7 @@
 import { endOfToday } from 'date-fns';
 import { parseCookies, setCookie } from 'nookies';
 
-import random from 'Helpers/random';
+import random from 'helpers/random';
 
 const COOKIE_NAME = 'raspberriesDay';
 const LUCKY_NUMBER = { min: 1, max: 10 };

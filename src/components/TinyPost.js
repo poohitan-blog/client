@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import Link from 'next/link';
 import { LazyLoadComponent } from 'react-lazy-load-image-component';
 
-import { formatPostDate } from 'Services/grammar';
-import { Rectangle } from 'Components/ui/Loader';
+import { formatPostDate } from 'services/grammar';
+import { Rectangle } from 'components/ui/Loader';
 
-import styles from 'Styles/components/tiny-post.module.scss';
+import styles from 'styles/components/tiny-post.module.scss';
 
 const IMAGE_WIDTH = 300;
 

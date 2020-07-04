@@ -1,7 +1,7 @@
 import React from 'react';
 import { LazyLoadComponent } from 'react-lazy-load-image-component';
 
-import Iframe from 'Components/ui/Iframe';
+import Iframe from 'components/ui/Iframe';
 
 export default function processIframe() {
   const {

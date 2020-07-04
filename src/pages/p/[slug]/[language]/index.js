@@ -1,3 +1,3 @@
-import PostPage from 'Pages/p/[slug]/index';
+import PostPage from 'pages/p/[slug]/index';
 
 export default PostPage;

@@ -1,14 +1,14 @@
 import pluralize from 'pluralize';
 
-import { current } from 'Config';
-import deserialize from 'Utils/deserialize';
-import request from 'Utils/request';
+import { current } from 'config';
+import deserialize from 'utils/deserialize';
+import request from 'utils/request';
 
-import Post from 'Models/post';
-import PostTranslation from 'Models/post-translation';
-import Page from 'Models/page';
-import TrashPost from 'Models/trash-post';
-import User from 'Models/user';
+import Post from 'models/post';
+import PostTranslation from 'models/post-translation';
+import Page from 'models/page';
+import TrashPost from 'models/trash-post';
+import User from 'models/user';
 
 const API_URL = current.apiURL;
 const INLINE_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/svg'];

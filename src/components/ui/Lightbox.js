@@ -5,7 +5,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import 'lightgallery.js';
 
-import { LIGHTBOX_CLASS } from 'Utils/html-processor/image';
+import { LIGHTBOX_CLASS } from 'utils/html-processor/image';
 
 const CONTAINER_SELECTOR = 'body';
 

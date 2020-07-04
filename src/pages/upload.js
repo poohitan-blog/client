@@ -2,14 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
 
-import Error from 'Pages/_error';
+import Error from 'pages/_error';
 
-import withSession from 'Hocs/withSession';
-import withProtection from 'Hocs/withProtection';
-import Wrapper from 'Components/Wrapper';
-import Header from 'Components/Header';
-import Content from 'Components/Content';
-import UploadFilesForm from 'Components/admin/UploadFilesForm';
+import withSession from 'hocs/withSession';
+import withProtection from 'hocs/withProtection';
+import Wrapper from 'components/Wrapper';
+import Header from 'components/Header';
+import Content from 'components/Content';
+import UploadFilesForm from 'components/admin/UploadFilesForm';
 
 const UploadFiles = (props) => {
   const { error } = props;

@@ -1,3 +1,3 @@
-import EditPage from 'Pages/pages/[slug]/edit';
+import EditPage from 'pages/pages/[slug]/edit';
 
 export default EditPage;

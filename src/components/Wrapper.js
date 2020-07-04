@@ -3,16 +3,16 @@ import PropTypes from 'prop-types';
 import Router from 'next/router';
 import NProgress from 'nprogress';
 
-import { logPageView, submitFlow } from 'Services/analytics';
-import { Context as SessionContext } from 'Services/session';
-import { Context as AnnouncementContext, getAnnouncement } from 'Services/announcements';
+import { logPageView, submitFlow } from 'services/analytics';
+import { Context as SessionContext } from 'services/session';
+import { Context as AnnouncementContext, getAnnouncement } from 'services/announcements';
 
-import AdminPanel from 'Components/admin/Panel';
-import LoginButton from 'Components/LoginButton';
+import AdminPanel from 'components/admin/Panel';
+import LoginButton from 'components/LoginButton';
 
-import PrintAngryDog from 'Helpers/angry-dog';
+import PrintAngryDog from 'helpers/angry-dog';
 
-import styles from 'Styles/components/wrapper.module.scss';
+import styles from 'styles/components/wrapper.module.scss';
 
 NProgress.configure({ showSpinner: false });
 Router.events.on('routeChangeStart', NProgress.start);

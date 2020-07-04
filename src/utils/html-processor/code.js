@@ -1,5 +1,5 @@
 import React from 'react';
-import CodeEditor from 'Utils/code-editor';
+import CodeEditor from 'utils/code-editor';
 
 export default function processCode() {
   const {

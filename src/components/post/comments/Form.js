@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { LazyLoadComponent } from 'react-lazy-load-image-component';
 
-import Disqus from 'Components/post/comments/Disqus';
-import { Circle } from 'Components/ui/Loader';
+import Disqus from 'components/post/comments/Disqus';
+import { Circle } from 'components/ui/Loader';
 
-import styles from 'Styles/components/post/comment-form.module.scss';
+import styles from 'styles/components/post/comment-form.module.scss';
 
 const ACCEPTABLE_WAITING_TIME = 5000;
 

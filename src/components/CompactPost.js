@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { stripHTML, shorten } from 'Services/text';
-import { formatPostDate } from 'Services/grammar';
+import { stripHTML, shorten } from 'services/text';
+import { formatPostDate } from 'services/grammar';
 
-import styles from 'Styles/components/compact-post.module.scss';
+import styles from 'styles/components/compact-post.module.scss';
 
 const CompactPost = (props) => {
   const {

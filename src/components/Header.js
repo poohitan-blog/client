@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { Context as AnnouncementContext, POSITIONS } from 'Services/announcements';
-import Announcement from 'Components/Announcement';
-import Trashbin from 'Components/header/Trashbin';
+import { Context as AnnouncementContext, POSITIONS } from 'services/announcements';
+import Announcement from 'components/Announcement';
+import Trashbin from 'components/header/Trashbin';
 
-import styles from 'Styles/components/header.module.scss';
+import styles from 'styles/components/header.module.scss';
 
 const Header = ({ trashBinState }) => {
   const items = [

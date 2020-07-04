@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import parse from 'html-react-parser';
 import { trackWindowScroll } from 'react-lazy-load-image-component';
 
-import HTMLProcessor from 'Utils/html-processor';
+import HTMLProcessor from 'utils/html-processor';
 
 const FullBody = ({
   language, body, scrollPosition, imagesWidth,

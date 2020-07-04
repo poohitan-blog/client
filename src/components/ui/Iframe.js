@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Circle } from 'Components/ui/Loader';
+import { Circle } from 'components/ui/Loader';
 
-import styles from 'Styles/components/ui/iframe.module.scss';
+import styles from 'styles/components/ui/iframe.module.scss';
 
 class Iframe extends React.Component {
   constructor(props) {

@@ -1,8 +1,8 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { sendFeedback } from 'Services/api';
+import { sendFeedback } from 'services/api';
 
-import styles from 'Styles/pages/feedback.module.scss';
+import styles from 'styles/pages/feedback.module.scss';
 
 const ENTER_KEY_CODE = 13;
 

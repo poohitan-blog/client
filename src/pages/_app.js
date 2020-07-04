@@ -16,7 +16,7 @@ import {
   faPaperPlane,
 } from '@fortawesome/free-solid-svg-icons';
 
-import 'Styles/global.scss';
+import 'styles/global.scss';
 
 config.autoAddCss = false;
 

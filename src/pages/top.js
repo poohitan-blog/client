@@ -6,18 +6,18 @@ import { differenceInCalendarDays, formatDistanceStrict } from 'date-fns';
 import { uk } from 'date-fns/locale';
 import { parseCookies } from 'nookies';
 
-import { current } from 'Config';
-import Error from 'Pages/_error';
+import { current } from 'config';
+import Error from 'pages/_error';
 
-import API from 'Services/api';
-import { describeWordCount } from 'Services/grammar';
-import { stripHTML } from 'Services/text';
+import API from 'services/api';
+import { describeWordCount } from 'services/grammar';
+import { stripHTML } from 'services/text';
 
-import withSession from 'Hocs/withSession';
-import Wrapper from 'Components/Wrapper';
-import Header from 'Components/Header';
-import Content from 'Components/Content';
-import Footer from 'Components/Footer';
+import withSession from 'hocs/withSession';
+import Wrapper from 'components/Wrapper';
+import Header from 'components/Header';
+import Content from 'components/Content';
+import Footer from 'components/Footer';
 
 const calculatePostInterestingness = (post) => {
   const age = Math.max(differenceInCalendarDays(new Date(), new Date(post.publishedAt)), 1);

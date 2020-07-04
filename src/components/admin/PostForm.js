@@ -3,14 +3,14 @@ import PropTypes from 'prop-types';
 import Link from 'next/link';
 import { format, parse, isValid } from 'date-fns';
 
-import { current } from 'Config';
+import { current } from 'config';
 
-import Checkbox from 'Components/ui/Checkbox';
-import Editor from 'Utils/editor';
-import CodeEditor from 'Utils/code-editor';
-import TagSuggestions from 'Components/admin/TagSuggestions';
+import Checkbox from 'components/ui/Checkbox';
+import Editor from 'utils/editor';
+import CodeEditor from 'utils/code-editor';
+import TagSuggestions from 'components/admin/TagSuggestions';
 
-import styles from 'Styles/components/admin/post-form.module.scss';
+import styles from 'styles/components/admin/post-form.module.scss';
 
 const DATE_FORMAT = 'dd.MM.yyyy HH:mm';
 const MAX_DESCRIPTION_LENGTH = 160;

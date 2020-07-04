@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import styles from 'Styles/components/announcement.module.scss';
+import styles from 'styles/components/announcement.module.scss';
 
 const Announcement = ({ id, text, Icon }) => (
   <div className={styles.wrapper} id={id}>

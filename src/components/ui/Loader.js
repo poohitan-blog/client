@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import DotsIcon from 'Static/icons/three-dots.svg';
-import CircleIcon from 'Static/icons/circle.svg';
+import DotsIcon from 'static/icons/three-dots.svg';
+import CircleIcon from 'static/icons/circle.svg';
 
-import styles from 'Styles/components/ui/loader.module.scss';
+import styles from 'styles/components/ui/loader.module.scss';
 
 export const Dots = ({ className }) => (
   <DotsIcon className={`${styles.dots} ${className}`} />

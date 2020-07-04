@@ -4,17 +4,17 @@ import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import FullBody from 'Components/post/FullBody';
-import CutBody from 'Components/post/CutBody';
-import Footer from 'Components/post/Footer';
-import TranslationButtons from 'Components/post/TranslationButtons';
-import AdminControlButtons from 'Components/admin/ControlButtons';
-import { DEFAULT_THUMBNAIL_WIDTH } from 'Utils/html-processor/image';
-import { Context as SessionContext } from 'Services/session';
+import FullBody from 'components/post/FullBody';
+import CutBody from 'components/post/CutBody';
+import Footer from 'components/post/Footer';
+import TranslationButtons from 'components/post/TranslationButtons';
+import AdminControlButtons from 'components/admin/ControlButtons';
+import { DEFAULT_THUMBNAIL_WIDTH } from 'utils/html-processor/image';
+import { Context as SessionContext } from 'services/session';
 
-import styles from 'Styles/components/post.module.scss';
+import styles from 'styles/components/post.module.scss';
 
-const MathHighlighter = dynamic(() => import('Components/ui/MathHighlighter'), { ssr: false, loading: () => null });
+const MathHighlighter = dynamic(() => import('components/ui/MathHighlighter'), { ssr: false, loading: () => null });
 
 const Post = (props) => {
   const {

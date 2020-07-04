@@ -3,17 +3,17 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { current } from 'Config';
+import { current } from 'config';
 
-import 'Static/libs/froala/froala_editor.pkgd.min';
-import 'Static/libs/froala/plugins/image.min';
-import 'Static/libs/froala/languages/uk';
+import 'static/libs/froala/froala_editor.pkgd.min';
+import 'static/libs/froala/plugins/image.min';
+import 'static/libs/froala/languages/uk';
 
-import 'Components/admin/editor/buttons/cut';
-import 'Components/admin/editor/buttons/quote';
-import 'Components/admin/editor/buttons/math';
+import 'components/admin/editor/buttons/cut';
+import 'components/admin/editor/buttons/quote';
+import 'components/admin/editor/buttons/math';
 
-import styles from 'Styles/components/admin/editor.module.scss';
+import styles from 'styles/components/admin/editor.module.scss';
 
 const buttons = [
   'bold', 'italic', 'underline', 'strikeThrough',

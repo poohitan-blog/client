@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { describeWordCount } from 'Services/grammar';
+import { describeWordCount } from 'services/grammar';
 
-import styles from 'Styles/components/admin/tag-suggestions.module.scss';
+import styles from 'styles/components/admin/tag-suggestions.module.scss';
 
 const TagSuggestions = ({ tags, count, onClick }) => {
   const markup = Object.keys(tags)

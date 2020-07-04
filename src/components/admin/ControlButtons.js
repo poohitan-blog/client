@@ -6,10 +6,10 @@ import pluralize from 'pluralize';
 import { parseCookies } from 'nookies';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import Popup from 'Components/Popup';
-import API from 'Services/api';
+import Popup from 'components/Popup';
+import API from 'services/api';
 
-import styles from 'Styles/components/admin/control-buttons.module.scss';
+import styles from 'styles/components/admin/control-buttons.module.scss';
 
 const linkGenerators = {
   page: {

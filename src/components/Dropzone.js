@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ReactDropzone from 'react-dropzone';
 
-import { Circle } from 'Components/ui/Loader';
+import { Circle } from 'components/ui/Loader';
 
-import styles from 'Styles/components/dropzone.module.scss';
+import styles from 'styles/components/dropzone.module.scss';
 
 class Dropzone extends React.Component {
   constructor(props) {
