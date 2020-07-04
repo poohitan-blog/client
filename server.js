@@ -1,7 +1,6 @@
 const express = require('express');
 const next = require('next');
 const cookieParser = require('cookie-parser');
-const fetch = require('isomorphic-unfetch');
 const path = require('path');
 const config = require('./config').current;
 

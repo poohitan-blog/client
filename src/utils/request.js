@@ -1,4 +1,3 @@
-import fetch from 'isomorphic-unfetch';
 import queryString from 'query-string';
 
 export default async function request(params) {

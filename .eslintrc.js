@@ -21,7 +21,8 @@ module.exports = {
     jQuery: false,
     FormData: false,
     window: false,
-    document: false
+    document: false,
+    fetch: false,
   },
   settings: {
     'import/resolver': {
