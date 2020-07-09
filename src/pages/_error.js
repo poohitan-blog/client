@@ -2,15 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
 
-import { current } from 'Config';
+import { current } from 'config';
 
-import { describeHTTPCode } from 'Services/grammar';
+import { describeHTTPCode } from 'services/grammar';
 
-import Wrapper from 'Components/Wrapper';
-import Header from 'Components/Header';
-import Content from 'Components/Content';
-import Footer from 'Components/Footer';
-import TagCloud from 'Components/TagCloud';
+import Wrapper from 'components/Wrapper';
+import Header from 'components/Header';
+import Content from 'components/Content';
+import Footer from 'components/Footer';
+import TagCloud from 'components/TagCloud';
 
 class Error extends React.Component {
   static getInitialProps({ res, error }) {

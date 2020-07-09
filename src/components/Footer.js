@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import Link from 'next/link';
 import { withRouter } from 'next/router';
 
-import { Context as AnnouncementContext, POSITIONS } from 'Services/announcements';
-import Announcement from 'Components/Announcement';
-import SearchBox from 'Components/SearchBox';
+import { Context as AnnouncementContext, POSITIONS } from 'services/announcements';
+import Announcement from 'components/Announcement';
+import SearchBox from 'components/SearchBox';
 
-import styles from 'Styles/components/footer.module.scss';
+import styles from 'styles/components/footer.module.scss';
 
 const DEFAULT_LINK_TEXTS = {
   next: 'Старіші записи',

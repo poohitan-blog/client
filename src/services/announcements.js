@@ -1,11 +1,11 @@
 import React from 'react';
 
-import random from 'Helpers/random';
-import getWebsiteInfo from 'Helpers/get-website-info';
-import { describeWordCount } from 'Services/grammar';
+import random from 'helpers/random';
+import getWebsiteInfo from 'helpers/get-website-info';
+import { describeWordCount } from 'services/grammar';
 
-import HeartIcon from 'Static/icons/heart.svg';
-import CakeIcon from 'Static/icons/cake.svg';
+import HeartIcon from 'static/icons/heart.svg';
+import CakeIcon from 'static/icons/cake.svg';
 
 const DEFAULT_PHRASES = [
   'Читай українською',

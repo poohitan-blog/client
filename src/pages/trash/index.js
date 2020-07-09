@@ -4,20 +4,20 @@ import Head from 'next/head';
 import dynamic from 'next/dynamic';
 import { parseCookies } from 'nookies';
 
-import { current } from 'Config';
-import Error from 'Pages/_error';
-import API from 'Services/api';
-import { generateTrashPostTitle } from 'Services/text';
+import { current } from 'config';
+import Error from 'pages/_error';
+import API from 'services/api';
+import { generateTrashPostTitle } from 'services/text';
 
-import withSession from 'Hocs/withSession';
-import Wrapper from 'Components/Wrapper';
-import Header from 'Components/Header';
-import Content from 'Components/Content';
-import Footer from 'Components/Footer';
-import TrashPost from 'Components/TrashPost';
-import Trashbin from 'Components/header/Trashbin';
+import withSession from 'hocs/withSession';
+import Wrapper from 'components/Wrapper';
+import Header from 'components/Header';
+import Content from 'components/Content';
+import Footer from 'components/Footer';
+import TrashPost from 'components/TrashPost';
+import Trashbin from 'components/header/Trashbin';
 
-const Lightbox = dynamic(() => import('Components/ui/Lightbox'), { ssr: false, loading: () => null });
+const Lightbox = dynamic(() => import('components/ui/Lightbox'), { ssr: false, loading: () => null });
 
 const POSTS_PER_PAGE = 30;
 

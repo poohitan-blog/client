@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { formatPostDate, createWordCountDescriptor } from 'Services/grammar';
+import { formatPostDate, createWordCountDescriptor } from 'services/grammar';
 
-import styles from 'Styles/components/post/footer.module.scss';
+import styles from 'styles/components/post/footer.module.scss';
 
 const describeCommentsCount = createWordCountDescriptor(['коментар', 'коментарі', 'коментарів']);
 

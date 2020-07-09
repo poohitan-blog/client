@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { parseCookies } from 'nookies';
 
-import { Context as SessionContext, isAuthenticated as isUserAuthenticated } from 'Services/session';
-import API from 'Services/api';
+import { Context as SessionContext, isAuthenticated as isUserAuthenticated } from 'services/session';
+import API from 'services/api';
 
 export default function withSession(WrappedComponent) {
   class WithSession extends React.Component {

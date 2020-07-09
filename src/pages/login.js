@@ -2,12 +2,12 @@ import React from 'react';
 import Head from 'next/head';
 import Router from 'next/router';
 
-import Wrapper from 'Components/Wrapper';
-import Content from 'Components/Content';
+import Wrapper from 'components/Wrapper';
+import Content from 'components/Content';
 
-import { logIn, isAuthenticated } from 'Services/session';
+import { logIn, isAuthenticated } from 'services/session';
 
-import styles from 'Styles/pages/login.module.scss';
+import styles from 'styles/pages/login.module.scss';
 
 const LOGIN_ATTEMPTS_MESSAGES = [
   'Пішов геть.',

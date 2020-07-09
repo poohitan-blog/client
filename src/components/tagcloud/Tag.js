@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 
-import { createWordCountDescriptor } from 'Services/grammar';
-import random from 'Helpers/random';
+import { createWordCountDescriptor } from 'services/grammar';
+import random from 'helpers/random';
 
-import styles from 'Styles/components/tag-cloud.module.scss';
+import styles from 'styles/components/tag-cloud.module.scss';
 
 const describePostsCount = createWordCountDescriptor(['запис', 'записи', 'записів']);
 

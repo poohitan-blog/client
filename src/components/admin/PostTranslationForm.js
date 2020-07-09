@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 
-import Checkbox from 'Components/ui/Checkbox';
-import Editor from 'Utils/editor';
+import Checkbox from 'components/ui/Checkbox';
+import Editor from 'utils/editor';
 
-import styles from 'Styles/components/admin/post-translation-form.module.scss';
+import styles from 'styles/components/admin/post-translation-form.module.scss';
 
 const MAX_DESCRIPTION_LENGTH = 160;
 

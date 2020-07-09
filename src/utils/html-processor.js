@@ -1,9 +1,9 @@
-import processAsImage from 'Utils/html-processor/image';
-import processAsLink from 'Utils/html-processor/link';
-import processAsCut from 'Utils/html-processor/cut';
-import processAsCode from 'Utils/html-processor/code';
-import processAsIframe from 'Utils/html-processor/iframe';
-import processAsMath from 'Utils/html-processor/math';
+import processAsImage from 'utils/html-processor/image';
+import processAsLink from 'utils/html-processor/link';
+import processAsCut from 'utils/html-processor/cut';
+import processAsCode from 'utils/html-processor/code';
+import processAsIframe from 'utils/html-processor/iframe';
+import processAsMath from 'utils/html-processor/math';
 
 export default class HTMLProcessor {
   constructor(node) {

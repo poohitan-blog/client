@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import parse from 'html-react-parser';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import AdminControlButtons from 'Components/admin/ControlButtons';
-import { Context as SessionContext } from 'Services/session';
-import HTMLProcessor from 'Utils/html-processor';
+import AdminControlButtons from 'components/admin/ControlButtons';
+import { Context as SessionContext } from 'services/session';
+import HTMLProcessor from 'utils/html-processor';
 
-import styles from 'Styles/components/page.module.scss';
+import styles from 'styles/components/page.module.scss';
 
 const Page = (props) => {
   const {

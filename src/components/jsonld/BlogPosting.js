@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { current } from 'Config';
-import { stripHTML, getImageLinksFromHTML } from 'Services/text';
+import { current } from 'config';
+import { stripHTML, getImageLinksFromHTML } from 'services/text';
 
 const BlogPosting = ({
   title,

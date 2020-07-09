@@ -1,3 +1,3 @@
-import Trash from 'Pages/trash/index';
+import Trash from 'pages/trash/index';
 
 export default Trash;

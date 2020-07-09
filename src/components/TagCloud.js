@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import shuffle from 'shuffle-array';
 
-import API from 'Services/api';
-import Tag from 'Components/tagcloud/Tag';
-import { Circle } from 'Components/ui/Loader';
+import API from 'services/api';
+import Tag from 'components/tagcloud/Tag';
+import { Circle } from 'components/ui/Loader';
 
-import styles from 'Styles/components/tag-cloud.module.scss';
+import styles from 'styles/components/tag-cloud.module.scss';
 
 const MAX_FONT_SIZE = 5;
 const MIN_FONT_SIZE = 1;

@@ -4,14 +4,14 @@ import parse from 'html-react-parser';
 import { trackWindowScroll } from 'react-lazy-load-image-component';
 import Link from 'next/link';
 
-import AdminControlButtons from 'Components/admin/ControlButtons';
-import PostCollapser from 'Components/trash/PostCollapser';
+import AdminControlButtons from 'components/admin/ControlButtons';
+import PostCollapser from 'components/trash/PostCollapser';
 
-import HTMLProcessor from 'Utils/html-processor';
-import { formatPostDate } from 'Services/grammar';
-import { Context as SessionContext } from 'Services/session';
+import HTMLProcessor from 'utils/html-processor';
+import { formatPostDate } from 'services/grammar';
+import { Context as SessionContext } from 'services/session';
 
-import styles from 'Styles/components/trash-post.module.scss';
+import styles from 'styles/components/trash-post.module.scss';
 
 const MAX_UNCOLLAPSED_HEIGHT = 1000;
 

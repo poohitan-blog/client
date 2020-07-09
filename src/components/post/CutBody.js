@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Link from 'next/link';
 import parse from 'html-react-parser';
 
-import HTMLProcessor from 'Utils/html-processor';
+import HTMLProcessor from 'utils/html-processor';
 
 const CUT_TAG = '<cut>';
 const READ_MORE = 'Читати повністю';

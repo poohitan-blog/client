@@ -4,10 +4,10 @@ import Link from 'next/link';
 import parse from 'html-react-parser';
 import { isValid } from 'date-fns';
 
-import { stripHTML, getHighlightsOfKeywords, shorten } from 'Services/text';
-import { formatPostDate } from 'Services/grammar';
+import { stripHTML, getHighlightsOfKeywords, shorten } from 'services/text';
+import { formatPostDate } from 'services/grammar';
 
-import styles from 'Styles/components/search-result.module.scss';
+import styles from 'styles/components/search-result.module.scss';
 
 const searchResultTypes = {
   post: 'Запис',

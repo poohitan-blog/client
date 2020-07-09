@@ -4,15 +4,15 @@ import Head from 'next/head';
 import Router from 'next/router';
 import { parseCookies } from 'nookies';
 
-import API from 'Services/api';
-import Error from 'Pages/_error';
+import API from 'services/api';
+import Error from 'pages/_error';
 
-import withSession from 'Hocs/withSession';
-import withProtection from 'Hocs/withProtection';
-import Wrapper from 'Components/Wrapper';
-import Header from 'Components/Header';
-import Content from 'Components/Content';
-import TrashPostForm from 'Components/admin/TrashPostForm';
+import withSession from 'hocs/withSession';
+import withProtection from 'hocs/withProtection';
+import Wrapper from 'components/Wrapper';
+import Header from 'components/Header';
+import Content from 'components/Content';
+import TrashPostForm from 'components/admin/TrashPostForm';
 
 class EditTrashPost extends React.Component {
   static async getInitialProps({ req, query }) {

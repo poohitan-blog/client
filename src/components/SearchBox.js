@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Router from 'next/router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import styles from 'Styles/components/search-box.module.scss';
+import styles from 'styles/components/search-box.module.scss';
 
 const PLACEHOLDER = 'бісовий пошук';
 const ENTER_KEY_CODE = 13;

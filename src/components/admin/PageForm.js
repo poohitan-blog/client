@@ -2,13 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 
-import { current } from 'Config';
+import { current } from 'config';
 
-import Checkbox from 'Components/ui/Checkbox';
-import Editor from 'Utils/editor';
-import CodeEditor from 'Utils/code-editor';
+import Checkbox from 'components/ui/Checkbox';
+import Editor from 'utils/editor';
+import CodeEditor from 'utils/code-editor';
 
-import styles from 'Styles/components/admin/page-form.module.scss';
+import styles from 'styles/components/admin/page-form.module.scss';
 
 class PageForm extends React.Component {
   constructor(props) {

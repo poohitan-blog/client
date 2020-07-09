@@ -7,4 +7,5 @@ Implemented with Next.js (server-side rendered React).
 
 Deploy
 
-* `npm run deploy`
+* `master` branch: `npm run deploy`
+* any other branch: `pm2 deploy production ref origin/%BRANCH_NAME%`

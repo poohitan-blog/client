@@ -3,18 +3,18 @@ import PropTypes from 'prop-types';
 import Head from 'next/head';
 import { parseCookies } from 'nookies';
 
-import { current } from 'Config';
-import API from 'Services/api';
-import Error from 'Pages/_error';
+import { current } from 'config';
+import API from 'services/api';
+import Error from 'pages/_error';
 
-import withSession from 'Hocs/withSession';
-import Wrapper from 'Components/Wrapper';
-import Header from 'Components/Header';
-import Content from 'Components/Content';
-import Footer from 'Components/Footer';
-import SearchResult from 'Components/SearchResult';
-import SearchBox from 'Components/SearchBox';
-import TagCloud from 'Components/TagCloud';
+import withSession from 'hocs/withSession';
+import Wrapper from 'components/Wrapper';
+import Header from 'components/Header';
+import Content from 'components/Content';
+import Footer from 'components/Footer';
+import SearchResult from 'components/SearchResult';
+import SearchBox from 'components/SearchBox';
+import TagCloud from 'components/TagCloud';
 
 const POSTS_PER_PAGE = 10;
 

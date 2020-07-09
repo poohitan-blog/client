@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { current } from 'Config';
+import { current } from 'config';
 
 const Blog = () => {
   const data = {

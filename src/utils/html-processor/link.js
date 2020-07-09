@@ -2,8 +2,8 @@ import React from 'react';
 import Link from 'next/link';
 import { domToReact } from 'html-react-parser';
 
-import { current } from 'Config';
-import getRouteByURL from 'Helpers/get-route-by-url';
+import { current } from 'config';
+import getRouteByURL from 'helpers/get-route-by-url';
 
 export default function processLink() {
   const { node } = this;

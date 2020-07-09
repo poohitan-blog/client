@@ -1,4 +1,3 @@
-import fetch from 'isomorphic-unfetch';
 import queryString from 'query-string';
 
 export default async function request(params) {
@@ -31,23 +30,25 @@ export default async function request(params) {
   const response = await fetch(requestUrl, {
     method,
     body: formData ? body : JSON.stringify(body),
-    headers: { ...defaultHeaders, ...headers },
+    headers: {
+      ...defaultHeaders,
+      ...headers,
+    },
     credentials,
   });
 
   const text = await response.text();
+  let result;
 
   try {
-    const json = JSON.parse(text);
-
-    // TODO: maybe it's better not to throw an error when request resulted in non-success status code.
-    // Maybe it's better to return an object with response and status instead (and a boolean flag "error")?
-    if (!response.ok) {
-      throw json;
-    }
-
-    return json;
+    result = JSON.parse(text);
   } catch (error) {
-    return text;
+    result = text;
   }
+
+  if (!response.ok) {
+    throw result;
+  }
+
+  return result;
 }

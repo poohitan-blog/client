@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { parseCookies } from 'nookies';
 
-import API from 'Services/api';
-import Dropzone from 'Components/Dropzone';
+import API from 'services/api';
+import Dropzone from 'components/Dropzone';
 
-import styles from 'Styles/components/admin/upload-files-form.module.scss';
+import styles from 'styles/components/admin/upload-files-form.module.scss';
 
 class UploadFilesForm extends React.Component {
   constructor(props) {

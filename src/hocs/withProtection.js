@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { isAuthenticated } from 'Services/session';
+import { isAuthenticated } from 'services/session';
 
 export default function withProtection(WrappedComponent) {
   class WithProtection extends React.Component {

@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 
-import { logOut } from 'Services/session';
-import Page from 'Components/admin/panel/Page';
-import Draft from 'Components/admin/panel/Draft';
+import { logOut } from 'services/session';
+import Page from 'components/admin/panel/Page';
+import Draft from 'components/admin/panel/Draft';
 
-import styles from 'Styles/components/admin/panel.module.scss';
+import styles from 'styles/components/admin/panel.module.scss';
 
 class Panel extends React.Component {
   static logOut(event) {

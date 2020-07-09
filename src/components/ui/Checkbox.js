@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import styles from 'Styles/components/ui/checkbox.module.scss';
+import styles from 'styles/components/ui/checkbox.module.scss';
 
 class Checkbox extends React.Component {
   constructor(props) {

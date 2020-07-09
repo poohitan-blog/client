@@ -2,8 +2,8 @@ import React from 'react';
 import Document, {
   Html, Head, Main, NextScript,
 } from 'next/document';
-import Raspberries from 'Services/raspberries';
-import { current } from 'Config';
+import Raspberries from 'services/raspberries';
+import { current } from 'config';
 
 class MyDocument extends Document {
   static async getInitialProps({ renderPage, req, res }) {

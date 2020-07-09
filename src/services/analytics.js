@@ -1,7 +1,7 @@
 import ReactGA from 'react-ga';
 
-import { current } from 'Config';
-import { analytics } from 'Services/api';
+import { current } from 'config';
+import { analytics } from 'services/api';
 
 const flow = [];
 

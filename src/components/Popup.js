@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import styles from 'Styles/components/popup.module.scss';
+import styles from 'styles/components/popup.module.scss';
 
 class Popup extends React.Component {
   constructor(props) {
