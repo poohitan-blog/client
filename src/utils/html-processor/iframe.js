@@ -13,10 +13,11 @@ export default function processIframe() {
     const {
       src,
       height,
-      allowfullscreen: allowFullScreen,
       referrerpolicy: referrerPolicy,
       class: className,
     } = attribs;
+
+    const allowFullScreen = attribs.allowfullscreen || attribs.allowfullscreen === '';
 
     this.processedNode = (
       <LazyLoadComponent threshold={300}>
