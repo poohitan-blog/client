@@ -32,11 +32,11 @@ const DYNAMIC_ROUTES = [
   },
   {
     href: (href) => {
-      const matches = href.match(/^\/trash\?permalink=(\d{8}_\d{6})/) || [];
+      const matches = href.match(/^\/trash\/?\?permalink=(\d{8}_\d{6})/) || [];
 
       return `/trash?permalink=${matches[1]}`;
     },
-    regex: /^\/trash\?permalink=\d{8}_\d{6}/,
+    regex: /^\/trash\/?\?permalink=\d{8}_\d{6}/,
   },
   {
     href: '/trash',
