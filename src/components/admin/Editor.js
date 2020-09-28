@@ -48,7 +48,7 @@ class Editor extends React.Component {
       height: 350,
       heightMax: 350,
 
-      fileMaxSize: 15 * 1024 * 1024,
+      fileMaxSize: 50 * 1024 * 1024,
       fileUploadMethod: 'POST',
       fileUploadParam: 'files',
       fileUploadURL: `${current.apiURL}/files/froala`,
