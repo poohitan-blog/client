@@ -62,7 +62,7 @@ class Editor extends React.Component {
       imageAllowedTypes: ['jpeg', 'jpg', 'png', 'gif'],
       imageDefaultWidth: 0,
       imageEditButtons: ['imageReplace', 'imageRemove', 'imageSize', '-', '|', 'imageLink', 'linkOpen', 'linkEdit', 'linkRemove', 'imageAlt', 'imageAlign'],
-      imageMaxSize: 15 * 1024 * 1024,
+      imageMaxSize: 50 * 1024 * 1024,
       imagePasteProcess: true,
       imageUploadMethod: 'POST',
       imageUploadParam: 'images',
