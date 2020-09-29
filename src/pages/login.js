@@ -35,7 +35,11 @@ const LOGIN_ATTEMPTS_MESSAGES = [
 class LoginPage extends React.Component {
   static async getInitialProps({ req, res, pathname }) {
     if (isAuthenticated(req)) {
-      res.redirect('/');
+      res
+        .writeHead(302, {
+          Location: '/',
+        })
+        .end();
     }
 
     return { pathname };

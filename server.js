@@ -8,18 +8,12 @@ const dev = config.environment !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
 
-const migrationMap = require('./src/routes/migration-map.js');
-
 const staticDirPath = config.environment === 'development' ? '../stuff' : '../../stuff';
 
 app.prepare()
   .then(() => {
     const server = express();
 
-    server.get('/robots.txt', (req, res) => res.sendFile(path.join(__dirname, '/public/static/robots.txt')));
-    server.get('/humans.txt', (req, res) => res.sendFile(path.join(__dirname, '/public/static/humans.txt')));
-
-    server.use(migrationMap);
     server.use('/stuff', express.static(path.join(__dirname, staticDirPath)));
 
     server.get('/rss', async (req, res) => {
@@ -37,16 +31,6 @@ app.prepare()
     server.use(cookieParser());
 
     server.use('/static/flags', express.static(path.join(__dirname, 'node_modules/flag-icon-css/flags'), { maxAge: 31557600000 }));
-
-    server.get('/wardrobe', (req, res) => app.render(req, res, '/login', req.query));
-
-    server.get(['/trash/index.php', '/trash/'], (req, res) => {
-      app.render(req, res, '/trash', req.query);
-    });
-
-    server.get('/trash/random', (req, res) => {
-      app.render(req, res, '/trash', { ...req.query, random: true });
-    });
 
     server.get('*', (req, res) => handle(req, res));
 

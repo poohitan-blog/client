@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
-import { withRouter } from 'next/router';
+import { useRouter } from 'next/router';
 
 import { Context as AnnouncementContext, POSITIONS } from 'services/announcements';
 import Announcement from 'components/Announcement';
@@ -14,8 +14,9 @@ const DEFAULT_LINK_TEXTS = {
   previous: 'Новіші записи',
 };
 
-const Footer = ({ pagination, searchBox, router }) => {
+const Footer = ({ pagination, searchBox }) => {
   const { currentPage, totalPages } = pagination;
+  const router = useRouter();
   const { query } = router;
   const hasNextPage = currentPage < totalPages;
   const hasPreviousPage = currentPage > 1;
@@ -101,4 +102,4 @@ Footer.defaultProps = {
   searchBox: true,
 };
 
-export default withRouter(React.memo(Footer));
+export default React.memo(Footer);

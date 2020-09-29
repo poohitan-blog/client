@@ -1,6 +1,38 @@
 const webpack = require('webpack');
+const migrationMap = require('./src/helpers/migration-map');
 
 module.exports = {
+  async rewrites() {
+    return [
+      {
+        source: '/wardrobe',
+        destination: '/login',
+      },
+    ];
+  },
+
+  async redirects() {
+    const migration = Object.keys(migrationMap).map((source) => ({
+      source,
+      destination: migrationMap[source],
+      permanent: true,
+    }));
+
+    return [
+      ...migration,
+      {
+        source: '/trash/index.php',
+        destination: '/trash',
+        permanent: true,
+      },
+      {
+        source: '/login',
+        destination: '/',
+        permanent: true,
+      },
+    ];
+  },
+
   webpack: (config) => {
     // TODO: remove this workaround when this issue is resolved: https://github.com/zeit/next.js/issues/10584
     /* eslint-disable */

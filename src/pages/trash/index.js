@@ -24,10 +24,8 @@ const POSTS_PER_PAGE = 30;
 class TrashPage extends React.Component {
   static async getInitialProps({ query, req, pathname }) {
     try {
-      if (query.id || query.random) {
-        const posts = query.random
-          ? [await API.trashPosts.findRandom(parseCookies({ req }))]
-          : [await API.trashPosts.findOne(query.id, parseCookies({ req }))];
+      if (query.id) {
+        const posts = [await API.trashPosts.findOne(query.id, parseCookies({ req }))];
 
         return {
           posts,
