@@ -1,6 +1,4 @@
-/* eslint-disable */
-
-export default () => console.log(`%c
+const drawAngryDog = () => console.log(`%c
         ____  ____  ______ _____  ______ __  _  ___    _  ____    __
        / __ \\|  __||  ____|  __ \\|  ___| \\ \\| |/ / |  | |/ __ \\  |  |
       | |  | | |__ | |__  | |__) | |__    \\ ' ' /| |__| | |  | | |  |
@@ -50,3 +48,5 @@ export default () => console.log(`%c
            |____/_/    \\_\\_/ |_|_/ |_|     |_|  |_|______\\_____|
 
 `, 'font-family: monospace');
+
+export default drawAngryDog;

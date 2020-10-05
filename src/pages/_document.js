@@ -29,7 +29,6 @@ class MyDocument extends Document {
     return (
       <Html lang={current.meta.language}>
         <Head>
-          <meta name="viewport" content="initial-scale=1.0, width=device-width" key="viewport" />
           <meta name="google-site-verification" content={current.google.siteVerificationCode} key="google-site-verification" />
           <meta httpEquiv="content-type" content="text/html; charset=utf-8" key="content-type" />
 

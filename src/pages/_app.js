@@ -1,4 +1,6 @@
+import React from 'react';
 import PropTypes from 'prop-types';
+import Head from 'next/head';
 
 import { config, library } from '@fortawesome/fontawesome-svg-core';
 import {
@@ -30,7 +32,14 @@ library.add(
 );
 
 function App({ Component, pageProps }) {
-  return <Component {...pageProps} />; // eslint-disable-line
+  return (
+    <>
+      <Head>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" key="viewport" />
+      </Head>
+      <Component {...pageProps} /> {/* eslint-disable-line */}
+    </>
+  );
 }
 
 App.propTypes = {

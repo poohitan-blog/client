@@ -36,7 +36,11 @@ class PostPage extends React.Component {
       const requestedLanguage = query.language;
 
       if (requestedLanguage && !availableLanguages.includes(requestedLanguage)) {
-        return res.redirect(`/p/${post.slug}`);
+        return res
+          .writeHead(302, {
+            Location: `/p/${post.slug}`,
+          })
+          .end();
       }
 
       return {

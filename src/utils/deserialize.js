@@ -23,10 +23,12 @@ const deserializeOne = (data, schema) => Object.keys(data).reduce((result, field
   return { ...result, [fieldName]: deserializedValue };
 }, {});
 
-export default (data, schema) => {
+const deserialize = (data, schema) => {
   if (Array.isArray(data)) {
     return data.map((object) => deserializeOne(object, schema));
   }
 
   return deserializeOne(data, schema);
 };
+
+export default deserialize;
