@@ -93,7 +93,7 @@ Footer.propTypes = {
   searchBox: PropTypes.bool,
 
   router: PropTypes.shape({
-    query: PropTypes.object,
+    query: PropTypes.objectOf(PropTypes.string),
   }).isRequired,
 };
 
