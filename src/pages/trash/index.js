@@ -14,6 +14,7 @@ import Wrapper from 'components/Wrapper';
 import Header from 'components/Header';
 import Content from 'components/Content';
 import Footer from 'components/Footer';
+import TrashHeader from 'components/trash/Header';
 import TrashPost from 'components/TrashPost';
 import Trashbin from 'components/header/Trashbin';
 
@@ -120,7 +121,7 @@ class TrashPage extends React.Component {
         </Head>
         <Header trashBinState={Trashbin.STATES.FULLY_OPEN} />
         <Content>
-          <h1>Смітник</h1>
+          <TrashHeader />
           {postsMarkup}
         </Content>
         <Footer pagination={paginationInfo} />
