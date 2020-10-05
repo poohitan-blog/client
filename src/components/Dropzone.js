@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactDropzone from 'react-dropzone';
+import cc from 'classcat';
 
 import { Circle } from 'components/ui/Loader';
 
@@ -39,7 +40,7 @@ class Dropzone extends React.Component {
       <ReactDropzone
         onDrop={this.onDrop}
         accept={accept}
-        className={`${styles.wrapper} ${className}`}
+        className={cc([styles.wrapper, className])}
         activeClassName={styles.active}
         acceptClassName={styles.accept}
         rejectClassName={styles.reject}
@@ -47,10 +48,10 @@ class Dropzone extends React.Component {
         disabled={loading}
       >
         <div className={styles.content}>
-          <div className={`${styles.loader} ${loaderVisible && styles.visible}`}>
+          <div className={cc({ [styles.loader]: true, [styles.visible]: loaderVisible })}>
             <Circle className={styles.loaderIcon} />
           </div>
-          <div className={`${styles.placeholder} ${placeholderVisible && styles.visible}`}>
+          <div className={cc({ [styles.placeholder]: true, [styles.visible]: placeholderVisible })}>
             Кидай сюди шо-небудь
           </div>
           <div className={styles.filelist}>{files.map((file) => <div key={file.name}>{file.name}</div>)}</div>

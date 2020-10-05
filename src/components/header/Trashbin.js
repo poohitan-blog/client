@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import cc from 'classcat';
 
 import TrashbinClosedIcon from 'static/icons/trashbin.svg';
 import TrashbinSemiOpenIcon from 'static/icons/trashbin-semi-open.svg';
@@ -61,8 +62,8 @@ class Trashbin extends React.PureComponent {
     const { className } = this.props;
 
     return (
-      <div className={`${styles.wrapper} ${className}`} onMouseEnter={this.semiOpen} onMouseLeave={this.close}>
-        { this.getTrashbinIcon() }
+      <div className={cc([styles.wrapper, className])} onMouseEnter={this.semiOpen} onMouseLeave={this.close}>
+        {this.getTrashbinIcon()}
       </div>
     );
   }

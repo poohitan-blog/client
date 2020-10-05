@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Router from 'next/router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import cc from 'classcat';
 
 import styles from 'styles/components/search-box.module.scss';
 
@@ -59,14 +60,12 @@ class SearchBox extends React.PureComponent {
     const { query, isFocused } = this.state;
     const { className } = this.props;
 
-    const classList = [styles.wrapper, className];
-
-    if (isFocused) {
-      classList.push(styles.focused);
-    }
+    const classNameString = cc([styles.wrapper, className, {
+      [styles.focused]: isFocused,
+    }]);
 
     return (
-      <div className={classList.join(' ')}>
+      <div className={classNameString}>
         <FontAwesomeIcon icon="search" className={styles.icon} />
         <input
           type="text"

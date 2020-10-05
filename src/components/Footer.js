@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import cc from 'classcat';
 
 import { Context as AnnouncementContext, POSITIONS } from 'services/announcements';
 import Announcement from 'components/Announcement';
@@ -51,14 +52,13 @@ const Footer = ({ pagination, searchBox }) => {
     );
   }
 
-  const classList = [styles.wrapper];
-
-  if (!hasPagination) {
-    classList.push(styles.withoutPagination);
-  }
+  const classNameString = cc({
+    [styles.wrapper]: true,
+    [styles.withoutPagination]: !hasPagination,
+  });
 
   return (
-    <div className={classList.join(' ')} id="footer">
+    <div className={classNameString} id="footer">
       <div className={styles.pagination}>
         {previousPagelink}
         {nextPageLink}

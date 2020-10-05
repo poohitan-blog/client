@@ -22,6 +22,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.13.0",
     "@fortawesome/react-fontawesome": "^0.1.9",
     "@svgr/webpack": "^5.3.1",
+    "classcat": "^4.1.0",
     "codemirror": "^5.49.2",
     "cookie-parser": "^1.4.3",
     "date-fns": "^2.8.1",

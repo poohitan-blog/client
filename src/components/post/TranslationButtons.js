@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
+import cc from 'classcat';
 
 import { translatePostIsAvailableInThisLanguage, getCountryCodeByLanguageCode } from 'services/translations';
 import { Context as SessionContext } from 'services/session';
@@ -19,7 +20,7 @@ const Button = React.memo(({
       as={as}
     >
       <a title={linkTitle}>
-        <div className={`${styles.button} flag-icon flag-icon-background flag-icon-${getCountryCodeByLanguageCode(language)}`} />
+        <div className={cc([styles.button, 'flag-icon', 'flag-icon-background', `flag-icon-${getCountryCodeByLanguageCode(language)}`])} />
       </a>
     </Link>
   );

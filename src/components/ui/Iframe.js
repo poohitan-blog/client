@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import cc from 'classcat';
 
 import { Circle } from 'components/ui/Loader';
 
@@ -46,8 +47,12 @@ class Iframe extends React.Component {
 
     const { loaded } = this.state;
 
+    const classNameString = cc([styles.wrapper, className, {
+      [styles.loading]: !loaded,
+    }]);
+
     return (
-      <div className={`${styles.wrapper} ${className} ${loaded ? '' : styles.loading}`} style={style}>
+      <div className={classNameString} style={style}>
         <div className={styles.loader}><Circle className={styles.loaderAnimation} /></div>
         {
           iframe
