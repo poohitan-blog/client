@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Controlled as CodeMirror } from 'react-codemirror2';
+import cc from 'classcat';
 
 import 'codemirror/mode/javascript/javascript';
 import 'codemirror/mode/jsx/jsx';
@@ -63,15 +64,10 @@ const CodeEditor = ({
   onInput,
   className,
 }) => {
-  const classList = [styles.wrapper, className, 'expendable-widget'];
-
-  if (!value) {
-    classList.push(styles.collapsed);
-  }
-
-  if (readonly) {
-    classList.push(styles.readonly);
-  }
+  const classNameString = cc([styles.wrapper, className, 'expendable-widget', {
+    [styles.collapsed]: !value,
+    [styles.readonly]: readonly,
+  }]);
 
   const mode = MIME_BY_LANGUAGE[language];
 
@@ -87,7 +83,7 @@ const CodeEditor = ({
         cursorHeight: 0.7,
       }}
       onBeforeChange={(editor, data, newValue) => onInput(newValue)}
-      className={classList.join(' ')}
+      className={classNameString}
     />
   );
 };

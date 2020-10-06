@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { differenceInCalendarDays, formatDistanceStrict } from 'date-fns';
 import { uk } from 'date-fns/locale';
 import { parseCookies } from 'nookies';
+import cc from 'classcat';
 
 import { current } from 'config';
 import Error from 'pages/_error';
@@ -155,7 +156,7 @@ class TopPage extends React.Component {
               sortButtons
                 .map((button) => (
                   <a
-                    className={`pointer ${sortBy === button.param ? 'disabled' : ''}`}
+                    className={cc({ pointer: true, disabled: sortBy === button.param })}
                     onClick={() => this.setState({ sortBy: button.param })}
                     key={button.param}
                   >

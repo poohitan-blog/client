@@ -16,6 +16,7 @@ import {
   faAngleDoubleDown,
   faSearch,
   faPaperPlane,
+  faDove, faCrow,
 } from '@fortawesome/free-solid-svg-icons';
 
 import 'styles/global.scss';
@@ -29,6 +30,7 @@ library.add(
   faAngleDoubleDown,
   faSearch,
   faPaperPlane,
+  faDove, faCrow,
 );
 
 function App({ Component, pageProps }) {

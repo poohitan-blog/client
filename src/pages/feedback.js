@@ -1,5 +1,7 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import cc from 'classcat';
+
 import { sendFeedback } from 'services/api';
 
 import styles from 'styles/pages/feedback.module.scss';
@@ -66,14 +68,14 @@ class FeedBackPage extends React.Component {
 
   render() {
     const { text, status, loading } = this.state;
-    const classList = [styles.wrapper];
 
-    if (loading) {
-      classList.push(styles.loading);
-    }
+    const classNameString = cc({
+      [styles.wrapper]: true,
+      [styles.loading]: loading,
+    });
 
     return (
-      <div className={classList.join(' ')}>
+      <div className={classNameString}>
         <textarea
           rows="3"
           value={text}

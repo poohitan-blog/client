@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { LazyLoadComponent } from 'react-lazy-load-image-component';
+import cc from 'classcat';
 
 import Disqus from 'components/post/comments/Disqus';
 import { Circle } from 'components/ui/Loader';
@@ -48,7 +49,7 @@ class CommentForm extends React.Component {
 
     return (
       <div id="comments" className={styles.wrapper}>
-        <div className={`${styles.formWrapper} ${loading ? styles.loading : ''}`}>
+        <div className={cc({ [styles.formWrapper]: true, [styles.loading]: loading })}>
           <div className={styles.loader}>
             {
               loadingFailed

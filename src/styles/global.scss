@@ -58,6 +58,7 @@ a {
   color: $orange;
   text-decoration: underline;
   transition: $link-transition;
+  outline: 0;
 
   &:hover {
     color: lighten($orange, 20%);

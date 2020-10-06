@@ -91,7 +91,7 @@ EditPostTranslation.propTypes = {
   }),
   post: PropTypes.shape({
     slug: PropTypes.string,
-    translations: PropTypes.array,
+    translations: PropTypes.arrayOf(PropTypes.oneOf(PropTypes.string, PropTypes.objectOf(PropTypes.string))),
   }).isRequired,
   error: PropTypes.shape({
     status: PropTypes.number,

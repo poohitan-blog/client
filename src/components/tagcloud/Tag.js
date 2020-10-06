@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
+import cc from 'classcat';
 
 import { createWordCountDescriptor } from 'services/grammar';
 import random from 'helpers/random';
@@ -75,11 +76,10 @@ class Tag extends React.Component {
     const { name, weight, normalizedWeight } = this.props;
     const { isShaking } = this.state;
 
-    const classList = [styles.tag];
-
-    if (isShaking) {
-      classList.push(styles.isShaking);
-    }
+    const classNameString = cc({
+      [styles.tag]: true,
+      [styles.isShaking]: isShaking,
+    });
 
     return (
       <Link href="/tag/[name]" as={`/tag/${name}`}>
@@ -90,7 +90,7 @@ class Tag extends React.Component {
           onFocus={() => {}}
           style={{ fontSize: `${normalizedWeight}em` }}
           ref={this.elementRef}
-          className={classList.join(' ')}
+          className={classNameString}
         >
           {name}
         </a>

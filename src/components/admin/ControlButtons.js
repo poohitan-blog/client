@@ -5,6 +5,7 @@ import Router from 'next/router';
 import pluralize from 'pluralize';
 import { parseCookies } from 'nookies';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import cc from 'classcat';
 
 import Popup from 'components/Popup';
 import API from 'services/api';
@@ -105,8 +106,8 @@ class ControlButtons extends React.Component {
     const popupContent = this.renderPopupContent();
 
     return (
-      <span className={`${styles.wrapper} ${className}`} id={id}>
-        <div className={`${styles.button} ${styles.buttonEdit}`}>
+      <span className={cc([styles.wrapper, className])} id={id}>
+        <div className={cc([styles.button, styles.buttonEdit])}>
           <Link as={as} href={href}>
             <a><FontAwesomeIcon icon="edit" /></a>
           </Link>

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import parse from 'html-react-parser';
 import { trackWindowScroll } from 'react-lazy-load-image-component';
 import Link from 'next/link';
+import cc from 'classcat';
 
 import AdminControlButtons from 'components/admin/ControlButtons';
 import PostCollapser from 'components/trash/PostCollapser';
@@ -95,18 +96,14 @@ class TrashPost extends React.Component {
     const { id, createdAt } = this.props;
     const { collapsable, collapsed, body } = this.state;
 
-    const classList = [styles.wrapper];
-
-    if (collapsable) {
-      classList.push(styles.collapsable);
-    }
-
-    if (collapsed) {
-      classList.push(styles.collapsed);
-    }
+    const classNameString = cc({
+      [styles.wrapper]: true,
+      [styles.collapsable]: collapsable,
+      [styles.collapsed]: collapsed,
+    });
 
     return (
-      <div className={classList.join(' ')}>
+      <div className={classNameString}>
         <SessionContext.Consumer>
           {({ isAuthenticated }) => isAuthenticated && (
             <AdminControlButtons
