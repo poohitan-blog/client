@@ -102,18 +102,13 @@ export function generateTrashPostTitle(html) {
     return shorten(text, 10);
   }
 
+  const regexAlt = /alt="(.+?)"/;
   const regexUk = /data-captionuk="(.+?)"/;
   const regexEn = /data-captionen="(.+?)"/;
 
-  const matchResultsUk = html.match(regexUk) || [];
+  const results = html.match(regexAlt) || html.match(regexUk) || html.match(regexEn) || [];
 
-  if (matchResultsUk.length) {
-    return matchResultsUk[1];
-  }
-
-  const matchResultsEn = html.match(regexEn) || [];
-
-  return matchResultsEn.length ? matchResultsEn[1] : null;
+  return results.length ? results[1] : null;
 }
 
 export default {
