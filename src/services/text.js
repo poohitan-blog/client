@@ -95,6 +95,12 @@ export function getImageLinksFromHTML(html) {
   return images;
 }
 
+function getMatchedText(input, regex) {
+  const matches = input.match(regex) || [];
+
+  return matches.length ? matches[1] : null;
+}
+
 export function generateTrashPostTitle(html) {
   const text = stripHTML(html);
 
@@ -102,13 +108,15 @@ export function generateTrashPostTitle(html) {
     return shorten(text, 10);
   }
 
-  const regexAlt = /alt="(.+?)"/;
-  const regexUk = /data-captionuk="(.+?)"/;
-  const regexEn = /data-captionen="(.+?)"/;
+  const regexes = [/alt="(.*?)"/, /data-captionuk="(.*?)"/, /data-captionen="(.*?)"/];
 
-  const results = html.match(regexAlt) || html.match(regexUk) || html.match(regexEn) || [];
+  const results = regexes
+    .map((regex) => getMatchedText(html, regex))
+    .filter((item) => item);
 
-  return results.length ? results[1] : null;
+  const [title] = results;
+
+  return title;
 }
 
 export default {
