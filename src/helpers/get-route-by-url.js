@@ -1,6 +1,6 @@
 // TODO: switch to built-in Next.js logic as soon as this issue is closed and shipped https://github.com/zeit/next.js/issues/8207
 
-const STATIC_ROUTES = [
+export const STATIC_ROUTES = [
   /^\/rss\/?/,
   /^\/stuff\/[\S]+/,
   /^\/rainbow-sheep/,
@@ -13,7 +13,7 @@ const STATIC_ROUTES = [
   /^\/shutup/,
 ];
 
-const DYNAMIC_ROUTES = [
+export const DYNAMIC_ROUTES = [
   {
     href: '/tag/[name]',
     regex: /^\/tag\/\S+/,
@@ -57,10 +57,6 @@ const DYNAMIC_ROUTES = [
 ];
 
 export default function getRouteByRelativeURL(url) {
-  if (STATIC_ROUTES.some((item) => item.test(url))) {
-    return url;
-  }
-
   const route = DYNAMIC_ROUTES.find((item) => item.regex.test(url));
 
   if (!route) {
