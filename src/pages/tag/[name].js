@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Head from 'next/head';
+import { NextSeo } from 'next-seo';
 import { parseCookies } from 'nookies';
 
 import { current } from 'config';
@@ -90,11 +90,11 @@ class TagPage extends React.Component {
 
     return (
       <Wrapper>
-        <Head>
-          <title>{`Записи з позначкою «${tag}» - ${current.meta.title}`}</title>
-          <meta name="description" content={`Записи про ${tag}`} key="description" />
-          <link rel="canonical" href={canonicalUrl} />
-        </Head>
+        <NextSeo
+          title={`Записи з позначкою «${tag}»`}
+          description={`Записи про ${tag}`}
+          canonical={canonicalUrl}
+        />
         <Header />
         <Content>
           <h1>{`Записи з позначкою «${tag}»`}</h1>

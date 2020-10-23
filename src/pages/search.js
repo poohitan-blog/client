@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Head from 'next/head';
+import { NextSeo } from 'next-seo';
 import { parseCookies } from 'nookies';
 
-import { current } from 'config';
 import API from 'services/api';
 import Error from 'pages/_error';
 
@@ -82,9 +81,7 @@ class SearchPage extends React.Component {
 
     return (
       <Wrapper>
-        <Head>
-          <title>{`Пошук за запитом «${searchQuery}» - ${current.meta.title}`}</title>
-        </Head>
+        <NextSeo title={`Пошук за запитом «${searchQuery}»`} />
         <Header />
         <Content>
           <h1>{title}</h1>

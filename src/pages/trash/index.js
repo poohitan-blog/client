@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Head from 'next/head';
 import dynamic from 'next/dynamic';
+import { NextSeo } from 'next-seo';
 import { parseCookies } from 'nookies';
 
 import { current } from 'config';
@@ -109,16 +109,13 @@ class TrashPage extends React.Component {
     const paginationInfo = { ...meta, linkTexts: { next: 'Далі', previous: 'Назад' } };
 
     const postTitle = single ? generateTrashPostTitle(posts[0].body) : null;
-    const pageTitle = [postTitle, 'Смітник', current.meta.title].filter((item) => item).join(' - ');
-
-    const canonicalURL = this.generateCanonicalUrl();
 
     return (
       <Wrapper>
-        <Head>
-          <title>{pageTitle}</title>
-          <link rel="canonical" href={canonicalURL} />
-        </Head>
+        <NextSeo
+          title={postTitle ? `${postTitle} - Смітник` : 'Смітник'}
+          canonical={this.generateCanonicalUrl()}
+        />
         <Header trashBinState={Trashbin.STATES.FULLY_OPEN} />
         <Content>
           <TrashHeader />

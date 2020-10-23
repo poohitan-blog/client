@@ -2,6 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
 
+import { DefaultSeo } from 'next-seo';
+
+import { current } from 'config';
+
 import { config, library } from '@fortawesome/fontawesome-svg-core';
 import {
   faHome,
@@ -39,6 +43,11 @@ function App({ Component, pageProps }) {
       <Head>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" key="viewport" />
       </Head>
+      <DefaultSeo
+        titleTemplate={`%s - ${current.meta.title}`}
+        description={current.meta.description}
+        keywords={current.meta.keywords}
+      />
       <Component {...pageProps} /> {/* eslint-disable-line */}
     </>
   );

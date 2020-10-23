@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Head from 'next/head';
 import dynamic from 'next/dynamic';
+import { NextSeo, ArticleJsonLd } from 'next-seo';
 import { parseCookies } from 'nookies';
 
 import { current } from 'config';
@@ -16,7 +16,6 @@ import Content from 'components/Content';
 import Footer from 'components/Footer';
 import Post from 'components/Post';
 import CommentForm from 'components/post/comments/Form';
-import BlogPosting from 'components/jsonld/BlogPosting';
 
 const SimilarPostsGroup = dynamic(() => import('components/SimilarPostsGroup'), {
   ssr: false,
@@ -69,12 +68,13 @@ class PostPage extends React.Component {
     const translation = (language && post.translations.find((item) => item.lang === language)) || {};
     const isTranslation = Boolean(translation.lang);
 
-    const title = `${translation.title || post.title} - ${current.meta.title}`;
+    const title = `${translation.title || post.title}`;
     const body = translation.body || post.body;
-    const [image] = getImageLinksFromHTML(body);
+    const images = getImageLinksFromHTML(body).slice(0, 10);
     const description = translation.description
       || post.description
       || shorten(stripHTML(body), 20);
+    const datePublished = new Date(post.publishedAt).toISOString();
 
     const url = isTranslation
       ? `${current.clientURL}/p/${post.slug}/${language}`
@@ -82,37 +82,38 @@ class PostPage extends React.Component {
 
     return (
       <>
-        <Head>
-          <title>{title}</title>
-
-          <link rel="canonical" href={url} />
-
-          <meta name="description" content={description} key="description" />
-          <meta name="keywords" content={post.tags.join(', ')} key="keywords" />
-
-          <meta name="twitter:card" content="summary" />
-          <meta name="twitter:title" content={title} />
-          <meta name="twitter:description" content={description} />
-          <meta name="twitter:site" content={current.meta.social.twitter.username} />
-          <meta name="twitter:creator" content={current.meta.social.twitter.username} />
-          <meta name="twitter:image:src" content={image} />
-
-          <meta name="og:title" content={title} />
-          <meta name="og:description" content={description} />
-          <meta name="og:image" content={image} />
-          <meta name="og:url" content={url} />
-          <meta name="og:site_name" content={current.meta.title} />
-          <meta name="og:locale" content={current.meta.language} />
-          <meta name="og:type" content="website" />
-
-          <BlogPosting
-            title={post.title}
-            slug={post.slug}
-            body={post.body}
-            tags={post.tags}
-            publishedAt={new Date(post.publishedAt)}
-          />
-        </Head>
+        <NextSeo
+          title={title}
+          description={description}
+          keywords={post.tags.join(', ')}
+          canonical={url}
+          openGraph={{
+            title,
+            description,
+            url,
+            type: 'article',
+            article: {
+              publishedTime: datePublished,
+              tags: post.tags,
+            },
+            images: images.map((image) => ({
+              url: image,
+            })),
+          }}
+          twitter={{
+            handle: current.meta.social.twitter.username,
+            site: current.meta.social.twitter.username,
+            cardType: 'summary',
+          }}
+        />
+        <ArticleJsonLd
+          url={url}
+          title={title}
+          description={description}
+          images={images}
+          datePublished={datePublished}
+          dateModified={datePublished}
+        />
         <Wrapper>
           <Header />
           {
