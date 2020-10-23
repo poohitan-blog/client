@@ -43,9 +43,9 @@ module.exports = {
           if (cssLoader = moduleRule.use.find(u => u.loader.match('css-loader'))) {
             cssLoader.options = {
               ...cssLoader.options,
-              localsConvention: 'camelCaseOnly',
               modules: {
                 ...cssLoader.options.modules,
+                exportLocalsConvention: 'camelCaseOnly',
               },
             };
           }
