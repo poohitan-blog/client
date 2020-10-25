@@ -1,13 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Head from 'next/head';
 import Link from 'next/link';
+import { NextSeo } from 'next-seo';
 import { differenceInCalendarDays, formatDistanceStrict } from 'date-fns';
 import { uk } from 'date-fns/locale';
 import { parseCookies } from 'nookies';
 import cc from 'classcat';
 
-import { current } from 'config';
 import Error from 'pages/_error';
 
 import API from 'services/api';
@@ -145,9 +144,7 @@ class TopPage extends React.Component {
 
     return (
       <Wrapper>
-        <Head>
-          <title>{`Рейтинг записів - ${current.meta.title}`}</title>
-        </Head>
+        <NextSeo title="Рейтинг записів" />
         <Header />
         <Content>
           <h1>Рейтинг записів</h1>

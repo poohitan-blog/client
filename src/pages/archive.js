@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Head from 'next/head';
+import { NextSeo } from 'next-seo';
 import { parseCookies } from 'nookies';
 
 import { current } from 'config';
@@ -76,11 +76,11 @@ class ArchivePage extends React.Component {
 
     return (
       <Wrapper>
-        <Head>
-          <title>{`Архів - ${current.meta.title}`}</title>
-          <link rel="canonical" href={canonicalUrl} />
-          <meta name="description" content={`Архів записів — ${description}`} key="description" />
-        </Head>
+        <NextSeo
+          title="Архів"
+          canonical={canonicalUrl}
+          description={`Архів записів — ${description}`}
+        />
         <Header />
         <Content>
           <h1>Архів</h1>

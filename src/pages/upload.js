@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Head from 'next/head';
+import { NextSeo } from 'next-seo';
 
 import Error from 'pages/_error';
 
@@ -22,9 +22,7 @@ const UploadFiles = (props) => {
 
   return (
     <Wrapper>
-      <Head>
-        <title>{title}</title>
-      </Head>
+      <NextSeo title={title} />
       <Header />
       <Content>
         <UploadFilesForm title={title} />

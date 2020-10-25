@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Head from 'next/head';
 import { parseCookies } from 'nookies';
+import { NextSeo } from 'next-seo';
 
 import { current } from 'config';
 import Error from 'pages/_error';
@@ -35,12 +35,11 @@ class PagePage extends React.Component {
 
     return (
       <Wrapper>
-        <Head>
-          <title>{`${page.title} - ${current.meta.title}`}</title>
-          <link rel="canonical" href={`${current.clientURL}/${page.slug}`} />
-
-          <meta name="description" content={shorten(stripHTML(page.body), 20)} key="description" />
-        </Head>
+        <NextSeo
+          title={page.title}
+          description={shorten(stripHTML(page.body), 20)}
+          canonical={`${current.clientURL}/${page.slug}`}
+        />
         {
           page.customStylesProcessed && <style dangerouslySetInnerHTML={{ __html: page.customStylesProcessed }} />
         }

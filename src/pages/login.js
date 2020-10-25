@@ -1,6 +1,7 @@
 import React from 'react';
-import Head from 'next/head';
 import Router from 'next/router';
+
+import { NextSeo } from 'next-seo';
 
 import Wrapper from 'components/Wrapper';
 import Content from 'components/Content';
@@ -89,9 +90,7 @@ class LoginPage extends React.Component {
 
     return (
       <Wrapper>
-        <Head>
-          <title>Вхід у Нарнію</title>
-        </Head>
+        <NextSeo title="Вхід у Нарнію" />
         <Content>
           <h1 className={styles.header}>Вхід у Нарнію</h1>
           <div className={styles.container}>

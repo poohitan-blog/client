@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Head from 'next/head';
+import { NextSeo } from 'next-seo';
 
 import { current } from 'config';
 
@@ -34,9 +34,7 @@ class Error extends React.Component {
 
     return (
       <Wrapper>
-        <Head>
-          <title>{`От халепа - ${current.meta.title}`}</title>
-        </Head>
+        <NextSeo title="От халепа" />
         <Header />
         <Content>
           <h1>От халепа</h1>

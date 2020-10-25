@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Head from 'next/head';
 import dynamic from 'next/dynamic';
 import { parseCookies } from 'nookies';
+import { NextSeo, BlogJsonLd } from 'next-seo';
 
 import { current } from 'config';
 import Error from 'pages/_error';
@@ -14,7 +14,6 @@ import Header from 'components/Header';
 import Content from 'components/Content';
 import Footer from 'components/Footer';
 import Post from 'components/Post';
-import Blog from 'components/jsonld/Blog';
 
 const Lightbox = dynamic(() => import('components/ui/Lightbox'), { ssr: false, loading: () => null });
 
@@ -82,29 +81,31 @@ class IndexPage extends React.Component {
 
     return (
       <>
-        <Head>
-          <title>{title}</title>
-
-          <link rel="canonical" href={canonicalUrl} />
-
-          <meta name="description" content={description} key="description" />
-          <meta name="keywords" content={keywords.join(', ')} key="keywords" />
-
-          <Blog />
-
-          <meta name="twitter:card" content="summary" />
-          <meta name="twitter:title" content={title} />
-          <meta name="twitter:description" content={description} />
-          <meta name="twitter:site" content={social.twitter.username} />
-          <meta name="twitter:creator" content={social.twitter.username} />
-
-          <meta name="og:title" content={title} />
-          <meta name="og:description" content={description} />
-          <meta name="og:url" content={current.clientURL} />
-          <meta name="og:site_name" content={title} />
-          <meta name="og:locale" content={languageTerritory} />
-          <meta name="og:type" content="website" />
-        </Head>
+        <NextSeo
+          title="Небилиці"
+          description={description}
+          keywords={keywords}
+          canonical={canonicalUrl}
+          openGraph={{
+            title,
+            description,
+            url: current.clientURL,
+            locale: languageTerritory,
+            site_name: title,
+            type: 'website',
+          }}
+          twitter={{
+            handle: social.twitter.username,
+            site: social.twitter.username,
+            cardType: 'summary',
+          }}
+        />
+        <BlogJsonLd
+          url={canonicalUrl}
+          title={title}
+          description={description}
+          authorName="poohitan"
+        />
         <Wrapper>
           <Header />
           <Content>
