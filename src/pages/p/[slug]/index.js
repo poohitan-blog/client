@@ -110,7 +110,7 @@ class PostPage extends React.Component {
           url={url}
           title={title}
           description={description}
-          images={images}
+          images={[image]}
           datePublished={datePublished}
           dateModified={datePublished}
         />
