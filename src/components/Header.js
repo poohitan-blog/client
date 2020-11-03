@@ -26,8 +26,7 @@ const Header = ({ trashBinState }) => {
     {
       title: 'Про',
       description: 'Хто в біса все це пише',
-      href: '/[slug]',
-      as: '/about',
+      href: '/about',
       icon: <FontAwesomeIcon icon="ghost" />,
     },
     {
@@ -43,7 +42,7 @@ const Header = ({ trashBinState }) => {
         {
           items.map((item) => (
             <li key={item.title} className={styles.menuItem}>
-              <Link href={item.href} as={item.as}>
+              <Link href={item.href}>
                 <a title={item.description || item.title}>
                   {
                     item.markup

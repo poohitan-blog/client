@@ -3,7 +3,6 @@ import Link from 'next/link';
 import { domToReact } from 'html-react-parser';
 
 import { current } from 'config';
-import getRouteByURL, { STATIC_ROUTES } from 'helpers/get-route-by-url';
 
 export default function processLink() {
   const { node } = this;
@@ -22,17 +21,15 @@ export default function processLink() {
 
     const relativeURL = isSelfLink ? url.replace(current.clientURL, '') : url;
 
-    const isStaticLink = STATIC_ROUTES.some((item) => item.test(relativeURL));
+    const isStaticLink = current.staticRoutes.some((item) => item.test(relativeURL));
 
     if (isStaticLink) {
       return this;
     }
 
     if (isRelativeLink || isSelfLink) {
-      const route = getRouteByURL(relativeURL);
-
       this.processedNode = (
-        <Link as={relativeURL} href={route}>
+        <Link href={relativeURL}>
           <a>{domToReact(children)}</a>
         </Link>
       );

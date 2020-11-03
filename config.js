@@ -16,6 +16,19 @@ const shared = {
       },
     },
   },
+
+  staticRoutes: [
+    /^\/rss\/?/,
+    /^\/stuff\/[\S]+/,
+    /^\/rainbow-sheep/,
+    /^\/google/,
+    /^\/comic-saaaaaaanns!!/,
+    /^\/webcolors/,
+    /^\/thats-a-paddlin/,
+    /^\/tortynka/,
+    /^\/uah/,
+    /^\/shutup/,
+  ],
 };
 
 const config = {

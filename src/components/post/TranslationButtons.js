@@ -9,16 +9,13 @@ import { Context as SessionContext } from 'services/session';
 import styles from 'styles/components/post/translation-buttons.module.scss';
 
 const Button = React.memo(({
-  language, title, href, as,
+  language, title, href,
 }) => {
   const postIsAvailableInThisLanguage = translatePostIsAvailableInThisLanguage(language);
   const linkTitle = title ? `"${title}" — ${postIsAvailableInThisLanguage}` : postIsAvailableInThisLanguage;
 
   return (
-    <Link
-      href={href}
-      as={as}
-    >
+    <Link href={href}>
       <a title={linkTitle}>
         <div className={cc([styles.button, 'flag-icon', 'flag-icon-background', `flag-icon-${getCountryCodeByLanguageCode(language)}`])} />
       </a>
@@ -33,7 +30,7 @@ const TranslationButtons = ({ translations, language, slug }) => (
         {
           language === 'uk'
             ? null
-            : <Button key="uk" language="uk" href="/p/[slug]" as={`/p/${slug}`} />
+            : <Button key="uk" language="uk" href={`/p/${slug}`} />
         }
         {
           translations
@@ -44,8 +41,7 @@ const TranslationButtons = ({ translations, language, slug }) => (
                 key={item.lang}
                 title={item.title}
                 language={item.lang}
-                href="/p/[slug]/[language]"
-                as={`/p/${slug}/${item.lang}`}
+                href={`/p/${slug}/${item.lang}`}
               />
             ))
         }
@@ -58,7 +54,6 @@ Button.propTypes = {
   title: PropTypes.string,
   language: PropTypes.string.isRequired,
   href: PropTypes.string.isRequired,
-  as: PropTypes.string.isRequired,
 };
 
 Button.defaultProps = {
