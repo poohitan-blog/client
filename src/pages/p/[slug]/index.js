@@ -96,9 +96,9 @@ class PostPage extends React.Component {
               publishedTime: datePublished,
               tags: post.tags,
             },
-            images: {
+            images: [{
               url: image,
-            },
+            }],
           }}
           twitter={{
             handle: current.meta.social.twitter.username,
