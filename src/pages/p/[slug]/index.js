@@ -70,7 +70,7 @@ class PostPage extends React.Component {
 
     const title = `${translation.title || post.title}`;
     const body = translation.body || post.body;
-    const images = getImageLinksFromHTML(body).slice(0, 10);
+    const [image] = getImageLinksFromHTML(body);
     const description = translation.description
       || post.description
       || shorten(stripHTML(body), 20);
@@ -96,9 +96,9 @@ class PostPage extends React.Component {
               publishedTime: datePublished,
               tags: post.tags,
             },
-            images: images.map((image) => ({
+            images: {
               url: image,
-            })),
+            },
           }}
           twitter={{
             handle: current.meta.social.twitter.username,
