@@ -9,7 +9,7 @@ const Page = (props) => {
   const { title, slug, hidden } = props;
 
   return (
-    <Link href="/[slug]" as={`/${slug}`}>
+    <Link href={`/${slug}`}>
       <a className={styles.listItem}>
         <div className={styles.listSentence}>{title || slug}</div>
         {

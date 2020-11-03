@@ -43,25 +43,16 @@ function highlightQueryInText(text, query) {
     .join(' ');
 }
 
-function generateLinkParams({ id, slug, searchResultType }) {
+function generateLink({ id, slug, searchResultType }) {
   if (searchResultType === 'post') {
-    return {
-      href: '/p/[slug]',
-      as: `/p/${slug}`,
-    };
+    return `/p/${slug}`;
   }
 
   if (searchResultType === 'trashPost') {
-    return {
-      href: '/trash/[id]',
-      as: `/trash/${id}`,
-    };
+    return `/trash/${id}`;
   }
 
-  return {
-    href: '/[slug]',
-    as: `/${slug}`,
-  };
+  return `/${slug}`;
 }
 
 function generateDescription(params) {
@@ -129,7 +120,7 @@ const SearchResult = (props) => {
     resultBody = shorten(bodyText, BODY_MAX_LENGTH_WORDS);
   }
 
-  const { href, as } = generateLinkParams({ id, slug, searchResultType });
+  const link = generateLink({ id, slug, searchResultType });
   const description = generateDescription({
     tags,
     createdAt,
@@ -140,7 +131,7 @@ const SearchResult = (props) => {
 
   return (
     <div className={styles.wrapper}>
-      <Link href={href} as={as}>
+      <Link href={link}>
         <a title={resultTitle}>
           <div className={styles.inner}>
             <h3>{parse(resultTitle)}</h3>

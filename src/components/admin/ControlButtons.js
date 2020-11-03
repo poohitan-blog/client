@@ -13,22 +13,10 @@ import API from 'services/api';
 import styles from 'styles/components/admin/control-buttons.module.scss';
 
 const linkGenerators = {
-  page: {
-    href: () => '/pages/[slug]/edit',
-    as: (slug) => `/pages/${slug}/edit`,
-  },
-  post: {
-    href: () => '/posts/[slug]/edit',
-    as: (slug) => `/posts/${slug}/edit`,
-  },
-  postTranslation: {
-    href: () => '/posts/[slug]/translations/[language]/edit',
-    as: (post, language) => `/posts/${post}/translations/${language}/edit`,
-  },
-  trashPost: {
-    href: () => '/trash/[id]/edit',
-    as: (id) => `/trash/${id}/edit`,
-  },
+  page: (slug) => `/pages/${slug}/edit`,
+  post: (slug) => `/posts/${slug}/edit`,
+  postTranslation: (post, language) => `/posts/${post}/translations/${language}/edit`,
+  trashPost: (id) => `/trash/${id}/edit`,
 };
 
 class ControlButtons extends React.Component {
@@ -100,15 +88,14 @@ class ControlButtons extends React.Component {
     const { removePopupVisible } = this.state;
 
     const linkGenerator = linkGenerators[attachedTo];
-    const href = linkGenerator.href(...tokens);
-    const as = linkGenerator.as(...tokens);
+    const link = linkGenerator(...tokens);
 
     const popupContent = this.renderPopupContent();
 
     return (
       <span className={cc([styles.wrapper, className])} id={id}>
         <div className={cc([styles.button, styles.buttonEdit])}>
-          <Link as={as} href={href}>
+          <Link href={link}>
             <a><FontAwesomeIcon icon="edit" /></a>
           </Link>
         </div>

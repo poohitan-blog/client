@@ -82,7 +82,7 @@ class Tag extends React.Component {
     });
 
     return (
-      <Link href="/tag/[name]" as={`/tag/${name}`}>
+      <Link href={`/tag/${name}`}>
         <a
           href={`/tag/${name}`}
           title={`${describePostsCount(weight)}`}

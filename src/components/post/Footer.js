@@ -24,7 +24,7 @@ class Footer extends React.Component {
         const encodedTag = encodeURIComponent(tag);
 
         return (
-          <Link key={tag} as={`/tag/${encodedTag}`} href="/tag/[name]">
+          <Link key={tag} href={`/tag/${encodedTag}`}>
             <a title={`Записи із позначкою «${tag}»`}>{tag}</a>
           </Link>
         );
@@ -41,7 +41,7 @@ class Footer extends React.Component {
       <div className={styles.wrapper} id={id}>
         <div className={styles.comments}>
           <FontAwesomeIcon icon="comment-alt" className={styles.commentsIcon} />
-          <Link as={`/p/${slug}#comments`} href="/p/[slug]#comments">
+          <Link href={`/p/${slug}#comments`}>
             <a title="Коментарі до запису" className={styles.iconLabel}>{ describeCommentsCount(commentsCount) }</a>
           </Link>
         </div>

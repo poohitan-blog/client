@@ -37,14 +37,14 @@ const Post = (props) => {
   const title = isTranslation ? translation.title : originalPostTitle;
   const body = isTranslation ? translation.body : originalPostBody;
   const link = isTranslation
-    ? { href: '/p/[slug]/[language]', as: `/p/${slug}/${translation.lang}` }
-    : { href: '/p/[slug]', as: `/p/${slug}` };
+    ? `/p/${slug}/${translation.lang}`
+    : `/p/${slug}`;
 
   return (
     <article className={styles.wrapper} data-slug={slug} id={cut ? null : 'post'}>
       <h1 className={styles.title} id={cut ? null : 'post-title'}>
-        <Link as={link.as} href={link.href}>
-          <a title={title} href={link.as}>{title}</a>
+        <Link href={link}>
+          <a title={title}>{title}</a>
         </Link>
         {
           Boolean(translations.length)

@@ -56,7 +56,7 @@ class EditPage extends React.Component {
       return <span>{fullLink}</span>;
     }
 
-    return <Link as={`/${slug}`} href="/[slug]"><a>{fullLink}</a></Link>;
+    return <Link href={`/${slug}`}><a>{fullLink}</a></Link>;
   }
 
   async submit(submittedPage) {
