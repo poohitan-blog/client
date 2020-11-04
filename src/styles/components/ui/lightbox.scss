@@ -2,78 +2,80 @@
 @import '../../mixins/smaller';
 
 .lg-backdrop {
-  background-color: transparentize($white, 0.15);
+  background-color: transparentize($white, 0.15) !important;
 }
 
-.lg-sub-html {
-  background-color: transparent;
-  color: $black;
-  display: flex;
-  justify-content: center;
-  padding: 0;
+.lightbox {
+  &.lg-outer {
+    .lg-item:not(.lg-complete) {
+      background-image: url('/static/icons/circle.svg');
+      background-repeat: none;
+      background-position: center center;
+      background-size: 3em;
+      filter: invert(50%);
+    }
 
-  @include smaller;
-
-  .lightbox-image-caption {
-    background-color: transparentize($white, 0.15);
-    padding: 1em 1.5em;
-    transition: background-color 100ms linear;
-
-    &:hover {
-      background-color: $white;
+    .lg-img-wrap {
+      padding: 0;
     }
   }
-}
 
-.lg-object {
-  background-color: white;
-}
-
-.lg-toolbar {
-  background: none;
-
-  #lg-counter {
-    color: $dark-grey;
-    @include smaller;
-  }
-}
-
-.lg-outer {
-  .lg-item:not(.lg-complete) {
-    background-image: url('/static/icons/circle.svg');
-    background-repeat: none;
-    background-position: center center;
-    background-size: 3em;
-    filter: invert(50%);
-  }
-
-  .lg-img-wrap {
+  .lg-sub-html {
+    background-color: transparent;
+    color: $black;
+    display: flex;
+    justify-content: center;
     padding: 0;
+
+    @include smaller;
+
+    .lightbox-image-caption {
+      background-color: transparentize($white, 0.15);
+      padding: 1em 1.5em;
+      transition: background-color 100ms linear;
+
+      &:hover {
+        background-color: $white;
+      }
+    }
   }
-}
 
-.lg-toolbar,
-.lg-actions {
-  @supports (-moz-appearance: none) {
-    -webkit-text-stroke: 3px $white;
-    paint-order: stroke fill markers;
+  .lg-object {
+    background-color: white;
   }
-}
 
-.lg-toolbar .lg-icon,
-.lg-actions .lg-next,
-.lg-actions .lg-prev {
-  background: none;
-  color: transparentize($grey, 0.3);
-  font-size: 1.5em;
+  .lg-toolbar {
+    background: none;
 
-  &:hover {
-    color: $dark-grey;
+    #lg-counter {
+      color: $dark-grey;
+      @include smaller;
+    }
   }
-}
 
-@media (orientation: portrait), (max-width: 640px) {
+  .lg-toolbar,
   .lg-actions {
-    display: none;
+    @supports (-moz-appearance: none) {
+      -webkit-text-stroke: 3px $white;
+      paint-order: stroke fill markers;
+    }
+  }
+
+  .lg-toolbar .lg-icon,
+  .lg-actions .lg-next,
+  .lg-actions .lg-prev {
+    background: none;
+    color: transparentize($grey, 0.3);
+    font-size: 1.5em;
+
+    &:hover {
+      color: $dark-grey;
+    }
+  }
+
+  @media (orientation: portrait), (max-width: 640px) {
+    .lg-actions {
+      display: none;
+    }
   }
 }

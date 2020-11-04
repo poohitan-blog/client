@@ -22,7 +22,7 @@ class TagPage extends React.Component {
     try {
       const { name, page = 1 } = query;
       const { docs, meta } = await API.posts.find({
-        tag: name,
+        tag: decodeURIComponent(name),
         page,
         limit: POSTS_PER_PAGE,
         cut: true,

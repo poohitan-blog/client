@@ -12,6 +12,10 @@ import 'codemirror/mode/shell/shell';
 
 import 'codemirror/addon/selection/active-line';
 
+import 'codemirror/lib/codemirror.css';
+import 'codemirror/theme/eclipse.css';
+import 'codemirror/theme/monokai.css';
+
 import styles from 'styles/components/admin/code-editor.module.scss';
 
 const MIME_BY_LANGUAGE = new Proxy({

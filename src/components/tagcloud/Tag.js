@@ -81,10 +81,12 @@ class Tag extends React.Component {
       [styles.isShaking]: isShaking,
     });
 
+    const href = `/tag/${encodeURIComponent(name)}`;
+
     return (
-      <Link href={`/tag/${name}`}>
+      <Link href={href}>
         <a
-          href={`/tag/${name}`}
+          href={href}
           title={`${describePostsCount(weight)}`}
           onMouseOver={this.shake}
           onFocus={() => {}}

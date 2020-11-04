@@ -4,6 +4,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import 'lightgallery.js';
+import 'lightgallery.js/dist/css/lightgallery.min.css';
 
 import { LIGHTBOX_CLASS } from 'utils/html-processor/image';
 
@@ -21,6 +22,7 @@ class Lightbox extends React.Component {
       hideBarsDelay: 3000,
       getCaptionFromTitleOrAlt: false,
       selector: `.${LIGHTBOX_CLASS}`,
+      addClass: 'lightbox',
     });
   }
 
