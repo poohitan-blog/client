@@ -4,7 +4,7 @@ import { parseCookies, setCookie } from 'nookies';
 import random from 'helpers/random';
 
 const COOKIE_NAME = 'raspberriesDay';
-const LUCKY_NUMBER = { min: 1, max: 10 };
+const LUCKY_NUMBER_PARAMS = { min: 1, max: 20 };
 
 function runLottery(req, res) {
   const cookies = parseCookies({ req });
@@ -14,8 +14,8 @@ function runLottery(req, res) {
     return cookie === 'true';
   }
 
-  const luckyNumber = random(LUCKY_NUMBER);
-  const userNumber = random(LUCKY_NUMBER);
+  const luckyNumber = random(LUCKY_NUMBER_PARAMS);
+  const userNumber = random(LUCKY_NUMBER_PARAMS);
   const wonLottery = userNumber === luckyNumber;
 
   const expires = endOfToday();
