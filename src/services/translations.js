@@ -5,7 +5,7 @@ const codes = {
 };
 
 const postIsAvailableInThisLanguagePhrases = {
-  en: 'Available in English',
+  en: 'Read in English',
   uk: 'Читати українською',
 };
 
