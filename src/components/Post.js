@@ -46,6 +46,35 @@ const Post = (props) => {
         <Link href={link}>
           <a title={title}>{title}</a>
         </Link>
+        <SessionContext.Consumer>
+          {({ isAuthenticated }) => {
+            if (!hidden && !isAuthenticated) {
+              return null;
+            }
+
+            return (
+              <div className={styles.titleIcons}>
+                {
+                  hidden
+                    ? <FontAwesomeIcon icon="eye-slash" className={styles.titleIcon} id={cut ? null : 'post-title-icon'} />
+                    : null
+                }
+                {
+                  isAuthenticated
+                    ? (
+                      <AdminControlButtons
+                        attachedTo={isTranslation ? 'postTranslation' : 'post'}
+                        tokens={[slug, translation.lang]}
+                        className={styles.adminControlButtons}
+                        id={cut ? null : 'post-admin-control-buttons'}
+                      />
+                    )
+                    : null
+                }
+              </div>
+            );
+          }}
+        </SessionContext.Consumer>
         {
           Boolean(translations.length)
             && (
@@ -56,23 +85,6 @@ const Post = (props) => {
               />
             )
         }
-        <div className={styles.titleIcons}>
-          {
-            hidden && (
-              <FontAwesomeIcon icon="eye-slash" className={styles.titleIcon} id={cut ? null : 'post-title-icon'} />
-            )
-          }
-          <SessionContext.Consumer>
-            {({ isAuthenticated }) => isAuthenticated && (
-              <AdminControlButtons
-                attachedTo={isTranslation ? 'postTranslation' : 'post'}
-                tokens={[slug, translation.lang]}
-                className={styles.adminControlButtons}
-                id={cut ? null : 'post-admin-control-buttons'}
-              />
-            )}
-          </SessionContext.Consumer>
-        </div>
       </h1>
       <div className={styles.body} id={cut ? null : 'post-body'}>
         {

@@ -1,44 +1,35 @@
 @import '../../variables';
 
 .wrapper {
-  position: absolute;
-  left: calc(0.8rem - #{$wrapper-padding});
-  top: -0.5rem;
+  display: flex;
+  margin-top: 0.5rem;
+  margin-left: 0.5rem;
 
   .button {
     background-color: white;
     background-size: cover;
     background-position: center center;
     background-clip: content-box;
-    border: 3px solid $light-grey;
-    border-radius: 50%;
+    border: 2px solid $light-grey;
+    border-radius: 20%;
     display: block;
-    margin: 0.2em 0;
-    width: 2rem;
-    height: 2rem;
-    transition: all 100ms linear;
+    width: 1.6rem;
+    height: 1.2rem;
+    transition: border-color 100ms linear, box-shadow 100ms linear, opacity 200ms linear;
     transform-origin: center center;
+    margin: 0 0.1em;
+    opacity: 0.8;
 
     &:hover {
       border-color: $white;
-      box-shadow: 0 0 0 3px $light-orange;
+      box-shadow: 0 0 0 2px $light-orange;
+      opacity: 1;
     }
   }
 }
 
 @media (max-width: 640px) {
   .wrapper {
-    position: relative;
-    left: auto;
-    top: auto;
-    margin-left: 1rem;
-    margin-top: 0rem;
-    display: flex;
-
-    .button {
-      height: 1.7rem;
-      width: 1.7rem;
-      margin: 0 0.2em;
-    }
+    margin-top: 0.35rem;
   }
 }
