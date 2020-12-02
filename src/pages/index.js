@@ -82,7 +82,7 @@ class IndexPage extends React.Component {
     return (
       <>
         <NextSeo
-          title="Небилиці"
+          title="Скандально довгі тексти"
           description={description}
           keywords={keywords}
           canonical={canonicalUrl}
