@@ -12,6 +12,7 @@ const IMAGE_WIDTH = 300;
 
 const TinyPost = ({
   title,
+  description,
   slug,
   image,
   publishedAt,
@@ -19,7 +20,7 @@ const TinyPost = ({
 }) => (
   <LazyLoadComponent threshold={300} scrollPosition={scrollPosition} placeholder={<Rectangle />}>
     <Link href={`/p/${slug}`}>
-      <a className={styles.wrapper} title={title} style={{ backgroundImage: `url("${image}?width=${IMAGE_WIDTH}")` }}>
+      <a className={styles.wrapper} title={description || title} style={{ backgroundImage: `url("${image}?width=${IMAGE_WIDTH}")` }}>
         <div className={styles.content}>
           <div><span className={styles.title}>{title}</span></div>
           <div><span className={styles.date}>{formatPostDate(publishedAt)}</span></div>
@@ -32,6 +33,7 @@ const TinyPost = ({
 
 TinyPost.propTypes = {
   title: PropTypes.string.isRequired,
+  description: PropTypes.string,
   slug: PropTypes.string.isRequired,
   publishedAt: PropTypes.instanceOf(Date).isRequired,
   image: PropTypes.string,
@@ -39,6 +41,7 @@ TinyPost.propTypes = {
 };
 
 TinyPost.defaultProps = {
+  description: '',
   image: '',
   scrollPosition: null,
 };

@@ -35,6 +35,7 @@ const SimilarPostsGroup = ({ posts, displayCount, scrollPosition }) => {
               <TinyPost
                 key={post.slug}
                 title={post.title}
+                description={post.description}
                 slug={post.slug}
                 publishedAt={new Date(post.publishedAt)}
                 image={post.image}
