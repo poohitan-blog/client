@@ -9,6 +9,7 @@ import PostTranslation from 'models/post-translation';
 import Page from 'models/page';
 import TrashPost from 'models/trash-post';
 import User from 'models/user';
+import Moment from 'models/moment';
 
 const API_URL = current.apiURL;
 const INLINE_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/svg'];
@@ -93,7 +94,9 @@ async function search(query, cookies) {
   return { docs: deserialized, meta };
 }
 
-async function upload(files, cookies) {
+async function upload(files, cookies, options = {}) {
+  const { analyze = false } = options;
+
   const images = files.filter((file) => INLINE_IMAGE_TYPES.includes(file.type));
   const restFiles = files.filter((file) => !images.includes(file));
 
@@ -106,7 +109,7 @@ async function upload(files, cookies) {
   const uploadImages = !images.length
     ? Promise.resolve([])
     : request({
-      url: `${API_URL}/images`,
+      url: `${API_URL}/images?analyze=${analyze}`,
       cookies,
       body: imagesFormData,
       method: 'POST',
@@ -189,6 +192,14 @@ const tags = {
   },
 };
 
+const moments = {
+  find: (query) => find({ model: Moment, query }),
+  findOne: (id) => findOne({ model: Moment, param: id }),
+  update: (id, body, cookies) => update({ model: Moment, param: id, body }, cookies),
+  create: (body, cookies) => create({ model: Moment, body }, cookies),
+  remove: (id, cookies) => remove({ model: Moment, param: id }, cookies),
+};
+
 export const analytics = {
   trackPageView(path) {
     const url = `${API_URL}/analytics/page-view`;
@@ -229,6 +240,7 @@ const API = {
   users,
   search,
   tags,
+  moments,
   upload,
   analytics,
   sendFeedback,

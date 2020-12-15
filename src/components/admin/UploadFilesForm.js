@@ -24,8 +24,8 @@ class UploadFilesForm extends React.Component {
 
     const { queue, links } = this.state;
 
-    const newLinks = await API.upload(queue, parseCookies({}));
-    const updatedLinksList = [...links, ...newLinks];
+    const uploadResults = await API.upload(queue, parseCookies({}));
+    const updatedLinksList = [...links, ...uploadResults.map((result) => result.url)];
 
     this.setState({
       links: updatedLinksList,
