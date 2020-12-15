@@ -3,7 +3,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import 'lightgallery.js';
+import 'lightgallery.js/dist/js/lightgallery';
 import 'lightgallery.js/dist/css/lightgallery.min.css';
 
 import { LIGHTBOX_CLASS } from 'utils/html-processor/image';
