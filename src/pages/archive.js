@@ -72,7 +72,7 @@ class ArchivePage extends React.Component {
       ? `${current.clientURL}/archive`
       : `${current.clientURL}/archive?page=${currentPage}`;
 
-    const description = posts.map((post) => post.title.toLowerCase()).join(', ');
+    const description = posts.map((post) => `«${post.title}»`).join(', ');
 
     return (
       <Wrapper>
