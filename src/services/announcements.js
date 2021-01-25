@@ -6,6 +6,7 @@ import { describeWordCount } from 'services/grammar';
 
 import HeartIcon from 'static/icons/heart.svg';
 import CakeIcon from 'static/icons/cake.svg';
+import GhostIcon from 'static/icons/ghost.svg';
 
 const DEFAULT_PHRASES = [
   'Читай українською',
@@ -68,6 +69,17 @@ export function generateRandomAnnouncement() {
 
 export function getAnnouncement() {
   const { isBirthday, age } = getWebsiteInfo();
+  const isDead = false; // TODO: make a check from API
+
+  if (isDead) {
+    const text = 'Я помер. Сайт більше не оновлюється';
+
+    return {
+      text,
+      position: POSITIONS.TOP,
+      Icon: GhostIcon,
+    };
+  }
 
   if (isBirthday) {
     const text = `${describeWordCount(age, ['рік', 'роки', 'років'])} сайту`;
