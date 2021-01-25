@@ -37,7 +37,6 @@ const SimilarPostsGroup = ({ posts, displayCount, scrollPosition }) => {
                 title={post.title}
                 description={post.description}
                 slug={post.slug}
-                publishedAt={new Date(post.publishedAt)}
                 image={post.image}
                 scrollPosition={scrollPosition}
               />

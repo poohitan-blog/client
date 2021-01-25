@@ -51,25 +51,15 @@
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
-  }
 
-  .date {
-    color: $light-grey;
-    white-space: nowrap;
-    @include smaller;
-  }
-
-  .title,
-  .date {
     background-color: transparentize($black, 0.3);
     box-decoration-break: clone;
-    padding: 0.25em 0.3em;
+    padding: 0.1em 0.5em;
     transition: background-color 200ms linear;
   }
 
   &:hover {
-    .title,
-    .date {
+    .title {
       background-color: transparent;
     }
 
