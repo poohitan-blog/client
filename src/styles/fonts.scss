@@ -3,6 +3,15 @@
   src: url('/static/fonts/gilroy-heavy.woff') format('woff'),
     url('/static/fonts/gilroy-heavy.ttf') format('truetype');
   font-display: swap;
+  font-weight: 900;
+}
+
+@font-face {
+  font-family: 'Gilroy';
+  src: url('/static/fonts/gilroy-bold.woff') format('woff'),
+    url('/static/fonts/gilroy-bold.ttf') format('truetype');
+  font-display: swap;
+  font-weight: 700;
 }
 
 @font-face {
