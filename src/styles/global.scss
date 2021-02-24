@@ -27,15 +27,20 @@ body {
   }
 }
 
-h1 {
+h1, h2, h3, h4 {
   font-family: $header-font-family;
+}
+
+h1 {
   color: $dark-grey;
   font-size: 1.9em;
+  font-weight: 900;
   margin: 1em 0 0.5em 0;
   line-height: 1.1em;
 }
 
 h2 {
+  font-weight: 700;
   line-height: 1.2em;
 }
 
