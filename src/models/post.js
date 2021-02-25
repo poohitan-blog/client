@@ -7,7 +7,7 @@ export default {
     slug: String,
     tags: [String],
     views: Number,
-    draft: Boolean,
+    hidden: Boolean,
     customStyles: String,
     customStylesProcessed: String,
     imagesWidth: Number,

@@ -14,6 +14,7 @@ import Header from 'components/Header';
 import Content from 'components/Content';
 import Footer from 'components/Footer';
 import Post from 'components/Post';
+import CompactPost from 'components/CompactPost';
 
 const Lightbox = dynamic(() => import('components/ui/Lightbox'), { ssr: false, loading: () => null });
 
@@ -50,21 +51,35 @@ class IndexPage extends React.Component {
       return <Error statusCode={error.status} />;
     }
 
-    const content = posts.map((post) => (
-      <Post
-        cut
-        key={post.slug}
-        title={post.title}
-        body={post.body}
-        slug={post.slug}
-        hidden={post.hidden}
-        language={post.language}
-        translations={post.translations}
-        commentsCount={post.commentsCount}
-        publishedAt={new Date(post.publishedAt)}
-        tags={post.tags}
-      />
-    ));
+    const content = posts.map((post) => {
+      if (post.hidden) {
+        return (
+          <CompactPost
+            key={post.slug}
+            title={post.title}
+            body={post.body}
+            slug={post.slug}
+            publishedAt={new Date(post.publishedAt)}
+            simplified
+          />
+        );
+      }
+
+      return (
+        <Post
+          cut
+          key={post.slug}
+          title={post.title}
+          body={post.body}
+          slug={post.slug}
+          language={post.language}
+          translations={post.translations}
+          commentsCount={post.commentsCount}
+          publishedAt={new Date(post.publishedAt)}
+          tags={post.tags}
+        />
+      );
+    });
 
     const {
       title,

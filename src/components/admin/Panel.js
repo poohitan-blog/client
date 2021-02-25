@@ -69,6 +69,9 @@ class Panel extends React.Component {
               <Link href="/upload"><a>Завантажити файли</a></Link>
             </li>
             <li>
+              <Link href="/drafts"><a>Чернетки</a></Link>
+            </li>
+            <li>
               <a href="#" role="button" onClick={Panel.logOut}>Вийти</a>
             </li>
           </ul>

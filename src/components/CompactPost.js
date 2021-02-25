@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import cc from 'classcat';
 
 import { stripHTML, shorten } from 'services/text';
 import { formatPostDate } from 'services/grammar';
@@ -15,11 +16,20 @@ const CompactPost = (props) => {
     slug,
     publishedAt,
     hidden,
+    simplified,
+    className,
   } = props;
+
   const shortenedBody = shorten(stripHTML(body), 70);
 
+  const fullClassName = cc({
+    [styles.wrapper]: true,
+    [styles.simplified]: simplified,
+    [className]: Boolean(className),
+  });
+
   return (
-    <article className={styles.wrapper}>
+    <article className={fullClassName}>
       <div className={styles.titleWrapper}>
         <h3 className={styles.title}>
           <Link href={`/p/${slug}`}>
@@ -49,10 +59,14 @@ CompactPost.propTypes = {
   slug: PropTypes.string.isRequired,
   publishedAt: PropTypes.instanceOf(Date).isRequired,
   hidden: PropTypes.bool,
+  simplified: PropTypes.bool,
+  className: PropTypes.string,
 };
 
 CompactPost.defaultProps = {
   hidden: false,
+  simplified: false,
+  className: '',
 };
 
 export default CompactPost;

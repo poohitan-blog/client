@@ -48,3 +48,17 @@
     margin-left: 0;
   }
 }
+
+.simplified {
+  margin: 2em 0;
+
+  .title a {
+    color: $light-orange;
+    text-decoration: none;
+
+    &:hover {
+      color: lighten($light-orange, 10%);
+      text-decoration: none;
+    }
+  }
+}
