@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import cc from 'classcat';
 
 import FullBody from 'components/post/FullBody';
 import CutBody from 'components/post/CutBody';
@@ -29,6 +30,7 @@ const Post = (props) => {
     commentsCount,
     publishedAt,
     tags,
+    className,
   } = props;
 
   const translation = translations.find((item) => item.lang === language) || {};
@@ -40,8 +42,13 @@ const Post = (props) => {
     ? `/p/${slug}/${translation.lang}`
     : `/p/${slug}`;
 
+  const fullClassName = cc({
+    [styles.wrapper]: true,
+    [className]: Boolean(className),
+  });
+
   return (
-    <article className={styles.wrapper} data-slug={slug} id={cut ? null : 'post'}>
+    <article className={fullClassName} data-slug={slug} id={cut ? null : 'post'}>
       <h1 className={styles.title} id={cut ? null : 'post-title'}>
         <Link href={link}>
           <a title={title}>{title}</a>
@@ -117,6 +124,7 @@ Post.propTypes = {
   imagesWidth: PropTypes.number,
   publishedAt: PropTypes.instanceOf(Date).isRequired,
   tags: PropTypes.arrayOf(PropTypes.string).isRequired,
+  className: PropTypes.string,
 };
 
 Post.defaultProps = {
@@ -126,6 +134,7 @@ Post.defaultProps = {
   translations: [],
   commentsCount: 0,
   imagesWidth: DEFAULT_THUMBNAIL_WIDTH,
+  className: '',
 };
 
 export default Post;
