@@ -43,7 +43,7 @@ class EditTrashPost extends React.Component {
       ? await API.trashPosts.update(trashPost.id, submittedTrashPost, parseCookies({}))
       : await API.trashPosts.create(submittedTrashPost, parseCookies({}));
 
-    Router.push('/trash/[id]', `/trash/${savedTrashPost.id}`);
+    Router.push('/trash/[id]', `/trash/${savedTrashPost.shortId}`);
   }
 
   render() {

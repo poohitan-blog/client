@@ -13,7 +13,7 @@ const Header = () => {
     try {
       const post = await API.trashPosts.findRandom();
 
-      router.push(`/trash/${post.id}`);
+      router.push(`/trash/${post.shortId}`);
     } catch (error) {
       console.error(error);
     }

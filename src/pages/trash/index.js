@@ -71,7 +71,7 @@ class TrashPage extends React.Component {
     if (single) {
       const [post] = posts;
 
-      return `${current.clientURL}/trash/${post.id}`;
+      return `${current.clientURL}/trash/${post.shortId}`;
     }
 
     if (currentPage !== 1) {
@@ -100,6 +100,7 @@ class TrashPage extends React.Component {
     const postsMarkup = posts.map((post) => (
       <TrashPost
         id={post.id}
+        shortId={post.shortId}
         key={`${post.id}-${single}`}
         collapsable={!single}
         body={post.body}
@@ -122,7 +123,7 @@ class TrashPage extends React.Component {
           {postsMarkup}
         </Content>
         <Footer pagination={paginationInfo} />
-        <Lightbox id={posts.map((post) => post.id).join('-')} />
+        <Lightbox id={posts.map((post) => post.shortId).join('-')} />
       </Wrapper>
     );
   }
