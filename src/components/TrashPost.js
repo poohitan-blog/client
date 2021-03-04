@@ -93,7 +93,7 @@ class TrashPost extends React.Component {
   }
 
   render() {
-    const { id, createdAt } = this.props;
+    const { id, shortId, createdAt } = this.props;
     const { collapsable, collapsed, body } = this.state;
 
     const classNameString = cc({
@@ -127,7 +127,7 @@ class TrashPost extends React.Component {
           )
         }
         <div className={styles.footer}>
-          <Link href={`/trash/${id}`}>
+          <Link href={`/trash/${shortId}`}>
             <a title="Постійне посилання" className="nowrap">постійне посилання</a>
           </Link>
           <hr className={styles.footerLine} />
@@ -142,6 +142,7 @@ class TrashPost extends React.Component {
 
 TrashPost.propTypes = {
   id: PropTypes.string.isRequired,
+  shortId: PropTypes.string.isRequired,
   body: PropTypes.string.isRequired,
   createdAt: PropTypes.instanceOf(Date).isRequired,
   scrollPosition: PropTypes.shape({}),
