@@ -5,12 +5,22 @@ import { NextSeo } from 'next-seo';
 import { current } from 'config';
 
 import { describeHTTPCode } from 'services/grammar';
+import random from 'helpers/random';
 
 import Wrapper from 'components/Wrapper';
 import Header from 'components/Header';
 import Content from 'components/Content';
 import Footer from 'components/Footer';
 import TagCloud from 'components/TagCloud';
+
+const ERROR_TITLES = [
+  'От халепа',
+  'Святе трясця!',
+  'Ой, леле!',
+  'Лишенько',
+  'Чорт забирай',
+  'Дідько!',
+];
 
 class Error extends React.Component {
   static getInitialProps({ res, error }) {
@@ -32,12 +42,14 @@ class Error extends React.Component {
       message += ` HTTP код помилки: ${statusCode}`;
     }
 
+    const errorTitle = ERROR_TITLES[random({ min: 0, max: ERROR_TITLES.length - 1 })];
+
     return (
       <Wrapper>
-        <NextSeo title="От халепа" />
+        <NextSeo title={errorTitle} />
         <Header />
         <Content>
-          <h1>От халепа</h1>
+          <h1>{errorTitle}</h1>
           <p className="fatty larger error text-center">{message}</p>
           <div className="text-center">
             <p>Хмаринка позначок:</p>
