@@ -21,7 +21,7 @@ class PostForm extends React.Component {
 
     this.state = {
       ...props,
-      tagsString: props.tags && props.tags.length ? props.tags.join(', ') : '',
+      tagsString: props.tags?.length ? props.tags.join(', ') : '',
       dateString: isValid(props.publishedAt) ? format(props.publishedAt, DATE_FORMAT) : '',
       translations: props.translations || [],
       descriptionSymbolsLeft: MAX_DESCRIPTION_LENGTH - props.description.length,
@@ -33,6 +33,27 @@ class PostForm extends React.Component {
     this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
     this.getPostLinkMarkup = this.getPostLinkMarkup.bind(this);
     this.submit = this.submit.bind(this);
+  }
+
+  handleTagsChange(event) {
+    this.setState({
+      tagsString: event.target.value,
+    });
+  }
+
+  handleDateChange(event) {
+    this.setState({
+      dateString: event.target.value,
+    });
+  }
+
+  handleDescriptionChange(event) {
+    const { value } = event.target;
+
+    this.setState({
+      description: value,
+      descriptionSymbolsLeft: MAX_DESCRIPTION_LENGTH - value.length,
+    });
   }
 
   getPostLinkMarkup() {
@@ -96,27 +117,6 @@ class PostForm extends React.Component {
 
     this.setState({
       tagsString: tags.join(', '),
-    });
-  }
-
-  handleTagsChange(event) {
-    this.setState({
-      tagsString: event.target.value,
-    });
-  }
-
-  handleDateChange(event) {
-    this.setState({
-      dateString: event.target.value,
-    });
-  }
-
-  handleDescriptionChange(event) {
-    const { value } = event.target;
-
-    this.setState({
-      description: value,
-      descriptionSymbolsLeft: MAX_DESCRIPTION_LENGTH - value.length,
     });
   }
 
@@ -211,7 +211,7 @@ class PostForm extends React.Component {
           <div className={styles.translations}>
             <p>Переклади:</p>
             {
-              translations && translations.length
+              translations?.length
                 ? translations
                   .map((translation) => (
                     <Link

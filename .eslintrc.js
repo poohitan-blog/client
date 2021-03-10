@@ -4,17 +4,19 @@ module.exports = {
   parser: 'babel-eslint',
   extends: 'airbnb',
   rules: {
-    'react/jsx-filename-extension': [1, { extensions: [".js", ".jsx"] }],
+    'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
     'jsx-a11y/anchor-is-valid': [1, {
-      components: [ "Link" ],
-      specialLink: [ "href" ],
-      aspects: [ "noHref", "invalidHref", "preferButton" ]
+      components: ['Link'],
+      specialLink: ['href'],
+      aspects: ['noHref', 'invalidHref', 'preferButton'],
     }],
     'import/no-extraneous-dependencies': 0,
-    'max-len': [2, { code: 120, ignoreStrings: true, ignoreUrls: true, ignoreTemplateLiterals: true }],
+    'max-len': [2, {
+      code: 120, ignoreStrings: true, ignoreUrls: true, ignoreTemplateLiterals: true,
+    }],
     'jsx-a11y/no-static-element-interactions': [1],
     'jsx-a11y/click-events-have-key-events': [1],
-    'global-require': [1]
+    'global-require': [1],
   },
   globals: {
     $: false,
@@ -42,9 +44,9 @@ module.exports = {
               config: path.resolve(__dirname, 'config'),
               static: path.resolve(__dirname, 'public/static'),
             },
-          }
-        }
-      }
-    }
-  }
-}
+          },
+        },
+      },
+    },
+  },
+};

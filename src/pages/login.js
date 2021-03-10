@@ -58,14 +58,14 @@ class LoginPage extends React.Component {
     this.authenticate = this.authenticate.bind(this);
   }
 
-  setPassword(event) {
-    this.setState({ password: event.target.value });
-  }
-
   async handleKeyPress(event) {
     if (event.which === 13) {
       this.authenticate();
     }
+  }
+
+  setPassword(event) {
+    this.setState({ password: event.target.value });
   }
 
   async authenticate() {
