@@ -56,7 +56,7 @@
   },
   "devDependencies": {
     "babel-eslint": "^10.0.3",
-    "babel-plugin-inline-react-svg": "^0.5.2",
+    "babel-plugin-inline-react-svg": "^2.0.1",
     "eslint": "^6.7.1",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-import-resolver-webpack": "^0.12.1",
