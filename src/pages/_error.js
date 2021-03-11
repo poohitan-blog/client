@@ -24,7 +24,7 @@ const ERROR_TITLES = [
 
 class Error extends React.Component {
   static getInitialProps({ res, error }) {
-    const statusCode = (res && res.statusCode) || (error && error.statusCode);
+    const statusCode = res?.statusCode || error?.statusCode;
 
     if (current.environment !== 'production') {
       console.error(error);

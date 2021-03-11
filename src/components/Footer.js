@@ -23,7 +23,7 @@ const Footer = ({ pagination, searchBox }) => {
   const hasPreviousPage = currentPage > 1;
   const hasPagination = hasNextPage || hasPreviousPage;
 
-  const { next, previous } = (pagination && pagination.linkTexts) || DEFAULT_LINK_TEXTS;
+  const { next, previous } = pagination?.linkTexts || DEFAULT_LINK_TEXTS;
 
   let previousPagelink;
   let nextPageLink;

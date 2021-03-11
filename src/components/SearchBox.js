@@ -24,14 +24,6 @@ class SearchBox extends React.PureComponent {
     this.setQuery = this.setQuery.bind(this);
   }
 
-  setQuery(event) {
-    const { value } = event.target;
-
-    this.setState({
-      query: value,
-    });
-  }
-
   handleKeyPress(event) {
     const { query } = this.state;
 
@@ -42,6 +34,14 @@ class SearchBox extends React.PureComponent {
     if (event.which === ENTER_KEY_CODE) {
       Router.push(`/search?query=${encodeURIComponent(query.trim())}`);
     }
+  }
+
+  setQuery(event) {
+    const { value } = event.target;
+
+    this.setState({
+      query: value,
+    });
   }
 
   focus() {

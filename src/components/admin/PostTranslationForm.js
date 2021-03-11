@@ -24,6 +24,15 @@ class PostTranslationForm extends React.Component {
     this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
   }
 
+  handleDescriptionChange(event) {
+    const { value } = event.target;
+
+    this.setState({
+      description: value,
+      descriptionSymbolsLeft: MAX_DESCRIPTION_LENGTH - value.length,
+    });
+  }
+
   async submit() {
     const { title, body } = this.state;
 
@@ -36,15 +45,6 @@ class PostTranslationForm extends React.Component {
     const { onChange } = this.props;
 
     onChange(this.state);
-  }
-
-  handleDescriptionChange(event) {
-    const { value } = event.target;
-
-    this.setState({
-      description: value,
-      descriptionSymbolsLeft: MAX_DESCRIPTION_LENGTH - value.length,
-    });
   }
 
   render() {

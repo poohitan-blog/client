@@ -27,8 +27,8 @@ class Lightbox extends React.Component {
   }
 
   static destroy(container) {
-    const lightboxId = container && container.getAttribute('lg-uid');
-    const lightboxInstance = global.lgData && global.lgData[lightboxId];
+    const lightboxId = container?.getAttribute('lg-uid');
+    const lightboxInstance = global.lgData?.[lightboxId];
 
     if (lightboxInstance) {
       lightboxInstance.destroy(true);
