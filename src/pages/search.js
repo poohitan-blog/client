@@ -64,6 +64,7 @@ class SearchPage extends React.Component {
         .map((searchResult) => (
           <SearchResult
             id={searchResult.id}
+            shortId={searchResult.shortId}
             key={searchResult.id}
             query={searchQuery}
             title={searchResult.title}

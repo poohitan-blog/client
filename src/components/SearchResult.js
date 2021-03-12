@@ -43,13 +43,13 @@ function highlightQueryInText(text, query) {
     .join(' ');
 }
 
-function generateLink({ id, slug, searchResultType }) {
+function generateLink({ id, shortId, slug, searchResultType }) {
   if (searchResultType === 'post') {
     return `/p/${slug}`;
   }
 
   if (searchResultType === 'trashPost') {
-    return `/trash/${id}`;
+    return `/trash/${shortId}`;
   }
 
   return `/${slug}`;
@@ -93,6 +93,7 @@ function generateDescription(params) {
 const SearchResult = (props) => {
   const {
     id,
+    shortId,
     title,
     slug,
     body,
@@ -120,7 +121,7 @@ const SearchResult = (props) => {
     resultBody = shorten(bodyText, BODY_MAX_LENGTH_WORDS);
   }
 
-  const link = generateLink({ id, slug, searchResultType });
+  const link = generateLink({ id, shortId, slug, searchResultType });
   const description = generateDescription({
     tags,
     createdAt,
@@ -148,6 +149,7 @@ const SearchResult = (props) => {
 
 SearchResult.propTypes = {
   id: PropTypes.string.isRequired,
+  shortId: PropTypes.string,
   title: PropTypes.string,
   body: PropTypes.string.isRequired,
   slug: PropTypes.string,
@@ -160,6 +162,7 @@ SearchResult.propTypes = {
 
 SearchResult.defaultProps = {
   title: '',
+  shortId: '',
   slug: '',
   tags: null,
   createdAt: null,
