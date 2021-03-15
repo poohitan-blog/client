@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 import Router from 'next/router';
@@ -12,107 +12,76 @@ import API from 'services/api';
 
 import styles from 'styles/components/admin/control-buttons.module.scss';
 
-const linkGenerators = {
+const editLinkGenerators = {
   page: (slug) => `/pages/${slug}/edit`,
   post: (slug) => `/posts/${slug}/edit`,
   postTranslation: (post, language) => `/posts/${post}/translations/${language}/edit`,
   trashPost: (id) => `/trash/${id}/edit`,
 };
 
-class ControlButtons extends React.Component {
-  constructor(props) {
-    super(props);
+const entityTypeNames = {
+  post: 'запис',
+  postTranslation: 'переклад',
+  page: 'сторінку',
+  trashPost: 'запис',
+};
 
-    this.state = {
-      removePopupVisible: false,
-    };
+async function removeEntity(entityType, tokens) {
+  await API[pluralize(entityType)].remove(...tokens, parseCookies({}));
 
-    this.showRemovePopup = this.showRemovePopup.bind(this);
-    this.hideRemovePopup = this.hideRemovePopup.bind(this);
-    this.remove = this.remove.bind(this);
+  if (entityType === 'trashPost') {
+    return Router.push('/trash');
   }
 
-  showRemovePopup() {
-    this.setState({ removePopupVisible: true });
-  }
+  return Router.push('/');
+}
 
-  hideRemovePopup() {
-    this.setState({ removePopupVisible: false });
-  }
+const ControlButtons = (props) => {
+  const {
+    entityType,
+    tokens,
+    className,
+    id,
+  } = props;
 
-  async remove() {
-    const { attachedTo, tokens } = this.props;
+  const [removePopupVisible, setRemovePopupVisible] = useState(false);
+  const hidePopup = () => setRemovePopupVisible(false);
+  const showPopup = () => setRemovePopupVisible(true);
 
-    await API[pluralize(attachedTo)].remove(...tokens, parseCookies({}));
-    this.hideRemovePopup();
+  const entityTypeName = entityTypeNames[entityType];
+  const editLink = editLinkGenerators[entityType](...tokens);
 
-    if (attachedTo === 'trashPost') {
-      return Router.push('/trash');
-    }
+  return (
+    <span className={cc([styles.wrapper, className])} id={id}>
+      <div className={cc([styles.button, styles.buttonEdit])}>
+        <Link href={editLink}>
+          <a><FontAwesomeIcon icon="edit" /></a>
+        </Link>
+      </div>
 
-    return Router.push('/');
-  }
+      <div className={styles.button} onClick={showPopup}>
+        <a><FontAwesomeIcon icon="times" /></a>
+      </div>
 
-  renderPopupContent() {
-    const { attachedTo } = this.props;
-    const contentTypes = {
-      post: 'запис',
-      postTranslation: 'переклад',
-      page: 'сторінку',
-      trashPost: 'запис',
-    };
-
-    return (
-      <>
-        <h1>{`Видалити ${contentTypes[attachedTo]}?`}</h1>
+      <Popup visible={removePopupVisible} onClose={hidePopup}>
+        <h1>{`Видалити ${entityTypeName}?`}</h1>
         <p>Якшо шо, можна буде відновити з бази.</p>
         <div className={styles.popupButtonsWrapper}>
-          <button type="button" onClick={this.hideRemovePopup}>
+          <button type="button" onClick={hidePopup}>
             Не треба
           </button>
-          <button type="button" onClick={this.remove}>
+          <button type="button" onClick={() => removeEntity(entityType, tokens)}>
             Видалити
           </button>
         </div>
-      </>
-    );
-  }
-
-  render() {
-    const {
-      attachedTo,
-      tokens,
-      className,
-      id,
-    } = this.props;
-    const { removePopupVisible } = this.state;
-
-    const linkGenerator = linkGenerators[attachedTo];
-    const link = linkGenerator(...tokens);
-
-    const popupContent = this.renderPopupContent();
-
-    return (
-      <span className={cc([styles.wrapper, className])} id={id}>
-        <div className={cc([styles.button, styles.buttonEdit])}>
-          <Link href={link}>
-            <a><FontAwesomeIcon icon="edit" /></a>
-          </Link>
-        </div>
-        <div className={styles.button} onClick={this.showRemovePopup}>
-          <a><FontAwesomeIcon icon="times" /></a>
-        </div>
-        <Popup visible={removePopupVisible} onClose={this.hideRemovePopup}>
-          {popupContent}
-        </Popup>
-      </span>
-    );
-  }
-}
+      </Popup>
+    </span>
+  );
+};
 
 ControlButtons.propTypes = {
   tokens: PropTypes.arrayOf(PropTypes.string).isRequired,
-  attachedTo: PropTypes.string.isRequired,
+  entityType: PropTypes.string.isRequired,
   className: PropTypes.string,
   id: PropTypes.string,
 };

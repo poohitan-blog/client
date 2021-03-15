@@ -70,7 +70,7 @@ const Post = (props) => {
                   isAuthenticated
                     ? (
                       <AdminControlButtons
-                        attachedTo={isTranslation ? 'postTranslation' : 'post'}
+                        entityType={isTranslation ? 'postTranslation' : 'post'}
                         tokens={[slug, translation.lang]}
                         className={styles.adminControlButtons}
                         id={cut ? null : 'post-admin-control-buttons'}
