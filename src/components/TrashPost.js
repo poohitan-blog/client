@@ -107,7 +107,7 @@ class TrashPost extends React.Component {
         <SessionContext.Consumer>
           {({ isAuthenticated }) => isAuthenticated && (
             <AdminControlButtons
-              attachedTo="trashPost"
+              entityType="trashPost"
               tokens={[id]}
               className={styles.adminControlButtons}
             />

@@ -30,7 +30,7 @@ const Page = (props) => {
           <SessionContext.Consumer>
             {({ isAuthenticated }) => isAuthenticated && (
               <AdminControlButtons
-                attachedTo="page"
+                entityType="page"
                 tokens={[slug]}
                 className={styles.adminControlButtons}
                 id="page-admin-control-buttons"

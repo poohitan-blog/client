@@ -5,40 +5,24 @@ import cc from 'classcat';
 
 import styles from 'styles/components/popup.module.scss';
 
-class Popup extends React.Component {
-  constructor(props) {
-    super(props);
+const Popup = ({ children, visible, onClose }) => {
+  const classNameString = cc({
+    [styles.wrapper]: true,
+    [styles.visible]: visible,
+  });
 
-    this.close = this.close.bind(this);
-  }
-
-  close() {
-    const { onClose } = this.props;
-
-    onClose();
-  }
-
-  render() {
-    const { visible, children } = this.props;
-
-    const classNameString = cc({
-      [styles.wrapper]: true,
-      [styles.visible]: visible,
-    });
-
-    return (
-      <div className={classNameString}>
-        <div className={styles.popup}>
-          <button type="button" className={styles.closeButton} onClick={this.close}>
-            <FontAwesomeIcon icon="times" />
-          </button>
-          {children}
-        </div>
-        <div className={styles.shadow} onClick={this.close} />
+  return (
+    <div className={classNameString}>
+      <div className={styles.popup}>
+        <button type="button" className={styles.closeButton} onClick={onClose}>
+          <FontAwesomeIcon icon="times" />
+        </button>
+        {children}
       </div>
-    );
-  }
-}
+      <div className={styles.shadow} onClick={onClose} />
+    </div>
+  );
+};
 
 Popup.propTypes = {
   children: PropTypes.node.isRequired,
