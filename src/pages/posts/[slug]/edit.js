@@ -5,41 +5,17 @@ import Router from 'next/router';
 import { parseCookies } from 'nookies';
 
 import API from 'services/api';
-import Error from 'pages/_error';
 
-import withSession from 'hocs/withSession';
-import withProtection from 'hocs/withProtection';
 import Wrapper from 'components/Wrapper';
 import Header from 'components/Header';
 import Content from 'components/Content';
 import PostForm from 'components/admin/PostForm';
+import checkAdminAccess from 'utils/check-admin-access';
 
-class EditPost extends React.Component {
-  static async getInitialProps({ req, query }) {
-    try {
-      const tagCloud = await API.tags.getCloud();
+function EditPost({ post, tagCloud }) {
+  const title = post.id ? 'Редагувати запис' : 'Додати запис';
 
-      if (!query.slug) {
-        return { tagCloud };
-      }
-
-      const post = await API.posts.findOne(query.slug, parseCookies({ req }));
-
-      return { post, tagCloud };
-    } catch (error) {
-      return { error };
-    }
-  }
-
-  constructor(props) {
-    super(props);
-
-    this.submit = this.submit.bind(this);
-  }
-
-  async submit(submittedPost) {
-    const { post } = this.props;
-
+  async function submit(submittedPost) {
     const savedPost = submittedPost.id
       ? await API.posts.update(post.slug, submittedPost, parseCookies({}))
       : await API.posts.create(submittedPost, parseCookies({}));
@@ -47,41 +23,70 @@ class EditPost extends React.Component {
     Router.push('/p/[slug]', `/p/${savedPost.slug}`);
   }
 
-  render() {
-    const { post, tagCloud, error } = this.props;
+  return (
+    <Wrapper>
+      <Head>
+        <title>{title}</title>
+      </Head>
+      <Header />
+      <Content>
+        <PostForm
+          key={post.slug}
+          id={post.id}
+          title={post.title}
+          slug={post.slug}
+          description={post.description}
+          body={post.body}
+          tags={post.tags}
+          tagCloud={tagCloud}
+          customStyles={post.customStyles}
+          imagesWidth={post.imagesWidth}
+          hidden={post.hidden}
+          publishedAt={new Date(post.publishedAt)}
+          translations={post.translations}
+          onChange={submit}
+        />
+      </Content>
+    </Wrapper>
+  );
+}
 
-    if (error) {
-      return <Error statusCode={error.status} />;
+export async function getServerSideProps({ req, res, query }) {
+  try {
+    const hasAccess = await checkAdminAccess({ req });
+
+    if (!hasAccess) {
+      return {
+        props: {
+          errorCode: 401,
+        },
+      };
     }
 
-    const title = post.id ? 'Редагувати запис' : 'Додати запис';
+    const tagCloud = await API.tags.getCloud();
 
-    return (
-      <Wrapper>
-        <Head>
-          <title>{title}</title>
-        </Head>
-        <Header />
-        <Content>
-          <PostForm
-            key={post.slug}
-            id={post.id}
-            title={post.title}
-            slug={post.slug}
-            description={post.description}
-            body={post.body}
-            tags={post.tags}
-            tagCloud={tagCloud}
-            customStyles={post.customStyles}
-            imagesWidth={post.imagesWidth}
-            hidden={post.hidden}
-            publishedAt={new Date(post.publishedAt)}
-            translations={post.translations}
-            onChange={(value) => this.submit(value)}
-          />
-        </Content>
-      </Wrapper>
-    );
+    if (!query.slug) {
+      return { tagCloud };
+    }
+
+    const post = await API.posts.findOne(query.slug, parseCookies({ req }));
+
+    return {
+      props: {
+        post,
+        tagCloud,
+      },
+    };
+  } catch (error) {
+    const { statusCode = 500 } = error;
+
+    res.statusCode = statusCode;
+
+    return {
+      props: {
+        errorCode: statusCode,
+      },
+    };
   }
 }
 
@@ -100,14 +105,10 @@ EditPost.propTypes = {
     translations: PropTypes.arrayOf(PropTypes.shape({})),
   }),
   tagCloud: PropTypes.shape({}).isRequired,
-  error: PropTypes.shape({
-    status: PropTypes.number,
-  }),
 };
 
 EditPost.defaultProps = {
   post: {},
-  error: null,
 };
 
-export default withProtection(withSession(EditPost));
+export default EditPost;

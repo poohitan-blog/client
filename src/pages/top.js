@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 import { NextSeo } from 'next-seo';
@@ -7,13 +7,10 @@ import { uk } from 'date-fns/locale';
 import { parseCookies } from 'nookies';
 import cc from 'classcat';
 
-import Error from 'pages/_error';
-
 import API from 'services/api';
 import { describeWordCount } from 'services/grammar';
 import { stripHTML } from 'services/text';
 
-import withSession from 'hocs/withSession';
 import Wrapper from 'components/Wrapper';
 import Header from 'components/Header';
 import Content from 'components/Content';
@@ -86,117 +83,108 @@ const SORTING_PREDICATES = {
   length: sortByLength,
 };
 
-class TopPage extends React.Component {
-  static async getInitialProps({ req, pathname }) {
-    try {
-      const { docs } = await API.posts.find({ hidden: false }, parseCookies({ req }));
+function TopPage({ posts }) {
+  const [sortBy, setSortBy] = useState('views');
 
-      return {
+  const sortButtons = [
+    {
+      title: 'За кількістю переглядів',
+      param: 'views',
+    },
+    {
+      title: 'За цікавістю',
+      param: 'interestingness',
+    },
+    {
+      title: 'За обговорюваністю',
+      param: 'commentness',
+    },
+    {
+      title: 'За довжиною',
+      param: 'length',
+    },
+  ];
+  const sortButtonsSeparator = <span>&nbsp;/&nbsp;</span>;
+
+  return (
+    <Wrapper>
+      <NextSeo title="Рейтинг записів" />
+      <Header />
+      <Content>
+        <h1>Рейтинг записів</h1>
+        <div className="smaller">
+          {
+            sortButtons
+              .map((button) => (
+                <a
+                  className={cc({ pointer: true, disabled: sortBy === button.param })}
+                  onClick={() => setSortBy(button.param)}
+                  key={button.param}
+                >
+                  {button.title}
+                </a>
+              ))
+              .reduce((array, item) => [array, sortButtonsSeparator, item])
+          }
+        </div>
+        <div className="smaller">(Цікавість — відношення кількості переглядів запису до його віку; обговорюваність — кількість коментарів під записом)</div>
+        <ol>
+          {
+            posts
+              .sort(SORTING_PREDICATES[sortBy])
+              .map((post) => {
+                const interestingness = calculatePostInterestingness(post).toFixed(2);
+
+                return (
+                  <li key={post.slug}>
+                    <Link href={`/p/${post.slug}`}><a title={post.title}>{post.title}</a></Link>
+                    <span className="smaller">
+                      {' '}
+                      <span className="nowrap">{`— переглядів: ${post.views || 0},`}</span>
+                      {' '}
+                      <span className="nowrap">{`цікавість: ${interestingness},`}</span>
+                      {' '}
+                      <span className="nowrap">{`коментарів: ${post.commentsCount || 0},`}</span>
+                      {' '}
+                      <span className="nowrap">{`вік: ${formatDistanceStrict(new Date(post.publishedAt), new Date(), { locale: uk })},`}</span>
+                      {' '}
+                      <span className="nowrap">
+                        {`довжина: ${describeWordCount(post.bodyLength, ['символ', 'символи', 'символів'])}`}
+                      </span>
+                    </span>
+                  </li>
+                );
+              })
+          }
+        </ol>
+      </Content>
+      <Footer />
+    </Wrapper>
+  );
+}
+
+export async function getServerSideProps({ req, res }) {
+  try {
+    const { docs } = await API.posts.find({ hidden: false }, parseCookies({ req }));
+
+    return {
+      props: {
         posts: docs.map((post) => ({
           ...post,
           bodyLength: stripHTML(post.body).length,
         })),
-        pathname,
-      };
-    } catch (error) {
-      return { error };
-    }
-  }
-
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      sortBy: 'views',
+      },
     };
-  }
+  } catch (error) {
+    const { statusCode = 500 } = error;
 
-  render() {
-    const {
-      posts,
-      error,
-    } = this.props;
+    res.statusCode = statusCode;
 
-    if (error) {
-      return <Error statusCode={error.status} />;
-    }
-
-    const { sortBy } = this.state;
-    const sortButtons = [
-      {
-        title: 'За кількістю переглядів',
-        param: 'views',
+    return {
+      props: {
+        errorCode: statusCode,
       },
-      {
-        title: 'За цікавістю',
-        param: 'interestingness',
-      },
-      {
-        title: 'За обговорюваністю',
-        param: 'commentness',
-      },
-      {
-        title: 'За довжиною',
-        param: 'length',
-      },
-    ];
-    const sortButtonsSeparator = <span>&nbsp;/&nbsp;</span>;
-
-    return (
-      <Wrapper>
-        <NextSeo title="Рейтинг записів" />
-        <Header />
-        <Content>
-          <h1>Рейтинг записів</h1>
-          <div className="smaller">
-            {
-              sortButtons
-                .map((button) => (
-                  <a
-                    className={cc({ pointer: true, disabled: sortBy === button.param })}
-                    onClick={() => this.setState({ sortBy: button.param })}
-                    key={button.param}
-                  >
-                    {button.title}
-                  </a>
-                ))
-                .reduce((array, item) => [array, sortButtonsSeparator, item])
-            }
-          </div>
-          <div className="smaller">(Цікавість — відношення кількості переглядів запису до його віку; обговорюваність — кількість коментарів під записом)</div>
-          <ol>
-            {
-              posts
-                .sort(SORTING_PREDICATES[sortBy])
-                .map((post) => {
-                  const interestingness = calculatePostInterestingness(post).toFixed(2);
-
-                  return (
-                    <li key={post.slug}>
-                      <Link href={`/p/${post.slug}`}><a title={post.title}>{post.title}</a></Link>
-                      <span className="smaller">
-                        {' '}
-                        <span className="nowrap">{`— переглядів: ${post.views || 0},`}</span>
-                        {' '}
-                        <span className="nowrap">{`цікавість: ${interestingness},`}</span>
-                        {' '}
-                        <span className="nowrap">{`коментарів: ${post.commentsCount || 0},`}</span>
-                        {' '}
-                        <span className="nowrap">{`вік: ${formatDistanceStrict(new Date(post.publishedAt), new Date(), { locale: uk })},`}</span>
-                        {' '}
-                        <span className="nowrap">
-                          {`довжина: ${describeWordCount(post.bodyLength, ['символ', 'символи', 'символів'])}`}
-                        </span>
-                      </span>
-                    </li>
-                  );
-                })
-            }
-          </ol>
-        </Content>
-        <Footer />
-      </Wrapper>
-    );
+    };
   }
 }
 
@@ -212,4 +200,4 @@ TopPage.defaultProps = {
   error: null,
 };
 
-export default withSession(TopPage);
+export default TopPage;

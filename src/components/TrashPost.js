@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
+import Link from 'next/link';
+import { useSession } from 'next-auth/client';
 import parse from 'html-react-parser';
 import { trackWindowScroll } from 'react-lazy-load-image-component';
-import Link from 'next/link';
 import cc from 'classcat';
 
 import AdminControlButtons from 'components/admin/ControlButtons';
@@ -10,135 +11,98 @@ import PostCollapser from 'components/trash/PostCollapser';
 
 import HTMLProcessor from 'utils/html-processor';
 import { formatPostDate } from 'services/grammar';
-import { Context as SessionContext } from 'services/session';
 
 import styles from 'styles/components/trash-post.module.scss';
 
 const MAX_UNCOLLAPSED_HEIGHT = 1000;
 
-class TrashPost extends React.Component {
-  constructor(props) {
-    super(props);
+const TrashPost = ({
+  id, shortId, body, createdAt, scrollPosition, collapsable,
+}) => {
+  const [longEnoughToCollapse, setLongEnoughToCollapse] = useState(false);
+  const [collapsed, setCollapsed] = useState(false);
+  const [collapsedHeight, setCollapsedHeight] = useState();
+  const [fullHeight, setFullHeight] = useState();
+  const [parsedBody] = useState(parse(body, {
+    replace(node) {
+      return new HTMLProcessor(node)
+        .asImage({ scrollPosition })
+        .asLink()
+        .asIframe()
+        .getNode();
+    },
+  }));
 
-    this.state = {
-      body: parse(props.body, {
-        replace(node) {
-          return new HTMLProcessor(node)
-            .asImage({ scrollPosition: props.scrollPosition })
-            .asLink()
-            .asIframe()
-            .getNode();
-        },
-      }),
-      collapsed: false,
-      collapsable: false,
-    };
+  const [session] = useSession();
+  const bodyElement = useRef(null);
 
-    this.collapse = this.collapse.bind(this);
-    this.unroll = this.unroll.bind(this);
-    this.switchCollapsionState = this.switchCollapsionState.bind(this);
-    this.checkIfLongEnoughToCollapse = this.checkIfLongEnoughToCollapse.bind(this);
-
-    this.bodyElement = React.createRef();
-  }
-
-  componentDidMount() {
-    const { collapsable } = this.props;
-
-    if (collapsable) {
-      this.checkIfLongEnoughToCollapse();
-    }
-  }
-
-  checkIfLongEnoughToCollapse() {
-    const currentHeight = this.bodyElement.current.clientHeight;
-
-    if (currentHeight > MAX_UNCOLLAPSED_HEIGHT) {
-      this.setState({
-        collapsable: true,
-        collapsed: true,
-      });
-    }
-  }
-
-  switchCollapsionState() {
-    const { collapsed } = this.state;
-
+  function switchCollapsionState() {
     if (collapsed) {
-      this.unroll();
-    } else {
-      this.collapse();
+      setCollapsedHeight(bodyElement.current.clientHeight);
     }
+
+    setCollapsed(!collapsed);
   }
 
-  collapse() {
-    const fullHeight = this.bodyElement.current.clientHeight;
+  useEffect(() => {
+    if (collapsable) {
+      const currentHeight = bodyElement.current.clientHeight;
 
-    this.setState({
-      collapsed: true,
-    }, () => {
-      const { collapsedHeight } = this.state;
+      if (currentHeight > MAX_UNCOLLAPSED_HEIGHT) {
+        setFullHeight(currentHeight);
+        setLongEnoughToCollapse(true);
+        setCollapsed(true);
+      }
+    }
+  }, [collapsable]);
 
+  useEffect(() => {
+    if (collapsed && fullHeight && collapsedHeight) {
       window.scrollTo(0, window.scrollY - (fullHeight - collapsedHeight));
-    });
-  }
+    }
+  }, [collapsedHeight, fullHeight, collapsed]);
 
-  unroll() {
-    const collapsedHeight = this.bodyElement.current.clientHeight;
+  const classNameString = cc({
+    [styles.wrapper]: true,
+    [styles.collapsable]: longEnoughToCollapse,
+    [styles.collapsed]: collapsed,
+  });
 
-    this.setState({
-      collapsed: false,
-      collapsedHeight,
-    });
-  }
-
-  render() {
-    const { id, shortId, createdAt } = this.props;
-    const { collapsable, collapsed, body } = this.state;
-
-    const classNameString = cc({
-      [styles.wrapper]: true,
-      [styles.collapsable]: collapsable,
-      [styles.collapsed]: collapsed,
-    });
-
-    return (
-      <div className={classNameString}>
-        <SessionContext.Consumer>
-          {({ isAuthenticated }) => isAuthenticated && (
-            <AdminControlButtons
-              entityType="trashPost"
-              tokens={[id]}
-              className={styles.adminControlButtons}
-            />
-          )}
-        </SessionContext.Consumer>
-        <div className={styles.bodyWrapper}>
-          <div className={styles.body} ref={this.bodyElement}>{ body }</div>
-          <div className={styles.bodyOverlayGradient} />
-        </div>
-        {
-          collapsable
-          && (
-            <PostCollapser
-              isPostCollapsed={collapsed}
-              onClick={this.switchCollapsionState}
-            />
-          )
-        }
-        <div className={styles.footer}>
-          <Link href={`/trash/${shortId}`}>
-            <a title="Постійне посилання" className="nowrap">постійне посилання</a>
-          </Link>
-          <hr className={styles.footerLine} />
-          <span className={styles.date} title={formatPostDate(createdAt, { detailed: true })}>
-            { formatPostDate(createdAt, { short: true }) }
-          </span>
-        </div>
+  return (
+    <div className={classNameString}>
+      {
+        session && (
+          <AdminControlButtons
+            entityType="trashPost"
+            tokens={[id]}
+            className={styles.adminControlButtons}
+          />
+        )
+      }
+      <div className={styles.bodyWrapper}>
+        <div className={styles.body} ref={bodyElement}>{ parsedBody }</div>
+        <div className={styles.bodyOverlayGradient} />
       </div>
-    );
-  }
-}
+      {
+        collapsable && longEnoughToCollapse && (
+          <PostCollapser
+            isPostCollapsed={collapsed}
+            onClick={switchCollapsionState}
+          />
+        )
+      }
+      <div className={styles.footer}>
+        <Link href={`/trash/${shortId}`}>
+          <a title="Постійне посилання" className="nowrap">постійне посилання</a>
+        </Link>
+        <hr className={styles.footerLine} />
+        <span className={styles.date} title={formatPostDate(createdAt, { detailed: true })}>
+          { formatPostDate(createdAt, { short: true }) }
+        </span>
+      </div>
+    </div>
+  );
+};
 
 TrashPost.propTypes = {
   id: PropTypes.string.isRequired,

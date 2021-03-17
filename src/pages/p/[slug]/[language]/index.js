@@ -1,3 +1,1 @@
-import PostPage from 'pages/p/[slug]/index';
-
-export default PostPage;
+export { default, getServerSideProps } from 'pages/p/[slug]/index';

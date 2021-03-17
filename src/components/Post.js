@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
+import { useSession } from 'next-auth/client';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import cc from 'classcat';
 
@@ -11,7 +12,6 @@ import Footer from 'components/post/Footer';
 import TranslationButtons from 'components/post/TranslationButtons';
 import AdminControlButtons from 'components/admin/ControlButtons';
 import { DEFAULT_THUMBNAIL_WIDTH } from 'utils/html-processor/image';
-import { Context as SessionContext } from 'services/session';
 
 import styles from 'styles/components/post.module.scss';
 
@@ -33,6 +33,8 @@ const Post = (props) => {
     className,
   } = props;
 
+  const [session] = useSession();
+
   const translation = translations.find((item) => item.lang === language) || {};
   const isTranslation = Boolean(translation.lang);
 
@@ -53,35 +55,25 @@ const Post = (props) => {
         <Link href={link}>
           <a title={title}>{title}</a>
         </Link>
-        <SessionContext.Consumer>
-          {({ isAuthenticated }) => {
-            if (!hidden && !isAuthenticated) {
-              return null;
-            }
-
-            return (
-              <div className={styles.titleIcons}>
-                {
-                  hidden
-                    ? <FontAwesomeIcon icon="eye-slash" className={styles.titleIcon} id={cut ? null : 'post-title-icon'} />
-                    : null
-                }
-                {
-                  isAuthenticated
-                    ? (
-                      <AdminControlButtons
-                        entityType={isTranslation ? 'postTranslation' : 'post'}
-                        tokens={[slug, translation.lang]}
-                        className={styles.adminControlButtons}
-                        id={cut ? null : 'post-admin-control-buttons'}
-                      />
-                    )
-                    : null
-                }
-              </div>
-            );
-          }}
-        </SessionContext.Consumer>
+        <div className={styles.titleIcons}>
+          {
+            hidden
+              ? <FontAwesomeIcon icon="eye-slash" className={styles.titleIcon} id={cut ? null : 'post-title-icon'} />
+              : null
+          }
+          {
+            session
+              ? (
+                <AdminControlButtons
+                  entityType={isTranslation ? 'postTranslation' : 'post'}
+                  tokens={[slug, translation.lang]}
+                  className={styles.adminControlButtons}
+                  id={cut ? null : 'post-admin-control-buttons'}
+                />
+              )
+              : null
+          }
+        </div>
         {
           Boolean(translations.length)
             && (

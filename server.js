@@ -34,6 +34,8 @@ app.prepare()
 
     server.get('*', (req, res) => handle(req, res));
 
+    server.post('/api/auth/*', (req, res) => handle(req, res));
+
     server.listen(config.port, (error) => {
       if (error) {
         throw error;

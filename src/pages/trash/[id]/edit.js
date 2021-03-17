@@ -1,76 +1,82 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
-import Router from 'next/router';
+import { useRouter } from 'next/router';
 import { parseCookies } from 'nookies';
 
 import API from 'services/api';
-import Error from 'pages/_error';
 
-import withSession from 'hocs/withSession';
-import withProtection from 'hocs/withProtection';
 import Wrapper from 'components/Wrapper';
 import Header from 'components/Header';
 import Content from 'components/Content';
 import TrashPostForm from 'components/admin/TrashPostForm';
+import checkAdminAccess from 'utils/check-admin-access';
 
-class EditTrashPost extends React.Component {
-  static async getInitialProps({ req, query }) {
-    try {
-      if (!query.id) {
-        return {};
-      }
+function EditTrashPost({ trashPost }) {
+  const title = trashPost.id ? 'Редагувати запис' : 'Додати запис у смітник';
+  const router = useRouter();
 
-      const trashPost = await API.trashPosts.findOne(query.id, parseCookies({ req }));
-
-      return { trashPost };
-    } catch (error) {
-      return { error };
-    }
-  }
-
-  constructor(props) {
-    super(props);
-
-    this.state = props.trashPost || {};
-    this.submit = this.submit.bind(this);
-  }
-
-  async submit(submittedTrashPost) {
-    const { trashPost } = this.props;
-
+  async function submit(submittedTrashPost) {
     const savedTrashPost = submittedTrashPost.id
       ? await API.trashPosts.update(trashPost.id, submittedTrashPost, parseCookies({}))
       : await API.trashPosts.create(submittedTrashPost, parseCookies({}));
 
-    Router.push('/trash/[id]', `/trash/${savedTrashPost.shortId}`);
+    router.push('/trash/[id]', `/trash/${savedTrashPost.shortId}`);
   }
 
-  render() {
-    const { trashPost, error } = this.props;
+  return (
+    <Wrapper>
+      <Head>
+        <title>{title}</title>
+      </Head>
+      <Header />
+      <Content>
+        <TrashPostForm
+          id={trashPost.id}
+          body={trashPost.body}
+          key={trashPost.id}
+          onChange={submit}
+        />
+      </Content>
+    </Wrapper>
+  );
+}
 
-    if (error) {
-      return <Error statusCode={error.status} />;
+export async function getServerSideProps({ req, res, query }) {
+  try {
+    const hasAccess = await checkAdminAccess({ req });
+
+    if (!hasAccess) {
+      return {
+        props: {
+          errorCode: 401,
+        },
+      };
     }
 
-    const title = trashPost.id ? 'Редагувати запис' : 'Додати запис у смітник';
+    if (!query.id) {
+      return {
+        props: {},
+      };
+    }
 
-    return (
-      <Wrapper>
-        <Head>
-          <title>{title}</title>
-        </Head>
-        <Header />
-        <Content>
-          <TrashPostForm
-            id={trashPost.id}
-            body={trashPost.body}
-            key={trashPost.id}
-            onChange={(value) => this.submit(value)}
-          />
-        </Content>
-      </Wrapper>
-    );
+    const trashPost = await API.trashPosts.findOne(query.id, parseCookies({ req }));
+
+    return {
+      props: {
+        trashPost,
+      },
+    };
+  } catch (error) {
+    const { statusCode = 500 } = error;
+
+    res.statusCode = statusCode;
+
+    return {
+      props: {
+        errorCode: statusCode,
+      },
+    };
   }
 }
 
@@ -89,4 +95,4 @@ EditTrashPost.defaultProps = {
   error: null,
 };
 
-export default withProtection(withSession(EditTrashPost));
+export default EditTrashPost;

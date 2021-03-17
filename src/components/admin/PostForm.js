@@ -60,7 +60,7 @@ class PostForm extends React.Component {
     const { id, slug: propsSlug } = this.props;
     const { slug: stateSlug } = this.state;
     const prefix = `${current.clientURL}/p`;
-    const slug = propsSlug || stateSlug || '';
+    const slug = stateSlug || propsSlug || '';
     const fullLink = `${prefix}/${slug}`;
     const isNewPost = !id;
 

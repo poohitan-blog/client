@@ -5,9 +5,7 @@ import { parseCookies } from 'nookies';
 
 import { current } from 'config';
 import API from 'services/api';
-import Error from 'pages/_error';
 
-import withSession from 'hocs/withSession';
 import Wrapper from 'components/Wrapper';
 import Header from 'components/Header';
 import Content from 'components/Content';
@@ -17,92 +15,94 @@ import TagCloud from 'components/TagCloud';
 
 const POSTS_PER_PAGE = 30;
 
-class TagPage extends React.Component {
-  static async getInitialProps({ query, req, pathname }) {
-    try {
-      const { name, page = 1 } = query;
-      const { docs, meta } = await API.posts.find({
-        tag: decodeURIComponent(name),
-        page,
-        limit: POSTS_PER_PAGE,
-        cut: true,
-      }, parseCookies({ req }));
+function TagPage({ posts, meta, tag }) {
+  const nothingFound = !posts.length;
 
-      return {
-        posts: docs,
-        meta,
-        tag: name,
-        pathname,
-      };
-    } catch (error) {
-      return { error };
-    }
-  }
-
-  render() {
-    const {
-      posts, meta, tag, error,
-    } = this.props;
-
-    if (error) {
-      return <Error statusCode={error.status} />;
-    }
-
-    const nothingFound = !posts.length;
-    let content;
-
+  function getContent() {
     if (nothingFound) {
-      content = (
+      return (
         <div className="text-center">
           <p className="fatty larger">Нічого не знайшлося.</p>
           <p>Хмаринка позначок:</p>
           <TagCloud shake minFontSize={1} maxFontSize={3} width="70%" />
         </div>
       );
-    } else {
-      content = posts
-        .map((post) => ({
-          slug: post.slug,
-          component: (
-            <CompactPost
-              key={post.slug}
-              title={post.title}
-              body={post.body}
-              slug={post.slug}
-              publishedAt={new Date(post.publishedAt)}
-              hidden={post.hidden}
-            />
-          ),
-        }))
-        .reduce((previousPosts, { slug, component }) => {
-          if (!previousPosts.length) {
-            return [component];
-          }
-
-          return [...previousPosts, <hr key={`hr-${slug}`} />, component];
-        }, []);
     }
 
-    const { currentPage } = meta;
-    const canonicalUrl = currentPage === 1
-      ? `${current.clientURL}/tag/${tag}`
-      : `${current.clientURL}/tag/${tag}?page=${currentPage}`;
+    return posts
+      .map((post) => ({
+        slug: post.slug,
+        component: (
+          <CompactPost
+            key={post.slug}
+            title={post.title}
+            body={post.body}
+            slug={post.slug}
+            publishedAt={new Date(post.publishedAt)}
+            hidden={post.hidden}
+          />
+        ),
+      }))
+      .reduce((previousPosts, { slug, component }) => {
+        if (!previousPosts.length) {
+          return [component];
+        }
 
-    return (
-      <Wrapper>
-        <NextSeo
-          title={`Записи з позначкою «${tag}»`}
-          description={`Записи про ${tag}`}
-          canonical={canonicalUrl}
-        />
-        <Header />
-        <Content>
-          <h1>{`Записи з позначкою «${tag}»`}</h1>
-          { content }
-        </Content>
-        <Footer pagination={meta} />
-      </Wrapper>
-    );
+        return [...previousPosts, <hr key={`hr-${slug}`} />, component];
+      }, []);
+  }
+
+  const { currentPage } = meta;
+  const canonicalUrl = currentPage === 1
+    ? `${current.clientURL}/tag/${tag}`
+    : `${current.clientURL}/tag/${tag}?page=${currentPage}`;
+
+  return (
+    <Wrapper>
+      <NextSeo
+        title={`Записи з позначкою «${tag}»`}
+        description={`Записи про ${tag}`}
+        canonical={canonicalUrl}
+      />
+      <Header />
+      <Content>
+        <h1>{`Записи з позначкою «${tag}»`}</h1>
+        {
+          getContent()
+        }
+      </Content>
+      <Footer pagination={meta} />
+    </Wrapper>
+  );
+}
+
+export async function getServerSideProps({ req, res, query }) {
+  try {
+    const { name, page = 1 } = query;
+    const { docs, meta } = await API.posts.find({
+      tag: decodeURIComponent(name),
+      page,
+      limit: POSTS_PER_PAGE,
+      cut: true,
+    }, parseCookies({ req }));
+
+    return {
+      props: {
+        posts: docs,
+        meta,
+        tag: name,
+      },
+    };
+  } catch (error) {
+    const { statusCode = 500 } = error;
+
+    res.statusCode = statusCode;
+
+    return {
+      props: {
+        errorCode: statusCode,
+      },
+    };
   }
 }
 
@@ -114,14 +114,6 @@ TagPage.propTypes = {
     currentPage: PropTypes.number,
     totalPages: PropTypes.number,
   }).isRequired,
-
-  error: PropTypes.shape({
-    status: PropTypes.number,
-  }),
 };
 
-TagPage.defaultProps = {
-  error: null,
-};
-
-export default withSession(TagPage);
+export default TagPage;

@@ -1,46 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
-import Router from 'next/router';
+import { useRouter } from 'next/router';
 import { parseCookies } from 'nookies';
 
 import API from 'services/api';
-import Error from 'pages/_error';
 
-import withSession from 'hocs/withSession';
-import withProtection from 'hocs/withProtection';
 import Wrapper from 'components/Wrapper';
 import Header from 'components/Header';
 import Content from 'components/Content';
 import PostTranslationForm from 'components/admin/PostTranslationForm';
+import checkAdminAccess from 'utils/check-admin-access';
 
-class EditPostTranslation extends React.Component {
-  static async getInitialProps({ req, query }) {
-    try {
-      const post = await API.posts.findOne(query.slug, parseCookies({ req }));
+function EditPostTranslation({ post, translation }) {
+  const title = translation.id ? 'Редагувати переклад' : 'Додати переклад';
+  const router = useRouter();
 
-      if (!query.language) {
-        return { post };
-      }
-
-      const translationId = post.translations.find((translation) => translation.lang === query.language).id;
-      const translation = await API.postTranslations.findOne(translationId, parseCookies({ req }));
-
-      return { translation, post };
-    } catch (error) {
-      return { error };
-    }
-  }
-
-  constructor(props) {
-    super(props);
-
-    this.submit = this.submit.bind(this);
-  }
-
-  async submit(submittedTranslation) {
-    const { post, translation } = this.props;
-
+  async function submit(submittedTranslation) {
     if (submittedTranslation.id) {
       await API.postTranslations.update(translation.id, submittedTranslation, parseCookies({}));
     } else {
@@ -50,38 +26,68 @@ class EditPostTranslation extends React.Component {
       await API.posts.update(post.slug, { ...post, translations: updatedListOfTranslations });
     }
 
-    Router.push('/p/[slug]/[language]', `/p/${post.slug}/${submittedTranslation.lang}`);
+    router.push('/p/[slug]/[language]', `/p/${post.slug}/${submittedTranslation.lang}`);
   }
 
-  render() {
-    const {
-      post,
-      translation,
-      error,
-    } = this.props;
+  return (
+    <Wrapper>
+      <Head>
+        <title>{title}</title>
+      </Head>
+      <Header />
+      <Content>
+        <PostTranslationForm
+          translation={translation}
+          post={post}
+          key={translation.id}
+          onChange={submit}
+        />
+      </Content>
+    </Wrapper>
+  );
+}
 
-    if (error) {
-      return <Error statusCode={error.status} />;
+export async function getServerSideProps({ req, res, query }) {
+  try {
+    const hasAccess = await checkAdminAccess({ req });
+
+    if (!hasAccess) {
+      return {
+        props: {
+          errorCode: 401,
+        },
+      };
     }
 
-    const title = translation.id ? 'Редагувати переклад' : 'Додати переклад';
+    const post = await API.posts.findOne(query.slug, parseCookies({ req }));
 
-    return (
-      <Wrapper>
-        <Head>
-          <title>{title}</title>
-        </Head>
-        <Header />
-        <Content>
-          <PostTranslationForm
-            translation={translation}
-            post={post}
-            key={translation.id}
-            onChange={(updatedTranslation) => this.submit(updatedTranslation)}
-          />
-        </Content>
-      </Wrapper>
-    );
+    if (!query.language) {
+      return {
+        props: {
+          post,
+        },
+      };
+    }
+
+    const translationId = post.translations.find((translation) => translation.lang === query.language).id;
+    const translation = await API.postTranslations.findOne(translationId, parseCookies({ req }));
+
+    return {
+      props: {
+        translation,
+        post,
+      },
+    };
+  } catch (error) {
+    const { statusCode = 500 } = error;
+
+    res.statusCode = statusCode;
+
+    return {
+      props: {
+        errorCode: statusCode,
+      },
+    };
   }
 }
 
@@ -93,14 +99,10 @@ EditPostTranslation.propTypes = {
     slug: PropTypes.string,
     translations: PropTypes.arrayOf(PropTypes.oneOf(PropTypes.string, PropTypes.objectOf(PropTypes.string))),
   }).isRequired,
-  error: PropTypes.shape({
-    status: PropTypes.number,
-  }),
 };
 
 EditPostTranslation.defaultProps = {
   translation: {},
-  error: null,
 };
 
-export default withProtection(withSession(EditPostTranslation));
+export default EditPostTranslation;

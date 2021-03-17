@@ -1,12 +1,11 @@
-import React from 'react';
-import Router from 'next/router';
+import React, { useState } from 'react';
+import { useRouter } from 'next/router';
 
 import { NextSeo } from 'next-seo';
+import { signIn, getSession } from 'next-auth/client';
 
 import Wrapper from 'components/Wrapper';
 import Content from 'components/Content';
-
-import { logIn, isAuthenticated } from 'services/session';
 
 import styles from 'styles/pages/login.module.scss';
 
@@ -33,78 +32,68 @@ const LOGIN_ATTEMPTS_MESSAGES = [
   'Бувай, бовдуре.',
 ];
 
-class LoginPage extends React.Component {
-  static async getInitialProps({ req, res, pathname }) {
-    if (isAuthenticated(req)) {
-      res
-        .writeHead(302, {
-          Location: '/',
-        })
-        .end();
-    }
+function LoginPage() {
+  const [errorMessage, setErrorMessage] = useState('');
+  const [password, setPassword] = useState('');
+  const [failedLoginAttemptsCount, setFailedLoginAttemptsCount] = useState(0);
+  const router = useRouter();
 
-    return { pathname };
-  }
-
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      failedLoginAttempts: 0,
-    };
-
-    this.handleKeyPress = this.handleKeyPress.bind(this);
-    this.setPassword = this.setPassword.bind(this);
-    this.authenticate = this.authenticate.bind(this);
-  }
-
-  async handleKeyPress(event) {
-    if (event.which === 13) {
-      this.authenticate();
-    }
-  }
-
-  setPassword(event) {
-    this.setState({ password: event.target.value });
-  }
-
-  async authenticate() {
-    const { password, failedLoginAttempts } = this.state;
-
+  async function authenticate() {
     try {
-      await logIn('poohitan', password);
+      await signIn('credentials', {
+        login: 'poohitan',
+        password,
+        redirect: false,
+      });
 
-      Router.push('/');
+      router.push('/');
     } catch (error) {
-      if (error.status === 403 || error.status === 401) {
-        this.setState({
-          error: LOGIN_ATTEMPTS_MESSAGES[failedLoginAttempts],
-          failedLoginAttempts: failedLoginAttempts + 1,
-        });
-      }
+      setErrorMessage(LOGIN_ATTEMPTS_MESSAGES[failedLoginAttemptsCount]);
+      setFailedLoginAttemptsCount(failedLoginAttemptsCount + 1);
     }
   }
 
-  render() {
-    const { error } = this.state;
-
-    return (
-      <Wrapper>
-        <NextSeo title="Вхід у Нарнію" />
-        <Content>
-          <h1 className={styles.header}>Вхід у Нарнію</h1>
-          <div className={styles.container}>
-            <input type="password" onChange={this.setPassword} onKeyPress={this.handleKeyPress} />
-            {
-              error
-                ? <p className={styles.error}>{error}</p>
-                : null
-            }
-          </div>
-        </Content>
-      </Wrapper>
-    );
+  async function handleKeyPress(event) {
+    if (event.which === 13) {
+      authenticate();
+    }
   }
+
+  async function handleChange(event) {
+    setPassword(event.target.value);
+  }
+
+  return (
+    <Wrapper showSidebar={false}>
+      <NextSeo title="Вхід у Нарнію" />
+      <Content>
+        <h1 className={styles.header}>Вхід у Нарнію</h1>
+        <div className={styles.container}>
+          <input type="password" onChange={handleChange} onKeyPress={handleKeyPress} />
+          {
+            errorMessage
+              ? <p className={styles.error}>{errorMessage}</p>
+              : null
+          }
+        </div>
+      </Content>
+    </Wrapper>
+  );
+}
+
+export async function getServerSideProps({ req }) {
+  const session = await getSession({ req });
+
+  if (session) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    };
+  }
+
+  return { props: {} };
 }
 
 export default LoginPage;

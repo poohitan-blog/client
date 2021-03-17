@@ -1,3 +1,1 @@
-import Trash from 'pages/trash/index';
-
-export default Trash;
+export { default, getServerSideProps } from 'pages/trash/index';

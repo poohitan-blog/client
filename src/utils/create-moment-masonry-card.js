@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useSession } from 'next-auth/client';
 
 import Moment from 'components/Moment';
-import { Context as SessionContext } from 'services/session';
 
 function createMomentMasonryCard({ onChange, onRemove, className }) {
   const MasonryCard = ({ data }) => {
@@ -16,26 +16,22 @@ function createMomentMasonryCard({ onChange, onRemove, className }) {
       capturedAt,
     } = data;
 
+    const [session] = useSession();
+
     return (
-      <SessionContext.Consumer>
-        {
-          ({ isAuthenticated }) => (
-            <Moment
-              id={id}
-              url={url}
-              caption={caption}
-              width={width}
-              height={height}
-              averageColor={averageColor}
-              capturedAt={new Date(capturedAt)}
-              isEditable={isAuthenticated}
-              onChange={(updatedMoment) => onChange(id, updatedMoment)}
-              onRemove={() => onRemove(id)}
-              className={className}
-            />
-          )
-        }
-      </SessionContext.Consumer>
+      <Moment
+        id={id}
+        url={url}
+        caption={caption}
+        width={width}
+        height={height}
+        averageColor={averageColor}
+        capturedAt={new Date(capturedAt)}
+        isEditable={Boolean(session)}
+        onChange={(updatedMoment) => onChange(id, updatedMoment)}
+        onRemove={() => onRemove(id)}
+        className={className}
+      />
     );
   };
 

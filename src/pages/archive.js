@@ -5,9 +5,7 @@ import { parseCookies } from 'nookies';
 
 import { current } from 'config';
 import API from 'services/api';
-import Error from 'pages/_error';
 
-import withSession from 'hocs/withSession';
 import Wrapper from 'components/Wrapper';
 import Header from 'components/Header';
 import Content from 'components/Content';
@@ -16,79 +14,78 @@ import CompactPost from 'components/CompactPost';
 
 const POSTS_PER_PAGE = 30;
 
-class ArchivePage extends React.Component {
-  static async getInitialProps({ query, req, pathname }) {
-    try {
-      const { page = 1 } = query;
-      const { docs, meta } = await API.posts.find({
-        page,
-        limit: POSTS_PER_PAGE,
-        cut: true,
-      }, parseCookies({ req }));
+function ArchivePage({ posts, meta }) {
+  const content = posts
+    .map((post) => ({
+      slug: post.slug,
+      component: (
+        <CompactPost
+          key={post.slug}
+          title={post.title}
+          body={post.body}
+          slug={post.slug}
+          publishedAt={new Date(post.publishedAt)}
+          hidden={post.hidden}
+        />
+      ),
+    }))
+    .reduce((previousPosts, { slug, component }) => {
+      if (!previousPosts.length) {
+        return [component];
+      }
 
-      return {
+      return [...previousPosts, <hr key={`hr-${slug}`} />, component];
+    }, []);
+
+  const { currentPage } = meta;
+  const canonicalUrl = currentPage === 1
+    ? `${current.clientURL}/archive`
+    : `${current.clientURL}/archive?page=${currentPage}`;
+
+  const description = posts.map((post) => `«${post.title}»`).join(', ');
+
+  return (
+    <Wrapper>
+      <NextSeo
+        title="Архів"
+        canonical={canonicalUrl}
+        description={`Архів записів — ${description}`}
+      />
+      <Header />
+      <Content>
+        <h1>Архів</h1>
+        { content }
+      </Content>
+      <Footer pagination={meta} />
+    </Wrapper>
+  );
+}
+
+export async function getServerSideProps({ query, req, res }) {
+  try {
+    const { page = 1 } = query;
+    const { docs, meta } = await API.posts.find({
+      page,
+      limit: POSTS_PER_PAGE,
+      cut: true,
+    }, parseCookies({ req }));
+
+    return {
+      props: {
         posts: docs,
         meta,
-        pathname,
-      };
-    } catch (error) {
-      return { error };
-    }
-  }
+      },
+    };
+  } catch (error) {
+    const { statusCode = 500 } = error;
 
-  render() {
-    const {
-      posts, error, meta,
-    } = this.props;
+    res.statusCode = statusCode;
 
-    if (error) {
-      return <Error statusCode={error.status} />;
-    }
-
-    const content = posts
-      .map((post) => ({
-        slug: post.slug,
-        component: (
-          <CompactPost
-            key={post.slug}
-            title={post.title}
-            body={post.body}
-            slug={post.slug}
-            publishedAt={new Date(post.publishedAt)}
-            hidden={post.hidden}
-          />
-        ),
-      }))
-      .reduce((previousPosts, { slug, component }) => {
-        if (!previousPosts.length) {
-          return [component];
-        }
-
-        return [...previousPosts, <hr key={`hr-${slug}`} />, component];
-      }, []);
-
-    const { currentPage } = meta;
-    const canonicalUrl = currentPage === 1
-      ? `${current.clientURL}/archive`
-      : `${current.clientURL}/archive?page=${currentPage}`;
-
-    const description = posts.map((post) => `«${post.title}»`).join(', ');
-
-    return (
-      <Wrapper>
-        <NextSeo
-          title="Архів"
-          canonical={canonicalUrl}
-          description={`Архів записів — ${description}`}
-        />
-        <Header />
-        <Content>
-          <h1>Архів</h1>
-          { content }
-        </Content>
-        <Footer pagination={meta} />
-      </Wrapper>
-    );
+    return {
+      props: {
+        errorCode: statusCode,
+      },
+    };
   }
 }
 
@@ -109,4 +106,4 @@ ArchivePage.defaultProps = {
   error: null,
 };
 
-export default withSession(ArchivePage);
+export default ArchivePage;

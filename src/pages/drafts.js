@@ -5,87 +5,91 @@ import dynamic from 'next/dynamic';
 import { parseCookies } from 'nookies';
 
 import { current } from 'config';
-import Error from 'pages/_error';
 import API from 'services/api';
 
-import withSession from 'hocs/withSession';
 import Wrapper from 'components/Wrapper';
 import Header from 'components/Header';
 import Content from 'components/Content';
 import Footer from 'components/Footer';
 import Post from 'components/Post';
+import checkAdminAccess from 'utils/check-admin-access';
 
 const Lightbox = dynamic(() => import('components/ui/Lightbox'), { ssr: false, loading: () => null });
 
 const POSTS_PER_PAGE = 10;
 
-class DraftsPage extends React.Component {
-  static async getInitialProps({ query, req, pathname }) {
-    try {
-      const { page = 1 } = query;
-      const { docs, meta } = await API.posts.find({
-        page,
-        limit: POSTS_PER_PAGE,
-        cut: true,
-        hidden: true,
-      }, parseCookies({ req }));
+function DraftsPage({ posts, meta }) {
+  const content = posts.map((post) => (
+    <Post
+      cut
+      key={post.slug}
+      title={post.title}
+      body={post.body}
+      slug={post.slug}
+      hidden
+      language={post.language}
+      translations={post.translations}
+      commentsCount={post.commentsCount}
+      publishedAt={new Date(post.publishedAt)}
+      tags={post.tags}
+    />
+  ));
 
-      return {
-        posts: docs,
-        meta,
-        pathname,
-      };
-    } catch (error) {
-      return { error };
-    }
+  const { title } = current.meta;
+
+  return (
+    <>
+      <Head>
+        <title>Чернетки</title>
+      </Head>
+      <Wrapper>
+        <Header />
+        <Content>
+          {content}
+        </Content>
+        <Footer pagination={meta} />
+        <Lightbox id={posts.map((post) => post.slug).join('-')} />
+      </Wrapper>
+    </>
+  );
+}
+
+export async function getServerSideProps({ query, req, res }) {
+  const hasAccess = await checkAdminAccess({ req });
+
+  if (!hasAccess) {
+    return {
+      props: {
+        errorCode: 401,
+      },
+    };
   }
 
-  render() {
-    const {
-      posts,
-      meta,
-      error,
-    } = this.props;
+  try {
+    const { page = 1 } = query;
+    const { docs, meta } = await API.posts.find({
+      page,
+      limit: POSTS_PER_PAGE,
+      cut: true,
+      hidden: true,
+    }, parseCookies({ req }));
 
-    if (error) {
-      return <Error statusCode={error.status} />;
-    }
+    return {
+      props: {
+        posts: docs,
+        meta,
+      },
+    };
+  } catch (error) {
+    const { statusCode = 500 } = error;
 
-    const content = posts.map((post) => (
-      <Post
-        cut
-        key={post.slug}
-        title={post.title}
-        body={post.body}
-        slug={post.slug}
-        hidden
-        language={post.language}
-        translations={post.translations}
-        commentsCount={post.commentsCount}
-        publishedAt={new Date(post.publishedAt)}
-        tags={post.tags}
-      />
-    ));
+    res.statusCode = statusCode;
 
-    const {
-      title,
-    } = current.meta;
-
-    return (
-      <>
-        <Head>
-          <title>Чернетки</title>
-        </Head>
-        <Wrapper>
-          <Header />
-          <Content>
-            {content}
-          </Content>
-          <Footer pagination={meta} />
-          <Lightbox id={posts.map((post) => post.slug).join('-')} />
-        </Wrapper>
-      </>
-    );
+    return {
+      props: {
+        errorCode: statusCode,
+      },
+    };
   }
 }
 
@@ -106,4 +110,4 @@ DraftsPage.defaultProps = {
   error: null,
 };
 
-export default withSession(DraftsPage);
+export default DraftsPage;
