@@ -33,8 +33,8 @@ class Dropzone extends React.Component {
       accept,
       className,
     } = this.props;
-    const placeholderVisible = !files.length;
     const loaderVisible = loading;
+    const placeholderVisible = !files.length && !loaderVisible;
 
     return (
       <ReactDropzone
