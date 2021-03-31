@@ -67,7 +67,7 @@ export function generateRandomAnnouncement() {
   };
 }
 
-export function getAnnouncement() {
+export function generateAnnouncement() {
   const { isBirthday, age } = getWebsiteInfo();
   const isDead = false; // TODO: make a check from API
 

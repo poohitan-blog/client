@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -25,11 +25,8 @@ const Footer = ({ pagination, searchBox }) => {
 
   const { next, previous } = pagination?.linkTexts || DEFAULT_LINK_TEXTS;
 
-  let previousPagelink;
-  let nextPageLink;
-
-  if (hasPreviousPage) {
-    previousPagelink = (
+  const previousPagelink = hasPreviousPage
+    ? (
       <Link href={{ query: { ...query, page: currentPage - 1 } }}>
         <a className="larger">
           &larr;
@@ -37,11 +34,11 @@ const Footer = ({ pagination, searchBox }) => {
           {previous}
         </a>
       </Link>
-    );
-  }
+    )
+    : null;
 
-  if (hasNextPage) {
-    nextPageLink = (
+  const nextPageLink = hasNextPage
+    ? (
       <Link href={{ query: { ...query, page: currentPage + 1 } }}>
         <a className="larger">
           {next}
@@ -49,13 +46,15 @@ const Footer = ({ pagination, searchBox }) => {
           &rarr;
         </a>
       </Link>
-    );
-  }
+    )
+    : null;
 
   const classNameString = cc({
     [styles.wrapper]: true,
     [styles.withoutPagination]: !hasPagination,
   });
+
+  const announcement = useContext(AnnouncementContext);
 
   return (
     <div className={classNameString} id="footer">
@@ -64,17 +63,12 @@ const Footer = ({ pagination, searchBox }) => {
         {nextPageLink}
       </div>
       {
-        searchBox ? <div className={styles.searchBox} id="footer-searchbox"><SearchBox /></div> : null
+        searchBox && <div className={styles.searchBox} id="footer-searchbox"><SearchBox /></div>
       }
-      <AnnouncementContext.Consumer>
-        {({ position, text, Icon }) => {
-          if (position === POSITIONS.BOTTOM) {
-            return <Announcement text={text} Icon={Icon} id="footer-announcement" />;
-          }
-
-          return null;
-        }}
-      </AnnouncementContext.Consumer>
+      {
+        announcement.position === POSITIONS.BOTTOM
+          && <Announcement text={announcement.text} Icon={announcement.Icon} id="footer-announcement" />
+      }
     </div>
   );
 };
@@ -91,10 +85,6 @@ Footer.propTypes = {
   }),
 
   searchBox: PropTypes.bool,
-
-  router: PropTypes.shape({
-    query: PropTypes.objectOf(PropTypes.string),
-  }).isRequired,
 };
 
 Footer.defaultProps = {
