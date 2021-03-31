@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -36,6 +36,8 @@ const Header = ({ trashBinState }) => {
     },
   ];
 
+  const announcement = useContext(AnnouncementContext);
+
   return (
     <nav className={styles.wrapper} id="header">
       <ul className={styles.menu} id="header-menu">
@@ -60,21 +62,17 @@ const Header = ({ trashBinState }) => {
         }
       </ul>
       <div className={styles.border} id="header-border">
-        <AnnouncementContext.Consumer>
-          {({ position, text, Icon }) => {
-            if (position === POSITIONS.TOP) {
-              return (
-                <>
-                  <hr />
-                  <Announcement text={text} Icon={Icon} id="header-announcement" />
-                  <hr />
-                </>
-              );
-            }
-
-            return <hr />;
-          }}
-        </AnnouncementContext.Consumer>
+        {
+          announcement.position === POSITIONS.TOP
+            ? (
+              <>
+                <hr />
+                <Announcement text={announcement.text} Icon={announcement.Icon} id="header-announcement" />
+                <hr />
+              </>
+            )
+            : <hr />
+        }
       </div>
     </nav>
   );

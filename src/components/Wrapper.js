@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/client';
 
 import { logPageView, submitFlow } from 'services/analytics';
-import { Context as AnnouncementContext, getAnnouncement } from 'services/announcements';
+import { Context as AnnouncementContext, generateAnnouncement } from 'services/announcements';
 
 import AdminPanel from 'components/admin/Panel';
 import LoginButton from 'components/LoginButton';
@@ -16,12 +16,17 @@ import styles from 'styles/components/wrapper.module.scss';
 const Wrapper = ({ showSidebar, children }) => {
   const router = useRouter();
 
-  const [session] = useSession();
+  const [session, loading] = useSession();
   const [announcement, setAnnouncement] = useState('');
 
   useEffect(() => {
+    setAnnouncement(generateAnnouncement());
+    PrintAngryDog();
+  }, []);
+
+  useEffect(() => {
     function submitPageView(path) {
-      if (!path) {
+      if (!path || loading) {
         return;
       }
 
@@ -30,8 +35,6 @@ const Wrapper = ({ showSidebar, children }) => {
       logPageView(path, isAuthenticated);
     }
 
-    PrintAngryDog();
-    setAnnouncement(getAnnouncement());
     submitPageView(router.asPath);
 
     router.events.on('routeChangeStart', submitPageView);
@@ -41,7 +44,7 @@ const Wrapper = ({ showSidebar, children }) => {
       router.events.off('routeChangeStart', submitPageView);
       global.removeEventListener('beforeunload', submitFlow);
     };
-  }, []);
+  }, [loading]);
 
   return (
     <AnnouncementContext.Provider value={announcement}>
