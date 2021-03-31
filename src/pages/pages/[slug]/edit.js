@@ -60,6 +60,13 @@ export async function getServerSideProps({ req, res, query }) {
     }
 
     const { slug } = query;
+
+    if (!slug) {
+      return {
+        props: {},
+      };
+    }
+
     const page = await API.pages.findOne(slug, parseCookies({ req }));
 
     return {

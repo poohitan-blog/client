@@ -66,7 +66,11 @@ export async function getServerSideProps({ req, res, query }) {
     const tagCloud = await API.tags.getCloud();
 
     if (!query.slug) {
-      return { tagCloud };
+      return {
+        props: {
+          tagCloud,
+        },
+      };
     }
 
     const post = await API.posts.findOne(query.slug, parseCookies({ req }));
