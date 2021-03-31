@@ -13,7 +13,7 @@ export const init = () => {
   initGoogleAnalytics();
 };
 
-export const logPageView = (path) => {
+export const logPageView = (path, isAuthenticated) => {
   if (!path) {
     return;
   }
@@ -26,7 +26,7 @@ export const logPageView = (path) => {
 
   console.info(`Logging pageview for ${path}`);
 
-  flow.push({ timestamp: Date.now(), path });
+  flow.push({ timestamp: Date.now(), path, isAuthenticated });
 
   if (current.environment === 'production') {
     ReactGA.pageview(path);
@@ -35,6 +35,11 @@ export const logPageView = (path) => {
 
 export const submitFlow = () => {
   flow.push({ timestamp: Date.now() });
+
+  if (flow.some((item) => item.isAuthenticated)) {
+    return;
+  }
+
   analytics.submitFlow(flow);
 };
 

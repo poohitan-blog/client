@@ -1,18 +1,17 @@
-import pluralize from 'pluralize';
-
 import { current } from 'config';
-import deserialize from 'utils/deserialize';
 import request from 'utils/request';
-
-import Post from 'models/post';
-import PostTranslation from 'models/post-translation';
-import Page from 'models/page';
-import TrashPost from 'models/trash-post';
-import User from 'models/user';
-import Moment from 'models/moment';
 
 const API_URL = current.apiURL;
 const INLINE_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/svg'];
+
+const MODEL_PATHS = {
+  POST: 'posts',
+  POST_TRANSLATION: 'post-translations',
+  PAGE: 'pages',
+  TRASH_POST: 'trash-posts',
+  USER: 'users',
+  MOMENT: 'moments',
+};
 
 export async function authenticate(login, password) {
   return request({
@@ -25,73 +24,71 @@ export async function authenticate(login, password) {
   });
 }
 
-async function find({ model, query }, cookies) {
-  const url = `${API_URL}/${pluralize(model.name)}`;
-  const { docs, meta } = await request({ url, query, cookies });
+function find(modelName) {
+  return async (query, cookies) => {
+    const url = `${API_URL}/${modelName}`;
+    const { docs, meta } = await request({ url, query, cookies });
 
-  return { docs: deserialize(docs, model.schema), meta };
+    return { docs, meta };
+  };
 }
 
-async function findOne({ model, param }, cookies) {
-  const url = `${API_URL}/${pluralize(model.name)}/${param}`;
-  const doc = await request({ url, cookies });
+function findOne(modelName) {
+  return async (param, cookies) => {
+    const url = `${API_URL}/${modelName}/${param}`;
+    const doc = await request({ url, cookies });
 
-  return deserialize(doc, model.schema);
+    return doc;
+  };
 }
 
-async function update({ model, param, body }, cookies) {
-  const url = `${API_URL}/${pluralize(model.name)}/${param}`;
-  const doc = await request({
-    url,
-    cookies,
-    body,
-    method: 'PATCH',
-  });
+function update(modelName) {
+  return async (param, body, cookies) => {
+    const url = `${API_URL}/${modelName}/${param}`;
+    const doc = await request({
+      url,
+      cookies,
+      body,
+      method: 'PATCH',
+    });
 
-  return deserialize(doc, model.schema);
+    return doc;
+  };
 }
 
-async function create({ model, body }, cookies) {
-  const url = `${API_URL}/${pluralize(model.name)}`;
-  const doc = await request({
-    url,
-    cookies,
-    body,
-    method: 'POST',
-  });
+function create(modelName) {
+  return async (body, cookies) => {
+    const url = `${API_URL}/${modelName}`;
+    const doc = await request({
+      url,
+      cookies,
+      body,
+      method: 'POST',
+    });
 
-  return deserialize(doc, model.schema);
+    return doc;
+  };
 }
 
-async function remove({ model, param }, cookies) {
-  const url = `${API_URL}/${pluralize(model.name)}/${param}`;
+function remove(modelName) {
+  return async (param, cookies) => {
+    const url = `${API_URL}/${modelName}/${param}`;
 
-  await request({
-    url,
-    cookies,
-    method: 'DELETE',
-  });
+    await request({
+      url,
+      cookies,
+      method: 'DELETE',
+    });
 
-  return true;
+    return true;
+  };
 }
 
 async function search(query, cookies) {
   const url = `${API_URL}/search`;
   const { docs, meta } = await request({ url, query, cookies });
 
-  const modelsBySearchResultType = {
-    post: Post,
-    page: Page,
-    trashPost: TrashPost,
-  };
-
-  const deserialized = docs.map((doc) => {
-    const searchResultModel = modelsBySearchResultType[doc.searchResultType];
-
-    return deserialize(doc, searchResultModel.schema);
-  });
-
-  return { docs: deserialized, meta };
+  return { docs, meta };
 }
 
 async function upload(files, cookies, options = {}) {
@@ -134,51 +131,51 @@ async function upload(files, cookies, options = {}) {
 }
 
 const posts = {
-  find: (query, cookies) => find({ model: Post, query }, cookies),
-  findOne: (path, cookies) => findOne({ model: Post, param: path }, cookies),
+  find: find(MODEL_PATHS.POST),
+  findOne: findOne(MODEL_PATHS.POST),
   findSimilar: (path) => {
-    const url = `${API_URL}/posts/${path}/similar`;
+    const url = `${API_URL}/${MODEL_PATHS.POST}/${path}/similar`;
 
     return request({ url });
   },
-  update: (path, body, cookies) => update({ model: Post, param: path, body }, cookies),
-  create: (body, cookies) => create({ model: Post, body }, cookies),
-  remove: (path, cookies) => remove({ model: Post, param: path }, cookies),
+  update: update(MODEL_PATHS.POST),
+  create: create(MODEL_PATHS.POST),
+  remove: remove(MODEL_PATHS.POST),
 };
 
 const postTranslations = {
-  find: (query, cookies) => find({ model: PostTranslation, query }, cookies),
-  findOne: (id, cookies) => findOne({ model: PostTranslation, param: id }, cookies),
-  update: (id, body, cookies) => update({ model: PostTranslation, param: id, body }, cookies),
-  create: (body, cookies) => create({ model: PostTranslation, body }, cookies),
+  find: find(MODEL_PATHS.POST_TRANSLATION),
+  findOne: findOne(MODEL_PATHS.POST_TRANSLATION),
+  update: update(MODEL_PATHS.POST_TRANSLATION),
+  create: create(MODEL_PATHS.POST_TRANSLATION),
   remove: async (postSlug, language, cookies) => {
     const { translations } = await posts.findOne(postSlug);
     const { id } = translations.find((translation) => translation.lang === language);
 
-    return remove({ model: PostTranslation, param: id }, cookies);
+    return remove(MODEL_PATHS.POST_TRANSLATION)(id, cookies);
   },
 };
 
 const pages = {
-  find: (cookies) => find({ model: Page }, cookies),
-  findOne: (path, cookies) => findOne({ model: Page, param: path }, cookies),
-  update: (path, body, cookies) => update({ model: Page, param: path, body }, cookies),
-  create: (body, cookies) => create({ model: Page, body }, cookies),
-  remove: (path, cookies) => remove({ model: Page, param: path }, cookies),
+  find: find(MODEL_PATHS.PAGE),
+  findOne: findOne(MODEL_PATHS.PAGE),
+  update: update(MODEL_PATHS.PAGE),
+  create: create(MODEL_PATHS.PAGE),
+  remove: remove(MODEL_PATHS.PAGE),
 };
 
 const trashPosts = {
-  find: (query, cookies) => find({ model: TrashPost, query }, cookies),
-  findOne: (id, cookies) => findOne({ model: TrashPost, param: id }, cookies),
-  findRandom: (cookies) => findOne({ model: TrashPost, param: 'random' }, cookies),
-  update: (id, body, cookies) => update({ model: TrashPost, param: id, body }, cookies),
-  create: (body, cookies) => create({ model: TrashPost, body }, cookies),
-  remove: (id, cookies) => remove({ model: TrashPost, param: id }, cookies),
+  find: find(MODEL_PATHS.TRASH_POST),
+  findOne: findOne(MODEL_PATHS.TRASH_POST),
+  findRandom: (cookies) => findOne(MODEL_PATHS.TRASH_POST)('random', cookies),
+  update: update(MODEL_PATHS.TRASH_POST),
+  create: create(MODEL_PATHS.TRASH_POST),
+  remove: remove(MODEL_PATHS.TRASH_POST),
 };
 
 const users = {
-  find: (query, cookies) => find({ model: User, query }, cookies),
-  findOne: (id, cookies) => findOne({ model: User, param: id }, cookies),
+  find: find(MODEL_PATHS.USER),
+  findOne: findOne(MODEL_PATHS.USER),
 };
 
 const tags = {
@@ -193,11 +190,11 @@ const tags = {
 };
 
 const moments = {
-  find: (query) => find({ model: Moment, query }),
-  findOne: (id) => findOne({ model: Moment, param: id }),
-  update: (id, body, cookies) => update({ model: Moment, param: id, body }, cookies),
-  create: (body, cookies) => create({ model: Moment, body }, cookies),
-  remove: (id, cookies) => remove({ model: Moment, param: id }, cookies),
+  find: find(MODEL_PATHS.MOMENT),
+  findOne: findOne(MODEL_PATHS.MOMENT),
+  update: update(MODEL_PATHS.MOMENT),
+  create: create(MODEL_PATHS.MOMENT),
+  remove: remove(MODEL_PATHS.MOMENT),
 };
 
 export const analytics = {

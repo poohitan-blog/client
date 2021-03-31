@@ -1,23 +1,14 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { NextSeo } from 'next-seo';
 
-import Error from 'pages/_error';
-
-import withSession from 'hocs/withSession';
-import withProtection from 'hocs/withProtection';
 import Wrapper from 'components/Wrapper';
 import Header from 'components/Header';
 import Content from 'components/Content';
 import UploadFilesForm from 'components/admin/UploadFilesForm';
 
-const UploadFiles = (props) => {
-  const { error } = props;
+import checkAdminAccess from 'utils/check-admin-access';
 
-  if (error) {
-    return <Error statusCode={error.status} />;
-  }
-
+function UploadFiles() {
   const title = 'Завантажити файли';
 
   return (
@@ -29,16 +20,20 @@ const UploadFiles = (props) => {
       </Content>
     </Wrapper>
   );
-};
+}
 
-UploadFiles.propTypes = {
-  error: PropTypes.shape({
-    status: PropTypes.number,
-  }),
-};
+export async function getServerSideProps({ req }) {
+  const hasAccess = await checkAdminAccess({ req });
 
-UploadFiles.defaultProps = {
-  error: null,
-};
+  if (!hasAccess) {
+    return {
+      props: {
+        errorCode: 401,
+      },
+    };
+  }
 
-export default withProtection(withSession(UploadFiles));
+  return { props: {} };
+}
+
+export default UploadFiles;

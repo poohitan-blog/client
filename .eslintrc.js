@@ -17,7 +17,12 @@ module.exports = {
     'jsx-a11y/no-static-element-interactions': [1],
     'jsx-a11y/click-events-have-key-events': [1],
     'global-require': [1],
+    'react-hooks/rules-of-hooks': [2],
+    'react-hooks/exhaustive-deps': [1],
   },
+  plugins: [
+    'react-hooks',
+  ],
   globals: {
     $: false,
     jQuery: false,

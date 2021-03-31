@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
+import { signOut } from 'next-auth/client';
 
-import { logOut } from 'services/session';
 import Page from 'components/admin/panel/Page';
 import Draft from 'components/admin/panel/Draft';
 
@@ -11,7 +11,7 @@ import styles from 'styles/components/admin/panel.module.scss';
 class Panel extends React.Component {
   static logOut(event) {
     event.preventDefault();
-    logOut();
+    signOut();
   }
 
   render() {

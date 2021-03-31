@@ -5,10 +5,8 @@ import { parseCookies } from 'nookies';
 import { NextSeo, BlogJsonLd } from 'next-seo';
 
 import { current } from 'config';
-import Error from 'pages/_error';
 import API from 'services/api';
 
-import withSession from 'hocs/withSession';
 import Wrapper from 'components/Wrapper';
 import Header from 'components/Header';
 import Content from 'components/Content';
@@ -20,117 +18,114 @@ const Lightbox = dynamic(() => import('components/ui/Lightbox'), { ssr: false, l
 
 const POSTS_PER_PAGE = 20;
 
-class IndexPage extends React.Component {
-  static async getInitialProps({ query, req, pathname }) {
-    try {
-      const { page = 1 } = query;
-      const { docs, meta } = await API.posts.find({
-        page,
-        limit: POSTS_PER_PAGE,
-        cut: true,
-      }, parseCookies({ req }));
-
-      return {
-        posts: docs,
-        meta,
-        pathname,
-      };
-    } catch (error) {
-      return { error };
-    }
-  }
-
-  render() {
-    const {
-      posts,
-      meta,
-      error,
-    } = this.props;
-
-    if (error) {
-      return <Error statusCode={error.status} />;
-    }
-
-    const content = posts.map((post) => {
-      if (post.hidden) {
-        return (
-          <CompactPost
-            key={post.slug}
-            title={post.title}
-            body={post.body}
-            slug={post.slug}
-            publishedAt={new Date(post.publishedAt)}
-            simplified
-          />
-        );
-      }
-
+function IndexPage({ posts, meta }) {
+  const content = posts.map((post) => {
+    if (post.hidden) {
       return (
-        <Post
-          cut
+        <CompactPost
           key={post.slug}
           title={post.title}
           body={post.body}
           slug={post.slug}
-          language={post.language}
-          translations={post.translations}
-          commentsCount={post.commentsCount}
           publishedAt={new Date(post.publishedAt)}
-          tags={post.tags}
+          simplified
         />
       );
-    });
-
-    const {
-      title,
-      description,
-      keywords,
-      languageTerritory,
-      social,
-    } = current.meta;
-
-    const { currentPage } = meta;
-    const canonicalUrl = currentPage === 1
-      ? current.clientURL
-      : `${current.clientURL}?page=${currentPage}`;
+    }
 
     return (
-      <>
-        <NextSeo
-          title="Скандально довгі тексти"
-          description={description}
-          keywords={keywords}
-          canonical={canonicalUrl}
-          openGraph={{
-            title,
-            description,
-            url: current.clientURL,
-            locale: languageTerritory,
-            site_name: title,
-            type: 'website',
-          }}
-          twitter={{
-            handle: social.twitter.username,
-            site: social.twitter.username,
-            cardType: 'summary',
-          }}
-        />
-        <BlogJsonLd
-          url={canonicalUrl}
-          title={title}
-          description={description}
-          authorName="poohitan"
-        />
-        <Wrapper>
-          <Header />
-          <Content>
-            {content}
-          </Content>
-          <Footer pagination={meta} />
-          <Lightbox id={posts.map((post) => post.slug).join('-')} />
-        </Wrapper>
-      </>
+      <Post
+        cut
+        key={post.slug}
+        title={post.title}
+        body={post.body}
+        slug={post.slug}
+        language={post.language}
+        translations={post.translations}
+        commentsCount={post.commentsCount}
+        publishedAt={new Date(post.publishedAt)}
+        tags={post.tags}
+      />
     );
+  });
+
+  const {
+    title,
+    description,
+    keywords,
+    languageTerritory,
+    social,
+  } = current.meta;
+
+  const { currentPage } = meta;
+  const canonicalUrl = currentPage === 1
+    ? current.clientURL
+    : `${current.clientURL}?page=${currentPage}`;
+
+  return (
+    <>
+      <NextSeo
+        title="Скандально довгі тексти"
+        description={description}
+        keywords={keywords}
+        canonical={canonicalUrl}
+        openGraph={{
+          title,
+          description,
+          url: current.clientURL,
+          locale: languageTerritory,
+          site_name: title,
+          type: 'website',
+        }}
+        twitter={{
+          handle: social.twitter.username,
+          site: social.twitter.username,
+          cardType: 'summary',
+        }}
+      />
+      <BlogJsonLd
+        url={canonicalUrl}
+        title={title}
+        description={description}
+        authorName="poohitan"
+      />
+      <Wrapper>
+        <Header />
+        <Content>
+          {content}
+        </Content>
+        <Footer pagination={meta} />
+        <Lightbox id={posts.map((post) => post.slug).join('-')} />
+      </Wrapper>
+    </>
+  );
+}
+
+export async function getServerSideProps({ query, req, res }) {
+  try {
+    const { page = 1 } = query;
+    const { docs, meta } = await API.posts.find({
+      page,
+      limit: POSTS_PER_PAGE,
+      cut: true,
+    }, parseCookies({ req }));
+
+    return {
+      props: {
+        posts: docs,
+        meta,
+      },
+    };
+  } catch (error) {
+    const { statusCode = 500 } = error;
+
+    res.statusCode = statusCode;
+
+    return {
+      props: {
+        errorCode: statusCode,
+      },
+    };
   }
 }
 
@@ -141,14 +136,6 @@ IndexPage.propTypes = {
     currentPage: PropTypes.number,
     totalPages: PropTypes.number,
   }).isRequired,
-
-  error: PropTypes.shape({
-    status: PropTypes.number,
-  }),
 };
 
-IndexPage.defaultProps = {
-  error: null,
-};
-
-export default withSession(IndexPage);
+export default IndexPage;

@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import Router from 'next/router';
+import { useRouter } from 'next/router';
 import { NextSeo } from 'next-seo';
+import { useSession } from 'next-auth/client';
 import { parseCookies } from 'nookies';
 import { Masonry, useInfiniteLoader } from 'masonic';
 
-import withSession from 'hocs/withSession';
-
 import Dropzone from 'components/Dropzone';
-import { Context as SessionContext } from 'services/session';
 import API from 'services/api';
 import createMomentMasonryCard from 'utils/create-moment-masonry-card';
 
@@ -22,6 +20,8 @@ const MomentsPage = ({ moments, totalPages }) => {
   const [items, setItems] = useState(moments);
   const [hasMore, setHasMore] = useState(totalPages > 1);
   const [isUploading, setIsUploading] = useState(false);
+  const router = useRouter();
+  const [session] = useSession();
 
   const createMoments = async (files) => {
     setIsUploading(true);
@@ -43,7 +43,7 @@ const MomentsPage = ({ moments, totalPages }) => {
       };
     }));
 
-    Router.reload();
+    router.reload();
   };
 
   const updateMoment = async (id, body) => {
@@ -90,21 +90,13 @@ const MomentsPage = ({ moments, totalPages }) => {
         <div className={styles.header}>
           <h1 className={styles.title}>{pageTitle}</h1>
         </div>
-        <SessionContext.Consumer>
-          {
-            ({ isAuthenticated }) => {
-              if (!isAuthenticated) {
-                return null;
-              }
-
-              return (
-                <div className={styles.moment} key="dropzone">
-                  <Dropzone loading={isUploading} onDrop={createMoments} />
-                </div>
-              );
-            }
-          }
-        </SessionContext.Consumer>
+        {
+          session && (
+            <div className={styles.moment} key="dropzone">
+              <Dropzone loading={isUploading} onDrop={createMoments} />
+            </div>
+          )
+        }
         <Masonry
           items={items}
           render={MomentMasonryCard}
@@ -117,25 +109,39 @@ const MomentsPage = ({ moments, totalPages }) => {
   );
 };
 
-MomentsPage.getInitialProps = async ({ query }) => {
-  const { page = 1 } = query;
+export async function getServerSideProps({ query, res }) {
+  try {
+    const { page = 1 } = query;
 
-  const { docs, meta } = await API.moments.find({
-    limit: MOMENTS_PER_PAGE,
-    page,
-  });
+    const { docs, meta } = await API.moments.find({
+      limit: MOMENTS_PER_PAGE,
+      page,
+    });
 
-  const { totalPages } = meta;
+    const { totalPages } = meta;
 
-  return {
-    moments: docs,
-    totalPages,
-  };
-};
+    return {
+      props: {
+        moments: docs,
+        totalPages,
+      },
+    };
+  } catch (error) {
+    const { statusCode = 500 } = error;
+
+    res.statusCode = statusCode;
+
+    return {
+      props: {
+        errorCode: statusCode,
+      },
+    };
+  }
+}
 
 MomentsPage.propTypes = {
   moments: PropTypes.arrayOf(PropTypes.object).isRequired,
   totalPages: PropTypes.number.isRequired,
 };
 
-export default withSession(MomentsPage);
+export default MomentsPage;

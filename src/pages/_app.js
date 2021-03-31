@@ -1,10 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
-
+import { Provider } from 'next-auth/client';
+import NextNProgress from 'nextjs-progressbar';
 import { DefaultSeo } from 'next-seo';
 
 import { current } from 'config';
+
+import Error from 'pages/_error';
 
 import { config, library } from '@fortawesome/fontawesome-svg-core';
 import {
@@ -38,6 +41,10 @@ library.add(
 );
 
 function App({ Component, pageProps }) {
+  if (pageProps.errorCode) {
+    return <Error statusCode={pageProps.errorCode} />;
+  }
+
   return (
     <>
       <Head>
@@ -48,14 +55,20 @@ function App({ Component, pageProps }) {
         description={current.meta.description}
         keywords={current.meta.keywords}
       />
-      <Component {...pageProps} /> {/* eslint-disable-line */}
+      <NextNProgress color="#f59300" height="2" options={{ showSpinner: false }} />
+      <Provider session={pageProps.session}>
+        <Component {...pageProps} /> {/* eslint-disable-line */}
+      </Provider>
     </>
   );
 }
 
 App.propTypes = {
   Component: PropTypes.func.isRequired,
-  pageProps: PropTypes.shape({}).isRequired,
+  pageProps: PropTypes.shape({
+    session: PropTypes.shape({}),
+    errorCode: PropTypes.number,
+  }).isRequired,
 };
 
 export default App;

@@ -25,7 +25,7 @@ class PageForm extends React.Component {
     const { slug: stateSlug } = this.state;
 
     const prefix = `${current.clientURL}`;
-    const slug = propsSlug || stateSlug || '';
+    const slug = stateSlug || propsSlug || '';
     const fullLink = `${prefix}/${slug}`;
     const isNewPage = !id;
 

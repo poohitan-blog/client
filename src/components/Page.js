@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import parse from 'html-react-parser';
+import { useSession } from 'next-auth/client';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import AdminControlButtons from 'components/admin/ControlButtons';
-import { Context as SessionContext } from 'services/session';
 import HTMLProcessor from 'utils/html-processor';
 
 import styles from 'styles/components/page.module.scss';
@@ -17,6 +17,8 @@ const Page = (props) => {
     hidden,
   } = props;
 
+  const [session] = useSession();
+
   return (
     <article className={styles.wrapper} id="page">
       <h1 className={styles.title} id="page-title">
@@ -27,16 +29,16 @@ const Page = (props) => {
               <FontAwesomeIcon icon="eye-slash" className={styles.titleIcon} id="page-title-icon" />
             )
           }
-          <SessionContext.Consumer>
-            {({ isAuthenticated }) => isAuthenticated && (
+          {
+            session && (
               <AdminControlButtons
                 entityType="page"
                 tokens={[slug]}
                 className={styles.adminControlButtons}
                 id="page-admin-control-buttons"
               />
-            )}
-          </SessionContext.Consumer>
+            )
+          }
         </div>
       </h1>
       <div className={styles.body} id="page-body">

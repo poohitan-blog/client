@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import Router from 'next/router';
-import NProgress from 'nprogress';
+import { useRouter } from 'next/router';
+import { useSession } from 'next-auth/client';
 
 import { logPageView, submitFlow } from 'services/analytics';
-import { Context as SessionContext } from 'services/session';
 import { Context as AnnouncementContext, getAnnouncement } from 'services/announcements';
 
 import AdminPanel from 'components/admin/Panel';
@@ -14,77 +13,61 @@ import PrintAngryDog from 'helpers/angry-dog';
 
 import styles from 'styles/components/wrapper.module.scss';
 
-NProgress.configure({ showSpinner: false });
-Router.events.on('routeChangeStart', NProgress.start);
-Router.events.on('routeChangeError', NProgress.done);
-Router.events.on('routeChangeComplete', NProgress.done);
+const Wrapper = ({ showSidebar, children }) => {
+  const router = useRouter();
 
-class Wrapper extends React.Component {
-  constructor(props) {
-    super(props);
+  const [session] = useSession();
+  const [announcement, setAnnouncement] = useState('');
 
-    this.state = {
-      announcement: {},
-    };
+  useEffect(() => {
+    function submitPageView(path) {
+      if (!path) {
+        return;
+      }
 
-    this.logPageView = this.logPageView.bind(this);
-  }
+      const isAuthenticated = Boolean(session);
 
-  componentDidMount() {
-    this.setState({ announcement: getAnnouncement() });
-
-    this.logPageView(Router.asPath);
-    Router.events.on('routeChangeComplete', this.logPageView);
-    global.addEventListener('beforeunload', submitFlow);
+      logPageView(path, isAuthenticated);
+    }
 
     PrintAngryDog();
-  }
+    setAnnouncement(getAnnouncement());
+    submitPageView(router.asPath);
 
-  componentWillUnmount() {
-    Router.events.off('routeChangeComplete', this.logPageView);
-    global.removeEventListener('beforeunload', submitFlow);
-  }
+    router.events.on('routeChangeStart', submitPageView);
+    global.addEventListener('beforeunload', submitFlow);
 
-  logPageView(path) {
-    const { isAuthenticated } = this.context;
+    return () => {
+      router.events.off('routeChangeStart', submitPageView);
+      global.removeEventListener('beforeunload', submitFlow);
+    };
+  }, []);
 
-    if (!isAuthenticated && path && path !== this.lastTrackedPath) {
-      logPageView(path);
-
-      this.lastTrackedPath = path;
-    }
-  }
-
-  render() {
-    const { children } = this.props;
-    const { isAuthenticated, pages, drafts } = this.context;
-    const { announcement } = this.state;
-
-    return (
-      <>
-        <AnnouncementContext.Provider value={announcement}>
-          <div id="wrapper" className={styles.wrapper}>
-            {
-              children
-            }
-            {
-              isAuthenticated && <AdminPanel pages={pages} drafts={drafts} />
-            }
-            {
-              !isAuthenticated && <LoginButton />
-            }
-            <div className={styles.shadow} />
-          </div>
-        </AnnouncementContext.Provider>
-      </>
-    );
-  }
-}
-
-Wrapper.contextType = SessionContext;
+  return (
+    <AnnouncementContext.Provider value={announcement}>
+      <div id="wrapper" className={styles.wrapper}>
+        {
+          children
+        }
+        {
+          session && showSidebar && <AdminPanel pages={[]} drafts={[]} />
+        }
+        {
+          !session && <LoginButton />
+        }
+        <div className={styles.shadow} />
+      </div>
+    </AnnouncementContext.Provider>
+  );
+};
 
 Wrapper.propTypes = {
   children: PropTypes.node.isRequired,
+  showSidebar: PropTypes.bool,
+};
+
+Wrapper.defaultProps = {
+  showSidebar: true,
 };
 
 export default Wrapper;

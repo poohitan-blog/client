@@ -1,3 +1,1 @@
-import Page from 'pages/trash/[id]/edit';
-
-export default Page;
+export { default, getServerSideProps } from 'pages/trash/[id]/edit';
