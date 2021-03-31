@@ -64,7 +64,7 @@ function LoginPage() {
   }
 
   return (
-    <Wrapper showSidebar={false}>
+    <Wrapper>
       <NextSeo title="Вхід у Нарнію" />
       <Content>
         <h1 className={styles.header}>Вхід у Нарнію</h1>

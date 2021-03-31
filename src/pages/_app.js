@@ -8,6 +8,7 @@ import { DefaultSeo } from 'next-seo';
 import { current } from 'config';
 
 import Error from 'pages/_error';
+import AdminPanel from 'components/admin/Panel';
 
 import { config, library } from '@fortawesome/fontawesome-svg-core';
 import {
@@ -57,6 +58,7 @@ function App({ Component, pageProps }) {
       />
       <NextNProgress color="#f59300" height="2" options={{ showSpinner: false }} />
       <Provider session={pageProps.session}>
+        <AdminPanel />
         <Component {...pageProps} /> {/* eslint-disable-line */}
       </Provider>
     </>
