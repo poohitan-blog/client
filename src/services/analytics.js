@@ -28,7 +28,7 @@ export const logPageView = (path, isAuthenticated) => {
 
   flow.push({ timestamp: Date.now(), path, isAuthenticated });
 
-  if (current.environment === 'production') {
+  if (current.environment === 'production' && !isAuthenticated) {
     ReactGA.pageview(path);
   }
 };
