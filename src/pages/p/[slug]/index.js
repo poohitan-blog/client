@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import dynamic from 'next/dynamic';
+import { useRouter } from 'next/router';
 import { NextSeo, ArticleJsonLd } from 'next-seo';
 import { parseCookies } from 'nookies';
 
@@ -13,7 +14,10 @@ import Header from 'components/Header';
 import Content from 'components/Content';
 import Footer from 'components/Footer';
 import Post from 'components/Post';
+import PageFallback from 'components/PageFallback';
 import CommentForm from 'components/post/comments/Form';
+
+const NUMBER_OF_POSTS_TO_RENDER_ON_BUILD_TIME = 15;
 
 const DEFAULT_POST_LANGUAGE = 'uk';
 
@@ -24,13 +28,19 @@ const SimilarPostsGroup = dynamic(() => import('components/SimilarPostsGroup'), 
 const Lightbox = dynamic(() => import('components/ui/Lightbox'), { ssr: false, loading: () => null });
 
 function PostPage({ post, similarPosts, language }) {
-  const translation = (language && post.translations.find((item) => item.lang === language)) || {};
-  const isTranslation = Boolean(translation.lang);
+  const router = useRouter();
 
-  const title = `${translation.title || post.title}`;
-  const body = translation.body || post.body;
+  if (router.isFallback) {
+    return <PageFallback />;
+  }
+
+  const isTranslation = language !== DEFAULT_POST_LANGUAGE;
+  const translation = post.translations.find((item) => item.lang === language);
+
+  const title = translation?.title || post.title;
+  const body = translation?.body || post.body;
   const [image] = getImageLinksFromHTML(body);
-  const description = translation.description
+  const description = translation?.description
     || post.description
     || shorten(stripHTML(body), 20);
   const datePublished = new Date(post.publishedAt).toISOString();
@@ -104,21 +114,22 @@ function PostPage({ post, similarPosts, language }) {
   );
 }
 
-export async function getServerSideProps({ req, res, query }) {
+export async function getStaticProps({ params }) {
   try {
-    const post = await API.posts.findOne(query.slug, parseCookies({ req }));
-    const similarPosts = await API.posts.findSimilar(query.slug);
+    const post = await API.posts.findOne(params.slug, parseCookies({}));
+    const similarPosts = await API.posts.findSimilar(params.slug);
 
     const availableLanguages = post.translations.map((item) => item.lang);
-    const requestedLanguage = query.language;
 
-    if (requestedLanguage && !availableLanguages.includes(requestedLanguage)) {
-      return {
-        redirect: {
-          destination: `/p/${post.slug}`,
-          permanent: false,
-        },
-      };
+    const requestedLanguage = params.language;
+    const requestedLanguageAvailable = availableLanguages.includes(requestedLanguage);
+
+    if (requestedLanguage && !requestedLanguageAvailable) {
+      const error = new Error();
+
+      error.status = 404;
+
+      throw error;
     }
 
     return {
@@ -127,23 +138,50 @@ export async function getServerSideProps({ req, res, query }) {
         similarPosts,
         language: requestedLanguage || DEFAULT_POST_LANGUAGE,
       },
+      revalidate: 1,
     };
   } catch (error) {
-    const { statusCode = 500 } = error;
-
-    res.statusCode = statusCode;
+    const { status } = error;
 
     return {
       props: {
-        errorCode: statusCode,
+        error: {
+          status,
+        },
       },
     };
   }
 }
 
-PostPage.propTypes = {
-  language: PropTypes.string.isRequired,
+export async function getStaticPaths() {
+  const { docs: posts } = await API.posts.find({ cut: true });
 
+  const paths = posts
+    .sort((left, right) => right.views - left.views)
+    .slice(0, NUMBER_OF_POSTS_TO_RENDER_ON_BUILD_TIME)
+    .reduce((accumulator, post) => [
+      ...accumulator,
+      {
+        params: {
+          slug: post.slug,
+          language: DEFAULT_POST_LANGUAGE,
+        },
+      },
+      ...post.translations.map((translation) => ({
+        params: {
+          slug: post.slug,
+          language: translation.lang,
+        },
+      })),
+    ], []);
+
+  return {
+    paths,
+    fallback: true,
+  };
+}
+
+PostPage.propTypes = {
   post: PropTypes.shape({
     title: PropTypes.string.isRequired,
     body: PropTypes.string.isRequired,
@@ -159,11 +197,13 @@ PostPage.propTypes = {
   }),
 
   similarPosts: PropTypes.arrayOf(PropTypes.object),
+  language: PropTypes.string,
 };
 
 PostPage.defaultProps = {
   post: {},
   similarPosts: [],
+  language: 'uk',
 };
 
 export default PostPage;

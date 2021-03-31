@@ -58,7 +58,9 @@ export async function getServerSideProps({ req, res, query }) {
     if (!hasAccess) {
       return {
         props: {
-          errorCode: 401,
+          error: {
+            status: 401,
+          },
         },
       };
     }
@@ -82,13 +84,15 @@ export async function getServerSideProps({ req, res, query }) {
       },
     };
   } catch (error) {
-    const { statusCode = 500 } = error;
+    const { status } = error;
 
-    res.statusCode = statusCode;
+    res.statusCode = status;
 
     return {
       props: {
-        errorCode: statusCode,
+        error: {
+          status,
+        },
       },
     };
   }

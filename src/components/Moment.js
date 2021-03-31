@@ -50,8 +50,19 @@ const Moment = ({
     setIsDeleted(true);
   };
 
+  const wrapperClassName = cc({
+    [styles.wrapper]: true,
+    [styles.deleted]: isDeleted,
+    [className]: Boolean(className),
+  });
+
+  const fullScreenWrapperClassName = cc({
+    [styles.fullScreenWrapper]: true,
+    [styles.fullScreenWrapperOpen]: isCurrentlyOpen,
+  });
+
   return (
-    <div className={cc({ [styles.wrapper]: true, [styles.deleted]: isDeleted, [className]: Boolean(className) })}>
+    <div className={wrapperClassName}>
       <div className={styles.container}>
         <a
           href={url}
@@ -79,8 +90,8 @@ const Moment = ({
       </div>
 
       <div
-        className={cc({ [styles.fullScreenWrapper]: true, [styles.fullScreenWrapperOpen]: isCurrentlyOpen })}
-        style={{ backgroundColor: `rgba(${averageColorRGB[0]}, ${averageColorRGB[1]}, ${averageColorRGB[2]}, 0.7)` }}
+        className={fullScreenWrapperClassName}
+        style={{ backgroundColor: `rgba(${averageColorRGB.join(', ')}, 0.7)` }}
         onClick={exitFullScreen}
       >
         <img src={`${url}?width=${FULLSCREEN_WIDTH}`} className={styles.fullScreenImage} alt={caption} />
