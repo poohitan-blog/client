@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
-import { LazyLoadComponent } from 'react-lazy-load-image-component';
+import LazyLoad from 'react-lazyload';
 
 import { Rectangle } from 'components/ui/Loader';
 
@@ -14,9 +14,8 @@ const TinyPost = ({
   description,
   slug,
   image,
-  scrollPosition,
 }) => (
-  <LazyLoadComponent threshold={300} scrollPosition={scrollPosition} placeholder={<Rectangle />}>
+  <LazyLoad offset={300} placeholder={<Rectangle />}>
     <Link href={`/p/${slug}`}>
       <a className={styles.wrapper} title={description || title} style={{ backgroundImage: `url("${image}?width=${IMAGE_WIDTH}")` }}>
         <div className={styles.content}>
@@ -25,7 +24,7 @@ const TinyPost = ({
         <div className={styles.shadow} />
       </a>
     </Link>
-  </LazyLoadComponent>
+  </LazyLoad>
 );
 
 TinyPost.propTypes = {
@@ -33,13 +32,11 @@ TinyPost.propTypes = {
   description: PropTypes.string,
   slug: PropTypes.string.isRequired,
   image: PropTypes.string,
-  scrollPosition: PropTypes.shape({}),
 };
 
 TinyPost.defaultProps = {
   description: '',
   image: '',
-  scrollPosition: null,
 };
 
 export default TinyPost;

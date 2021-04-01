@@ -64,7 +64,7 @@ class Iframe extends React.Component {
 
 Iframe.propTypes = {
   src: PropTypes.string.isRequired,
-  height: PropTypes.oneOf([PropTypes.string, PropTypes.number]),
+  height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   allowFullScreen: PropTypes.bool,
   referrerPolicy: PropTypes.string,
   className: PropTypes.string,

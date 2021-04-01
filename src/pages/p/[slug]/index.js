@@ -150,7 +150,7 @@ PostPage.propTypes = {
     description: PropTypes.string,
     slug: PropTypes.string.isRequired,
     tags: PropTypes.arrayOf(PropTypes.string),
-    publishedAt: PropTypes.instanceOf(Date),
+    publishedAt: PropTypes.string,
     hidden: PropTypes.bool,
     commentsCount: PropTypes.number,
     translations: PropTypes.arrayOf(PropTypes.shape({})),

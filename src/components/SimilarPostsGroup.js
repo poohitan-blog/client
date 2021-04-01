@@ -5,13 +5,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 import shuffle from 'shuffle-array';
-import { trackWindowScroll } from 'react-lazy-load-image-component';
 
 import TinyPost from 'components/TinyPost';
 
 import styles from 'styles/components/similar-posts-group.module.scss';
 
-const SimilarPostsGroup = ({ posts, displayCount, scrollPosition }) => {
+const SimilarPostsGroup = ({ posts, displayCount }) => {
   const postsWithImages = posts.filter((post) => post.image);
   const postsToDisplay = postsWithImages.length >= displayCount
     ? postsWithImages
@@ -38,7 +37,6 @@ const SimilarPostsGroup = ({ posts, displayCount, scrollPosition }) => {
                 description={post.description}
                 slug={post.slug}
                 image={post.image}
-                scrollPosition={scrollPosition}
               />
             ))
         }
@@ -50,13 +48,11 @@ const SimilarPostsGroup = ({ posts, displayCount, scrollPosition }) => {
 SimilarPostsGroup.propTypes = {
   posts: PropTypes.arrayOf(PropTypes.object),
   displayCount: PropTypes.number,
-  scrollPosition: PropTypes.shape({}),
 };
 
 SimilarPostsGroup.defaultProps = {
   posts: [],
   displayCount: 3,
-  scrollPosition: null,
 };
 
-export default trackWindowScroll(SimilarPostsGroup);
+export default SimilarPostsGroup;

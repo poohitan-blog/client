@@ -1,15 +1,14 @@
 import PropTypes from 'prop-types';
 import parse from 'html-react-parser';
-import { trackWindowScroll } from 'react-lazy-load-image-component';
 
 import HTMLProcessor from 'utils/html-processor';
 
 const FullBody = ({
-  language, body, scrollPosition, imagesWidth,
+  language, body, imagesWidth,
 }) => parse(body, {
   replace(node) {
     return new HTMLProcessor(node)
-      .asImage({ language, imagesWidth, scrollPosition })
+      .asImage({ language, imagesWidth })
       .asCut()
       .asLink()
       .asCode()
@@ -22,12 +21,7 @@ const FullBody = ({
 FullBody.propTypes = {
   language: PropTypes.string.isRequired,
   body: PropTypes.node.isRequired,
-  scrollPosition: PropTypes.shape({}),
   imagesWidth: PropTypes.number.isRequired,
 };
 
-FullBody.defaultProps = {
-  scrollPosition: null,
-};
-
-export default trackWindowScroll(FullBody);
+export default FullBody;

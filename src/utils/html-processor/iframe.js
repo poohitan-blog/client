@@ -1,5 +1,5 @@
 import React from 'react';
-import { LazyLoadComponent } from 'react-lazy-load-image-component';
+import LazyLoad from 'react-lazyload';
 
 import Iframe from 'components/ui/Iframe';
 
@@ -20,7 +20,7 @@ export default function processIframe() {
     const allowFullScreen = attribs.allowfullscreen || attribs.allowfullscreen === '';
 
     this.processedNode = (
-      <LazyLoadComponent threshold={300}>
+      <LazyLoad offset={300}>
         <Iframe
           src={src}
           height={height}
@@ -28,7 +28,7 @@ export default function processIframe() {
           referrerPolicy={referrerPolicy}
           className={className}
         />
-      </LazyLoadComponent>
+      </LazyLoad>
     );
   }
 

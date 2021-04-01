@@ -2,6 +2,11 @@ const webpack = require('webpack');
 const migrationMap = require('./src/helpers/migration-map');
 
 module.exports = {
+  images: {
+    domains: ['static.poohitan.com'],
+    imageSizes: [600, 800, 1200, 1600, 1920],
+  },
+
   async rewrites() {
     return [
       {

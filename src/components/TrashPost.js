@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import Link from 'next/link';
 import { useSession } from 'next-auth/client';
 import parse from 'html-react-parser';
-import { trackWindowScroll } from 'react-lazy-load-image-component';
 import cc from 'classcat';
 
 import AdminControlButtons from 'components/admin/ControlButtons';
@@ -17,16 +16,17 @@ import styles from 'styles/components/trash-post.module.scss';
 const MAX_UNCOLLAPSED_HEIGHT = 1000;
 
 const TrashPost = ({
-  id, shortId, body, createdAt, scrollPosition, collapsable,
+  id, shortId, body, createdAt, collapsable,
 }) => {
   const [longEnoughToCollapse, setLongEnoughToCollapse] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
   const [collapsedHeight, setCollapsedHeight] = useState();
   const [fullHeight, setFullHeight] = useState();
+
   const [parsedBody] = useState(parse(body, {
     replace(node) {
       return new HTMLProcessor(node)
-        .asImage({ scrollPosition })
+        .asImage()
         .asLink()
         .asIframe()
         .getNode();
@@ -109,13 +109,11 @@ TrashPost.propTypes = {
   shortId: PropTypes.string.isRequired,
   body: PropTypes.string.isRequired,
   createdAt: PropTypes.instanceOf(Date).isRequired,
-  scrollPosition: PropTypes.shape({}),
   collapsable: PropTypes.bool,
 };
 
 TrashPost.defaultProps = {
   collapsable: true,
-  scrollPosition: null,
 };
 
-export default trackWindowScroll(TrashPost);
+export default TrashPost;

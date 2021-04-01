@@ -1,24 +1,13 @@
 import React from 'react';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
-import 'react-lazy-load-image-component/src/effects/blur.css';
+import Image from 'next/image';
+
+import styles from 'styles/image.module.scss';
 
 export const LIGHTBOX_CLASS = 'lightbox-image';
 const LIGHTBOX_IMAGE_CAPTION_CLASS = 'lightbox-image-caption';
 
 export const DEFAULT_THUMBNAIL_WIDTH = 800;
-const DEFAULT_THUMBNAIL_RELATIVE_HEIGHT = 60;
 const DEFAULT_ALT_LANGUAGE = 'uk';
-
-function calculateRelativeThumbnailHeight(node) {
-  const {
-    'data-originalwidth': originalWidth,
-    'data-originalheight': originalHeight,
-  } = node.attribs;
-
-  return originalWidth && originalHeight
-    ? (originalHeight * 100) / originalWidth
-    : DEFAULT_THUMBNAIL_RELATIVE_HEIGHT;
-}
 
 function generateAltText(node, language) {
   const {
@@ -51,42 +40,43 @@ function generateLinkTitle(node, language) {
 export function generateLazyPreview(node, {
   altLanguage = DEFAULT_ALT_LANGUAGE,
   thumbnailWidth = DEFAULT_THUMBNAIL_WIDTH,
-  scrollPosition,
 }) {
   const {
     class: className,
     src: originalSource,
     'data-averagecolor': averageColor,
     'data-clickable': clickable,
+    'data-originalwidth': originalWidth,
+    'data-originalheight': originalHeight,
   } = node.attribs;
 
   const placeholderSource = `${originalSource}?placeholder=true`;
-  const thumbnailSource = `${originalSource}?width=${thumbnailWidth}`;
 
-  const relativeThumbnailHeight = calculateRelativeThumbnailHeight(node);
   const alt = generateAltText(node, altLanguage);
   const title = generateLinkTitle(node, altLanguage);
 
+  const thumbnailHeight = thumbnailWidth / (originalWidth / originalHeight);
+
   const isClickable = clickable !== 'false';
 
+  const loader = ({ src, width }) => `${src}?width=${width}`;
+
   const image = (
-    <span className="lazy-load-image-wrapper">
-      <LazyLoadImage
-        src={thumbnailSource}
-        key={thumbnailSource}
-        placeholderSrc={placeholderSource}
+    <div className={[className, styles.wrapper].join(' ')} style={{ backgroundColor: `#${averageColor}` }}>
+      <img
+        src={placeholderSource}
         alt={alt}
-        effect="blur"
-        threshold={300}
-        scrollPosition={scrollPosition}
-        wrapperClassName="lazy-load-image"
-        className={className}
+        aria-hidden="true"
+        className={styles.placeholder}
       />
-      <span
-        className="lazy-load-image-placeholder"
-        style={{ paddingTop: `${relativeThumbnailHeight}%`, backgroundColor: `#${averageColor}` }}
+      <Image
+        src={originalSource}
+        alt={alt}
+        width={thumbnailWidth}
+        height={thumbnailHeight}
+        loader={loader}
       />
-    </span>
+    </div>
   );
 
   const captionHtml = alt ? `<span class="${LIGHTBOX_IMAGE_CAPTION_CLASS}">${alt}</span>` : null;
@@ -107,7 +97,7 @@ export function generateLazyPreview(node, {
     : image;
 }
 
-export default function processImage({ language, imagesWidth, scrollPosition } = {}) {
+export default function processImage({ language, imagesWidth } = {}) {
   const { node } = this;
   const { name, type } = node;
   const isImage = type === 'tag' && name === 'img';
@@ -116,7 +106,6 @@ export default function processImage({ language, imagesWidth, scrollPosition } =
     this.processedNode = generateLazyPreview(node, {
       altLanguage: language,
       thumbnailWidth: imagesWidth,
-      scrollPosition,
     });
   }
 
