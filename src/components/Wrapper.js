@@ -6,14 +6,13 @@ import { useSession } from 'next-auth/client';
 import { logPageView, submitFlow } from 'services/analytics';
 import { Context as AnnouncementContext, generateAnnouncement } from 'services/announcements';
 
-import AdminPanel from 'components/admin/Panel';
 import LoginButton from 'components/LoginButton';
 
 import PrintAngryDog from 'helpers/angry-dog';
 
 import styles from 'styles/components/wrapper.module.scss';
 
-const Wrapper = ({ showSidebar, children }) => {
+const Wrapper = ({ children }) => {
   const router = useRouter();
 
   const [session, loading] = useSession();
@@ -53,9 +52,6 @@ const Wrapper = ({ showSidebar, children }) => {
           children
         }
         {
-          session && showSidebar && <AdminPanel pages={[]} drafts={[]} />
-        }
-        {
           !session && <LoginButton />
         }
         <div className={styles.shadow} />
@@ -66,11 +62,6 @@ const Wrapper = ({ showSidebar, children }) => {
 
 Wrapper.propTypes = {
   children: PropTypes.node.isRequired,
-  showSidebar: PropTypes.bool,
-};
-
-Wrapper.defaultProps = {
-  showSidebar: true,
 };
 
 export default Wrapper;

@@ -1,96 +1,105 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { signOut } from 'next-auth/client';
+import { useSession, signOut } from 'next-auth/client';
+import { parseCookies } from 'nookies';
 
+import Container from 'components/admin/panel/Container';
 import Page from 'components/admin/panel/Page';
 import Draft from 'components/admin/panel/Draft';
 
+import API from 'services/api';
+
 import styles from 'styles/components/admin/panel.module.scss';
 
-class Panel extends React.Component {
-  static logOut(event) {
+const menu = [
+  {
+    title: 'Додати запис',
+    href: '/posts/new',
+  },
+  {
+    title: 'Додати запис у смітник',
+    href: '/trash/new',
+  },
+  {
+    title: 'Додати сторінку',
+    href: '/pages/new',
+  },
+  {
+    title: 'Завантажити файли',
+    href: '/upload',
+  },
+  {
+    title: 'Чернетки',
+    href: '/drafts',
+  },
+];
+
+export function Panel() {
+  const [session] = useSession();
+
+  const [pagesList, setPagesList] = useState([]);
+  const [draftsList, setDraftsList] = useState([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      const { docs: drafts } = await API.posts.find({ hidden: true }, parseCookies({}));
+      const { docs: pages } = await API.pages.find({}, parseCookies({}));
+      const publicPages = pages.filter((page) => !page.hidden);
+      const hiddenPages = pages.filter((page) => page.hidden);
+      const allPages = publicPages.concat(...hiddenPages);
+
+      setPagesList(allPages);
+      setDraftsList(drafts);
+    }
+
+    if (session) {
+      fetchData();
+    }
+  }, [session]);
+
+  if (!session) {
+    return null;
+  }
+
+  function logOut(event) {
     event.preventDefault();
     signOut();
   }
 
-  render() {
-    const { pages, drafts } = this.props;
-
-    const publicPages = pages.filter((page) => !page.hidden);
-    const hiddenPages = pages.filter((page) => page.hidden);
-    const allPages = publicPages.concat(...hiddenPages);
-
-    const pagesBlock = !pages.length ? null : (
-      <div className={styles.block}>
-        <h3>Сторінки</h3>
-        <ul>
-          {
-            allPages.map((page) => (
-              <li key={page.slug}>
-                <Page slug={page.slug} title={page.title} hidden={page.hidden} />
-              </li>
-            ))
-          }
-        </ul>
-      </div>
-    );
-
-    const draftsBlock = !drafts.length ? null : (
-      <div className={styles.block}>
-        <h3>Чернетки</h3>
-        <ul>
-          {
-            drafts.map((draft) => (
-              <li key={draft.slug}>
-                <Draft slug={draft.slug} title={draft.title} />
-              </li>
-            ))
-          }
-        </ul>
-      </div>
-    );
-
-    return (
-      <nav className={styles.wrapper} id="admin-panel">
-        <div className={styles.block}>
-          <h3>Панель приладів</h3>
-          <ul>
-            <li>
-              <Link href="/posts/new"><a>Додати запис</a></Link>
+  return (
+    <nav className={styles.wrapper} id="admin-panel">
+      <Container title="Панель приладів">
+        {
+          menu.map((item) => (
+            <li key={item.href}>
+              <Link href={item.href}><a>{item.title}</a></Link>
             </li>
-            <li>
-              <Link href="/trash/new"><a>Додати запис у смітник</a></Link>
+          ))
+        }
+        <li>
+          <a href="#" role="button" onClick={logOut}>Вийти</a>
+        </li>
+      </Container>
+      <Container title="Сторінки">
+        {
+          pagesList.map((page) => (
+            <li key={page.slug}>
+              <Page slug={page.slug} title={page.title} hidden={page.hidden} />
             </li>
-            <li>
-              <Link href="/pages/new"><a>Додати сторінку</a></Link>
+          ))
+        }
+      </Container>
+      <Container title="Чернетки">
+        {
+          draftsList.map((draft) => (
+            <li key={draft.slug}>
+              <Draft slug={draft.slug} title={draft.title} />
             </li>
-            <li>
-              <Link href="/upload"><a>Завантажити файли</a></Link>
-            </li>
-            <li>
-              <Link href="/drafts"><a>Чернетки</a></Link>
-            </li>
-            <li>
-              <a href="#" role="button" onClick={Panel.logOut}>Вийти</a>
-            </li>
-          </ul>
-        </div>
-        {pagesBlock}
-        {draftsBlock}
-      </nav>
-    );
-  }
+          ))
+        }
+      </Container>
+    </nav>
+  );
 }
-
-Panel.propTypes = {
-  pages: PropTypes.arrayOf(PropTypes.shape({})),
-  drafts: PropTypes.arrayOf(PropTypes.shape({})),
-};
-
-Panel.defaultProps = {
-  pages: [],
-  drafts: [],
-};
 
 export default Panel;
