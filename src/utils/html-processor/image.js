@@ -6,35 +6,43 @@ import styles from 'styles/image.module.scss';
 export const LIGHTBOX_CLASS = 'lightbox-image';
 const LIGHTBOX_IMAGE_CAPTION_CLASS = 'lightbox-image-caption';
 
-export const DEFAULT_THUMBNAIL_WIDTH = 800;
+export const DEFAULT_THUMBNAIL_WIDTH = 640;
 const DEFAULT_ALT_LANGUAGE = 'uk';
 
-function generateAltText(node, language) {
+function generateCaption(node, language) {
   const {
     alt,
     'data-captionen': captionEn,
     'data-captionuk': captionUk,
   } = node.attribs;
 
+  if (alt) {
+    return {
+      text: alt,
+      comment: '',
+    };
+  }
+
   const captionByAI = language === 'uk'
     ? captionUk
     : captionEn;
   const captionInfo = language === 'uk'
-    ? '(на думку штучного інтелекту)'
+    ? '(опис згенеровано штучним інтелектом)'
     : '(description by AI)';
-  const caption = captionByAI
-    ? `${captionByAI} ${captionInfo}`
-    : '';
 
-  return alt || caption;
+  return {
+    text: captionByAI,
+    comment: captionInfo,
+  };
 }
 
 function generateLinkTitle(node, language) {
-  const alt = generateAltText(node, language);
-  const separator = alt.slice(-1) === '.' ? '' : '.';
+  const { text } = generateCaption(node, language);
+
+  const separator = text?.slice(-1) === '.' ? '' : '.';
   const clickToEnlarge = language === 'uk' ? 'Клацни, шоб збільшити' : 'Click to enlarge';
 
-  return alt ? `${alt}${separator} ${clickToEnlarge}.` : clickToEnlarge;
+  return text ? `${text}${separator} ${clickToEnlarge}.` : clickToEnlarge;
 }
 
 export function generateLazyPreview(node, {
@@ -52,34 +60,31 @@ export function generateLazyPreview(node, {
 
   const placeholderSource = `${originalSource}?placeholder=true`;
 
-  const alt = generateAltText(node, altLanguage);
+  const caption = generateCaption(node, altLanguage);
   const title = generateLinkTitle(node, altLanguage);
 
   const thumbnailHeight = thumbnailWidth / (originalWidth / originalHeight);
 
   const isClickable = clickable !== 'false';
 
-  const loader = ({ src, width }) => `${src}?width=${width}`;
-
   const image = (
     <div className={[className, styles.wrapper].join(' ')} style={{ backgroundColor: `#${averageColor}` }}>
       <img
         src={placeholderSource}
-        alt={alt}
+        alt={caption.text}
         aria-hidden="true"
         className={styles.placeholder}
       />
       <Image
         src={originalSource}
-        alt={alt}
+        alt={caption.text}
         width={thumbnailWidth}
         height={thumbnailHeight}
-        loader={loader}
       />
     </div>
   );
 
-  const captionHtml = alt ? `<span class="${LIGHTBOX_IMAGE_CAPTION_CLASS}">${alt}</span>` : null;
+  const captionHtml = caption.text ? `<span class="${LIGHTBOX_IMAGE_CAPTION_CLASS}">${caption.text} <em>${caption.comment}</em></span>` : null;
 
   return isClickable
     ? (
@@ -89,7 +94,6 @@ export function generateLazyPreview(node, {
         data-src={originalSource}
         data-sub-html={captionHtml}
         className={`expendable-widget ${LIGHTBOX_CLASS}`}
-        key={originalSource}
       >
         {image}
       </a>
