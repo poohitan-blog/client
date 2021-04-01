@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { LazyLoadComponent } from 'react-lazy-load-image-component';
+import LazyLoad from 'react-lazyload';
 import cc from 'classcat';
 
 import Disqus from 'components/post/comments/Disqus';
@@ -8,79 +8,37 @@ import { Circle } from 'components/ui/Loader';
 
 import styles from 'styles/components/post/comment-form.module.scss';
 
-const ACCEPTABLE_WAITING_TIME = 5000;
+// const ACCEPTABLE_WAITING_TIME = 5000;
 
-class CommentForm extends React.Component {
-  constructor(props) {
-    super(props);
+function CommentForm({ title, slug }) {
+  const [loading, setLoading] = useState(true);
 
-    this.state = {
-      loading: true,
-      loadingFailed: false,
-    };
-
-    this.setFailTimeout = this.setFailTimeout.bind(this);
-    this.hideLoader = this.hideLoader.bind(this);
+  function hideLoader() {
+    setLoading(false);
   }
 
-  setFailTimeout() {
-    const timeout = setTimeout(() => {
-      this.setState({ loadingFailed: true });
-    }, ACCEPTABLE_WAITING_TIME);
+  const className = cc({
+    [styles.formWrapper]: true,
+    [styles.loading]: loading,
+  });
 
-    this.setState({
-      timeout,
-    });
-  }
-
-  hideLoader() {
-    const { timeout } = this.state;
-
-    clearTimeout(timeout);
-
-    this.setState({
-      loading: false,
-    });
-  }
-
-  render() {
-    const { title, slug } = this.props;
-    const { loading, loadingFailed } = this.state;
-
-    return (
-      <div id="comments" className={styles.wrapper}>
-        <div className={cc({ [styles.formWrapper]: true, [styles.loading]: loading })}>
-          <div className={styles.loader}>
-            {
-              loadingFailed
-                ? (
-                  <>
-                    <span>Коментарі шось дуже довго вантажаться.</span>
-                    <br />
-                    <span>Почекай ше трохи, або спробуй оновити сторінку.</span>
-                    <br />
-                    <span>Якшо не допоможе, то це дуже сумно.</span>
-                  </>
-                )
-                : (
-                  <>
-                    <span className={styles.encouragement}>Напиши коментар, трясця</span>
-                    <Circle className={styles.loaderAnimation} />
-                  </>
-                )
-            }
-          </div>
-          <LazyLoadComponent beforeLoad={this.setFailTimeout} threshold={300}>
-            <Disqus
-              title={title}
-              identifier={slug}
-              onReady={this.hideLoader}
-            />
-          </LazyLoadComponent>
+  return (
+    <div id="comments" className={styles.wrapper}>
+      <div className={className}>
+        <div className={styles.loader}>
+          <span className={styles.encouragement}>Напиши коментар, трясця</span>
+          <Circle className={styles.loaderAnimation} />
         </div>
+        <LazyLoad offset={300}>
+          <Disqus
+            title={title}
+            identifier={slug}
+            onReady={hideLoader}
+          />
+        </LazyLoad>
       </div>
-    );
-  }
+    </div>
+  );
 }
 
 CommentForm.propTypes = {

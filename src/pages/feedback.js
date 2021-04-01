@@ -6,8 +6,6 @@ import { sendFeedback } from 'services/api';
 
 import styles from 'styles/pages/feedback.module.scss';
 
-const ENTER_KEY_CODE = 13;
-
 const STATUS = {
   SENDING: 'Відправляється…',
   SENT: 'Відправлено',
@@ -46,7 +44,7 @@ function FeedBackPage() {
   }
 
   function handleKeyPress(event) {
-    if (event.which === ENTER_KEY_CODE && !event.shiftKey) {
+    if (event.code === 'Enter' && !event.shiftKey) {
       event.preventDefault();
 
       submit();
