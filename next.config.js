@@ -1,10 +1,11 @@
 const webpack = require('webpack');
+const { current } = require('./config');
 const migrationMap = require('./src/helpers/migration-map');
 
 module.exports = {
   images: {
-    domains: ['static.poohitan.com'],
-    imageSizes: [600, 800, 1200, 1600, 1920],
+    domains: current.imageDomains,
+    deviceSizes: [480, 640, 800, 1280, 1600, 1920],
   },
 
   async rewrites() {
