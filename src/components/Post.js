@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
-import dynamic from 'next/dynamic';
 import { useSession } from 'next-auth/client';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import cc from 'classcat';
@@ -14,8 +13,6 @@ import AdminControlButtons from 'components/admin/ControlButtons';
 import { DEFAULT_THUMBNAIL_WIDTH } from 'utils/html-processor/image';
 
 import styles from 'styles/components/post.module.scss';
-
-const MathHighlighter = dynamic(() => import('components/ui/MathHighlighter'), { ssr: false, loading: () => null });
 
 const Post = (props) => {
   const {
@@ -92,7 +89,6 @@ const Post = (props) => {
             : <FullBody language={language} body={body} imagesWidth={imagesWidth} />
         }
       </div>
-      <MathHighlighter />
       <Footer
         slug={slug}
         commentsCount={commentsCount}
