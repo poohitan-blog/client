@@ -6,6 +6,7 @@ import { parseCookies } from 'nookies';
 import Container from 'components/admin/panel/Container';
 import Page from 'components/admin/panel/Page';
 import Draft from 'components/admin/panel/Draft';
+import { Dots } from 'components/ui/Loader';
 
 import API from 'services/api';
 
@@ -39,9 +40,12 @@ export function Panel() {
 
   const [pagesList, setPagesList] = useState([]);
   const [draftsList, setDraftsList] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
+      setIsLoading(true);
+
       const { docs: drafts } = await API.posts.find({ hidden: true }, parseCookies({}));
       const { docs: pages } = await API.pages.find({}, parseCookies({}));
       const publicPages = pages.filter((page) => !page.hidden);
@@ -50,6 +54,8 @@ export function Panel() {
 
       setPagesList(allPages);
       setDraftsList(drafts);
+
+      setIsLoading(false);
     }
 
     if (session) {
@@ -65,6 +71,8 @@ export function Panel() {
     event.preventDefault();
     signOut();
   }
+
+  const loader = <Dots className={styles.loader} />;
 
   return (
     <nav className={styles.wrapper} id="admin-panel">
@@ -82,20 +90,24 @@ export function Panel() {
       </Container>
       <Container title="Сторінки">
         {
-          pagesList.map((page) => (
-            <li key={page.slug}>
-              <Page slug={page.slug} title={page.title} hidden={page.hidden} />
-            </li>
-          ))
+          isLoading
+            ? loader
+            : pagesList.map((page) => (
+              <li key={page.slug}>
+                <Page slug={page.slug} title={page.title} hidden={page.hidden} />
+              </li>
+            ))
         }
       </Container>
       <Container title="Чернетки">
         {
-          draftsList.map((draft) => (
-            <li key={draft.slug}>
-              <Draft slug={draft.slug} title={draft.title} />
-            </li>
-          ))
+          isLoading
+            ? loader
+            : draftsList.map((draft) => (
+              <li key={draft.slug}>
+                <Draft slug={draft.slug} title={draft.title} />
+              </li>
+            ))
         }
       </Container>
     </nav>

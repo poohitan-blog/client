@@ -9,7 +9,7 @@ function Container({ title, children }) {
       <h3>{title}</h3>
       <ul>
         {
-          children.length ? children : <span className={styles.empty}>Тут порожньо</span>
+          children || <span className={styles.empty}>Тут порожньо</span>
         }
       </ul>
     </div>
