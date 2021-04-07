@@ -64,4 +64,9 @@ $padding: 2em;
   .empty {
     color: $grey;
   }
+
+  .loader {
+    fill: $light-grey;
+    stroke: $light-grey;
+  }
 }
