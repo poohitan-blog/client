@@ -3,6 +3,11 @@ const { current } = require('./config');
 const migrationMap = require('./src/helpers/migration-map');
 
 module.exports = {
+  // TODO: remove this option as soon as Next.js start using Webpack 5 by default
+  future: {
+    webpack5: true,
+  },
+
   images: {
     domains: current.imageDomains,
     deviceSizes: [480, 640, 800, 1280, 1600, 1920],
@@ -34,6 +39,11 @@ module.exports = {
       {
         source: '/login',
         destination: '/',
+        permanent: true,
+      },
+      {
+        source: '/p/:slug/uk',
+        destination: '/p/:slug',
         permanent: true,
       },
     ];

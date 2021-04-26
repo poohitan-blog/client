@@ -176,13 +176,15 @@ export async function getServerSideProps({ req, res }) {
       },
     };
   } catch (error) {
-    const { statusCode = 500 } = error;
+    const { status } = error;
 
-    res.statusCode = statusCode;
+    res.statusCode = status;
 
     return {
       props: {
-        errorCode: statusCode,
+        error: {
+          status,
+        },
       },
     };
   }

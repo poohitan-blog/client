@@ -22,11 +22,11 @@ const ERROR_TITLES = [
   'Дідько!',
 ];
 
-function Error({ statusCode }) {
-  let message = describeHTTPCode(statusCode);
+function Error({ message, statusCode }) {
+  let messageText = message || describeHTTPCode(statusCode);
 
   if (statusCode && current.environment !== 'production') {
-    message += ` HTTP код помилки: ${statusCode}`;
+    messageText += ` HTTP код помилки: ${statusCode}`;
   }
 
   const errorTitle = ERROR_TITLES[random({ min: 0, max: ERROR_TITLES.length - 1 })];
@@ -37,7 +37,7 @@ function Error({ statusCode }) {
       <Header />
       <Content>
         <h1>{errorTitle}</h1>
-        <p className="fatty larger error text-center">{message}</p>
+        <p className="fatty larger error text-center">{messageText}</p>
         <div className="text-center">
           <p>Хмаринка позначок:</p>
           <TagCloud shake width="90%" />
@@ -59,10 +59,12 @@ Error.getInitialProps = function getInitialProps({ res, error }) {
 };
 
 Error.propTypes = {
+  message: PropTypes.string,
   statusCode: PropTypes.number,
 };
 
 Error.defaultProps = {
+  message: '',
   statusCode: null,
 };
 

@@ -40,28 +40,37 @@ export function Panel() {
 
   const [pagesList, setPagesList] = useState([]);
   const [draftsList, setDraftsList] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [pagesLoading, setPagesLoading] = useState(false);
+  const [draftsLoading, setDraftsLoading] = useState(false);
 
   useEffect(() => {
-    async function fetchData() {
-      setIsLoading(true);
+    async function fetchPages() {
+      setPagesLoading(true);
 
-      const { docs: drafts } = await API.posts.find({ hidden: true }, parseCookies({}));
       const { docs: pages } = await API.pages.find({}, parseCookies({}));
+
       const publicPages = pages.filter((page) => !page.hidden);
       const hiddenPages = pages.filter((page) => page.hidden);
       const allPages = publicPages.concat(...hiddenPages);
 
       setPagesList(allPages);
-      setDraftsList(drafts);
+      setPagesLoading(false);
+    }
 
-      setIsLoading(false);
+    async function fetchDrafts() {
+      setDraftsLoading(true);
+
+      const { docs: drafts } = await API.posts.find({ hidden: true }, parseCookies({}));
+
+      setDraftsList(drafts);
+      setDraftsLoading(false);
     }
 
     if (session) {
-      fetchData();
+      fetchPages();
+      fetchDrafts();
     }
-  }, [session]);
+  }, [session?.user?.id]);
 
   if (!session) {
     return null;
@@ -90,7 +99,7 @@ export function Panel() {
       </Container>
       <Container title="Сторінки">
         {
-          isLoading
+          pagesLoading && !pagesList.length
             ? loader
             : pagesList.map((page) => (
               <li key={page.slug}>
@@ -101,7 +110,7 @@ export function Panel() {
       </Container>
       <Container title="Чернетки">
         {
-          isLoading
+          draftsLoading && !draftsList.length
             ? loader
             : draftsList.map((draft) => (
               <li key={draft.slug}>

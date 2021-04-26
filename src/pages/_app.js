@@ -41,9 +41,11 @@ library.add(
   faDove, faCrow,
 );
 
+const DEFAULT_HTTP_ERROR_STATUS_CODE = 500;
+
 function App({ Component, pageProps }) {
-  if (pageProps.errorCode) {
-    return <Error statusCode={pageProps.errorCode} />;
+  if (pageProps.error) {
+    return <Error statusCode={pageProps.error?.status || DEFAULT_HTTP_ERROR_STATUS_CODE} />;
   }
 
   return (
@@ -69,7 +71,9 @@ App.propTypes = {
   Component: PropTypes.func.isRequired,
   pageProps: PropTypes.shape({
     session: PropTypes.shape({}),
-    errorCode: PropTypes.number,
+    error: PropTypes.shape({
+      status: PropTypes.number,
+    }),
   }).isRequired,
 };
 

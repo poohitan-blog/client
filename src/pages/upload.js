@@ -28,7 +28,9 @@ export async function getServerSideProps({ req }) {
   if (!hasAccess) {
     return {
       props: {
-        errorCode: 401,
+        error: {
+          status: 401,
+        },
       },
     };
   }

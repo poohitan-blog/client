@@ -1,1 +1,1 @@
-export { default, getServerSideProps } from 'pages/p/[slug]/index';
+export { default, getStaticProps, getStaticPaths } from 'pages/p/[slug]/index';
