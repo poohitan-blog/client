@@ -84,11 +84,13 @@ export function generateLazyPreview(node, {
     </div>
   );
 
-  const captionHtml = caption.text ? `<span class="${LIGHTBOX_IMAGE_CAPTION_CLASS}">${caption.text} <em>${caption.comment}</em></span>` : null;
+  const captionHtml = caption.text
+    ? `<span class="${LIGHTBOX_IMAGE_CAPTION_CLASS}">${caption.text} <em>${caption.comment}</em></span>`
+    : null;
 
   return isClickable
     ? (
-      <a
+      <div
         title={title}
         href={originalSource}
         data-src={originalSource}
@@ -96,7 +98,7 @@ export function generateLazyPreview(node, {
         className={`expendable-widget ${LIGHTBOX_CLASS}`}
       >
         {image}
-      </a>
+      </div>
     )
     : image;
 }
