@@ -32,6 +32,12 @@ app.prepare()
 
     server.use('/static/flags', express.static(path.join(__dirname, 'node_modules/flag-icon-css/flags'), { maxAge: 31557600000 }));
 
+    server.get('/*/pdf', (req, res) => {
+      const pagePath = req.params[0];
+
+      res.redirect(`${config.apiURL}/pdf/${pagePath}`);
+    });
+
     server.get('*', (req, res) => handle(req, res));
 
     server.post('/api/auth/*', (req, res) => handle(req, res));
