@@ -31,19 +31,9 @@ function EditPost({ post, tagCloud }) {
       <Header />
       <Content>
         <PostForm
-          key={post.slug}
-          id={post.id}
-          title={post.title}
-          slug={post.slug}
-          description={post.description}
-          body={post.body}
-          tags={post.tags}
+          post={post}
           tagCloud={tagCloud}
-          customStyles={post.customStyles}
-          imagesWidth={post.imagesWidth}
-          hidden={post.hidden}
-          publishedAt={new Date(post.publishedAt)}
-          translations={post.translations}
+          key={post.slug}
           onChange={submit}
         />
       </Content>
