@@ -6,7 +6,7 @@ import { NextSeo } from 'next-seo';
 
 import { current } from 'config';
 import API from 'services/api';
-import { stripHTML, shorten } from 'services/text';
+import { stripHTML, shorten, getImageLinksFromHTML } from 'services/text';
 
 import Wrapper from 'components/Wrapper';
 import Header from 'components/Header';
@@ -22,12 +22,38 @@ function PagePage({ page }) {
     return <PageFallback />;
   }
 
+  const {
+    title, body, slug, createdAt,
+  } = page;
+  const description = shorten(stripHTML(body), 20);
+  const [image] = getImageLinksFromHTML(body);
+  const datePublished = new Date(createdAt).toISOString();
+
+  const url = `${current.clientURL}/${slug}`;
+
   return (
     <Wrapper>
       <NextSeo
-        title={page.title}
-        description={shorten(stripHTML(page.body), 20)}
-        canonical={`${current.clientURL}/${page.slug}`}
+        title={title}
+        description={description}
+        canonical={url}
+        openGraph={{
+          title,
+          description,
+          url,
+          type: 'article',
+          article: {
+            publishedTime: datePublished,
+          },
+          images: [{
+            url: image,
+          }],
+        }}
+        twitter={{
+          handle: current.meta.social.twitter.username,
+          site: current.meta.social.twitter.username,
+          cardType: 'summary',
+        }}
       />
       {
         page.customStylesProcessed && <style dangerouslySetInnerHTML={{ __html: page.customStylesProcessed }} />
@@ -54,6 +80,7 @@ PagePage.propTypes = {
     slug: PropTypes.string.isRequired,
     hidden: PropTypes.bool,
     customStylesProcessed: PropTypes.string,
+    createdAt: PropTypes.string,
   }),
 };
 
