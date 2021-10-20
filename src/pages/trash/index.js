@@ -102,9 +102,11 @@ export async function getServerSideProps({ query, req, res }) {
       },
     };
   } catch (error) {
-    const { status } = error;
+    const { status = null } = error;
 
-    res.statusCode = status;
+    if (status) {
+      res.statusCode = status;
+    }
 
     return {
       props: {

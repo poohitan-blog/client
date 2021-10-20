@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import cc from 'classcat';
 
@@ -8,66 +8,43 @@ import TrashbinFullyOpenIcon from 'static/icons/trashbin-fully-open.svg';
 
 import styles from 'styles/components/header/trashbin.module.scss';
 
-class Trashbin extends React.PureComponent {
-  constructor(props) {
-    super(props);
+const Trashbin = ({ state, className }) => {
+  const [currentState, setCurrentState] = useState(state);
 
-    this.state = {
-      state: props.state || Trashbin.STATES.CLOSED,
-    };
-
-    this.semiOpen = this.semiOpen.bind(this);
-    this.close = this.close.bind(this);
-  }
-
-  getTrashbinIcon() {
-    const { state } = this.state;
-
-    if (state === 'fully-open') {
+  const getTrashbinIcon = () => {
+    if (currentState === Trashbin.STATES.FULLY_OPEN) {
       return <TrashbinFullyOpenIcon />;
     }
 
-    if (state === 'semi-open') {
+    if (currentState === Trashbin.STATES.SEMI_OPEN) {
       return <TrashbinSemiOpenIcon />;
     }
 
     return <TrashbinClosedIcon />;
-  }
+  };
 
-  semiOpen() {
-    const { state } = this.state;
-
-    if (state === Trashbin.STATES.FULLY_OPEN) {
+  const semiOpen = () => {
+    if (currentState === Trashbin.STATES.FULLY_OPEN) {
       return;
     }
 
-    this.setState({
-      state: Trashbin.STATES.SEMI_OPEN,
-    });
-  }
+    setCurrentState(Trashbin.STATES.SEMI_OPEN);
+  };
 
-  close() {
-    const { state } = this.state;
-
-    if (state === Trashbin.STATES.FULLY_OPEN) {
+  const close = () => {
+    if (currentState === Trashbin.STATES.FULLY_OPEN) {
       return;
     }
 
-    this.setState({
-      state: Trashbin.STATES.CLOSED,
-    });
-  }
+    setCurrentState(Trashbin.STATES.CLOSED);
+  };
 
-  render() {
-    const { className } = this.props;
-
-    return (
-      <div className={cc([styles.wrapper, className])} onMouseEnter={this.semiOpen} onMouseLeave={this.close}>
-        {this.getTrashbinIcon()}
-      </div>
-    );
-  }
-}
+  return (
+    <div className={cc([styles.wrapper, className])} onMouseEnter={semiOpen} onMouseLeave={close}>
+      {getTrashbinIcon()}
+    </div>
+  );
+};
 
 Trashbin.STATES = {
   CLOSED: 'closed',
