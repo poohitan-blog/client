@@ -62,3 +62,14 @@
   @extend .item;
   @include text-overflow-ellipsis;
 }
+
+@media (prefers-color-scheme: dark) {
+  .wrapper {
+    background-color: $yellowy-dark-grey;
+  }
+
+  .icon {
+    fill: $light-grey;
+    color: $light-grey;
+  }
+}

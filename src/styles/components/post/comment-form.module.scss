@@ -22,7 +22,7 @@
 }
 
 .loader {
-  background-color: white;
+  background-color: $white;
   color: $grey;
   text-align: center;
   opacity: 0;
@@ -52,5 +52,16 @@
     fill: $light-grey;
     stroke: $light-grey;
     font-size: 1.5em;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .loader {
+    background-color: $darker-grey;
+  }
+
+  .loader-animation {
+    fill: $dark-grey;
+    stroke: $dark-grey;
   }
 }

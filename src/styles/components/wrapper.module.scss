@@ -46,3 +46,10 @@ $shadow-height: 6px;
     overflow: hidden;
   }
 }
+
+@media (prefers-color-scheme: dark) { 
+  .wrapper {
+    background-color: $darker-grey;
+    border-color: $black;
+  }
+}
