@@ -132,12 +132,21 @@ export async function getServerSideProps({ query, req, res }) {
 }
 
 IndexPage.propTypes = {
-  posts: PropTypes.arrayOf(PropTypes.object).isRequired,
+  posts: PropTypes.arrayOf(PropTypes.object),
 
   meta: PropTypes.shape({
     currentPage: PropTypes.number,
     totalPages: PropTypes.number,
-  }).isRequired,
+  }),
+};
+
+IndexPage.defaultProps = {
+  posts: [],
+
+  meta: {
+    currentPage: 0,
+    totalPages: 0,
+  },
 };
 
 export default IndexPage;
