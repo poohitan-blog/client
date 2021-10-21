@@ -29,3 +29,13 @@
     grid-gap: 0.5em;
   }
 }
+
+@media (prefers-color-scheme: dark) {
+  .wrapper {
+    background-color: $yellowy-dark-grey;
+
+    .header {
+      color: $light-grey;
+    }
+  }
+}

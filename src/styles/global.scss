@@ -277,3 +277,24 @@ textarea {
   margin: 0 2em;
   width: auto;
 }
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: $smoke-black;
+    color: $smoke-white;
+  }
+
+  h1 {
+    color: $light-grey;
+  }
+
+  blockquote,
+  .blockquote {
+    color: $light-grey !important;
+    border-left-color: $grey !important;
+  }
+
+  hr {
+    border-top: 1px solid $dark-grey;
+  }
+}

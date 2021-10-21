@@ -38,3 +38,11 @@
     opacity: 1;
   }
 }
+
+@media (prefers-color-scheme: dark) {
+  .wrapper {
+    background-color: $dark-grey;
+    color: $light-grey;
+    fill: $light-grey;
+  }
+}

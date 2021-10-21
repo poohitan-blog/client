@@ -80,7 +80,7 @@ $collapsedHeight: 1000px;
       width: 100%;
       height: 20em;
 
-      background: linear-gradient(to top, $white, rgba(255,255,255, 0.3) 75%, rgba(255,255,255, 0));
+      background: linear-gradient(to top, $white, transparentize($white, 0.3) 75%, $transparent);
     }
 
     &.collapsed {
@@ -92,6 +92,24 @@ $collapsedHeight: 1000px;
 
       .body-overlay-gradient {
         opacity: 1;
+      }
+    }
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .wrapper {
+    &.collapsable {
+      .body-overlay-gradient {
+        background: linear-gradient(to top, $darker-grey, transparentize($darker-grey, 0.3) 75%, $transparent);
+      }
+    }
+
+    .footer {
+      color: $grey;
+
+      a {
+        color: grey;
       }
     }
   }

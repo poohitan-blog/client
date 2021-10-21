@@ -53,9 +53,21 @@
     text-decoration: none;
 
     &:hover {
-      color: lighten($dark-grey, 19%);
-      fill: lighten($dark-grey, 19%);
+      color: lighten($dark-grey, 20%);
+      fill: lighten($dark-grey, 20%);
       text-decoration: none;
+    }
+  }
+
+  @media (prefers-color-scheme: dark) {
+    a {
+      color: $light-grey;
+      fill: $light-grey;
+
+      &:hover {
+        color: darken($light-grey, 20%);
+        fill: darken($light-grey, 20%);
+      }
     }
   }
 }
