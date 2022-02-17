@@ -36,7 +36,7 @@
     "jwt-decode": "^2.2.0",
     "lightgallery.js": "git+https://github.com/poohitan-blog/lightgallery.js.git",
     "masonic": "^3.3.10",
-    "next": "^11.1.2",
+    "next": "^12.1.0",
     "next-auth": "^3.11.2",
     "next-seo": "^4.14.0",
     "nextjs-progressbar": "0.0.8",
