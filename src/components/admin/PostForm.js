@@ -208,28 +208,34 @@ class PostForm extends React.Component {
               : null
           }
           <hr className={styles.separator} />
-          <div className={styles.translations}>
-            <p>Переклади:</p>
-            {
-              translations?.length
-                ? translations
-                  .map((translation) => (
-                    <Link
-                      key={translation.lang}
-                      href={`/posts/${slug}/translations/${translation.lang}/edit`}
-                    >
-                      <a className={styles.translationLink}>
-                        {translation.lang}
-                        {translation.hidden ? <sup>(прих.)</sup> : null}
-                      </a>
-                    </Link>
-                  ))
-                : null
-            }
-            <Link href={`/posts/${slug}/translations/new`}>
-              <a className={styles.translationLink}>(Додати)</a>
-            </Link>
-          </div>
+          {
+            id
+              ? (
+                <div className={styles.translations}>
+                  <p>Переклади:</p>
+                  {
+                    translations?.length
+                      ? translations
+                        .map((translation) => (
+                          <Link
+                            key={translation.lang}
+                            href={`/posts/${slug}/translations/${translation.lang}/edit`}
+                          >
+                            <a className={styles.translationLink}>
+                              {translation.lang}
+                              {translation.hidden ? <sup>(прих.)</sup> : null}
+                            </a>
+                          </Link>
+                        ))
+                      : null
+                  }
+                  <Link href={`/posts/${slug}/translations/new`}>
+                    <a className={styles.translationLink}>(Додати)</a>
+                  </Link>
+                </div>
+              )
+              : null
+          }
           <div className={styles.footer}>
             <div className={styles.options}>
               <input

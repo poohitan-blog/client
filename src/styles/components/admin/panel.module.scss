@@ -69,4 +69,9 @@ $padding: 2em;
     fill: $light-grey;
     stroke: $light-grey;
   }
+
+  @media (prefers-color-scheme: dark) {
+    background-color: $darker-grey;
+    border-color: $black;
+  }
 }

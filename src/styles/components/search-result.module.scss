@@ -97,4 +97,18 @@
       pointer-events: all;
     }
   }
+
+  @media (prefers-color-scheme: dark) {
+    a {
+      color: $white;
+
+      &:hover {
+        color: $white;
+      }
+    }
+
+    .description {
+      background-color: $dark-grey;
+    }
+  }
 }

@@ -34,8 +34,8 @@ const shared = {
 const config = {
   development: {
     ...shared,
-    port: 7000,
-    clientURL: 'http://localhost:7000',
+    port: 7001,
+    clientURL: 'http://localhost:7001',
     apiURL: 'http://localhost:3100',
     imageDomains: ['localhost', 'static.poohitan.com'],
     cookiesDomain: 'localhost',
