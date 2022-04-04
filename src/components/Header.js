@@ -67,7 +67,12 @@ const Header = ({ trashBinState }) => {
             ? (
               <>
                 <hr />
-                <Announcement text={announcement.text} Icon={announcement.Icon} id="header-announcement" />
+                <Announcement
+                  text={announcement.text}
+                  link={announcement.link}
+                  Icon={announcement.Icon}
+                  id="header-announcement"
+                />
                 <hr />
               </>
             )

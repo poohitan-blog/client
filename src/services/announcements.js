@@ -8,16 +8,39 @@ import HeartIcon from 'static/icons/heart.svg';
 import CakeIcon from 'static/icons/cake.svg';
 import GhostIcon from 'static/icons/ghost.svg';
 
+const WAR_IN_PROGRESS = true;
+
 const DEFAULT_PHRASES = [
-  'Читай українською',
-  'Пиши українською',
-  'Спілкуйся українською',
-  'Шукай українською',
-  'Думай українською',
-  'Наша мова кольорова',
-  'Аваков — чорт',
-  'Вакцинуйся, чорт забирай!',
+  {
+    text: 'Читай українською',
+  },
+  {
+    text: 'Пиши українською',
+  },
+  {
+    text: 'Спілкуйся українською',
+  },
+  {
+    text: 'Шукай українською',
+  },
+  {
+    text: 'Думай українською',
+  },
+  {
+    text: 'Наша мова кольорова',
+  },
+  {
+    text: 'Аваков — чорт',
+  },
+  {
+    text: 'Вакцинуйся, чорт забирай!',
+  },
 ];
+
+const BACK_AND_ALIVE_PHRASE = {
+  text: 'Скидай гроші в «Повернись живим»',
+  link: 'https://www.comebackalive.in.ua/uk',
+};
 
 export const POSITIONS = {
   TOP: 'top',
@@ -60,10 +83,12 @@ function getCurrentPosition() {
 
 export function generateRandomAnnouncement() {
   const phraseIndex = random({ min: 0, max: DEFAULT_PHRASES.length - 1 });
+  const phrase = DEFAULT_PHRASES[phraseIndex];
 
   return {
     position: getCurrentPosition(),
-    text: DEFAULT_PHRASES[phraseIndex],
+    text: phrase.text,
+    link: phrase.link,
     Icon: HeartIcon,
   };
 }
@@ -71,6 +96,14 @@ export function generateRandomAnnouncement() {
 export function generateAnnouncement() {
   const { isBirthday, age } = getWebsiteInfo();
   const isDead = false; // TODO: make a check from API
+
+  if (WAR_IN_PROGRESS) {
+    return {
+      ...BACK_AND_ALIVE_PHRASE,
+      position: POSITIONS.TOP,
+      Icon: HeartIcon,
+    };
+  }
 
   if (isDead) {
     const text = 'Я помер. Сайт більше не оновлюється';

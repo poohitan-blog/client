@@ -17,4 +17,13 @@
   .text {
     white-space: nowrap;
   }
+
+  .link {
+    white-space: nowrap;
+    color: $light-grey;
+
+    &:hover {
+      color: $grey;
+    }
+  }
 }

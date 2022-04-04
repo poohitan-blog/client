@@ -67,7 +67,14 @@ const Footer = ({ pagination, searchBox }) => {
       }
       {
         announcement.position === POSITIONS.BOTTOM
-          && <Announcement text={announcement.text} Icon={announcement.Icon} id="footer-announcement" />
+          && (
+            <Announcement
+              text={announcement.text}
+              link={announcement.link}
+              Icon={announcement.Icon}
+              id="header-announcement"
+            />
+          )
       }
     </div>
   );
