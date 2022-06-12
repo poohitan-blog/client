@@ -3,6 +3,10 @@
 
 .lg-backdrop {
   background-color: transparentize($white, 0.15) !important;
+
+  @media (prefers-color-scheme: dark) {
+    background-color: transparentize($dark-grey, 0.15) !important;
+  }
 }
 
 .lightbox {
@@ -37,6 +41,11 @@
       &:hover {
         background-color: $white;
       }
+
+      @media (prefers-color-scheme: dark) {
+        background-color: transparentize($dark-grey, 0.15);
+        color: white;
+      }
     }
   }
 
@@ -50,6 +59,10 @@
     #lg-counter {
       color: $dark-grey;
       @include smaller;
+
+      @media (prefers-color-scheme: dark) {
+        color: $smoke-white;
+      }
     }
   }
 
@@ -58,6 +71,10 @@
     @supports (-moz-appearance: none) {
       -webkit-text-stroke: 3px $white;
       paint-order: stroke fill markers;
+
+      @media (prefers-color-scheme: dark) {
+        -webkit-text-stroke: 3px $darker-grey;
+      }
     }
   }
 
@@ -70,6 +87,14 @@
 
     &:hover {
       color: $dark-grey;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      color: transparentize($white, 0.2);
+
+      &:hover {
+        color: $smoke-white;
+      }
     }
   }
 
