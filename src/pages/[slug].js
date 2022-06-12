@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
+import dynamic from 'next/dynamic';
 import { parseCookies } from 'nookies';
 import { NextSeo } from 'next-seo';
 
@@ -15,6 +16,7 @@ import Footer from 'components/Footer';
 import Page from 'components/Page';
 import PageFallback from 'components/PageFallback';
 
+const Lightbox = dynamic(() => import('components/ui/Lightbox'), { ssr: false, loading: () => null });
 function PagePage({ page }) {
   const router = useRouter();
 
@@ -68,6 +70,7 @@ function PagePage({ page }) {
           hidden={page.hidden}
         />
       </Content>
+      <Lightbox id={page.slug} />
       <Footer />
     </Wrapper>
   );

@@ -19,27 +19,35 @@ const Page = (props) => {
 
   const [session] = useSession();
 
+  const pageTitleIcons = (
+    <div className={styles.titleIcons}>
+      {
+        hidden && (
+          <FontAwesomeIcon icon="eye-slash" className={styles.titleIcon} id="page-title-icon" />
+        )
+      }
+      {
+        session && (
+          <AdminControlButtons
+            entityType="page"
+            tokens={[slug]}
+            className={styles.adminControlButtons}
+            id="page-admin-control-buttons"
+          />
+        )
+      }
+    </div>
+  );
+
   return (
     <article className={styles.wrapper} id="page">
       <h1 className={styles.title} id="page-title">
         <span>{title}</span>
-        <div className={styles.titleIcons}>
-          {
-            hidden && (
-              <FontAwesomeIcon icon="eye-slash" className={styles.titleIcon} id="page-title-icon" />
-            )
-          }
-          {
-            session && (
-              <AdminControlButtons
-                entityType="page"
-                tokens={[slug]}
-                className={styles.adminControlButtons}
-                id="page-admin-control-buttons"
-              />
-            )
-          }
-        </div>
+        {
+          session || hidden
+            ? pageTitleIcons
+            : null
+        }
       </h1>
       <div className={styles.body} id="page-body">
         {
