@@ -45,6 +45,10 @@
       @media (prefers-color-scheme: dark) {
         background-color: transparentize($dark-grey, 0.15);
         color: white;
+
+        &:hover {
+          background-color: $dark-grey;
+        }
       }
     }
   }
