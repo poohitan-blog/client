@@ -68,7 +68,7 @@ export function generateLazyPreview(node, {
   const isClickable = clickable !== 'false';
 
   const image = (
-    <div className={[className, styles.wrapper].join(' ')} style={{ backgroundColor: `#${averageColor}` }}>
+    <span className={[className, styles.wrapper].join(' ')} style={{ backgroundColor: `#${averageColor}` }}>
       <img
         src={placeholderSource}
         alt={caption.text}
@@ -81,7 +81,7 @@ export function generateLazyPreview(node, {
         width={thumbnailWidth}
         height={thumbnailHeight}
       />
-    </div>
+    </span>
   );
 
   const captionHtml = caption.text ? `<span class="${LIGHTBOX_IMAGE_CAPTION_CLASS}">${caption.text} <em>${caption.comment}</em></span>` : null;
