@@ -20,7 +20,7 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.28",
     "@fortawesome/free-regular-svg-icons": "^5.13.0",
     "@fortawesome/free-solid-svg-icons": "^5.13.0",
-    "@fortawesome/react-fontawesome": "^0.1.9",
+    "@fortawesome/react-fontawesome": "^0.2.0",
     "@svgr/webpack": "^5.3.1",
     "classcat": "^4.1.0",
     "codemirror": "^5.49.2",
@@ -36,7 +36,7 @@
     "jwt-decode": "^2.2.0",
     "lightgallery.js": "git+https://github.com/poohitan-blog/lightgallery.js.git",
     "masonic": "^3.3.10",
-    "next": "^12.1.0",
+    "next": "^12.2.2",
     "next-auth": "^3.11.2",
     "next-seo": "^4.14.0",
     "nextjs-progressbar": "0.0.8",
@@ -66,6 +66,6 @@
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-react": "^7.22.0",
-    "eslint-plugin-react-hooks": "^1.7.0"
+    "eslint-plugin-react-hooks": "^4.6.0"
   }
 }
