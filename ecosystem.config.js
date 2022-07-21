@@ -22,7 +22,7 @@ module.exports = {
       ref: 'origin/master',
       repo: 'git@github.com:poohitan-blog/client.git',
       path: '/home/poohitan/poohitan.com/client',
-      'post-deploy': 'npm install && npm run build && pm2 reload ecosystem.config.js --env production --update-env',
+      'post-deploy': 'npm install --legacy-peer-deps && npm run build && pm2 reload ecosystem.config.js --env production --update-env',
     },
   },
 };
