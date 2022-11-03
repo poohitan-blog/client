@@ -37,9 +37,9 @@ const DEFAULT_PHRASES = [
   },
 ];
 
-const BACK_AND_ALIVE_PHRASE = {
-  text: 'Скидай гроші в «Повернись живим»',
-  link: 'https://www.comebackalive.in.ua/uk',
+const DONATIONS_PHRASE = {
+  text: 'Скидай гроші Госпітальєрам',
+  link: 'https://www.hospitallers.life/needs-hospitallers',
 };
 
 export const POSITIONS = {
@@ -99,7 +99,7 @@ export function generateAnnouncement() {
 
   if (WAR_IN_PROGRESS) {
     return {
-      ...BACK_AND_ALIVE_PHRASE,
+      ...DONATIONS_PHRASE,
       position: POSITIONS.TOP,
       Icon: HeartIcon,
     };
