@@ -100,11 +100,13 @@ export function generateAnnouncement() {
   const { isBirthday, age } = getWebsiteInfo();
   const isDead = false; // TODO: make a check from API
 
-  if (WAR_IN_PROGRESS) {
+  if (isBirthday) {
+    const text = `${describeWordCount(age, ["рік", "роки", "років"])} сайту`;
+
     return {
-      ...DONATIONS_PHRASE,
+      text,
       position: POSITIONS.TOP,
-      Icon: HeartIcon,
+      Icon: CakeIcon,
     };
   }
 
@@ -118,13 +120,11 @@ export function generateAnnouncement() {
     };
   }
 
-  if (isBirthday) {
-    const text = `${describeWordCount(age, ["рік", "роки", "років"])} сайту`;
-
+  if (WAR_IN_PROGRESS) {
     return {
-      text,
+      ...DONATIONS_PHRASE,
       position: POSITIONS.TOP,
-      Icon: CakeIcon,
+      Icon: HeartIcon,
     };
   }
 
