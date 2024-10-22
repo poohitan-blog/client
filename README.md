@@ -9,3 +9,5 @@ Deploy
 
 * `master` branch: `npm run deploy`
 * any other branch: `pm2 deploy production ref origin/%BRANCH_NAME%`
+
+Node version: 14, hopefully any higher
